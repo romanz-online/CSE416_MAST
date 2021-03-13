@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<h1>Student {{ student.sbu_id }}</h1>
+
+{% if error_message %}<p><strong>{{ error_message }}</strong></p>{% endif %}
+
+Name: {{ student.name }} <br>
+Email: {{ student.email }} <br>
+Graduated? {{ student.graduated }} <br>
+Withdrew? {{ student.withdrew }} <br>
+<br>
+Major: [to be implemented] <br>
+Enrollment Semester: [to be implemented] <br>
+Graduation Semester: [to be implemented] <br>
+Requirement Version Semester: [to be implemented] <br>
+Courses taken: [to be implemented] <br>
+Schedule: [to be implemented] <br>
+
+<a href="{% url 'mast:index' %}">Back</a>
+
+</html>

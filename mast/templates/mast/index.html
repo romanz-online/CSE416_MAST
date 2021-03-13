@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+<body>
+
+{% load static %}
+<link rel="stylesheet" type="text/css" href="{% static 'mast/style.css' %}">
+
+<h1>Students</h1>
+
+<form action="{% url 'mast:search' %}" method="get">
+  <input name="query" type="text" placeholder="Enter criteria..." >
+  <button type="submit" name="button">Submit</button>
+</form>
+
+{% if student_list %}
+    <ul>
+    {% for student in student_list %}
+        <li><a href="{% url 'mast:detail' student.sbu_id %}">{{ student.sbu_id }} - {{ student.name }}</a></li>
+    {% endfor %}
+    </ul>
+{% else %}
+    <p>No student records found.</p>
+{% endif %}
+
+</body>
+</html>
