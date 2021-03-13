@@ -8,9 +8,9 @@
 <h1>Students</h1>
 
 <form action="{% url 'mast:search' %}" method="get">
-  <input name="name" type="text" placeholder="Name" >
-  <input name="sbu_id" type="text" placeholder="SBU ID" >
-  <button type="submit" name="button">Submit</button>
+  <input name="name" type="text" placeholder="Name" autocomplete="on" value={{ name_search }}>
+  <input name="sbu_id" type="text" placeholder="SBU ID" autocomplete="on" value={{ sbu_id_search }}>
+  <button type="submit">Submit</button>
 </form>
 
 {% if student_list %}
