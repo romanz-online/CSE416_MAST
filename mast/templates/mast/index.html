@@ -8,7 +8,8 @@
 <h1>Students</h1>
 
 <form action="{% url 'mast:search' %}" method="get">
-  <input name="query" type="text" placeholder="Enter criteria..." >
+  <input name="name" type="text" placeholder="Name" >
+  <input name="sbu_id" type="text" placeholder="SBU ID" >
   <button type="submit" name="button">Submit</button>
 </form>
 
