@@ -50,10 +50,22 @@ def commit_edit(request, sbu_id):
         email = request.GET['email']
         graduated = True if request.GET['graduated'] == 'yes' else False
         withdrew = True if request.GET['withdrew'] == 'yes' else False
+        entry_season = request.GET['entry_season']
+        graduation_season = request.GET['graduation_season']
+        requirement_season = request.GET['requirement_season']
+        entry_year = request.GET['entry_year']
+        graduation_year = request.GET['graduation_year']
+        requirement_year = request.GET['requirement_year']
         student.name = name
         student.email = email
         student.graduated = graduated
         student.withdrew = withdrew
+        student.entry_semester_season = entry_season
+        student.entry_semester_year = entry_year
+        student.graduation_semester_season = graduation_season
+        student.graduation_semester_year = graduation_year
+        student.requirement_semester_season = requirement_season
+        student.requirement_semester_year = requirement_year
         student.save()
     except:
         student = get_object_or_404(Student, pk=sbu_id)

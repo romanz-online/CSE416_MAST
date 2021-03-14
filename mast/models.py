@@ -1,11 +1,12 @@
 from django.db import models
+from datetime import datetime
 
 
-# class Season(models.TextChoices):
-#     WINTER = 'WN', ('Winter')
-#     SPRING = 'SP', ('Spring')
-#     SUMMER = 'SM', ('Summer')
-#     FALL = 'FA', ('Fall')
+class Season(models.TextChoices):
+    WINTER = 'Winter'
+    SPRING = 'Spring'
+    SUMMER = 'Summer'
+    FALL = 'Fall'
 
 
 # class Course(models.Model):
@@ -49,12 +50,12 @@ class Student(models.Model):
     sbu_id = models.IntegerField(primary_key=True)
     name = models.CharField(max_length=100)
     email = models.CharField(max_length=100)
-    # entry_semester_season = models.CharField(max_length=2, choices=Season.choices, default=Season.FALL)
-    # entry_semester_year = models.IntegerField()
-    # graduation_semester_season = models.CharField(max_length=2, choices=Season.choices, default=Season.FALL)
-    # graduation_semester_year = models.IntegerField()
-    # requirement_semester_season = models.CharField(max_length=2, choices=Season.choices, default=Season.FALL)
-    # requirement_semester_year = models.IntegerField()
+    entry_semester_season = models.CharField(max_length=6, choices=Season.choices, default=Season.FALL)
+    entry_semester_year = models.IntegerField(default=datetime.now().year)
+    graduation_semester_season = models.CharField(max_length=6, choices=Season.choices, default=Season.FALL)
+    graduation_semester_year = models.IntegerField(default=datetime.now().year)
+    requirement_semester_season = models.CharField(max_length=6, choices=Season.choices, default=Season.FALL)
+    requirement_semester_year = models.IntegerField(default=datetime.now().year)
     # major = models.ForeignKey(Major, on_delete=models.SET_NULL)
     graduated = models.BooleanField(default=False)
     withdrew = models.BooleanField(default=False)
