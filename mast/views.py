@@ -1,7 +1,7 @@
 from django.shortcuts import get_object_or_404, render
 from django.http import HttpResponseRedirect
 from django.urls import reverse
-from .models import Student, Major, Required_Classes_for_Major
+from .models import Student, Major, Required_Classes_for_Major, Classes_Taken_by_Student
 
 
 def home(request):
@@ -56,7 +56,9 @@ def search(request):
 
 def detail(request, sbu_id):
     student = get_object_or_404(Student, pk=sbu_id)
-    return render(request, 'mast/detail.html', {'student': student, 'major_list': Major.objects.order_by('name')})
+    return render(request, 'mast/detail.html', {'student': student,
+                                                'major_list': Major.objects.order_by('name'),
+                                                'classes_taken': Classes_Taken_by_Student.objects.all()})
 
 
 def edit(request, sbu_id):

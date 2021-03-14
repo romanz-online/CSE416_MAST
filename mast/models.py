@@ -18,6 +18,9 @@ class Course(models.Model):
     timeslot = models.TimeField()
     section = models.IntegerField()
 
+    def __str__(self):
+        return self.department + str(self.number) + ':' + str(self.section)
+
 
 # class Prerequisite_Classes_for_Course(models.Model):
 #     course = models.ForeignKey(Course, on_delete=models.CASCADE)
@@ -62,15 +65,18 @@ class Student(models.Model):
     major = models.ForeignKey(Major, null=True, on_delete=models.SET_NULL)
     graduated = models.BooleanField(default=False)
     withdrew = models.BooleanField(default=False)
-    password = models.CharField(max_length=100) # may be unnecessary
+    # password = models.CharField(max_length=100) # may be unnecessary
 
     def __str__(self):
         return str(self.sbu_id)
 
 
-# class Classes_Taken_by_Student(models.Model):
-#     student = models.ForeignKey(Student, on_delete=models.CASCADE)
-#     course = models.ForeignKey(Course, on_delete=models.CASCADE)
+class Classes_Taken_by_Student(models.Model):
+    student = models.ForeignKey(Student, on_delete=models.CASCADE)
+    course = models.ForeignKey(Course, null=True, on_delete=models.SET_NULL)
+
+    def __str__(self):
+        return str(self.student) + ' - ' + str(self.course)
 
 
 # class Schedule(models.Model):
