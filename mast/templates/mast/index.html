@@ -34,7 +34,7 @@
 {% if student_list %}
     <ul>
     {% for student in student_list %}
-        <li><a href="{% url 'mast:detail' student.sbu_id %}">{{ student.sbu_id }} - {{ student.name }}</a></li>
+        <a href="{% url 'mast:detail' student.sbu_id %}">{{ student.sbu_id }} - {{ student.name }}</a><br>
     {% endfor %}
     </ul>
 {% else %}
