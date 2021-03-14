@@ -1,12 +1,25 @@
 from django.shortcuts import get_object_or_404, render
 from django.http import HttpResponseRedirect
 from django.urls import reverse
-from .models import Student, Major
+from .models import Student, Major, Required_Classes_for_Major
 
 
-def index(request):
+def home(request):
+    return render(request, 'mast/home.html', {})
+
+
+def gpd_landing(request):
+    return render(request, 'mast/gpd_landing.html', {})
+
+
+def major_index(request):
+    context = {'major_list': Major.objects.order_by('name'), 'required_classes_for_major_list': Required_Classes_for_Major.objects.order_by('major')}
+    return render(request, 'mast/major_index.html', context)
+
+
+def student_index(request):
     context = {'student_list': Student.objects.order_by('sbu_id'), 'major_list': Major.objects.order_by('name')}
-    return render(request, 'mast/index.html', context)
+    return render(request, 'mast/student_index.html', context)
 
 
 def search(request):
@@ -38,7 +51,7 @@ def search(request):
                'graduated_search': graduated_search,
                'withdrew_search': withdrew_search,
                'major_search': int(major_search)}
-    return render(request, 'mast/index.html', context)
+    return render(request, 'mast/student_index.html', context)
 
 
 def detail(request, sbu_id):

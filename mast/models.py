@@ -9,22 +9,22 @@ class Season(models.TextChoices):
     FALL = 'Fall'
 
 
-# class Course(models.Model):
-#     name = models.CharField(max_length=100)
-#     department = models.CharField(max_length=10)
-#     number = models.IntegerField()
-#     semester_season = models.CharField(max_length=2, choices=Season.choices, default=Season.FALL)
-#     semester_year = models.IntegerField()
-#     timeslot = models.DateTimeField()
-#     section = models.IntegerField()
-#
-#
+class Course(models.Model):
+    name = models.CharField(max_length=100)
+    department = models.CharField(max_length=10)
+    number = models.IntegerField()
+    semester_season = models.CharField(max_length=6, choices=Season.choices, default=Season.FALL)
+    semester_year = models.IntegerField()
+    timeslot = models.TimeField()
+    section = models.IntegerField()
+
+
 # class Prerequisite_Classes_for_Course(models.Model):
 #     course = models.ForeignKey(Course, on_delete=models.CASCADE)
 #     prerequisite_class_department = models.CharField(max_length=10)
 #     prerequisite_class_number = models.IntegerField()
-#
-#
+
+
 class Major(models.Model):
     name = models.CharField(max_length=50)
     department = models.CharField(max_length=50)
@@ -38,12 +38,12 @@ class Major(models.Model):
         return self.name
 
 
-# class Required_Classes_for_Major(models.Model):
-#     major = models.ForeignKey(Major, on_delete=models.CASCADE)
-#     required_class_department = models.CharField(max_length=10)
-#     required_class_number = models.IntegerField()
-#
-#
+class Required_Classes_for_Major(models.Model):
+    major = models.ForeignKey(Major, on_delete=models.CASCADE)
+    required_class_department = models.CharField(max_length=10)
+    required_class_number = models.IntegerField()
+
+
 # class Tracks_in_Major(models.Model):
 #     major = models.ForeignKey(Course, on_delete=models.CASCADE)
 #     track = models.CharField(max_length=100)

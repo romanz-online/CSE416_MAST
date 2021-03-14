@@ -9,9 +9,9 @@ from .models import Question, Choice
 # def index(request):
 #     latest_question_list = Question.objects.order_by('-pub_date')[:5]
 #     context = {'latest_question_list': latest_question_list}
-#     return render(request, 'mast/index.html', context)
+#     return render(request, 'mast/student_index.html', context)
 class IndexView(generic.ListView):
-    template_name = 'polls/index.html'
+    template_name = 'polls/student_index.html'
     context_object_name = 'latest_question_list'
 
     def get_queryset(self):

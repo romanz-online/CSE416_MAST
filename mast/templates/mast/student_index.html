@@ -7,12 +7,11 @@
 
 <h1>Students</h1>
 
+<a href="{% url 'mast:gpd_landing' %}">Back to landing</a> <br><br>
+
 <form action="{% url 'mast:search' %}" method="get">
-
     <input name="name" type="text" placeholder="Name" autocomplete="on" value={{ name_search }}>
-
     <input name="sbu_id" type="text" placeholder="SBU ID" autocomplete="on" value={{ sbu_id_search }}>
-
     Major:
     <select name="major">
         {% for major in major_list %}
@@ -23,7 +22,6 @@
             {% endif %}
         {% endfor %}
     </select>
-
     Show Graduated Students:
     <select name="graduated">
         {% if graduated_search %}
@@ -34,7 +32,6 @@
             <option value = "no" selected>No</option>
         {% endif %}
     </select>
-
     Show Withdrawn Students:
     <select name="withdrew">
         {% if withdrew_search %}
@@ -45,7 +42,6 @@
             <option value = "no" selected>No</option>
         {% endif %}
     </select>
-
     <button type="submit">Search</button>
 </form>
 

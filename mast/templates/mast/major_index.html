@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="en">
+<body>
+
+{% load static %}
+<link rel="stylesheet" type="text/css" href="{% static 'mast/style.css' %}">
+
+<h1>Majors</h1>
+
+<a href="{% url 'mast:gpd_landing' %}">Back to landing</a> <br><br>
+
+{% if major_list %}
+    {% for major in major_list %}
+        {{ major }}<br>
+    {% endfor %}
+{% else %}
+    <p>No majors found.</p>
+{% endif %}
+
+</body>
+</html>
