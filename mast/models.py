@@ -25,14 +25,17 @@ class Season(models.TextChoices):
 #     prerequisite_class_number = models.IntegerField()
 #
 #
-# class Major(models.Model):
-#     name = models.CharField(max_length=100)
-#     department = models.CharField(max_length=10)
-#     track = models.CharField(max_length=100)
-#     requirement_semester_season = models.CharField(max_length=2, choices=Season.choices, default=Season.FALL)
-#     requirement_semester_year = models.IntegerField()
-#     thesis_required = models.BooleanField(default=False)
-#     project_required = models.BooleanField(default=False)
+class Major(models.Model):
+    name = models.CharField(max_length=50)
+    department = models.CharField(max_length=50)
+    track = models.CharField(max_length=50)
+    requirement_semester_season = models.CharField(max_length=6, choices=Season.choices, default=Season.FALL)
+    requirement_semester_year = models.IntegerField(default=datetime.now().year)
+    thesis_required = models.BooleanField(default=False)
+    project_required = models.BooleanField(default=False)
+
+    def __str__(self):
+        return self.name
 
 
 # class Required_Classes_for_Major(models.Model):
@@ -56,7 +59,7 @@ class Student(models.Model):
     graduation_semester_year = models.IntegerField(default=datetime.now().year)
     requirement_semester_season = models.CharField(max_length=6, choices=Season.choices, default=Season.FALL)
     requirement_semester_year = models.IntegerField(default=datetime.now().year)
-    # major = models.ForeignKey(Major, on_delete=models.SET_NULL)
+    major = models.ForeignKey(Major, null=True, on_delete=models.SET_NULL)
     graduated = models.BooleanField(default=False)
     withdrew = models.BooleanField(default=False)
     password = models.CharField(max_length=100) # may be unnecessary

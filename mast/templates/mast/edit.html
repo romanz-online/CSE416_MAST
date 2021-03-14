@@ -104,9 +104,18 @@
             <option value = "Fall" selected>Fall</option>
         {% endif %}
     </select>
-    <input name="requirement_year" type="text" autocomplete="on" value={{ student.requirement_semester_year }}>
+    <input name="requirement_year" type="text" autocomplete="on" value={{ student.requirement_semester_year }}> <br>
+    Major:
+    <select name="major">
+        {% for major in major_list %}
+            {% if major.id == student.major.id %}
+                <option selected value={{ major.id }}>{{ major }}</option>
+            {% else %}
+                <option value = {{ major.id }}>{{ major }}</option>
+            {% endif %}
+        {% endfor %}
+    </select> <br>
     <br>
-    Major: [to be implemented] <br>
     Courses taken: [to be implemented] <br>
     Schedule: [to be implemented] <br>
     <button type="submit">Done</button>
