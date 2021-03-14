@@ -5,12 +5,29 @@
 
 {% if error_message %}<p><strong>{{ error_message }}</strong></p>{% endif %}
 
-<form action="{% url 'mast:detail' student.sbu_id %}" method="get">
-    SBU ID: <input name="sbu_id" type="text" autocomplete="on" value={{ student.sbu_id }}> <br>
+<form action="{% url 'mast:commit_edit' student.sbu_id %}" method="get">
     Name: <input name="name" type="text" autocomplete="on" value={{ student.name }}> <br>
     Email: <input name="email" type="text" autocomplete="on" value={{ student.email }}> <br>
-    Graduated: <input name="graduated" type="checkbox" value={{ graduated_search }}>
-    Show Withdrawn Students: <input name="withdrew" type="checkbox" value={{ withdrew_search }}>
+    Graduated:
+    <select name="graduated">
+        {% if student.graduated %}
+            <option value = "yes" selected>Yes</option>
+            <option value = "no">No</option>
+        {% else %}
+            <option value = "yes">Yes</option>
+            <option value = "no" selected>No</option>
+        {% endif %}
+    </select> <br>
+    Withdrew:
+    <select name="withdrew">
+        {% if student.withdrew %}
+            <option value = "yes" selected>Yes</option>
+            <option value = "no">No</option>
+        {% else %}
+            <option value = "yes">Yes</option>
+            <option value = "no" selected>No</option>
+        {% endif %}
+    </select> <br>
     Major: [to be implemented] <br>
     Enrollment Semester: [to be implemented] <br>
     Graduation Semester: [to be implemented] <br>
@@ -19,12 +36,6 @@
     Schedule: [to be implemented] <br>
     <button type="submit">Done</button>
 </form>
-
-
-Graduated? {{ student.graduated }} <br>
-Withdrew? {{ student.withdrew }} <br>
-<br>
-
 
 <form action="{% url 'mast:edit' student.sbu_id %}" method="post">
     {% csrf_token %}

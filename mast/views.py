@@ -1,4 +1,6 @@
 from django.shortcuts import get_object_or_404, render
+from django.http import HttpResponseRedirect
+from django.urls import reverse
 from .models import Student
 
 
@@ -35,6 +37,28 @@ def detail(request, sbu_id):
     student = get_object_or_404(Student, pk=sbu_id)
     return render(request, 'mast/detail.html', {'student': student})
 
+
 def edit(request, sbu_id):
     student = get_object_or_404(Student, pk=sbu_id)
     return render(request, 'mast/edit.html', {'student': student})
+
+
+def commit_edit(request, sbu_id):
+    student = get_object_or_404(Student, pk=sbu_id)
+    try:
+        name = request.GET['name']
+        email = request.GET['email']
+        graduated = True if request.GET['graduated'] == 'yes' else False
+        withdrew = True if request.GET['withdrew'] == 'yes' else False
+        student.name = name
+        student.email = email
+        student.graduated = graduated
+        student.withdrew = withdrew
+        student.save()
+    except:
+        student = get_object_or_404(Student, pk=sbu_id)
+        return render(request, 'mast/edit.html', {
+            'student': student,
+            'error_message': "Something went wrong.",
+        })
+    return HttpResponseRedirect(reverse('mast:detail', args=(sbu_id,)))
