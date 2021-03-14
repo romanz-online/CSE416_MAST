@@ -10,8 +10,24 @@
 <form action="{% url 'mast:search' %}" method="get">
     <input name="name" type="text" placeholder="Name" autocomplete="on" value={{ name_search }}>
     <input name="sbu_id" type="text" placeholder="SBU ID" autocomplete="on" value={{ sbu_id_search }}>
-    Show Graduated Students: <input name="graduated" type="checkbox" value={{ graduated_search }}>
-    Show Withdrawn Students: <input name="withdrew" type="checkbox" value={{ withdrew_search }}>
+    Show Graduated Students: <select name="graduated">
+        {% if graduated_search %}
+            <option value = "yes" selected>Yes</option>
+            <option value = "no">No</option>
+        {% else %}
+            <option value = "yes">Yes</option>
+            <option value = "no" selected>No</option>
+        {% endif %}
+        </select>
+    Show Withdrawn Students: <select name="withdrew">
+        {% if withdrew_search %}
+            <option value = "yes" selected>Yes</option>
+            <option value = "no">No</option>
+        {% else %}
+            <option value = "yes">Yes</option>
+            <option value = "no" selected>No</option>
+        {% endif %}
+        </select>
     <button type="submit">Search</button>
 </form>
 

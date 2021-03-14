@@ -10,10 +10,11 @@ def index(request):
 def search(request):
     name_search = request.GET['name']
     sbu_id_search = request.GET['sbu_id']
-    graduated_search = False if request.GET.get('graduated', 'on') else True
-    withdrew_search = False if request.GET.get('withdrew', 'on') else True
+    graduated_search = True if request.GET['graduated'] == 'yes' else False
+    withdrew_search = True if request.GET['withdrew'] == 'yes' else False
     name_list = Student.objects.filter(name__icontains=name_search)
     sbu_id_list = Student.objects.filter(sbu_id__icontains=sbu_id_search)
+
     if not graduated_search:
         name_list = name_list.filter(graduated=False)
         sbu_id_list = sbu_id_list.filter(graduated=False)
@@ -25,11 +26,15 @@ def search(request):
     context = {'student_list': student_list,
                'name_search': name_search,
                'sbu_id_search': sbu_id_search,
-               'graduated_search': '',
-               'withdrew_search': ''}
+               'graduated_search': graduated_search,
+               'withdrew_search': withdrew_search}
     return render(request, 'mast/index.html', context)
 
 
 def detail(request, sbu_id):
     student = get_object_or_404(Student, pk=sbu_id)
     return render(request, 'mast/detail.html', {'student': student})
+
+def edit(request, sbu_id):
+    student = get_object_or_404(Student, pk=sbu_id)
+    return render(request, 'mast/edit.html', {'student': student})

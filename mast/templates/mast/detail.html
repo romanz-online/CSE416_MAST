@@ -17,6 +17,12 @@ Requirement Version Semester: [to be implemented] <br>
 Courses taken: [to be implemented] <br>
 Schedule: [to be implemented] <br>
 
-<a href="{% url 'mast:index' %}">Back</a>
-
+<form action="{% url 'mast:edit' student.sbu_id %}" method="post">
+    {% csrf_token %}
+    <button type="submit">Edit</button>
+</form>
+<form action="{% url 'mast:index' %}" method="post">
+    {% csrf_token %}
+    <button type="submit">Back</button>
+</form>
 </html>

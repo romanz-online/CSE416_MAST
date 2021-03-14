@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<h1>Student {{ student.sbu_id }}</h1>
+
+{% if error_message %}<p><strong>{{ error_message }}</strong></p>{% endif %}
+
+<form action="{% url 'mast:detail' student.sbu_id %}" method="get">
+    SBU ID: <input name="sbu_id" type="text" autocomplete="on" value={{ student.sbu_id }}> <br>
+    Name: <input name="name" type="text" autocomplete="on" value={{ student.name }}> <br>
+    Email: <input name="email" type="text" autocomplete="on" value={{ student.email }}> <br>
+    Graduated: <input name="graduated" type="checkbox" value={{ graduated_search }}>
+    Show Withdrawn Students: <input name="withdrew" type="checkbox" value={{ withdrew_search }}>
+    Major: [to be implemented] <br>
+    Enrollment Semester: [to be implemented] <br>
+    Graduation Semester: [to be implemented] <br>
+    Requirement Version Semester: [to be implemented] <br>
+    Courses taken: [to be implemented] <br>
+    Schedule: [to be implemented] <br>
+    <button type="submit">Done</button>
+</form>
+
+
+Graduated? {{ student.graduated }} <br>
+Withdrew? {{ student.withdrew }} <br>
+<br>
+
+
+<form action="{% url 'mast:edit' student.sbu_id %}" method="post">
+    {% csrf_token %}
+    <button type="submit">Reset</button>
+</form>
+
+</html>
