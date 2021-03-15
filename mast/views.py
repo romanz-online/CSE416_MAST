@@ -1,9 +1,7 @@
-from datetime import datetime
-
 from django.shortcuts import get_object_or_404, render
 from django.http import HttpResponseRedirect
 from django.urls import reverse
-from .models import Student, Major, Course, Required_Classes_for_Major, Classes_Taken_by_Student, Grade, CourseStatus, \
+from .models import Student, Major, Course, Required_Classes_for_Track, Classes_Taken_by_Student, Grade, CourseStatus, \
     Comment, Schedule
 
 
@@ -17,7 +15,7 @@ def gpd_landing(request):
 
 def major_index(request):
     context = {'major_list': Major.objects.order_by('name')[1:],
-               'required_classes_for_major_list': Required_Classes_for_Major.objects.order_by('major')}
+               'required_classes_for_major_list': Required_Classes_for_Track.objects.order_by('major')}
     return render(request, 'mast/major_index.html', context)
 
 
@@ -27,24 +25,29 @@ def add_student(request):
 
 
 def commit_new_student(request):
-    try:
-        id_list = [i.sbu_id for i in Student.objects.all()]
+    id_list = [i.sbu_id for i in Student.objects.all()]
+    if id_list:
         sbu_id = min(id_list)
-        while sbu_id in id_list:
-            sbu_id += 1
-        if sbu_id > 999999999:
-            raise Exception('No IDs available in the current range.')
-        name = request.GET['name']
-        email = request.GET['email']
-        major = request.GET['major']
-        entry_season = request.GET['entry_season']
-        graduation_season = request.GET['graduation_season']
-        requirement_season = request.GET['requirement_season']
-        entry_year = int(request.GET['entry_year'])
-        graduation_year = int(request.GET['graduation_year'])
-        requirement_year = int(request.GET['requirement_year'])
+    else:
+        sbu_id = 1
+    while sbu_id in id_list:
+        sbu_id += 1
+    if sbu_id > 999999999:
+        raise Exception('No IDs available in the current range.')
+    first_name = request.GET['first_name']
+    last_name = request.GET['last_name']
+    email = request.GET['email']
+    major = request.GET['major']
+    entry_season = request.GET['entry_season']
+    graduation_season = request.GET['graduation_season']
+    requirement_season = request.GET['requirement_season']
+    entry_year = int(request.GET['entry_year'])
+    graduation_year = int(request.GET['graduation_year'])
+    requirement_year = int(request.GET['requirement_year'])
+    try:
         student = Student(sbu_id=sbu_id,
-                          name=name,
+                          first_name=first_name,
+                          last_name=last_name,
                           email=email,
                           major=Major.objects.get(id=int(major)),
                           entry_semester_season=entry_season,
@@ -165,6 +168,7 @@ def commit_edit(request, sbu_id):
         entry_year = request.GET['entry_year']
         graduation_year = request.GET['graduation_year']
         requirement_year = request.GET['requirement_year']
+
         student.first_name = first_name
         student.last_name = last_name
         student.email = email
@@ -177,20 +181,22 @@ def commit_edit(request, sbu_id):
         student.graduation_semester_year = graduation_year
         student.requirement_semester_season = requirement_season
         student.requirement_semester_year = requirement_year
-        for course in Classes_Taken_by_Student.objects.all():
-            if course.student == student and course.status == 'Completed':
-                new_grade = request.GET[str(course.id)]
-                if course.grade != new_grade:
-                    course.grade = new_grade
-                    course.save()
-        sum = 0
-        total = 0
-        for course in Classes_Taken_by_Student.objects.all():
-            if course.student == student:
-                sum += get_grade_number(course.grade)
-                total += 1
-        sum = sum/total
-        student.gpa = format(sum, '.2f')
+
+        if Classes_Taken_by_Student.objects.all():
+            for course in Classes_Taken_by_Student.objects.all():
+                if course.student == student and course.status == 'Completed':
+                    new_grade = request.GET[str(course.id)]
+                    if course.grade != new_grade:
+                        course.grade = new_grade
+                        course.save()
+            sum = 0
+            total = 0
+            for course in Classes_Taken_by_Student.objects.all():
+                if course.student == student and course.status == 'Completed':
+                    sum += get_grade_number(course.grade)
+                    total += 1
+            sum = sum / total
+            student.gpa = format(sum, '.2f')
         student.save()
     except:
         student = get_object_or_404(Student, pk=sbu_id)
@@ -208,7 +214,8 @@ def commit_edit(request, sbu_id):
 
 
 def get_grade_number(grade):
-    dict = {'A':4.0, 'A-':3.7, 'B+':3.3, 'B':3.0, 'B-':2.7, 'C+':2.3, 'C':2.0, 'C-':1.7, 'D+':1.3, 'D':1.0, 'D-':0.7, 'F':0.0}
+    dict = {'A': 4.0, 'A-': 3.7, 'B+': 3.3, 'B': 3.0, 'B-': 2.7, 'C+': 2.3, 'C': 2.0, 'C-': 1.7, 'D+': 1.3, 'D': 1.0,
+            'D-': 0.7, 'F': 0.0}
     return dict[grade]
 
 

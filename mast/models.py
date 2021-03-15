@@ -56,24 +56,27 @@ class Course(models.Model):
 class Major(models.Model):
     name = models.CharField(max_length=50)
     department = models.CharField(max_length=50)
-    track = models.CharField(max_length=50)
     requirement_semester_season = models.CharField(max_length=6, choices=Season.choices, default=Season.FALL)
     requirement_semester_year = models.IntegerField(default=datetime.now().year)
-    thesis_required = models.BooleanField(default=False)
-    project_required = models.BooleanField(default=False)
 
     def __str__(self):
         return self.name
 
 
-class Required_Classes_for_Major(models.Model):
+class Required_Classes_for_Track(models.Model):
     major = models.ForeignKey(Major, on_delete=models.CASCADE)
+    track = models.CharField(max_length=50)
     required_class = models.ForeignKey(Course, null=True, on_delete=models.SET_NULL)
+    thesis_required = models.BooleanField(default=False)
+    project_required = models.BooleanField(default=False)
 
 
-# class Tracks_in_Major(models.Model):
-#     major = models.ForeignKey(Course, on_delete=models.CASCADE)
-#     track = models.CharField(max_length=100)
+class Tracks_in_Major(models.Model):
+    major = models.ForeignKey(Major, on_delete=models.CASCADE)
+    name = models.CharField(max_length=100)
+
+    def __str__(self):
+        return str(self.major) + ' - ' + str(self.name)
 
 
 class Student(models.Model):
@@ -89,6 +92,7 @@ class Student(models.Model):
     requirement_semester_season = models.CharField(max_length=6, choices=Season.choices, default=Season.FALL)
     requirement_semester_year = models.IntegerField(default=datetime.now().year)
     major = models.ForeignKey(Major, null=True, on_delete=models.SET_NULL)
+    track = models.ForeignKey(Tracks_in_Major, null=True, on_delete=models.SET_NULL)
     graduated = models.BooleanField(default=False)
     withdrew = models.BooleanField(default=False)
     # password = models.CharField(max_length=100) # may be unnecessary
@@ -116,4 +120,4 @@ class Comment(models.Model):
     student = models.ForeignKey(Student, on_delete=models.CASCADE)
     author = models.CharField(max_length=100, default='no auth')
     text = models.CharField(max_length=1000)
-    post_date = models.DateTimeField(default=datetime.now())
+    post_date = models.CharField(max_length=100, default=datetime.now())
