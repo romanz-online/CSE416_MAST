@@ -56,7 +56,7 @@
             <option value = "Fall" selected>Fall</option>
         {% endif %}
     </select>
-    <input name="entry_year" type="text" autocomplete="on" value={{ student.entry_semester_year }}> <br>
+    <input name="entry_year" type="number" autocomplete="on" value={{ student.entry_semester_year }}> <br>
     <br>
     Graduation Semester:
     <select name="graduation_season">
@@ -82,7 +82,7 @@
             <option value = "Fall" selected>Fall</option>
         {% endif %}
     </select>
-    <input name="graduation_year" type="text" autocomplete="on" value={{ student.graduation_semester_year }}> <br>
+    <input name="graduation_year" type="number" autocomplete="on" value={{ student.graduation_semester_year }}> <br>
     <br>
     Requirement Version Semester:
     <select name="requirement_season">
@@ -108,7 +108,7 @@
             <option value = "Fall" selected>Fall</option>
         {% endif %}
     </select>
-    <input name="requirement_year" type="text" autocomplete="on" value={{ student.requirement_semester_year }}> <br>
+    <input name="requirement_year" type="number" autocomplete="on" value={{ student.requirement_semester_year }}> <br>
     <br>
     Major:
     <select name="major">

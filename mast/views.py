@@ -18,6 +18,47 @@ def major_index(request):
     return render(request, 'mast/major_index.html', context)
 
 
+def add_student(request):
+    context = {'major_list': Major.objects.order_by('name')}
+    return render(request, 'mast/new_student.html', context)
+
+
+def commit_new_student(request):
+    try:
+        id_list = [i.sbu_id for i in Student.objects.all()]
+        sbu_id = min(id_list)
+        while sbu_id in id_list:
+            sbu_id += 1
+        if sbu_id > 999999999:
+            raise Exception('No IDs available in the current range.')
+        name = request.GET['name']
+        email = request.GET['email']
+        major = request.GET['major']
+        entry_season = request.GET['entry_season']
+        graduation_season = request.GET['graduation_season']
+        requirement_season = request.GET['requirement_season']
+        entry_year = int(request.GET['entry_year'])
+        graduation_year = int(request.GET['graduation_year'])
+        requirement_year = int(request.GET['requirement_year'])
+        student = Student(sbu_id=sbu_id,
+                          name=name,
+                          email=email,
+                          major=Major.objects.get(id=int(major)),
+                          entry_semester_season=entry_season,
+                          entry_semester_year=entry_year,
+                          graduation_semester_season=graduation_season,
+                          graduation_semester_year=graduation_year,
+                          requirement_semester_season=requirement_season,
+                          requirement_semester_year=requirement_year)
+        student.save()
+    except:
+        return render(request, 'mast/new_student.html', {
+            'major_list': Major.objects.order_by('name'),
+            'error_message': "Something went wrong."
+        })
+    return HttpResponseRedirect(reverse('mast:detail', args=(sbu_id,)))
+
+
 def student_index(request):
     context = {'student_list': Student.objects.order_by('sbu_id'), 'major_list': Major.objects.order_by('name')}
     return render(request, 'mast/student_index.html', context)
