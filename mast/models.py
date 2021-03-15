@@ -106,7 +106,9 @@ class Classes_Taken_by_Student(models.Model):
         return str(self.student) + ' - ' + str(self.course)
 
 
-# class Schedule(models.Model):
+class Schedule(models.Model):
+    student = models.ForeignKey(Student, on_delete = models.CASCADE)
+    semesters = jsonfield.JSONField()
 
 
 class Comment(models.Model):
