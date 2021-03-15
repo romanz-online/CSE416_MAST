@@ -147,9 +147,38 @@ def commit_edit(request, sbu_id):
         student.save()
     except:
         student = get_object_or_404(Student, pk=sbu_id)
-        return render(request, 'mast/edit.html', {
-            'student': student,
-            'major_list': Major.objects.order_by('name'),
-            'error_message': "Something went wrong.",
-        })
+        grade_list = [i[0] for i in Grade.choices]
+        return render(request, 'mast/edit.html', {'student': student,
+                                                  'major_list': Major.objects.order_by('name'),
+                                                  'course_list': Course.objects.order_by('name'),
+                                                  'classes_taken': Classes_Taken_by_Student.objects.all(),
+                                                  'grade_list': grade_list,
+                                                  'error_message': "Something went wrong."
+                                                  })
     return HttpResponseRedirect(reverse('mast:detail', args=(sbu_id,)))
+
+
+def add_taken_course(request, sbu_id):
+    student = get_object_or_404(Student, pk=sbu_id)
+    grade_list = [i[0] for i in Grade.choices]
+    try:
+        new_course = request.GET['course']
+        print('NEW COURSE:', new_course)
+        new_course = Course.objects.get(id=new_course)
+        new_grade = request.GET['grade']
+        c = Classes_Taken_by_Student(student=student, course=new_course, grade=new_grade)
+        c.save()
+    except:
+        return render(request, 'mast/edit.html', {'student': student,
+                                                  'major_list': Major.objects.order_by('name'),
+                                                  'course_list': Course.objects.order_by('name'),
+                                                  'classes_taken': Classes_Taken_by_Student.objects.all(),
+                                                  'grade_list': grade_list,
+                                                  'error_message': "Something went wrong."
+                                                  })
+    return render(request, 'mast/edit.html', {'student': student,
+                                              'major_list': Major.objects.order_by('name'),
+                                              'course_list': Course.objects.order_by('name'),
+                                              'classes_taken': Classes_Taken_by_Student.objects.all(),
+                                              'grade_list': grade_list
+                                              })

@@ -6,9 +6,9 @@
 {% if error_message %}<p><strong>{{ error_message }}</strong></p>{% endif %}
 
 <form action="{% url 'mast:commit_new_student' %}" method="get">
-    Name: <input name="name" type="text" autocomplete="on" value={{ student.name }}> <br>
+    Name: <input name="name" type="text" autocomplete="on"> <br>
     <br>
-    Email: <input name="email" type="text" autocomplete="on" value={{ student.email }}> <br>
+    Email: <input name="email" type="text" autocomplete="on"> <br>
     <br>
     Enrollment Semester:
     <select name="entry_season">
@@ -17,7 +17,7 @@
         <option value = "Summer">Summer</option>
         <option value = "Fall">Fall</option>
     </select>
-    <input name="entry_year" type="number" autocomplete="on" value={{ student.entry_semester_year }}> <br>
+    <input name="entry_year" type="number" autocomplete="on"> <br>
     <br>
     Graduation Semester:
     <select name="graduation_season">
@@ -26,7 +26,7 @@
         <option value = "Summer">Summer</option>
         <option value = "Fall">Fall</option>
     </select>
-    <input name="graduation_year" type="number" autocomplete="on" value={{ student.graduation_semester_year }}> <br>
+    <input name="graduation_year" type="number" autocomplete="on"> <br>
     <br>
     Requirement Version Semester:
     <select name="requirement_season">
@@ -35,7 +35,7 @@
         <option value = "Summer">Summer</option>
         <option value = "Fall">Fall</option>
     </select>
-    <input name="requirement_year" type="number" autocomplete="on" value={{ student.requirement_semester_year }}> <br>
+    <input name="requirement_year" type="number" autocomplete="on"> <br>
     <br>
     Major:
     <select name="major">
