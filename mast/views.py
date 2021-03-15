@@ -1,7 +1,10 @@
+from datetime import datetime
+
 from django.shortcuts import get_object_or_404, render
 from django.http import HttpResponseRedirect
 from django.urls import reverse
-from .models import Student, Major, Course, Required_Classes_for_Major, Classes_Taken_by_Student, Grade, CourseStatus
+from .models import Student, Major, Course, Required_Classes_for_Major, Classes_Taken_by_Student, Grade, CourseStatus, \
+    Comment
 
 
 def home(request):
@@ -100,9 +103,38 @@ def search(request):
 
 def detail(request, sbu_id):
     student = get_object_or_404(Student, pk=sbu_id)
+    comment_list = Comment.objects.filter(student=sbu_id)
     return render(request, 'mast/detail.html', {'student': student,
                                                 'major_list': Major.objects.order_by('name'),
-                                                'classes_taken': Classes_Taken_by_Student.objects.all()})
+                                                'classes_taken': Classes_Taken_by_Student.objects.all(),
+                                                'comment_list': comment_list.order_by('post_date')})
+
+
+def add_comment(request, sbu_id):
+    student = get_object_or_404(Student, pk=sbu_id)
+    grade_list = [i[0] for i in Grade.choices]
+    course_status_list = [i[0] for i in CourseStatus.choices]
+    comment_list = Comment.objects.filter(student=sbu_id)
+    try:
+        new_comment = request.GET['new_comment']
+        c = Comment(student=student, text=str(new_comment))
+        c.save()
+    except:
+        return render(request, 'mast/detail.html', {'student': student,
+                                                    'major_list': Major.objects.order_by('name'),
+                                                    'course_list': Course.objects.order_by('name'),
+                                                    'classes_taken': Classes_Taken_by_Student.objects.all(),
+                                                    'grade_list': grade_list,
+                                                    'course_status_list': course_status_list,
+                                                    'comment_list': comment_list.order_by('post_date'),
+                                                    'error_message': "Something went wrong."})
+    return render(request, 'mast/detail.html', {'student': student,
+                                                'major_list': Major.objects.order_by('name'),
+                                                'course_list': Course.objects.order_by('name'),
+                                                'classes_taken': Classes_Taken_by_Student.objects.all(),
+                                                'grade_list': grade_list,
+                                                'comment_list': comment_list.order_by('post_date'),
+                                                'course_status_list': course_status_list})
 
 
 def edit(request, sbu_id):

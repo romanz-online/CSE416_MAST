@@ -86,6 +86,20 @@
 </table>
 Schedule: [to be implemented] <br>
 
+<br>
+
+Comments: <br>
+{% for comment in comment_list %}
+    {{ comment.author }} says:<br>
+    {{ comment.text }}<br>
+    Posted on: {{ comment.post_date }}<br><br>
+{% endfor %}
+
+<form action="{% url 'mast:add_comment' student.sbu_id %}" method="get">
+    <input type="text" name="new_comment" placeholder="Type your comment here.">
+    <button type="submit">Comment</button>
+</form>
+
 <form action="{% url 'mast:edit' student.sbu_id %}" method="post">
 {% csrf_token %}
 <button type="submit">Edit</button>

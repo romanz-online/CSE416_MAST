@@ -109,8 +109,8 @@ class Classes_Taken_by_Student(models.Model):
 # class Schedule(models.Model):
 
 
-# class Comment(models.Model):
-#     student = models.ForeignKey(Student, on_delete=models.CASCADE)
-#     author = models.CharField(max_length=100)
-#     text = models.CharField(max_length=1000)
-#     post_date = models.DateTimeField()
+class Comment(models.Model):
+    student = models.ForeignKey(Student, on_delete=models.CASCADE)
+    author = models.CharField(max_length=100, default='no auth')
+    text = models.CharField(max_length=1000)
+    post_date = models.DateTimeField(default=datetime.now())
