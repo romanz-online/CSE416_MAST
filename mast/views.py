@@ -111,7 +111,7 @@ def detail(request, sbu_id):
                                                 'major_list': Major.objects.order_by('name'),
                                                 'classes_taken': Classes_Taken_by_Student.objects.all(),
                                                 'comment_list': comment_list.order_by('post_date'),
-                                                'Schedule': Schedule.objects.filter(student=sbu_id)})
+                                                'Schedule': Schedule.objects.filter(student=sbu_id).first(),})
 
 
 def add_comment(request, sbu_id):

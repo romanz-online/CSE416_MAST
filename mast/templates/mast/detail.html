@@ -93,8 +93,18 @@
 </tbody>
 </table>
 Schedule: 
-{% for semester in Schedule %}
-   <span>{{semester.semesters}}</span>
+</br>
+{% for semester,classes in Schedule.semesters.items %}
+<table class="uk-table uk-table-divider">
+   <thead>
+      <th>{{semester}}</th>
+   </thead>
+   {% for class in classes %}
+   <tr>
+      <td>{{class}}</td>
+   </tr>
+   {% endfor %}
+</table>
 {% endfor %}
 <br>
 
