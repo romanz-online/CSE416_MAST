@@ -13,7 +13,7 @@ def gpd_landing(request):
 
 
 def major_index(request):
-    context = {'major_list': Major.objects.order_by('name'),
+    context = {'major_list': Major.objects.order_by('name')[1:],
                'required_classes_for_major_list': Required_Classes_for_Major.objects.order_by('major')}
     return render(request, 'mast/major_index.html', context)
 

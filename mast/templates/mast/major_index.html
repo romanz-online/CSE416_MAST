@@ -12,6 +12,15 @@
 {% if major_list %}
     {% for major in major_list %}
         {{ major }}<br>
+        {% if required_classes_for_major_list %}
+            Required Classes:<br>
+            {% for class in required_classes_for_major_list %}
+                {% if class.major == major %}
+                    {{ class.required_class }}<br>
+                {% endif %}
+            {% endfor %}
+        {% endif %}
+        <br>
     {% endfor %}
 {% else %}
     <p>No majors found.</p>

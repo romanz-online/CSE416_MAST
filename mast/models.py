@@ -63,8 +63,7 @@ class Major(models.Model):
 
 class Required_Classes_for_Major(models.Model):
     major = models.ForeignKey(Major, on_delete=models.CASCADE)
-    required_class_department = models.CharField(max_length=10)
-    required_class_number = models.IntegerField()
+    required_class = models.ForeignKey(Course, null=True, on_delete=models.SET_NULL)
 
 
 # class Tracks_in_Major(models.Model):
