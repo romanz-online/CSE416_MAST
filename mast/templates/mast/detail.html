@@ -1,33 +1,97 @@
 <!DOCTYPE html>
 <html lang="en">
-
+   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/uikit@3.6.17/dist/css/uikit.min.css" />
+ 
+   <!-- UIkit JS -->
+   <script src="https://cdn.jsdelivr.net/npm/uikit@3.6.17/dist/js/uikit.min.js"></script>
+   <script src="https://cdn.jsdelivr.net/npm/uikit@3.6.17/dist/js/uikit-icons.min.js"></script>
+   <style>
+       .center {
+   position: absolute;
+   text-align: left;
+   vertical-align: center;
+   left: 40%;
+}
+   </style>
+<div class = 'center'>
 <h1>Student {{ student.sbu_id }}</h1>
-
+ 
 {% if error_message %}<p><strong>{{ error_message }}</strong></p>{% endif %}
-
-Name: {{ student.name }} <br>
-Email: {{ student.email }} <br>
-Graduated? {{ student.graduated }} <br>
-Withdrew? {{ student.withdrew }} <br>
-Enrollment Semester: {{ student.entry_semester_season }}, {{ student.entry_semester_year }} <br>
-Graduation Semester: {{ student.graduation_semester_season }}, {{ student.graduation_semester_year }} <br>
-Requirement Version Semester: {{ student.requirement_semester_season }}, {{ student.requirement_semester_year }} <br>
-Major: {{ student.major }} <br>
-Courses taken: <br>
+<table class="uk-table uk-table-divider ">
+   <tbody>
+       <tr>
+<td>Name</td>
+<td>{{ student.name }}</td>
+</tr>
+<tr>
+   <td>Email</td>
+   <td> {{ student.email }}</td>
+</tr>
+<tr>
+   <td>Graduated?</td>
+   <td>{% if student.graduated %}
+       <span uk-icon="icon: check"></span>
+       {% else %}
+       <span uk-icon="icon: close"></span>
+       {% endif %}
+    </td>
+</tr>
+<tr>
+   <td>Withdrew?</td>
+   <td>
+       {% if student.withdraw %}
+       <span uk-icon="icon: check"></span>
+       {% else %}
+       <span uk-icon="icon: close"></span>
+       {% endif %}
+   </td>
+</tr>
+<tr>
+   <td>Enrollment Semester</td>
+   <td>{{ student.entry_semester_season }}, {{ student.entry_semester_year }}</td>
+</tr>
+<tr>
+   <td>Graduation Semester</td>
+   <td>{{ student.graduation_semester_season }}, {{ student.graduation_semester_year }}</td>
+</tr>
+<tr>
+   <td>Requirement Version Semester</td>
+   <td>{{ student.requirement_semester_season }}, {{ student.requirement_semester_year }}</td>
+</tr>
+<tr>
+   <td>Major: </td>
+   <td>{{ student.major }}</td>
+</tr>
+ 
+ 
+ 
+</tbody>
+</table>
+ 
+<table class="uk-table uk-table-divider ">
+   <thead>
+       <th>Courses taken</th>
+   </thead>
+<tbody>
 {% for record in classes_taken %}
-    {% if record.student == student %}
-        {{ record.course }} - {{ record.grade }} <br>
-    {% endif %}
+{% if record.student == student %}
+<tr>
+    <td>{{ record.course }}</td>
+    <td> {{ record.grade }}</td>
+</tr>
+{% endif %}
 {% endfor %}
-<br>
+</tbody>
+</table>
 Schedule: [to be implemented] <br>
 
 <form action="{% url 'mast:edit' student.sbu_id %}" method="post">
-    {% csrf_token %}
-    <button type="submit">Edit</button>
+{% csrf_token %}
+<button type="submit">Edit</button>
 </form>
 <form action="{% url 'mast:student_index' %}" method="post">
-    {% csrf_token %}
-    <button type="submit">Back</button>
+{% csrf_token %}
+<button type="submit">Back</button>
 </form>
+</div>
 </html>
