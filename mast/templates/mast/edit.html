@@ -6,7 +6,9 @@
 {% if error_message %}<p><strong>{{ error_message }}</strong></p>{% endif %}
 
 <form action="{% url 'mast:commit_edit' student.sbu_id %}" method="get">
-    Name: <input name="name" type="text" autocomplete="on" value={{ student.name }}> <br>
+    First Name: <input name="first_name" type="text" autocomplete="on" value={{ student.first_name }}> <br>
+    <br>
+    Last Name: <input name="last_name" type="text" autocomplete="on" value={{ student.last_name }}> <br>
     <br>
     Email: <input name="email" type="text" autocomplete="on" value={{ student.email }}> <br>
     <br>
@@ -124,7 +126,7 @@
     Courses taken:
     <br>
     {% for record in classes_taken %}
-        {% if record.student == student %}
+        {% if record.student == student and record.status == 'Completed' %}
             {{ record.course }}
             <select name={{ record.id }}>
                 {% for grade in grade_list %}
@@ -142,6 +144,22 @@
     Schedule: [to be implemented] <br>
     <button type="submit">Done</button>
 </form>
+<br>
+
+
+Courses in progress:
+<br>
+{% for record in classes_taken %}
+    {% if record.student == student and record.status == 'In Progress' %}
+        {{ record.course }}
+        <form action="{% url 'mast:modify_course_in_progress' student.sbu_id record.id %}" method="get">
+            <button type="submit" name="action" value="complete">Complete</button>
+            <button type="submit" name="action" value="drop">Drop</button>
+        </form>
+        <br>
+    {% endif %}
+{% endfor %}
+
 <br>
 
 <form action="{% url 'mast:add_taken_course' student.sbu_id %}" method="get">

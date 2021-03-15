@@ -9,6 +9,11 @@ class Season(models.TextChoices):
     FALL = 'Fall'
 
 
+class CourseStatus(models.TextChoices):
+    COMPLETED = 'Completed'
+    IN_PROGRESS = 'In Progress'
+
+
 class Grade(models.TextChoices):
     A = 'A'
     A_MINUS = 'A-'
@@ -73,7 +78,8 @@ class Required_Classes_for_Major(models.Model):
 
 class Student(models.Model):
     sbu_id = models.IntegerField(primary_key=True)
-    name = models.CharField(max_length=100)
+    first_name = models.CharField(max_length=100)
+    last_name = models.CharField(max_length=100)
     email = models.CharField(max_length=100)
     entry_semester_season = models.CharField(max_length=6, choices=Season.choices, default=Season.FALL)
     entry_semester_year = models.IntegerField(default=datetime.now().year)
@@ -94,6 +100,7 @@ class Classes_Taken_by_Student(models.Model):
     student = models.ForeignKey(Student, on_delete=models.CASCADE)
     course = models.ForeignKey(Course, null=True, on_delete=models.SET_NULL)
     grade = models.CharField(max_length=3, choices=Grade.choices, default=Grade.NOT_APPLICABLE)
+    status = models.CharField(max_length=15, choices=CourseStatus.choices, default=CourseStatus.IN_PROGRESS)
 
     def __str__(self):
         return str(self.student) + ' - ' + str(self.course)

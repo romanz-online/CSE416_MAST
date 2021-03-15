@@ -21,7 +21,7 @@
    <tbody>
        <tr>
 <td>Name</td>
-<td>{{ student.name }}</td>
+<td>{{ student.first_name }} {{ student.last_name }}</td>
 </tr>
 <tr>
    <td>Email</td>
@@ -74,12 +74,13 @@
    </thead>
 <tbody>
 {% for record in classes_taken %}
-{% if record.student == student %}
-<tr>
-    <td>{{ record.course }}</td>
-    <td> {{ record.grade }}</td>
-</tr>
-{% endif %}
+    {% if record.student == student %}
+    <tr>
+        <td>{{ record.course }}</td>
+        <td>{{ record.grade }}</td>
+        <td>{{ record.status }}</td>
+    </tr>
+    {% endif %}
 {% endfor %}
 </tbody>
 </table>

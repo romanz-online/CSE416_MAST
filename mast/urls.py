@@ -14,5 +14,6 @@ urlpatterns = [
     path('edit/<int:sbu_id>/', views.edit, name='edit'),
     path('edit/<int:sbu_id>/commit_edit', views.commit_edit, name='commit_edit'),
     path('edit/<int:sbu_id>/add_taken_course', views.add_taken_course, name='add_taken_course'),
+    path('edit/<int:sbu_id>/modify_course_in_progress/<int:record>', views.modify_course_in_progress, name='modify_course_in_progress'),
     path('student_index/search/', views.search, name='search'),
 ]
