@@ -12,12 +12,14 @@ Withdrew? {{ student.withdrew }} <br>
 Enrollment Semester: {{ student.entry_semester_season }}, {{ student.entry_semester_year }} <br>
 Graduation Semester: {{ student.graduation_semester_season }}, {{ student.graduation_semester_year }} <br>
 Requirement Version Semester: {{ student.requirement_semester_season }}, {{ student.requirement_semester_year }} <br>
+Major: {{ student.major }} <br>
 Courses taken: <br>
 {% for record in classes_taken %}
-    {{ record.course }} <br>
+    {% if record.student == student %}
+        {{ record.course }} - {{ record.grade }} <br>
+    {% endif %}
 {% endfor %}
 <br>
-Major: {{ student.major }} <br>
 Schedule: [to be implemented] <br>
 
 <form action="{% url 'mast:edit' student.sbu_id %}" method="post">

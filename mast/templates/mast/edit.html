@@ -7,7 +7,9 @@
 
 <form action="{% url 'mast:commit_edit' student.sbu_id %}" method="get">
     Name: <input name="name" type="text" autocomplete="on" value={{ student.name }}> <br>
+    <br>
     Email: <input name="email" type="text" autocomplete="on" value={{ student.email }}> <br>
+    <br>
     Graduated:
     <select name="graduated">
         {% if student.graduated %}
@@ -18,6 +20,7 @@
             <option value = "no" selected>No</option>
         {% endif %}
     </select> <br>
+    <br>
     Withdrew:
     <select name="withdrew">
         {% if student.withdrew %}
@@ -28,6 +31,7 @@
             <option value = "no" selected>No</option>
         {% endif %}
     </select> <br>
+    <br>
     Enrollment Semester:
     <select name="entry_season">
         {% if student.entry_semester_season == 'Winter' %}
@@ -52,7 +56,7 @@
             <option value = "Fall" selected>Fall</option>
         {% endif %}
     </select>
-    <input name="entry_year" type="text" autocomplete="on" value={{ student.entry_semester_year }}>
+    <input name="entry_year" type="text" autocomplete="on" value={{ student.entry_semester_year }}> <br>
     <br>
     Graduation Semester:
     <select name="graduation_season">
@@ -78,7 +82,7 @@
             <option value = "Fall" selected>Fall</option>
         {% endif %}
     </select>
-    <input name="graduation_year" type="text" autocomplete="on" value={{ student.graduation_semester_year }}>
+    <input name="graduation_year" type="text" autocomplete="on" value={{ student.graduation_semester_year }}> <br>
     <br>
     Requirement Version Semester:
     <select name="requirement_season">
@@ -105,6 +109,7 @@
         {% endif %}
     </select>
     <input name="requirement_year" type="text" autocomplete="on" value={{ student.requirement_semester_year }}> <br>
+    <br>
     Major:
     <select name="major">
         {% for major in major_list %}
@@ -116,7 +121,24 @@
         {% endfor %}
     </select> <br>
     <br>
-    Courses taken: [to be implemented] <br>
+    Courses taken:
+    <br>
+    {% for record in classes_taken %}
+        {% if record.student == student %}
+            {{ record.course }}
+            <select name={{ record.id }}>
+                {% for grade in grade_list %}
+                    {% if grade == record.grade %}
+                        <option selected value={{ grade }}>{{ grade }}</option>
+                    {% else %}
+                        <option value = {{ grade }}>{{ grade }}</option>
+                    {% endif %}
+                {% endfor %}
+            </select>
+            <br>
+        {% endif %}
+    {% endfor %}
+    <br>
     Schedule: [to be implemented] <br>
     <button type="submit">Done</button>
 </form>

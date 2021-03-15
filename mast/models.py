@@ -9,6 +9,26 @@ class Season(models.TextChoices):
     FALL = 'Fall'
 
 
+class Grade(models.TextChoices):
+    A = 'A'
+    A_MINUS = 'A-'
+    B_PLUS = 'B+'
+    B = 'B'
+    B_MINUS = 'B-'
+    C_PLUS = 'C+'
+    C = 'C'
+    C_MINUS = 'C-'
+    D_PLUS = 'D+'
+    D = 'D'
+    D_MINUS = 'D-'
+    F = 'F'
+    WITHDREW = 'W'
+    SATISFIED = 'S'
+    UNSATISFIED = 'U'
+    INCOMPLETE = 'I'
+    NOT_APPLICABLE = 'N/A'
+
+
 class Course(models.Model):
     name = models.CharField(max_length=100)
     department = models.CharField(max_length=10)
@@ -74,6 +94,7 @@ class Student(models.Model):
 class Classes_Taken_by_Student(models.Model):
     student = models.ForeignKey(Student, on_delete=models.CASCADE)
     course = models.ForeignKey(Course, null=True, on_delete=models.SET_NULL)
+    grade = models.CharField(max_length=3, choices=Grade.choices, default=Grade.NOT_APPLICABLE)
 
     def __str__(self):
         return str(self.student) + ' - ' + str(self.course)
