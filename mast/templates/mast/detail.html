@@ -84,8 +84,10 @@
 {% endfor %}
 </tbody>
 </table>
-Schedule: [to be implemented] <br>
-
+Schedule: 
+{% for semester in Schedule %}
+   <span>{{semester.semesters}}</span>
+{% endfor %}
 <br>
 
 Comments: <br>

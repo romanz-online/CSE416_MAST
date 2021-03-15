@@ -4,7 +4,7 @@ from django.shortcuts import get_object_or_404, render
 from django.http import HttpResponseRedirect
 from django.urls import reverse
 from .models import Student, Major, Course, Required_Classes_for_Major, Classes_Taken_by_Student, Grade, CourseStatus, \
-    Comment
+    Comment, Schedule
 
 
 def home(request):
@@ -107,7 +107,8 @@ def detail(request, sbu_id):
     return render(request, 'mast/detail.html', {'student': student,
                                                 'major_list': Major.objects.order_by('name'),
                                                 'classes_taken': Classes_Taken_by_Student.objects.all(),
-                                                'comment_list': comment_list.order_by('post_date')})
+                                                'comment_list': comment_list.order_by('post_date'),
+                                                'Schedule': Schedule.objects.filter(student=sbu_id)})
 
 
 def add_comment(request, sbu_id):
