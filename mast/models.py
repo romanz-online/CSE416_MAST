@@ -80,6 +80,7 @@ class Student(models.Model):
     sbu_id = models.IntegerField(primary_key=True)
     first_name = models.CharField(max_length=100)
     last_name = models.CharField(max_length=100)
+    gpa = models.FloatField(default=4.0)
     email = models.CharField(max_length=100)
     entry_semester_season = models.CharField(max_length=6, choices=Season.choices, default=Season.FALL)
     entry_semester_year = models.IntegerField(default=datetime.now().year)

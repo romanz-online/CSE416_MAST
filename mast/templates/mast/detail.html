@@ -20,22 +20,26 @@
 <table class="uk-table uk-table-divider ">
    <tbody>
        <tr>
-<td>Name</td>
-<td>{{ student.first_name }} {{ student.last_name }}</td>
-</tr>
-<tr>
-   <td>Email</td>
-   <td> {{ student.email }}</td>
-</tr>
-<tr>
-   <td>Graduated?</td>
-   <td>{% if student.graduated %}
-       <span uk-icon="icon: check"></span>
-       {% else %}
-       <span uk-icon="icon: close"></span>
-       {% endif %}
-    </td>
-</tr>
+        <td>Name</td>
+            <td>{{ student.first_name }} {{ student.last_name }}</td>
+            </tr>
+        <tr>
+            <td>Email</td>
+            <td> {{ student.email }}</td>
+        </tr>
+       <tr>
+            <td>GPA</td>
+            <td> {{ student.gpa }}</td>
+        </tr>
+        <tr>
+            <td>Graduated?</td>
+            <td>{% if student.graduated %}
+            <span uk-icon="icon: check"></span>
+            {% else %}
+            <span uk-icon="icon: close"></span>
+            {% endif %}
+            </td>
+        </tr>
 <tr>
    <td>Withdrew?</td>
    <td>

@@ -183,6 +183,14 @@ def commit_edit(request, sbu_id):
                 if course.grade != new_grade:
                     course.grade = new_grade
                     course.save()
+        sum = 0
+        total = 0
+        for course in Classes_Taken_by_Student.objects.all():
+            if course.student == student:
+                sum += get_grade_number(course.grade)
+                total += 1
+        sum = sum/total
+        student.gpa = format(sum, '.2f')
         student.save()
     except:
         student = get_object_or_404(Student, pk=sbu_id)
@@ -197,6 +205,11 @@ def commit_edit(request, sbu_id):
                                                   'error_message': "Something went wrong."
                                                   })
     return HttpResponseRedirect(reverse('mast:detail', args=(sbu_id,)))
+
+
+def get_grade_number(grade):
+    dict = {'A':4.0, 'A-':3.7, 'B+':3.3, 'B':3.0, 'B-':2.7, 'C+':2.3, 'C':2.0, 'C-':1.7, 'D+':1.3, 'D':1.0, 'D-':0.7, 'F':0.0}
+    return dict[grade]
 
 
 def add_taken_course(request, sbu_id):
