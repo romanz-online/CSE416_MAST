@@ -3,6 +3,11 @@
 <body>
 
 {% load static %}
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/uikit@3.6.17/dist/css/uikit.min.css" />
+ 
+<!-- UIkit JS -->
+<script src="https://cdn.jsdelivr.net/npm/uikit@3.6.17/dist/js/uikit.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/uikit@3.6.17/dist/js/uikit-icons.min.js"></script>
 <link rel="stylesheet" type="text/css" href="{% static 'mast/style.css' %}">
 
 <h1>Students</h1>
@@ -44,16 +49,36 @@
     </select>
     <button type="submit">Search</button>
 </form>
+
 <br>
 
 <a href="{% url 'mast:add_student' %}">Add Student</a><br>
 
 {% if student_list %}
-    <ul>
-    {% for student in student_list %}
-        <a href="{% url 'mast:detail' student.sbu_id %}">{{ student.sbu_id }} - {{ student.last_name }}, {{ student.first_name }}</a><br>
-    {% endfor %}
-    </ul>
+    <table class = "uk-table uk-table-hover uk-table-divider">
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>Name</th>
+               
+            </tr>
+        </thead>
+        <tbody>
+            {% for student in student_list %}
+            
+            <tr>
+               
+                <td>{{student.sbu_id}}</td>
+                <td> <a href="{% url 'mast:detail' student.sbu_id %}">{{student.last_name}} {{student.first_name}} </a></td>
+            
+            </tr>
+            
+            {% endfor %}
+            
+        </tbody>
+   
+    
+</table> 
 {% else %}
     <p>No student records found.</p>
 {% endif %}
