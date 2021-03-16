@@ -12,6 +12,7 @@ urlpatterns = [
     path('majors/', views.major_index, name='major_index'),
     path('<int:sbu_id>/', views.detail, name='detail'),
     path('<int:sbu_id>/add_comment', views.add_comment, name='add_comment'),
+    path('edit_schedule/<int:sbu_id>/', views.edit_schedule, name='edit_schedule'),
     path('edit/<int:sbu_id>/', views.edit, name='edit'),
     path('edit/<int:sbu_id>/commit_edit', views.commit_edit, name='commit_edit'),
     path('edit/<int:sbu_id>/add_taken_course', views.add_taken_course, name='add_taken_course'),

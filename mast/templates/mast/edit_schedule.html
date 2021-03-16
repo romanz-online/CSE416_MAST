@@ -1,0 +1,34 @@
+<html lang="en">
+   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/uikit@3.6.17/dist/css/uikit.min.css" />
+
+   <!-- UIkit JS -->
+   <script src="https://cdn.jsdelivr.net/npm/uikit@3.6.17/dist/js/uikit.min.js"></script>
+   <script src="https://cdn.jsdelivr.net/npm/uikit@3.6.17/dist/js/uikit-icons.min.js"></script>
+   <style>
+       .left {
+   display: flex;
+   text-align: left;
+   vertical-align: center;
+
+}
+
+   </style>
+
+<h1>{{ student.sbu_id }} Schedule:</h1>
+<br>
+
+{% for semester in schedule %}
+    <table class="uk-table uk-table-divider ">
+    <thead>
+        <th>{{semester}}</th>
+    </thead>
+    {% for class in semester.classes %}
+        <tr>
+            <td>{{class}}</td>
+        </tr>
+    {% endfor %}
+    </table>
+{% endfor %}
+<br>
+
+</html>

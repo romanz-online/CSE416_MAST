@@ -1,3 +1,4 @@
+import json
 from datetime import datetime
 
 from django.shortcuts import get_object_or_404, render
@@ -109,38 +110,70 @@ def search(request):
 def detail(request, sbu_id):
     student = get_object_or_404(Student, pk=sbu_id)
     comment_list = Comment.objects.filter(student=sbu_id)
+    schedule = Schedule.objects.filter(student=sbu_id).first()
+    schedule = json.dumps(schedule.semesters)
+    schedule = json.loads(schedule)
     return render(request, 'mast/detail.html', {'student': student,
                                                 'major_list': Major.objects.order_by('name'),
                                                 'classes_taken': Classes_Taken_by_Student.objects.all(),
                                                 'comment_list': comment_list.order_by('post_date'),
-                                                'Schedule': Schedule.objects.filter(student=sbu_id).first(),})
+                                                'schedule': schedule})
+
+
+def string_to_tuple(string):
+    list = string.split()
+    season = list[0]
+    year = list[1]
+    status = list[2]
+    return season, year, status
+
+
+def tuple_to_string(tuple):
+    return str(tuple[0]) + ' ' + str(tuple[1]) + ' ' + str(tuple[2])
+
+
+def get_course_from_name(string):
+    department = string[:3]
+    number = int(string[3:])
+    return Course.objects.get(department=department, number=number)
+
+
+class Semester():
+    def __init__(self, season, year, status, classes):
+        self.season = season
+        self.year = year
+        self.status = status
+        self.classes = classes
+
+    def __str__(self):
+        return str(self.season) + ' ' + str(self.year) + ' ' + str(self.status)
+
+
+def edit_schedule(request, sbu_id):
+    student = get_object_or_404(Student, pk=sbu_id)
+    schedule = Schedule.objects.filter(student=sbu_id).first()
+    schedule = json.dumps(schedule.semesters)
+    schedule = json.loads(schedule)
+    python_schedule = []
+    for key in schedule.keys():
+        python_schedule += [Semester(string_to_tuple(key)[0],
+                                     string_to_tuple(key)[1],
+                                     string_to_tuple(key)[2],
+                                     [get_course_from_name(c) for c in schedule[key]])]
+    return render(request, 'mast/edit_schedule.html', {'student': student,
+                                                       'classes_taken': Classes_Taken_by_Student.objects.all(),
+                                                       'schedule': python_schedule})
 
 
 def add_comment(request, sbu_id):
     student = get_object_or_404(Student, pk=sbu_id)
-    grade_list = [i[0] for i in Grade.choices]
-    course_status_list = [i[0] for i in CourseStatus.choices]
-    comment_list = Comment.objects.filter(student=sbu_id)
     try:
         new_comment = request.GET['new_comment']
-        c = Comment(student=student, text=str(new_comment))
+        c = Comment(student=student, text=str(new_comment), post_date=str(datetime.now()))
         c.save()
     except:
-        return render(request, 'mast/detail.html', {'student': student,
-                                                    'major_list': Major.objects.order_by('name'),
-                                                    'course_list': Course.objects.order_by('name'),
-                                                    'classes_taken': Classes_Taken_by_Student.objects.all(),
-                                                    'grade_list': grade_list,
-                                                    'course_status_list': course_status_list,
-                                                    'comment_list': comment_list.order_by('post_date'),
-                                                    'error_message': "Something went wrong."})
-    return render(request, 'mast/detail.html', {'student': student,
-                                                'major_list': Major.objects.order_by('name'),
-                                                'course_list': Course.objects.order_by('name'),
-                                                'classes_taken': Classes_Taken_by_Student.objects.all(),
-                                                'grade_list': grade_list,
-                                                'comment_list': comment_list.order_by('post_date'),
-                                                'course_status_list': course_status_list})
+        return HttpResponseRedirect(reverse('mast:detail', args=(sbu_id,)))
+    return HttpResponseRedirect(reverse('mast:detail', args=(sbu_id,)))
 
 
 def edit(request, sbu_id):
@@ -225,7 +258,6 @@ def get_grade_number(grade):
 
 def add_taken_course(request, sbu_id):
     student = get_object_or_404(Student, pk=sbu_id)
-    grade_list = [i[0] for i in Grade.choices]
     try:
         new_course = request.GET['course']
         new_course = Course.objects.get(id=new_course)
@@ -235,27 +267,14 @@ def add_taken_course(request, sbu_id):
         student.pending_courses += 1
         student.save()
     except:
-        return render(request, 'mast/edit.html', {'student': student,
-                                                  'major_list': Major.objects.order_by('name'),
-                                                  'course_list': Course.objects.order_by('name'),
-                                                  'classes_taken': Classes_Taken_by_Student.objects.all(),
-                                                  'grade_list': grade_list,
-                                                  'error_message': "Something went wrong."
-                                                  })
-    return render(request, 'mast/edit.html', {'student': student,
-                                              'major_list': Major.objects.order_by('name'),
-                                              'course_list': Course.objects.order_by('name'),
-                                              'classes_taken': Classes_Taken_by_Student.objects.all(),
-                                              'grade_list': grade_list
-                                              })
+        return HttpResponseRedirect(reverse('mast:edit', args=(sbu_id,)))
+    return HttpResponseRedirect(reverse('mast:edit', args=(sbu_id,)))
 
 
 def modify_course_in_progress(request, sbu_id, record):
     student = get_object_or_404(Student, pk=sbu_id)
-    grade_list = [i[0] for i in Grade.choices]
     try:
         r = Classes_Taken_by_Student.objects.get(id=record)
-
         if request.GET['action'] == 'complete_s':
             r.status = CourseStatus.SATISFIED
             r.save()
@@ -275,16 +294,5 @@ def modify_course_in_progress(request, sbu_id, record):
         else:
             raise Exception()
     except:
-        return render(request, 'mast/edit.html', {'student': student,
-                                                  'major_list': Major.objects.order_by('name'),
-                                                  'course_list': Course.objects.order_by('name'),
-                                                  'classes_taken': Classes_Taken_by_Student.objects.all(),
-                                                  'grade_list': grade_list,
-                                                  'error_message': "Something went wrong."
-                                                  })
-    return render(request, 'mast/edit.html', {'student': student,
-                                              'major_list': Major.objects.order_by('name'),
-                                              'course_list': Course.objects.order_by('name'),
-                                              'classes_taken': Classes_Taken_by_Student.objects.all(),
-                                              'grade_list': grade_list
-                                              })
+        return HttpResponseRedirect(reverse('mast:edit', args=(sbu_id,)))
+    return HttpResponseRedirect(reverse('mast:edit', args=(sbu_id,)))

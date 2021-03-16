@@ -46,7 +46,7 @@
    <td>Withdrew?</td>
    <td>
        {% if student.withdrew %}
-       <span uk-icon="icon: check"></s <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/uikit@3.6.17/dist/css/uikit.min.css" />
+       <span uk-icon="icon: check"></s <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/uikit@3.6.17/dist/css/uikit.min.css" /></span>
          <!-- UIkit JS -->
        {% else %}
        <span uk-icon="icon: close"></span>
@@ -98,9 +98,10 @@
 {% endfor %}
 </tbody>
 </table>
+
 Schedule: 
 </br>
-{% for semester,classes in Schedule.semesters.items %}
+{% for semester, classes in schedule.items %}
 <table class="uk-table uk-table-divider ">
    <thead>
       <th>{{semester}}</th>
@@ -113,6 +114,11 @@ Schedule:
 </table>
 {% endfor %}
 <br>
+
+<form action="{% url 'mast:edit_schedule' student.sbu_id %}" method="post">
+{% csrf_token %}
+<button type="submit">Edit Schedule</button>
+</form>
 
 Comments: <br>
 {% for comment in comment_list %}
@@ -130,7 +136,6 @@ Comments: <br>
    
    </article>
 {% endfor %}
-   
    
 
 <form action="{% url 'mast:add_comment' student.sbu_id %}" method="get">

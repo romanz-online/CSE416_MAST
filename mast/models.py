@@ -121,6 +121,9 @@ class Schedule(models.Model):
     student = models.ForeignKey(Student, on_delete = models.CASCADE)
     semesters = models.JSONField()
 
+    def __str__(self):
+        return str(self.student)
+
 
 class Comment(models.Model):
     student = models.ForeignKey(Student, on_delete=models.CASCADE)
