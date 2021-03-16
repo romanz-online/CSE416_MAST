@@ -126,7 +126,7 @@
     Courses taken:
     <br>
     {% for record in classes_taken %}
-        {% if record.student == student and record.status == 'Completed' %}
+        {% if record.student == student and record.status != 'Pending' %}
             {{ record.course }}
             <select name={{ record.id }}>
                 {% for grade in grade_list %}
@@ -150,10 +150,11 @@
 Courses in progress:
 <br>
 {% for record in classes_taken %}
-    {% if record.student == student and record.status == 'In Progress' %}
+    {% if record.student == student and record.status == 'Pending' %}
         {{ record.course }}
         <form action="{% url 'mast:modify_course_in_progress' student.sbu_id record.id %}" method="get">
-            <button type="submit" name="action" value="complete">Complete</button>
+            <button type="submit" name="action" value="complete_s">Complete (Satisfied)</button>
+            <button type="submit" name="action" value="complete_u">Complete (Unsatisfied)</button>
             <button type="submit" name="action" value="drop">Drop</button>
         </form>
         <br>

@@ -60,21 +60,17 @@
             <tr>
                 <th>ID</th>
                 <th>Name</th>
-               
+                <th>Satisfied-Pending-Unsatisfied</th>
             </tr>
         </thead>
         <tbody>
             {% for student in student_list %}
-            
-            <tr>
-               
-                <td>{{student.sbu_id}}</td>
-                <td> <a href="{% url 'mast:detail' student.sbu_id %}">{{student.last_name}} {{student.first_name}} </a></td>
-            
-            </tr>
-            
+                <tr>
+                    <td>{{student.sbu_id}}</td>
+                    <td> <a href="{% url 'mast:detail' student.sbu_id %}">{{student.last_name}}, {{student.first_name}} </a></td>
+                    <td>{{ student.satisfied_courses }} - {{ student.pending_courses }} - {{ student.unsatisfied_courses }}</td>
+                </tr>
             {% endfor %}
-            
         </tbody>
    
     

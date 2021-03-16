@@ -10,8 +10,9 @@ class Season(models.TextChoices):
 
 
 class CourseStatus(models.TextChoices):
-    COMPLETED = 'Completed'
-    IN_PROGRESS = 'In Progress'
+    SATISFIED = 'Satisfied'
+    PENDING = 'Pending'
+    UNSATISFIED = 'Unsatisfied'
 
 
 class Grade(models.TextChoices):
@@ -47,10 +48,11 @@ class Course(models.Model):
         return self.department + str(self.number) + ':' + str(self.section)
 
 
-# class Prerequisite_Classes_for_Course(models.Model):
-#     course = models.ForeignKey(Course, on_delete=models.CASCADE)
-#     prerequisite_class_department = models.CharField(max_length=10)
-#     prerequisite_class_number = models.IntegerField()
+class Prerequisite_Classes_for_Course(models.Model):
+    course = models.ForeignKey(Course, on_delete=models.CASCADE)
+    prerequisite_name = models.CharField(max_length=100)
+    prerequisite_department = models.CharField(max_length=10)
+    prerequisite_number = models.IntegerField()
 
 
 class Major(models.Model):
@@ -74,6 +76,7 @@ class Required_Classes_for_Track(models.Model):
 class Tracks_in_Major(models.Model):
     major = models.ForeignKey(Major, on_delete=models.CASCADE)
     name = models.CharField(max_length=100)
+    required_gpa = models.FloatField(default=3.0)
 
     def __str__(self):
         return str(self.major) + ' - ' + str(self.name)
@@ -95,6 +98,9 @@ class Student(models.Model):
     track = models.ForeignKey(Tracks_in_Major, null=True, on_delete=models.SET_NULL)
     graduated = models.BooleanField(default=False)
     withdrew = models.BooleanField(default=False)
+    satisfied_courses = models.IntegerField(default=0)
+    unsatisfied_courses = models.IntegerField(default=0)
+    pending_courses = models.IntegerField(default=0)
     # password = models.CharField(max_length=100) # may be unnecessary
 
     def __str__(self):
@@ -105,7 +111,7 @@ class Classes_Taken_by_Student(models.Model):
     student = models.ForeignKey(Student, on_delete=models.CASCADE)
     course = models.ForeignKey(Course, null=True, on_delete=models.SET_NULL)
     grade = models.CharField(max_length=3, choices=Grade.choices, default=Grade.NOT_APPLICABLE)
-    status = models.CharField(max_length=15, choices=CourseStatus.choices, default=CourseStatus.IN_PROGRESS)
+    status = models.CharField(max_length=15, choices=CourseStatus.choices, default=CourseStatus.PENDING)
 
     def __str__(self):
         return str(self.student) + ' - ' + str(self.course)
@@ -120,4 +126,4 @@ class Comment(models.Model):
     student = models.ForeignKey(Student, on_delete=models.CASCADE)
     author = models.CharField(max_length=100, default='no auth')
     text = models.CharField(max_length=1000)
-    post_date = models.CharField(max_length=100, default=datetime.now())
+    post_date = models.CharField(max_length=100)

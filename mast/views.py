@@ -1,3 +1,5 @@
+from datetime import datetime
+
 from django.shortcuts import get_object_or_404, render
 from django.http import HttpResponseRedirect
 from django.urls import reverse
@@ -182,21 +184,23 @@ def commit_edit(request, sbu_id):
         student.requirement_semester_season = requirement_season
         student.requirement_semester_year = requirement_year
 
-        if Classes_Taken_by_Student.objects.all():
-            for course in Classes_Taken_by_Student.objects.all():
-                if course.student == student and course.status == 'Completed':
-                    new_grade = request.GET[str(course.id)]
-                    if course.grade != new_grade:
-                        course.grade = new_grade
-                        course.save()
-            sum = 0
-            total = 0
-            for course in Classes_Taken_by_Student.objects.all():
-                if course.student == student and course.status == 'Completed':
-                    sum += get_grade_number(course.grade)
-                    total += 1
-            sum = sum / total
-            student.gpa = format(sum, '.2f')
+        # if len(Classes_Taken_by_Student.objects) > 0:
+        for course in Classes_Taken_by_Student.objects.all():
+            if course.student == student and course.status != 'Pending':
+                new_grade = request.GET[str(course.id)]
+                if course.grade != new_grade:
+                    course.grade = new_grade
+                    course.save()
+        sum = 0
+        total = 0
+        for course in Classes_Taken_by_Student.objects.all():
+            if course.student == student and course.status != 'Pending':
+                sum += get_grade_number(course.grade)
+                total += 1
+        if total == 0:
+            total = 1
+        sum = sum / total
+        student.gpa = format(sum, '.2f')
         student.save()
     except:
         student = get_object_or_404(Student, pk=sbu_id)
@@ -228,6 +232,8 @@ def add_taken_course(request, sbu_id):
         new_grade = request.GET['grade']
         c = Classes_Taken_by_Student(student=student, course=new_course, grade=new_grade)
         c.save()
+        student.pending_courses += 1
+        student.save()
     except:
         return render(request, 'mast/edit.html', {'student': student,
                                                   'major_list': Major.objects.order_by('name'),
@@ -250,11 +256,22 @@ def modify_course_in_progress(request, sbu_id, record):
     try:
         r = Classes_Taken_by_Student.objects.get(id=record)
 
-        if request.GET['action'] == 'complete':
-            r.status = CourseStatus.COMPLETED
+        if request.GET['action'] == 'complete_s':
+            r.status = CourseStatus.SATISFIED
             r.save()
+            student.pending_courses -= 1
+            student.satisfied_courses += 1
+            student.save()
+        elif request.GET['action'] == 'complete_u':
+            r.status = CourseStatus.UNSATISFIED
+            r.save()
+            student.pending_courses -= 1
+            student.unsatisfied_courses += 1
+            student.save()
         elif request.GET['action'] == 'drop':
             r.delete()
+            student.pending_courses -= 1
+            student.save()
         else:
             raise Exception()
     except:
