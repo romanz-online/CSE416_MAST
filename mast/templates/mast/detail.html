@@ -6,18 +6,20 @@
    <script src="https://cdn.jsdelivr.net/npm/uikit@3.6.17/dist/js/uikit.min.js"></script>
    <script src="https://cdn.jsdelivr.net/npm/uikit@3.6.17/dist/js/uikit-icons.min.js"></script>
    <style>
-       .center {
-   position: absolute;
+       .left {
+   display: flex;
    text-align: left;
    vertical-align: center;
-   left: 40%;
+   
 }
+   
    </style>
-<div class = 'center'>
+   <div class = "uk-flex">
+<div class = 'uk-width-1-2'>
 <h1>Student {{ student.sbu_id }}</h1>
  
 {% if error_message %}<p><strong>{{ error_message }}</strong></p>{% endif %}
-<table class="uk-table uk-table-divider ">
+<table class="uk-table uk-table-divider">
    <tbody>
        <tr>
         <td>Name</td>
@@ -44,7 +46,11 @@
    <td>Withdrew?</td>
    <td>
        {% if student.withdraw %}
-       <span uk-icon="icon: check"></span>
+       <span uk-icon="icon: check"></s <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/uikit@3.6.17/dist/css/uikit.min.css" />
+ 
+         <!-- UIkit JS -->
+         <script src="https://cdn.jsdelivr.net/npm/uikit@3.6.17/dist/js/uikit.min.js"></script>
+         <script src="https://cdn.jsdelivr.net/npm/uikit@3.6.17/dist/js/uikit-icons.min.js"></script>an>
        {% else %}
        <span uk-icon="icon: close"></span>
        {% endif %}
@@ -75,8 +81,11 @@
  
 </tbody>
 </table>
- 
-<table class="uk-table uk-table-divider ">
+</div>
+
+
+<div class = " uk-width-1-2">
+<table class="uk-table uk-table-divider uk-width-1-2">
    <thead>
        <th>Courses taken</th>
    </thead>
@@ -95,7 +104,7 @@
 Schedule: 
 </br>
 {% for semester,classes in Schedule.semesters.items %}
-<table class="uk-table uk-table-divider">
+<table class="uk-table uk-table-divider ">
    <thead>
       <th>{{semester}}</th>
    </thead>
@@ -110,10 +119,22 @@ Schedule:
 
 Comments: <br>
 {% for comment in comment_list %}
-    {{ comment.author }} says:<br>
-    {{ comment.text }}<br>
-    Posted on: {{ comment.post_date }}<br><br>
+<article class="uk-comment">
+   <header class="uk-comment-header">
+      <div class="uk-width-expand"></div>
+      <img class="uk-comment-avatar" src="" alt="">
+      <h4 class="uk-comment-title uk-margin-remove"><a class="uk-link-reset" href="#">{{comment.author}}</a></h4>
+      <ul class="uk-comment-meta uk-subnav uk-subnav-divider uk-margin-remove-top">
+         <li><a href="#">{{comment.post_date}}</a></li>
+         <li><a href="#">Reply</a></li>
+     </ul>
+  </header>
+  <div class="uk-comment-body">{{ comment.text }}</div>
+   
+   </article>
 {% endfor %}
+   
+   
 
 <form action="{% url 'mast:add_comment' student.sbu_id %}" method="get">
     <input type="text" name="new_comment" placeholder="Type your comment here.">
@@ -128,5 +149,7 @@ Comments: <br>
 {% csrf_token %}
 <button type="submit">Back</button>
 </form>
+</div>
+
 </div>
 </html>
