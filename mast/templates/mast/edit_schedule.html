@@ -4,16 +4,32 @@
 
 {% for semester in semester_list %}
     {{ semester }}<br>
+
     {% for record in schedule %}
-
-            {% if record.course.semester == semester %}
-
-                {{ record.course }}<br>
-
-            {% endif %}
-
+        {% if record.course.semester == semester %}
+            {{ record.course }}<br>
+{#            <select>#}
+{##}
+{#            </select>#}
+        {% endif %}
     {% endfor %}
     <br>
+
+
+    <form action="{% url 'mast:add_scheduled_course' student.sbu_id %}" method="get">
+        <select name="course">
+            {% for class in course_list %}
+                {% if class.semester == semester %}
+                    <option value={{ class.id }}>{{ class }}</option>
+                {% endif %}
+            {% endfor %}
+        </select>
+        <button type="submit">Add to {{ semester }}</button>
+        <br>
+    </form>
+    <br>
+
+
 {% endfor %}
 <br>
 <br>

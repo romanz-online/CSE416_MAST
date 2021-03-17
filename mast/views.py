@@ -134,10 +134,15 @@ def edit_schedule(request, sbu_id):
 
 
 
-def remove_scheduled_course(request, sbu_id, semester, course):
+def add_scheduled_course(request, sbu_id):
     student = get_object_or_404(Student, pk=sbu_id)
-    grade_list = [i[0] for i in Grade.choices]
-
+    try:
+        new_course = request.GET['course']
+        new_course = Course.objects.get(id=new_course)
+        c = Student_Course_Schedule(student=student, course=new_course)
+        c.save()
+    except:
+        return HttpResponseRedirect(reverse('mast:edit_schedule', args=(sbu_id,)))
     return HttpResponseRedirect(reverse('mast:edit_schedule', args=(sbu_id,)))
 
 
