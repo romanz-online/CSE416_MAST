@@ -80,17 +80,16 @@ class Major(models.Model):
 
 
 class Required_Classes_for_Track(models.Model):
-    major = models.ForeignKey(Major, on_delete=models.CASCADE)
     track = models.CharField(max_length=50)
     required_class = models.ForeignKey(Course, null=True, on_delete=models.SET_NULL)
-    thesis_required = models.BooleanField(default=False)
-    project_required = models.BooleanField(default=False)
 
 
 class Tracks_in_Major(models.Model):
     major = models.ForeignKey(Major, on_delete=models.CASCADE)
     name = models.CharField(max_length=100)
     required_gpa = models.FloatField(default=3.0)
+    thesis_required = models.BooleanField(default=False)
+    project_required = models.BooleanField(default=False)
 
     def __str__(self):
         return str(self.major) + ' - ' + str(self.name)
