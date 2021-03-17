@@ -7,14 +7,14 @@
 
     {% for record in schedule %}
         {% if record.course.semester == semester %}
-            {{ record.course }}<br>
-{#            <select>#}
-{##}
-{#            </select>#}
+            <form action="{% url 'mast:remove_scheduled_course' student.sbu_id record.course.id %}" method="get">
+                {{ record.course }}
+                <button type="submit">Remove</button>
+                <br>
+            </form>
         {% endif %}
     {% endfor %}
     <br>
-
 
     <form action="{% url 'mast:add_scheduled_course' student.sbu_id %}" method="get">
         <select name="course">
@@ -29,9 +29,17 @@
     </form>
     <br>
 
-
 {% endfor %}
 <br>
-<br>
+
+<form action="{% url 'mast:add_scheduled_semester' student.sbu_id %}" method="post">
+    {% csrf_token %}
+    <button type="submit">Add Semester</button>
+</form>
+
+<form action="{% url 'mast:detail' student.sbu_id %}" method="post">
+    {% csrf_token %}
+    <button type="submit">Done</button>
+</form>
 
 </html>

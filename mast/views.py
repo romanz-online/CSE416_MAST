@@ -133,6 +133,26 @@ def edit_schedule(request, sbu_id):
                                                        })
 
 
+def add_scheduled_semester(request, sbu_id):
+    student = get_object_or_404(Student, pk=sbu_id)
+    grade_list = [i[0] for i in Grade.choices]
+    semester_list = {i.course.semester:1 for i in Student_Course_Schedule.objects.filter(student=sbu_id)}.keys()
+    semester_list = sorted(semester_list, key=operator.attrgetter('year'))
+    full_semester_list = [i for i in Semester.objects.all()]
+    full_semester_list = sorted(full_semester_list, key=operator.attrgetter('season'))
+    full_semester_list = sorted(full_semester_list, key=operator.attrgetter('year'))
+    i = full_semester_list.index(semester_list[0])
+    while full_semester_list[i] in semester_list:
+        i += 1
+    semester_list.append(full_semester_list[i])
+    return render(request, 'mast/edit_schedule.html', {'student': student,
+                                                       'grade_list': grade_list,
+                                                       'course_list': Course.objects.order_by('department'),
+                                                       'classes_taken': Classes_Taken_by_Student.objects.all(),
+                                                       'semester_list': semester_list,
+                                                       'schedule': Student_Course_Schedule.objects.filter(student=sbu_id)
+                                                       })
+
 
 def add_scheduled_course(request, sbu_id):
     student = get_object_or_404(Student, pk=sbu_id)
@@ -141,6 +161,18 @@ def add_scheduled_course(request, sbu_id):
         new_course = Course.objects.get(id=new_course)
         c = Student_Course_Schedule(student=student, course=new_course)
         c.save()
+    except:
+        return HttpResponseRedirect(reverse('mast:edit_schedule', args=(sbu_id,)))
+    return HttpResponseRedirect(reverse('mast:edit_schedule', args=(sbu_id,)))
+
+
+def remove_scheduled_course(request, sbu_id, course):
+    student = get_object_or_404(Student, pk=sbu_id)
+    course_record = get_object_or_404(Course, pk=course)
+    print(course_record)
+    try:
+        c = Student_Course_Schedule.objects.get(student=student, course=course_record)
+        c.delete()
     except:
         return HttpResponseRedirect(reverse('mast:edit_schedule', args=(sbu_id,)))
     return HttpResponseRedirect(reverse('mast:edit_schedule', args=(sbu_id,)))
