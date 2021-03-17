@@ -1,13 +1,15 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
+  <component name="BookmarkManager">
+    <bookmark url="file://$PROJECT_DIR$/mast/templates/mast/detail.html" line="102" mnemonic="3" />
+  </component>
   <component name="ChangeListManager">
     <list default="true" id="433e10ab-7bf6-49f7-ab54-8658f67b786e" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/mast/templates/mast/edit_schedule.html" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/mast/admin.py" beforeDir="false" afterPath="$PROJECT_DIR$/mast/admin.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/mast/models.py" beforeDir="false" afterPath="$PROJECT_DIR$/mast/models.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/mast/static/mast/style.css" beforeDir="false" afterPath="$PROJECT_DIR$/mast/static/mast/style.css" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/mast/templates/mast/detail.html" beforeDir="false" afterPath="$PROJECT_DIR$/mast/templates/mast/detail.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/mast/templates/mast/student_index.html" beforeDir="false" afterPath="$PROJECT_DIR$/mast/templates/mast/student_index.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/mast/templates/mast/edit_schedule.html" beforeDir="false" afterPath="$PROJECT_DIR$/mast/templates/mast/edit_schedule.html" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/mast/urls.py" beforeDir="false" afterPath="$PROJECT_DIR$/mast/urls.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/mast/views.py" beforeDir="false" afterPath="$PROJECT_DIR$/mast/views.py" afterDir="false" />
     </list>
@@ -25,8 +27,8 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/mast/models.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="1049">
-              <caret line="89" column="44" lean-forward="true" selection-start-line="89" selection-start-column="44" selection-end-line="89" selection-end-column="44" />
+            <state relative-caret-position="267">
+              <caret line="112" column="69" selection-start-line="112" selection-start-column="69" selection-end-line="112" selection-end-column="69" />
               <folding>
                 <element signature="e#0#28#0" expanded="true" />
               </folding>
@@ -37,18 +39,23 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/mast/views.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="408">
-              <caret line="166" lean-forward="true" selection-start-line="166" selection-end-line="166" />
+            <state relative-caret-position="318">
+              <caret line="116" column="97" selection-start-line="116" selection-start-column="97" selection-end-line="116" selection-end-column="97" />
               <folding>
                 <element signature="e#0#11#0" expanded="true" />
-                <element signature="e#331#375#0" />
-                <element signature="e#408#459#0" />
-                <element signature="e#492#717#0" />
-                <element signature="e#750#867#0" />
-                <element signature="e#907#2596#0" />
-                <element signature="e#2631#2802#0" />
-                <element signature="e#2830#4301#0" />
+                <element signature="e#7655#10647#0" />
+                <element signature="e#10898#11416#0" />
+                <element signature="e#11479#12394#0" />
               </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/mast/templates/mast/detail.html">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="230">
+              <caret line="103" column="58" selection-start-line="103" selection-start-column="58" selection-end-line="103" selection-end-column="58" />
             </state>
           </provider>
         </entry>
@@ -56,17 +63,8 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/mast/templates/mast/edit_schedule.html">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="255">
-              <caret line="15" lean-forward="true" selection-start-line="15" selection-end-line="15" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/mast/templates/mast/edit.html">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="256">
-              <caret line="126" column="8" lean-forward="true" selection-start-line="126" selection-start-column="8" selection-end-line="126" selection-end-column="8" />
+            <state relative-caret-position="136">
+              <caret line="8" column="87" selection-start-line="8" selection-start-column="87" selection-end-line="8" selection-end-column="87" />
             </state>
           </provider>
         </entry>
@@ -92,6 +90,7 @@
       <find>for_m</find>
       <find>Pogg</find>
       <find>print</find>
+      <find>grade_</find>
     </findStrings>
   </component>
   <component name="Git.Settings">
@@ -127,15 +126,15 @@
         <option value="$PROJECT_DIR$/mast/templates/mast/home.html" />
         <option value="$PROJECT_DIR$/mast/templates/mast/major_index.html" />
         <option value="$PROJECT_DIR$/mast/templates/mast/new_student.html" />
-        <option value="$PROJECT_DIR$/mast/admin.py" />
         <option value="$PROJECT_DIR$/mast/templates/mast/edit.html" />
         <option value="$PROJECT_DIR$/mast/static/mast/style.css" />
         <option value="$PROJECT_DIR$/mast/templates/mast/student_index.html" />
-        <option value="$PROJECT_DIR$/mast/models.py" />
         <option value="$PROJECT_DIR$/mast/urls.py" />
-        <option value="$PROJECT_DIR$/mast/templates/mast/detail.html" />
-        <option value="$PROJECT_DIR$/mast/views.py" />
         <option value="$PROJECT_DIR$/mast/templates/mast/edit_schedule.html" />
+        <option value="$PROJECT_DIR$/mast/admin.py" />
+        <option value="$PROJECT_DIR$/mast/models.py" />
+        <option value="$PROJECT_DIR$/mast/views.py" />
+        <option value="$PROJECT_DIR$/mast/templates/mast/detail.html" />
       </list>
     </option>
   </component>
@@ -151,6 +150,7 @@
       <foldersAlwaysOnTop value="true" />
     </navigator>
     <panes>
+      <pane id="Scope" />
       <pane id="ProjectPane">
         <subPane>
           <expand>
@@ -193,7 +193,6 @@
           <select />
         </subPane>
       </pane>
-      <pane id="Scope" />
     </panes>
   </component>
   <component name="PropertiesComponent">
@@ -304,6 +303,8 @@
       <workItem from="1615845237224" duration="5836000" />
       <workItem from="1615858195062" duration="5264000" />
       <workItem from="1615917572106" duration="7784000" />
+      <workItem from="1615929538433" duration="9309000" />
+      <workItem from="1615941925650" duration="1021000" />
     </task>
     <servers />
   </component>
@@ -313,13 +314,13 @@
     </history-entry>
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="87166000" />
+    <option name="totallyTimeSpent" value="97496000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="-1608" y="-8" width="1616" height="876" extended-state="6" />
     <editor active="true" />
     <layout>
-      <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.29562983" />
+      <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.3033419" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
       <window_info id="Favorites" order="2" side_tool="true" />
       <window_info anchor="bottom" id="Message" order="0" />
@@ -520,16 +521,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/mast/admin.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="170">
-          <caret line="10" column="36" lean-forward="true" selection-start-line="10" selection-start-column="36" selection-end-line="10" selection-end-column="36" />
-          <folding>
-            <element signature="e#0#32#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/mast/templates/mast/major_index.html">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="51">
@@ -568,58 +559,64 @@
     <entry file="file://$PROJECT_DIR$/mast/static/mast/style.css">
       <provider selected="true" editor-type-id="text-editor" />
     </entry>
+    <entry file="file://$PROJECT_DIR$/mast/admin.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="153">
+          <caret line="9" column="43" selection-start-line="9" selection-start-column="43" selection-end-line="9" selection-end-column="43" />
+          <folding>
+            <element signature="e#0#32#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/mast/templates/mast/edit.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="3009">
+          <caret line="177" column="44" selection-start-line="177" selection-start-column="44" selection-end-line="177" selection-end-column="44" />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/mast/urls.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="204">
-          <caret line="14" column="80" selection-start-line="14" selection-start-column="80" selection-end-line="14" selection-end-column="80" />
+        <state relative-caret-position="221">
+          <caret line="15" column="75" selection-start-line="15" selection-start-column="75" selection-end-line="15" selection-end-column="75" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/mast/models.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1049">
-          <caret line="89" column="44" lean-forward="true" selection-start-line="89" selection-start-column="44" selection-end-line="89" selection-end-column="44" />
+        <state relative-caret-position="267">
+          <caret line="112" column="69" selection-start-line="112" selection-start-column="69" selection-end-line="112" selection-end-column="69" />
           <folding>
             <element signature="e#0#28#0" expanded="true" />
           </folding>
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/mast/templates/mast/detail.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="228">
-          <caret line="102" column="5" lean-forward="true" selection-start-line="102" selection-start-column="5" selection-end-line="102" selection-end-column="5" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/mast/views.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="408">
-          <caret line="166" lean-forward="true" selection-start-line="166" selection-end-line="166" />
+        <state relative-caret-position="318">
+          <caret line="116" column="97" selection-start-line="116" selection-start-column="97" selection-end-line="116" selection-end-column="97" />
           <folding>
             <element signature="e#0#11#0" expanded="true" />
-            <element signature="e#331#375#0" />
-            <element signature="e#408#459#0" />
-            <element signature="e#492#717#0" />
-            <element signature="e#750#867#0" />
-            <element signature="e#907#2596#0" />
-            <element signature="e#2631#2802#0" />
-            <element signature="e#2830#4301#0" />
+            <element signature="e#7655#10647#0" />
+            <element signature="e#10898#11416#0" />
+            <element signature="e#11479#12394#0" />
           </folding>
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/mast/templates/mast/edit_schedule.html">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="255">
-          <caret line="15" lean-forward="true" selection-start-line="15" selection-end-line="15" />
+        <state relative-caret-position="136">
+          <caret line="8" column="87" selection-start-line="8" selection-start-column="87" selection-end-line="8" selection-end-column="87" />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/mast/templates/mast/edit.html">
+    <entry file="file://$PROJECT_DIR$/mast/templates/mast/detail.html">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="256">
-          <caret line="126" column="8" lean-forward="true" selection-start-line="126" selection-start-column="8" selection-end-line="126" selection-end-column="8" />
+        <state relative-caret-position="230">
+          <caret line="103" column="58" selection-start-line="103" selection-start-column="58" selection-end-line="103" selection-end-column="58" />
         </state>
       </provider>
     </entry>

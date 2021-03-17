@@ -5,7 +5,7 @@ from django.shortcuts import get_object_or_404, render
 from django.http import HttpResponseRedirect
 from django.urls import reverse
 from .models import Student, Major, Course, Required_Classes_for_Track, Classes_Taken_by_Student, Grade, CourseStatus, \
-    Comment, Schedule
+    Comment, Student_Course_Schedule
 
 
 def home(request):
@@ -110,59 +110,30 @@ def search(request):
 def detail(request, sbu_id):
     student = get_object_or_404(Student, pk=sbu_id)
     comment_list = Comment.objects.filter(student=sbu_id)
-    schedule = Schedule.objects.filter(student=sbu_id).first()
-    schedule = json.dumps(schedule.semesters)
-    schedule = json.loads(schedule)
     return render(request, 'mast/detail.html', {'student': student,
                                                 'major_list': Major.objects.order_by('name'),
                                                 'classes_taken': Classes_Taken_by_Student.objects.all(),
                                                 'comment_list': comment_list.order_by('post_date'),
-                                                'schedule': schedule})
+                                                'schedule': Student_Course_Schedule.objects.all()
+                                                })
 
 
-def string_to_tuple(string):
-    list = string.split()
-    season = list[0]
-    year = list[1]
-    status = list[2]
-    return season, year, status
-
-
-def tuple_to_string(tuple):
-    return str(tuple[0]) + ' ' + str(tuple[1]) + ' ' + str(tuple[2])
-
-
-def get_course_from_name(string):
-    department = string[:3]
-    number = int(string[3:])
-    return Course.objects.get(department=department, number=number)
-
-
-class Semester():
-    def __init__(self, season, year, status, classes):
-        self.season = season
-        self.year = year
-        self.status = status
-        self.classes = classes
-
-    def __str__(self):
-        return str(self.season) + ' ' + str(self.year) + ' ' + str(self.status)
-
-
-def edit_schedule(request, sbu_id):
+def edit_schedule(request, sbu_id, s=None):
     student = get_object_or_404(Student, pk=sbu_id)
-    schedule = Schedule.objects.filter(student=sbu_id).first()
-    schedule = json.dumps(schedule.semesters)
-    schedule = json.loads(schedule)
-    python_schedule = []
-    for key in schedule.keys():
-        python_schedule += [Semester(string_to_tuple(key)[0],
-                                     string_to_tuple(key)[1],
-                                     string_to_tuple(key)[2],
-                                     [get_course_from_name(c) for c in schedule[key]])]
+    grade_list = [i[0] for i in Grade.choices]
+
     return render(request, 'mast/edit_schedule.html', {'student': student,
-                                                       'classes_taken': Classes_Taken_by_Student.objects.all(),
-                                                       'schedule': python_schedule})
+                                                       'grade_list': grade_list,
+                                                       'course_list': Course.objects.order_by('department'),
+                                                       'classes_taken': Classes_Taken_by_Student.objects.all(),})
+
+
+
+def remove_scheduled_course(request, sbu_id, semester, course):
+    student = get_object_or_404(Student, pk=sbu_id)
+    grade_list = [i[0] for i in Grade.choices]
+
+    return HttpResponseRedirect(reverse('mast:edit_schedule', args=(sbu_id,)))
 
 
 def add_comment(request, sbu_id):

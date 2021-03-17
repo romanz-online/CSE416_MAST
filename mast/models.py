@@ -101,6 +101,7 @@ class Student(models.Model):
     satisfied_courses = models.IntegerField(default=0)
     unsatisfied_courses = models.IntegerField(default=0)
     pending_courses = models.IntegerField(default=0)
+    valid_schedule = models.BooleanField(default=True)
     # password = models.CharField(max_length=100) # may be unnecessary
 
     def __str__(self):
@@ -117,12 +118,14 @@ class Classes_Taken_by_Student(models.Model):
         return str(self.student) + ' - ' + str(self.course)
 
 
-class Schedule(models.Model):
-    student = models.ForeignKey(Student, on_delete = models.CASCADE)
-    semesters = models.JSONField()
+class Student_Course_Schedule(models.Model):
+    student = models.ForeignKey(Student, on_delete=models.CASCADE)
+    season = models.CharField(max_length=6, choices=Season.choices, default=Season.FALL)
+    year = models.IntegerField(default=datetime.now().year)
+    course = models.ForeignKey(Course, null=True, on_delete=models.SET_NULL)
 
     def __str__(self):
-        return str(self.student)
+        return str(self.student) + ' - ' + str(self.course) + ' ' + self.season + ' ' + str(self.year)
 
 
 class Comment(models.Model):

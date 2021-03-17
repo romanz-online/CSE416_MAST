@@ -101,17 +101,12 @@
 
 Schedule: 
 </br>
-{% for semester, classes in schedule.items %}
-<table class="uk-table uk-table-divider ">
-   <thead>
-      <th>{{semester}}</th>
-   </thead>
-   {% for class in classes %}
-   <tr>
-      <td>{{class}}</td>
-   </tr>
-   {% endfor %}
-</table>
+add another for loop that loops through semesters somehow?
+{% for record in schedule %}
+    {% if record.student == student %}
+        {{ record }}
+        <br>
+    {% endif %}
 {% endfor %}
 <br>
 
