@@ -53,7 +53,7 @@ class Requirement_Semester(models.Model):
 
 class Course(models.Model):
     name = models.CharField(max_length=100)
-    department = models.CharField(max_length=10)
+    department = models.CharField(max_length=3)
     number = models.IntegerField()
     semester = models.ForeignKey(Semester, null=True, on_delete=models.SET_NULL)
     timeslot = models.TimeField()
@@ -66,13 +66,13 @@ class Course(models.Model):
 class Prerequisite_Classes_for_Course(models.Model):
     course = models.ForeignKey(Course, on_delete=models.CASCADE)
     prerequisite_name = models.CharField(max_length=100)
-    prerequisite_department = models.CharField(max_length=10)
+    prerequisite_department = models.CharField(max_length=3)
     prerequisite_number = models.IntegerField()
 
 
 class Major(models.Model):
     name = models.CharField(max_length=50)
-    department = models.CharField(max_length=50)
+    department = models.CharField(max_length=3)
     requirement_semester = models.ForeignKey(Requirement_Semester, null=True, on_delete=models.SET_NULL)
 
     def __str__(self):
@@ -97,6 +97,7 @@ class Tracks_in_Major(models.Model):
 
 class Director(models.Model):
     name = models.CharField(max_length=100)
+    department = models.CharField(max_length=3)
 
     def __str__(self):
         return self.name

@@ -35,82 +35,19 @@
     </select> <br>
     <br>
     Enrollment Semester:
-    <select name="entry_season">
-        {% if student.entry_semester_season == 'Winter' %}
-            <option value = "Winter" selected>Winter</option>
-            <option value = "Spring">Spring</option>
-            <option value = "Summer">Summer</option>
-            <option value = "Fall">Fall</option>
-        {% elif student.entry_semester_season == 'Spring' %}
-            <option value = "Winter">Winter</option>
-            <option value = "Spring" selected>Spring</option>
-            <option value = "Summer">Summer</option>
-            <option value = "Fall">Fall</option>
-        {% elif student.entry_semester_season == 'Summer' %}
-            <option value = "Winter">Winter</option>
-            <option value = "Spring">Spring</option>
-            <option value = "Summer" selected>Summer</option>
-            <option value = "Fall">Fall</option>
-        {% else%}
-            <option value = "Winter">Winter</option>
-            <option value = "Spring">Spring</option>
-            <option value = "Summer">Summer</option>
-            <option value = "Fall" selected>Fall</option>
-        {% endif %}
+    <select name="entry_semester">
+        {% for s in semesters %}
+            <option value={{ s.id }}>{{ s }}</option>
+        {% endfor %}
     </select>
-    <input name="entry_year" type="number" autocomplete="on" value={{ student.entry_semester_year }}> <br>
-    <br>
-    Graduation Semester:
-    <select name="graduation_season">
-        {% if student.graduation_semester_season == 'Winter' %}
-            <option value = "Winter" selected>Winter</option>
-            <option value = "Spring">Spring</option>
-            <option value = "Summer">Summer</option>
-            <option value = "Fall">Fall</option>
-        {% elif student.graduation_semester_season == 'Spring' %}
-            <option value = "Winter">Winter</option>
-            <option value = "Spring" selected>Spring</option>
-            <option value = "Summer">Summer</option>
-            <option value = "Fall">Fall</option>
-        {% elif student.graduation_semester_season == 'Summer' %}
-            <option value = "Winter">Winter</option>
-            <option value = "Spring">Spring</option>
-            <option value = "Summer" selected>Summer</option>
-            <option value = "Fall">Fall</option>
-        {% else%}
-            <option value = "Winter">Winter</option>
-            <option value = "Spring">Spring</option>
-            <option value = "Summer">Summer</option>
-            <option value = "Fall" selected>Fall</option>
-        {% endif %}
-    </select>
-    <input name="graduation_year" type="number" autocomplete="on" value={{ student.graduation_semester_year }}> <br>
     <br>
     Requirement Version Semester:
-    <select name="requirement_season">
-        {% if student.requirement_semester_season == 'Winter' %}
-            <option value = "Winter" selected>Winter</option>
-            <option value = "Spring">Spring</option>
-            <option value = "Summer">Summer</option>
-            <option value = "Fall">Fall</option>
-        {% elif student.requirement_semester_season == 'Spring' %}
-            <option value = "Winter">Winter</option>
-            <option value = "Spring" selected>Spring</option>
-            <option value = "Summer">Summer</option>
-            <option value = "Fall">Fall</option>
-        {% elif student.requirement_semester_season == 'Summer' %}
-            <option value = "Winter">Winter</option>
-            <option value = "Spring">Spring</option>
-            <option value = "Summer" selected>Summer</option>
-            <option value = "Fall">Fall</option>
-        {% else%}
-            <option value = "Winter">Winter</option>
-            <option value = "Spring">Spring</option>
-            <option value = "Summer">Summer</option>
-            <option value = "Fall" selected>Fall</option>
-        {% endif %}
+    <select name="requirement_semester">
+        {% for s in requirement_semesters %}
+            <option value={{ s.id }}>{{ s }}</option>
+        {% endfor %}
     </select>
-    <input name="requirement_year" type="number" autocomplete="on" value={{ student.requirement_semester_year }}> <br>
+    <br>
     <br>
     Major:
     <select name="major">

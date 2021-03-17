@@ -202,7 +202,9 @@ def edit(request, sbu_id):
                                               'course_list': Course.objects.order_by('name'),
                                               'classes_taken': Classes_Taken_by_Student.objects.all(),
                                               'grade_list': grade_list,
-                                              'course_status_list': course_status_list})
+                                              'course_status_list': course_status_list,
+                                              'semesters': Semester.objects.order_by('year'),
+                                              'requirement_semesters': Requirement_Semester.objects.order_by('year')})
 
 
 def commit_edit(request, sbu_id):
@@ -214,12 +216,8 @@ def commit_edit(request, sbu_id):
         major = request.GET['major']
         graduated = True if request.GET['graduated'] == 'yes' else False
         withdrew = True if request.GET['withdrew'] == 'yes' else False
-        entry_season = request.GET['entry_season']
-        graduation_season = request.GET['graduation_season']
-        requirement_season = request.GET['requirement_season']
-        entry_year = request.GET['entry_year']
-        graduation_year = request.GET['graduation_year']
-        requirement_year = request.GET['requirement_year']
+        entry_semester = request.GET['entry_semester']
+        requirement_semester = request.GET['requirement_semester']
 
         student.first_name = first_name
         student.last_name = last_name
@@ -227,20 +225,16 @@ def commit_edit(request, sbu_id):
         student.major = Major.objects.get(id=int(major))
         student.graduated = graduated
         student.withdrew = withdrew
-        student.entry_semester_season = entry_season
-        student.entry_semester_year = entry_year
-        student.graduation_semester_season = graduation_season
-        student.graduation_semester_year = graduation_year
-        student.requirement_semester_season = requirement_season
-        student.requirement_semester_year = requirement_year
+        student.entry_semester=Semester.objects.get(id=int(entry_semester))
+        student.requirement_semester=Requirement_Semester.objects.get(id=int(requirement_semester))
 
-        # if len(Classes_Taken_by_Student.objects) > 0:
         for course in Classes_Taken_by_Student.objects.all():
             if course.student == student and course.status != 'Pending':
                 new_grade = request.GET[str(course.id)]
                 if course.grade != new_grade:
                     course.grade = new_grade
                     course.save()
+
         sum = 0
         total = 0
         for course in Classes_Taken_by_Student.objects.all():
@@ -251,6 +245,7 @@ def commit_edit(request, sbu_id):
             total = 1
         sum = sum / total
         student.gpa = format(sum, '.2f')
+
         student.save()
     except:
         student = get_object_or_404(Student, pk=sbu_id)
