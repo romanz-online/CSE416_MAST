@@ -55,15 +55,11 @@
 </tr>
 <tr>
    <td>Enrollment Semester</td>
-   <td>{{ student.entry_semester_season }}, {{ student.entry_semester_year }}</td>
-</tr>
-<tr>
-   <td>Graduation Semester</td>
-   <td>{{ student.graduation_semester_season }}, {{ student.graduation_semester_year }}</td>
+   <td>{{ student.entry_semester }}</td>
 </tr>
 <tr>
    <td>Requirement Version Semester</td>
-   <td>{{ student.requirement_semester_season }}, {{ student.requirement_semester_year }}</td>
+   <td>{{ student.requirement_semester }}</td>
 </tr>
 <tr>
    <td>Major: </td>
@@ -101,12 +97,26 @@
 
 Schedule: 
 </br>
-add another for loop that loops through semesters somehow?
+
+
 {% for record in schedule %}
-    {% if record.student == student %}
-        {{ record }}
-        <br>
-    {% endif %}
+    {% for semester in semester_list %}
+        {% if record.course.semester == semester and record.student == student %}
+
+            {{ semester }}
+            <br>
+
+            {% for record in schedule %}
+                {% if record.course.semester == semester %}
+                    {{ record.course }}
+                    <br>
+                {% endif %}
+            {% endfor %}
+
+
+            <br>
+        {% endif %}
+    {% endfor %}
 {% endfor %}
 <br>
 

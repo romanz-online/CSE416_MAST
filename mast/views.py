@@ -111,11 +111,12 @@ def detail(request, sbu_id):
                                                 'major_list': Major.objects.order_by('name'),
                                                 'classes_taken': Classes_Taken_by_Student.objects.all(),
                                                 'comment_list': comment_list.order_by('post_date'),
+                                                'semester_list': Semester.objects.order_by('year'),
                                                 'schedule': Student_Course_Schedule.objects.all()
                                                 })
 
 
-def edit_schedule(request, sbu_id, s=None):
+def edit_schedule(request, sbu_id):
     student = get_object_or_404(Student, pk=sbu_id)
     grade_list = [i[0] for i in Grade.choices]
 
