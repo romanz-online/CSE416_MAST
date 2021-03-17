@@ -2,35 +2,20 @@
 <h1>{{ student.sbu_id }} Schedule:</h1>
 <br>
 
-{% for semester in schedule %}
-    {{semester.season}} {{ semester.year }}<br>
-    {% for class in semester.classes %}
-        {% if semester.status %}
-            <form action="{% url 'mast:remove_scheduled_course' student.sbu_id semester class.id %}" method="post">
-                {% csrf_token %}
-                <select name={{ class.id }}>
-                    {% for c in course_list %}
-                        {% if c.department == class.department and c.number == class.number %}
-                            {% if c.section == class.section %}
-                                <option selected value={{ c }}>{{ c }}</option>
-                            {% else %}
-                                <option value = {{ c }}>{{ c }}</option>
-                            {% endif %}
-                        {% endif %}
-                    {% endfor %}
-                </select>
-                <button type="submit">Remove</button>
-            </form>
-        {% else %}
-            {{ class }}
-        {% endif %}
+{% for semester in semester_list %}
+    {{ semester }}<br>
+    {% for record in schedule %}
+
+            {% if record.course.semester == semester %}
+
+                {{ record.course }}<br>
+
+            {% endif %}
+
     {% endfor %}
-    <form action="{% url 'mast:edit' student.sbu_id %}" method="post">
-        {% csrf_token %}
-        <button type="submit">Add Course</button>
-    </form>
     <br>
 {% endfor %}
+<br>
 <br>
 
 </html>

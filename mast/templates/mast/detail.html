@@ -95,28 +95,20 @@
 </tbody>
 </table>
 
-Schedule: 
+Schedule:
 </br>
+{% for semester in semester_list %}
+    {{ semester }}<br>
+    {% for record in schedule %}
 
+            {% if record.course.semester == semester %}
 
-{% for record in schedule %}
-    {% for semester in semester_list %}
-        {% if record.course.semester == semester and record.student == student %}
+                {{ record.course }}<br>
 
-            {{ semester }}
-            <br>
+            {% endif %}
 
-            {% for record in schedule %}
-                {% if record.course.semester == semester %}
-                    {{ record.course }}
-                    <br>
-                {% endif %}
-            {% endfor %}
-
-
-            <br>
-        {% endif %}
     {% endfor %}
+    <br>
 {% endfor %}
 <br>
 

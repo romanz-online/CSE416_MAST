@@ -1,6 +1,7 @@
-import json
 from datetime import datetime
+import operator
 
+from django.db.models import Count
 from django.shortcuts import get_object_or_404, render
 from django.http import HttpResponseRedirect
 from django.urls import reverse
@@ -107,23 +108,29 @@ def search(request):
 def detail(request, sbu_id):
     student = get_object_or_404(Student, pk=sbu_id)
     comment_list = Comment.objects.filter(student=sbu_id)
+    semester_list = {i.course.semester:1 for i in Student_Course_Schedule.objects.filter(student=sbu_id)}.keys()
+    semester_list = sorted(semester_list, key=operator.attrgetter('year'))
     return render(request, 'mast/detail.html', {'student': student,
                                                 'major_list': Major.objects.order_by('name'),
                                                 'classes_taken': Classes_Taken_by_Student.objects.all(),
                                                 'comment_list': comment_list.order_by('post_date'),
-                                                'semester_list': Semester.objects.order_by('year'),
-                                                'schedule': Student_Course_Schedule.objects.all()
+                                                'semester_list': semester_list,
+                                                'schedule': Student_Course_Schedule.objects.filter(student=sbu_id)
                                                 })
 
 
 def edit_schedule(request, sbu_id):
     student = get_object_or_404(Student, pk=sbu_id)
     grade_list = [i[0] for i in Grade.choices]
-
+    semester_list = {i.course.semester:1 for i in Student_Course_Schedule.objects.filter(student=sbu_id)}.keys()
+    semester_list = sorted(semester_list, key=operator.attrgetter('year'))
     return render(request, 'mast/edit_schedule.html', {'student': student,
                                                        'grade_list': grade_list,
                                                        'course_list': Course.objects.order_by('department'),
-                                                       'classes_taken': Classes_Taken_by_Student.objects.all(),})
+                                                       'classes_taken': Classes_Taken_by_Student.objects.all(),
+                                                       'semester_list': semester_list,
+                                                       'schedule': Student_Course_Schedule.objects.filter(student=sbu_id)
+                                                       })
 
 
 
