@@ -95,6 +95,13 @@ class Tracks_in_Major(models.Model):
         return str(self.major) + ' - ' + str(self.name)
 
 
+class Director(models.Model):
+    name = models.CharField(max_length=100)
+
+    def __str__(self):
+        return self.name
+
+
 class Student(models.Model):
     sbu_id = models.IntegerField(primary_key=True)
     first_name = models.CharField(max_length=100)
