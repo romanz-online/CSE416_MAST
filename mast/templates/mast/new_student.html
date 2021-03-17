@@ -13,31 +13,18 @@
     Email: <input name="email" type="text" autocomplete="on"> <br>
     <br>
     Enrollment Semester:
-    <select name="entry_season">
-        <option value = "Winter">Winter</option>
-        <option value = "Spring">Spring</option>
-        <option value = "Summer">Summer</option>
-        <option value = "Fall">Fall</option>
+    <select name="entry_semester">
+        {% for s in semesters %}
+            <option value={{ s.id }}>{{ s }}</option>
+        {% endfor %}
     </select>
-    <input name="entry_year" type="number" autocomplete="on"> <br>
-    <br>
-    Graduation Semester:
-    <select name="graduation_season">
-        <option value = "Winter">Winter</option>
-        <option value = "Spring">Spring</option>
-        <option value = "Summer">Summer</option>
-        <option value = "Fall">Fall</option>
-    </select>
-    <input name="graduation_year" type="number" autocomplete="on"> <br>
     <br>
     Requirement Version Semester:
-    <select name="requirement_season">
-        <option value = "Winter">Winter</option>
-        <option value = "Spring">Spring</option>
-        <option value = "Summer">Summer</option>
-        <option value = "Fall">Fall</option>
+    <select name="requirement_semester">
+        {% for s in requirement_semesters %}
+            <option value={{ s.id }}>{{ s }}</option>
+        {% endfor %}
     </select>
-    <input name="requirement_year" type="number" autocomplete="on"> <br>
     <br>
     Major:
     <select name="major">

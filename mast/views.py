@@ -5,7 +5,7 @@ from django.shortcuts import get_object_or_404, render
 from django.http import HttpResponseRedirect
 from django.urls import reverse
 from .models import Student, Major, Course, Required_Classes_for_Track, Classes_Taken_by_Student, Grade, CourseStatus, \
-    Comment, Student_Course_Schedule
+    Comment, Student_Course_Schedule, Semester, Requirement_Semester
 
 
 def home(request):
@@ -23,7 +23,8 @@ def major_index(request):
 
 
 def add_student(request):
-    context = {'major_list': Major.objects.order_by('name')}
+    context = {'major_list': Major.objects.order_by('name')[1:], 'semesters': Semester.objects.order_by('year'),
+               'requirement_semesters': Requirement_Semester.objects.order_by('year')}
     return render(request, 'mast/new_student.html', context)
 
 
@@ -41,24 +42,17 @@ def commit_new_student(request):
     last_name = request.GET['last_name']
     email = request.GET['email']
     major = request.GET['major']
-    entry_season = request.GET['entry_season']
-    graduation_season = request.GET['graduation_season']
-    requirement_season = request.GET['requirement_season']
-    entry_year = int(request.GET['entry_year'])
-    graduation_year = int(request.GET['graduation_year'])
-    requirement_year = int(request.GET['requirement_year'])
+    entry_semester = request.GET['entry_semester']
+    requirement_semester = request.GET['requirement_semester']
     try:
         student = Student(sbu_id=sbu_id,
                           first_name=first_name,
                           last_name=last_name,
                           email=email,
                           major=Major.objects.get(id=int(major)),
-                          entry_semester_season=entry_season,
-                          entry_semester_year=entry_year,
-                          graduation_semester_season=graduation_season,
-                          graduation_semester_year=graduation_year,
-                          requirement_semester_season=requirement_season,
-                          requirement_semester_year=requirement_year)
+                          entry_semester=Semester.objects.get(id=int(entry_semester)),
+                          requirement_semester=Requirement_Semester.objects.get(id=int(requirement_semester))
+                          )
         student.save()
     except:
         return render(request, 'mast/new_student.html', {
@@ -81,21 +75,24 @@ def search(request):
     withdrew_search = True if request.GET['withdrew'] == 'yes' else False
     first_name_list = Student.objects.filter(first_name__icontains=name_search)
     last_name_list = Student.objects.filter(last_name__icontains=name_search)
-    name_list = first_name_list + last_name_list
     sbu_id_list = Student.objects.filter(sbu_id__icontains=sbu_id_search)
 
     if not graduated_search:
-        name_list = name_list.filter(graduated=False)
+        first_name_list = first_name_list.filter(graduated=False)
+        last_name_list = last_name_list.filter(graduated=False)
         sbu_id_list = sbu_id_list.filter(graduated=False)
     if not withdrew_search:
-        name_list = name_list.filter(withdrew=False)
+        first_name_list = first_name_list.filter(withdrew=False)
+        last_name_list = last_name_list.filter(withdrew=False)
         sbu_id_list = sbu_id_list.filter(withdrew=False)
 
     m = Major.objects.get(id=int(major_search))
     if m.name != '(None)':
-        name_list = name_list.filter(major=m)
+        first_name_list = first_name_list.filter(major=m)
+        last_name_list = last_name_list.filter(major=m)
         sbu_id_list = sbu_id_list.filter(major=m)
 
+    name_list = set(first_name_list).union(set(last_name_list))
     student_list = list(set(name_list) & set(sbu_id_list))
     context = {'student_list': student_list,
                'major_list': Major.objects.order_by('name'),

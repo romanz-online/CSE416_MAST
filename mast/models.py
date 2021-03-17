@@ -35,12 +35,27 @@ class Grade(models.TextChoices):
     NOT_APPLICABLE = 'N/A'
 
 
+class Semester(models.Model):
+    season = models.CharField(max_length=6, choices=Season.choices, default=Season.FALL)
+    year = models.IntegerField(default=datetime.now().year)
+
+    def __str__(self):
+        return self.season + ' ' + str(self.year)
+
+
+class Requirement_Semester(models.Model):
+    season = models.CharField(max_length=6, choices=Season.choices, default=Season.FALL)
+    year = models.IntegerField(default=datetime.now().year)
+
+    def __str__(self):
+        return self.season + ' ' + str(self.year)
+
+
 class Course(models.Model):
     name = models.CharField(max_length=100)
     department = models.CharField(max_length=10)
     number = models.IntegerField()
-    semester_season = models.CharField(max_length=6, choices=Season.choices, default=Season.FALL)
-    semester_year = models.IntegerField()
+    semester = models.ForeignKey(Semester, null=True, on_delete=models.SET_NULL)
     timeslot = models.TimeField()
     section = models.IntegerField()
 
@@ -58,8 +73,7 @@ class Prerequisite_Classes_for_Course(models.Model):
 class Major(models.Model):
     name = models.CharField(max_length=50)
     department = models.CharField(max_length=50)
-    requirement_semester_season = models.CharField(max_length=6, choices=Season.choices, default=Season.FALL)
-    requirement_semester_year = models.IntegerField(default=datetime.now().year)
+    requirement_semester = models.ForeignKey(Requirement_Semester, null=True, on_delete=models.SET_NULL)
 
     def __str__(self):
         return self.name
@@ -88,12 +102,8 @@ class Student(models.Model):
     last_name = models.CharField(max_length=100)
     gpa = models.FloatField(default=4.0)
     email = models.CharField(max_length=100)
-    entry_semester_season = models.CharField(max_length=6, choices=Season.choices, default=Season.FALL)
-    entry_semester_year = models.IntegerField(default=datetime.now().year)
-    graduation_semester_season = models.CharField(max_length=6, choices=Season.choices, default=Season.FALL)
-    graduation_semester_year = models.IntegerField(default=datetime.now().year)
-    requirement_semester_season = models.CharField(max_length=6, choices=Season.choices, default=Season.FALL)
-    requirement_semester_year = models.IntegerField(default=datetime.now().year)
+    entry_semester = models.ForeignKey(Semester, null=True, on_delete=models.SET_NULL)
+    requirement_semester = models.ForeignKey(Requirement_Semester, null=True, on_delete=models.SET_NULL)
     major = models.ForeignKey(Major, null=True, on_delete=models.SET_NULL)
     track = models.ForeignKey(Tracks_in_Major, null=True, on_delete=models.SET_NULL)
     graduated = models.BooleanField(default=False)
@@ -120,12 +130,10 @@ class Classes_Taken_by_Student(models.Model):
 
 class Student_Course_Schedule(models.Model):
     student = models.ForeignKey(Student, on_delete=models.CASCADE)
-    season = models.CharField(max_length=6, choices=Season.choices, default=Season.FALL)
-    year = models.IntegerField(default=datetime.now().year)
     course = models.ForeignKey(Course, null=True, on_delete=models.SET_NULL)
 
     def __str__(self):
-        return str(self.student) + ' - ' + str(self.course) + ' ' + self.season + ' ' + str(self.year)
+        return str(self.student) + ' - ' + str(self.course) + ' ' + str(self.course.semester)
 
 
 class Comment(models.Model):
