@@ -145,6 +145,10 @@ def add_scheduled_semester(request, sbu_id):
     while full_semester_list[i] in semester_list:
         i += 1
     semester_list.append(full_semester_list[i])
+    empty_course = Course(name='', department='', number=0, semester=full_semester_list[i], section=0, timeslot=datetime.now())
+    empty_course.save()
+    empty_schedule_course = Student_Course_Schedule(student=student, course=empty_course)
+    empty_schedule_course.save()
     return render(request, 'mast/edit_schedule.html', {'student': student,
                                                        'grade_list': grade_list,
                                                        'course_list': Course.objects.order_by('department'),
