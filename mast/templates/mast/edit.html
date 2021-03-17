@@ -141,14 +141,12 @@
         {% endif %}
     {% endfor %}
     <br>
-    Schedule: [to be implemented] <br>
     <button type="submit">Done</button>
 </form>
 <br>
 
 
 Courses in progress:
-<br>
 {% for record in classes_taken %}
     {% if record.student == student and record.status == 'Pending' %}
         {{ record.course }}
@@ -166,7 +164,9 @@ Courses in progress:
 <form action="{% url 'mast:add_taken_course' student.sbu_id %}" method="get">
     <select name="course">
         {% for class in course_list %}
-            <option value={{ class.id }}>{{ class }}</option>
+            {% if class.name != '' %}
+                <option value={{ class.id }}>{{ class }}</option>
+            {% endif %}
         {% endfor %}
     </select>
     <select name="grade">

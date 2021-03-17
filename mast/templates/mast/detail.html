@@ -101,7 +101,7 @@ Schedule:
     {{ semester }}<br>
     {% for record in schedule %}
 
-            {% if record.course.semester == semester %}
+            {% if record.course.semester == semester and record.course.name != '' %}
 
                 {{ record.course }}<br>
 
