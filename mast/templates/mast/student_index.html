@@ -22,12 +22,24 @@
         background-color: #490000;
         color:white;
     }
+
+    a.button {
+            background-color: #490000;
+  border: none;
+  width: 150px;
+  color: rgb(255, 255, 255);
+  padding: 10px 10px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 15px;
+  cursor: pointer;
+}
     </style>
 
 </head>
-<h1>Students</h1>
+<h1>Student Search</h1>
 <div>
-<a href="{% url 'mast:gpd_landing' %}">Back to Home</a> <br><br>
 
 <form action="{% url 'mast:search' %}" method="get">
     <input name="name" type="text" placeholder="Name" autocomplete="on" value={{ name_search }}>
@@ -94,5 +106,8 @@
     <p>No student records found.</p>
 {% endif %}
 </div>
+<center>
+<a href="{% url 'mast:gpd_landing' %}" class="button">Return Home</a> <br><br>
+</center>
 </body>
 </html>
