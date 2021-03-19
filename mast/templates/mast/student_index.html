@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
 <body>
-
+<head>
 {% load static %}
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/uikit@3.6.17/dist/css/uikit.min.css" />
  
@@ -9,9 +9,25 @@
 <script src="https://cdn.jsdelivr.net/npm/uikit@3.6.17/dist/js/uikit.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/uikit@3.6.17/dist/js/uikit-icons.min.js"></script>
 
-<h1>Students</h1>
+<style>
+    div{margin-left:15px;
+        }
+    h1{
+        margin-top: -10px;
+        margin-left: -10px;
+        margin-right: -10px;
+        padding: 30px;
+        margin-bottom: 40px;
+        text-align: center;
+        background-color: #490000;
+        color:white;
+    }
+    </style>
 
-<a href="{% url 'mast:gpd_landing' %}">Back to landing</a> <br><br>
+</head>
+<h1>Students</h1>
+<div>
+<a href="{% url 'mast:gpd_landing' %}">Back to Home</a> <br><br>
 
 <form action="{% url 'mast:search' %}" method="get">
     <input name="name" type="text" placeholder="Name" autocomplete="on" value={{ name_search }}>
@@ -77,6 +93,6 @@
 {% else %}
     <p>No student records found.</p>
 {% endif %}
-
+</div>
 </body>
 </html>

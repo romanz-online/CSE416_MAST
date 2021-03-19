@@ -16,14 +16,14 @@
    </style>
    <div class = "uk-flex">
 <div class = 'uk-width-1-2'>
-<h1>Student {{ student.sbu_id }}</h1>
+<h1>{{ student.first_name }} {{ student.last_name }}</h1>
  
 {% if error_message %}<p><strong>{{ error_message }}</strong></p>{% endif %}
 <table class="uk-table uk-table-divider">
    <tbody>
        <tr>
-        <td>Name</td>
-            <td>{{ student.first_name }} {{ student.last_name }}</td>
+        <td>ID Number</td>
+            <td>{{ student.sbu_id }}</td>
             </tr>
         <tr>
             <td>Email</td>
