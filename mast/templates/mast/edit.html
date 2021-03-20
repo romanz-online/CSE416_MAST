@@ -1,10 +1,68 @@
 <!DOCTYPE html>
 <html lang="en">
+    <head>
+        <style>
+            h1{
+        margin-top: -10px;
+        margin-left: -10px;
+        margin-right: -10px;
+        padding: 20px;
+        margin-bottom: 40px;
+        text-align: center;
+        background-color: #490000;
+        color:white;
+    }
 
-<h1>Student {{ student.sbu_id }}</h1>
+    body{
+        background-color: #f2f2f2;
+    }
+    button[type=submit]{
+    color: #490000;
+      border: none;
+      background-color: #f2f2f2;
+      padding: 3px 3px;
+      text-align: center;
+      
+      display: inline-block;
+      font-size: 12px;
+      cursor: pointer;
+    }
+
+  
+    input[type=submit] {
+        display: inline-block;
+        background-color: #490000;
+      border: none;
+      color: rgb(255, 255, 255);
+      padding: 10px 10px;
+      text-align: center;
+      text-decoration: none;
+      display: inline-block;
+      font-size: 15px;
+      cursor: pointer;
+      
+    }
+    div{
+        background-color:white;
+        width: 100%;
+        float: left;
+        padding: 10px 10px 10px 10px;
+        margin-left: 10px;
+        width:47%;
+        border:solid;
+        }
+    form{
+        margin-bottom: 10px;
+        
+    }
+        </style>
+    </head>
+
+<body>
+<h1> {{ student.first_name }} {{ student.last_name }}</h1>
 
 {% if error_message %}<p><strong>{{ error_message }}</strong></p>{% endif %}
-
+<div>
 <form action="{% url 'mast:commit_edit' student.sbu_id %}" method="get">
     First Name: <input name="first_name" type="text" autocomplete="on" value={{ student.first_name }}> <br>
     <br>
@@ -77,27 +135,20 @@
             <br>
         {% endif %}
     {% endfor %}
+
+    
     <br>
-    <button type="submit">Done</button>
-</form>
-<br>
-
-
-Courses in progress:
-{% for record in classes_taken %}
-    {% if record.student == student and record.status == 'Pending' %}
-        {{ record.course }}
-        <form action="{% url 'mast:modify_course_in_progress' student.sbu_id record.id %}" method="get">
-            <button type="submit" name="action" value="complete_s">Complete (Satisfied)</button>
-            <button type="submit" name="action" value="complete_u">Complete (Unsatisfied)</button>
-            <button type="submit" name="action" value="drop">Drop</button>
+    <input type="submit" value="Submit">
         </form>
-        <br>
-    {% endif %}
-{% endfor %}
+    
+<form action="{% url 'mast:edit' student.sbu_id %}" method="post">
+    {% csrf_token %}
+    <input type="submit" value="Reset">
+</form>
 
-<br>
+</div>
 
+<div>
 <form action="{% url 'mast:add_taken_course' student.sbu_id %}" method="get">
     <select name="course">
         {% for class in course_list %}
@@ -112,13 +163,13 @@ Courses in progress:
         {% endfor %}
     </select>
     <button type="submit">Add Course</button>
-    <br>THIS WOULD BE GOOD TO TURN INTO A POP-UP FORM, ALSO MOVING IT INTO THE REST OF THE INFORMATION (above "Done") WOULD BE GREAT!<br>
+    <br>
+    <br>THIS WOULD BE GOOD TO TURN INTO A POP-UP FORM, ALSO MOVING IT INTO THE REST OF THE INFORMATION (above "Done") WOULD BE GREAT!<br><br>
+    DO YOU KNOW HOW MUCH EXTRA WORK A POP-UP IS?!?! Be happy with side by sides plz.
+    also this entire box/form/side is kinda wack? I really dunno what's going on here, sorry if I broke it.
 </form>
 <br>
+</div>
 
-<form action="{% url 'mast:edit' student.sbu_id %}" method="post">
-    {% csrf_token %}
-    <button type="submit">Reset</button>
-</form>
-
+</body>
 </html>

@@ -19,7 +19,20 @@ h1{
         margin-bottom: -5px;
     }
 
-    input[type=button], input[type=submit], input[type=reset] {
+    button[type=submit]{
+    color: #490000;
+      border: none;
+      background-color: rgb(255, 255, 255);
+      padding: 3px 3px;
+      text-align: center;
+      
+      display: inline-block;
+      font-size: 12px;
+      cursor: pointer;
+    }
+
+  
+    input[type=submit] {
         background-color: #490000;
       border: none;
       color: rgb(255, 255, 255);
@@ -69,7 +82,7 @@ h1{
     
     {% endfor %}
     <br>
-
+            <hr color=#4900000>
     <form action="{% url 'mast:add_scheduled_course' student.sbu_id %}" method="get">
         <select name="course">
             {% for class in course_list %}
