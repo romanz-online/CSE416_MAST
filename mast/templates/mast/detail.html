@@ -13,12 +13,26 @@
    vertical-align: center;
    
 }
+
+    .info{
+       color:black;
+       margin-top: 10px;
+       margin-left:20px;
+       margin-right:20px;
+    }
+    .schedule{
+        margin-top: 10px;
+        margin-left: 20px;
+        margin-right: 0;
+    
+    }
    </style>
    </head>
 
 
    <div class = "uk-flex">
 <div class = 'uk-width-1-2'>
+    <div class = info>
 <h1>{{ student.first_name }} {{ student.last_name }}</h1>
  
 {% if error_message %}<p><strong>{{ error_message }}</strong></p>{% endif %}
@@ -78,9 +92,11 @@
 </tbody>
 </table>
 </div>
+</div>
 
 
 <div class = " uk-width-1-2">
+    <div class = "schedule">
 <table class="uk-table uk-table-divider uk-width-1-2">
    <thead>
        <th>Courses taken</th>
@@ -152,6 +168,6 @@ Comments: <br>
 <button type="submit">Back</button>
 </form>
 </div>
-
+</div>
 </div>
 </html>

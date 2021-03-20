@@ -10,7 +10,9 @@
 <script src="https://cdn.jsdelivr.net/npm/uikit@3.6.17/dist/js/uikit-icons.min.js"></script>
 
 <style>
+
     div{margin-left:15px;
+    color:black;
         }
     h1{
         margin-top: -10px;
@@ -44,6 +46,7 @@
 <form action="{% url 'mast:search' %}" method="get">
     <input name="name" type="text" placeholder="Name" autocomplete="on" value={{ name_search }}>
     <input name="sbu_id" type="text" placeholder="SBU ID" autocomplete="on" value={{ sbu_id_search }}>
+    
     Major:
     <select name="major">
         {% for major in major_list %}
@@ -85,9 +88,11 @@
     <table class = "uk-table uk-table-hover uk-table-divider">
         <thead>
             <tr>
-                <th>ID</th>
-                <th>Name</th>
-                <th>Satisfied-Pending-Unsatisfied</th>
+         
+                <th> <font color=black>ID</font></th>
+                <th><font color=black>Name</font></th>
+                <th><font color=black>Satisfied-Pending-Unsatisfied</font></th>
+             
             </tr>
         </thead>
         <tbody>
