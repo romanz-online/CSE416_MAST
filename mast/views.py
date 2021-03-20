@@ -139,16 +139,22 @@ def edit_schedule(request, sbu_id):
 def add_scheduled_semester(request, sbu_id):
     student = get_object_or_404(Student, pk=sbu_id)
     grade_list = [i[0] for i in Grade.choices]
+    current_semester = Semester.objects.get(is_current_semester=True)
     semester_list = {i.course.semester:1 for i in Student_Course_Schedule.objects.filter(student=sbu_id)}.keys()
     semester_list = sorted(semester_list, key=operator.attrgetter('year'))
-    full_semester_list = [i for i in Semester.objects.all()]
-    full_semester_list = sorted(full_semester_list, key=operator.attrgetter('season'))
-    full_semester_list = sorted(full_semester_list, key=operator.attrgetter('year'))
-    i = full_semester_list.index(semester_list[0])
-    while full_semester_list[i] in semester_list:
-        i += 1
-    semester_list.append(full_semester_list[i])
-    empty_course = Course(name='', department='', number=0, semester=full_semester_list[i], section=0, timeslot=datetime.now())
+    if semester_list:
+        full_semester_list = [i for i in Semester.objects.all()]
+        full_semester_list = sorted(full_semester_list, key=operator.attrgetter('season'))
+        full_semester_list = sorted(full_semester_list, key=operator.attrgetter('year'))
+        i = full_semester_list.index(semester_list[0])
+        while full_semester_list[i] in semester_list:
+            i += 1
+        semester_list.append(full_semester_list[i])
+        empty_course = Course(name='', department='', number=0, semester=full_semester_list[i], section=0, timeslot=datetime.now())
+    else:
+        semester_list.append(current_semester)
+        empty_course = Course(name='', department='', number=0, semester=current_semester, section=0,
+                              timeslot=datetime.now())
     empty_course.save()
     empty_schedule_course = Student_Course_Schedule(student=student, course=empty_course)
     empty_schedule_course.save()

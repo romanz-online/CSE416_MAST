@@ -38,6 +38,7 @@ class Grade(models.TextChoices):
 class Semester(models.Model):
     season = models.CharField(max_length=6, choices=Season.choices, default=Season.FALL)
     year = models.IntegerField(default=datetime.now().year)
+    is_current_semester = models.BooleanField(default=False)
 
     def __str__(self):
         return self.season + ' ' + str(self.year)
