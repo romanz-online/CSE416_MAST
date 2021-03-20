@@ -41,6 +41,8 @@ div {
 {% if error_message %}<p><strong>{{ error_message }}</strong></p>{% endif %}
 <div>
 <form action="{% url 'mast:commit_new_student' %}" method="get">
+    Stony Brook ID: <input name="sbu_id" type="number" autocomplete="on"> <br>
+    <br>
     First Name: <input name="first_name" type="text" autocomplete="on"> <br>
     <br>
     Last Name: <input name="last_name" type="text" autocomplete="on"> <br>

@@ -105,8 +105,8 @@ class Director(models.Model):
 
 class Student(models.Model):
     sbu_id = models.IntegerField(primary_key=True)
-    first_name = models.CharField(max_length=100)
-    last_name = models.CharField(max_length=100)
+    first_name = models.CharField(default='unknown', max_length=100)
+    last_name = models.CharField(default='unknown', max_length=100)
     gpa = models.FloatField(default=4.0)
     email = models.CharField(max_length=100)
     entry_semester = models.ForeignKey(Semester, null=True, on_delete=models.SET_NULL)

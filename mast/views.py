@@ -31,14 +31,8 @@ def add_student(request):
 
 def commit_new_student(request):
     id_list = [i.sbu_id for i in Student.objects.all()]
-    if id_list:
-        sbu_id = min(id_list)
-    else:
-        sbu_id = 1
-    while sbu_id in id_list:
-        sbu_id += 1
-    if sbu_id > 999999999:
-        raise Exception('No IDs available in the current range.')
+    id_taken = False
+    sbu_id = request.GET['sbu_id']
     first_name = request.GET['first_name']
     last_name = request.GET['last_name']
     email = request.GET['email']
@@ -46,6 +40,9 @@ def commit_new_student(request):
     entry_semester = request.GET['entry_semester']
     requirement_semester = request.GET['requirement_semester']
     try:
+        if int(sbu_id) in id_list:
+            id_taken = True
+            raise Exception('non-unique id')
         student = Student(sbu_id=sbu_id,
                           first_name=first_name,
                           last_name=last_name,
@@ -56,10 +53,16 @@ def commit_new_student(request):
                           )
         student.save()
     except:
-        return render(request, 'mast/new_student.html', {
-            'major_list': Major.objects.order_by('name'),
-            'error_message': "Something went wrong."
-        })
+        if id_taken:
+            return render(request, 'mast/new_student.html', {
+                'major_list': Major.objects.order_by('name'),
+                'error_message': "ID taken."
+            })
+        else:
+            return render(request, 'mast/new_student.html', {
+                'major_list': Major.objects.order_by('name'),
+                'error_message': "Something went wrong."
+            })
     return HttpResponseRedirect(reverse('mast:detail', args=(sbu_id,)))
 
 
