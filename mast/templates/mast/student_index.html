@@ -92,6 +92,7 @@ a.button {
 
 <center>
     <a href="{% url 'mast:add_student' %}" class="button">Add Student</a>
+    <a href="{% url 'mast:gpd_landing' %}" class="button">Return Home</a>
 </center>
 <br>
 
@@ -99,7 +100,7 @@ a.button {
 <form action="{% url 'mast:search' %}" method="get">
     <input name="name" type="text" placeholder="Name" autocomplete="on" value={{ name_search }}>
     <input name="sbu_id" type="text" placeholder="SBU ID" autocomplete="on" value={{ sbu_id_search }}>
-    
+
     Major:
     <select name="major">
         {% for major in major_list %}
@@ -161,16 +162,12 @@ a.button {
 </div>
 
 
-    
-</table> 
+
+</table>
 {% else %}
     <p>No student records found.</p>
 {% endif %}
 </div>
-
-<center>
-    <a href="{% url 'mast:gpd_landing' %}" class="button">Return Home</a>
-</center>
 
 </body>
 </html>
