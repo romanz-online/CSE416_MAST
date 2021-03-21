@@ -101,13 +101,13 @@
                     <td> {{ student.gpa }}</td>
                 </tr>
                 <tr>
-                    <td>Graduated?</td>
-                    <td>{% if student.graduated %}
-                        <span uk-icon="icon: check"></span>
-                    {% else %}
-                        <span uk-icon="icon: close"></span>
-                    {% endif %}
-                    </td>
+                {% if not student.graduated %}
+                    <td>Not Graduated</td>
+                    <td><span uk-icon="icon: close"></span></td>
+                {% else %}
+                    <td>Graduated in {{ student.graduation_date }}</td>
+                    <td><span uk-icon="icon: check"></span></td>
+                {% endif %}
                 </tr>
                 <tr>
                     <td>Withdrew?</td>
@@ -254,5 +254,6 @@
     <form action="{% url 'mast:student_index' %}" method="post">
         {% csrf_token %}
         <input type="submit" value="Back">
+    </form>
 </div>
 </html>

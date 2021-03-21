@@ -227,6 +227,8 @@ def commit_edit(request, sbu_id):
         withdrew = True if request.GET['withdrew'] == 'yes' else False
         entry_semester = request.GET['entry_semester']
         requirement_semester = request.GET['requirement_semester']
+        graduation_semester = request.GET['graduation_semester']
+        graduation_semester = Semester.objects.get(id=int(graduation_semester))
 
         student.first_name = first_name
         student.last_name = last_name
@@ -236,6 +238,8 @@ def commit_edit(request, sbu_id):
         student.withdrew = withdrew
         student.entry_semester=Semester.objects.get(id=int(entry_semester))
         student.requirement_semester=Requirement_Semester.objects.get(id=int(requirement_semester))
+        student.graduation_season = graduation_semester.season
+        student.graduation_year = graduation_semester.year
 
         for course in Classes_Taken_by_Student.objects.all():
             if course.student == student and course.status != 'Pending':

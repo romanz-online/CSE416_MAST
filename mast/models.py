@@ -7,6 +7,7 @@ class Season(models.TextChoices):
     SPRING = 'Spring'
     SUMMER = 'Summer'
     FALL = 'Fall'
+    NOT_APPLICABLE = 'N/A'
 
 
 class CourseStatus(models.TextChoices):
@@ -112,6 +113,8 @@ class Student(models.Model):
     email = models.CharField(max_length=100)
     entry_semester = models.ForeignKey(Semester, null=True, on_delete=models.SET_NULL)
     requirement_semester = models.ForeignKey(Requirement_Semester, null=True, on_delete=models.SET_NULL)
+    graduation_season = models.CharField(max_length=6, choices=Season.choices, default=Season.NOT_APPLICABLE)
+    graduation_year = models.IntegerField(default=0)
     major = models.ForeignKey(Major, null=True, on_delete=models.SET_NULL)
     track = models.ForeignKey(Tracks_in_Major, null=True, on_delete=models.SET_NULL)
     graduated = models.BooleanField(default=False)
@@ -120,10 +123,13 @@ class Student(models.Model):
     unsatisfied_courses = models.IntegerField(default=0)
     pending_courses = models.IntegerField(default=0)
     valid_schedule = models.BooleanField(default=True)
-    # password = models.CharField(max_length=100) # may be unnecessary
+    password = models.CharField(max_length=100)
 
     def __str__(self):
         return str(self.sbu_id)
+
+    def graduation_date(self):
+        return str(self.graduation_season) + " " + str(self.graduation_year)
 
 
 class Classes_Taken_by_Student(models.Model):
