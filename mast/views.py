@@ -144,7 +144,7 @@ def add_scheduled_semester(request, sbu_id):
     semester_list = sorted(semester_list, key=operator.attrgetter('year'))
     if semester_list:
         full_semester_list = [i for i in Semester.objects.all()]
-        full_semester_list = sorted(full_semester_list, key=operator.attrgetter('season'))
+        full_semester_list = sorted(full_semester_list, reverse=True, key=operator.attrgetter('season'))
         full_semester_list = sorted(full_semester_list, key=operator.attrgetter('year'))
         i = full_semester_list.index(semester_list[0])
         while full_semester_list[i] in semester_list:
