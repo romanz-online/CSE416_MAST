@@ -248,13 +248,14 @@ def commit_edit(request, sbu_id):
         total = 0
         for course in Classes_Taken_by_Student.objects.all():
             if course.student == student and course.status != 'Pending':
-                sum += get_grade_number(course.grade)
-                total += 1
+                if course.grade not in ['W', 'S', 'U', 'I', 'N/A']:
+                    sum += get_grade_number(course.grade)
+                    total += 1
         if total == 0:
             total = 1
         sum = sum / total
         student.gpa = format(sum, '.2f')
-        print('got here 2')
+
         student.save()
     except:
         student = get_object_or_404(Student, pk=sbu_id)
@@ -275,7 +276,7 @@ def commit_edit(request, sbu_id):
 
 def get_grade_number(grade):
     dict = {'A': 4.0, 'A-': 3.7, 'B+': 3.3, 'B': 3.0, 'B-': 2.7, 'C+': 2.3, 'C': 2.0, 'C-': 1.7, 'D+': 1.3, 'D': 1.0,
-            'D-': 0.7, 'F': 0.0, 'W': 0.0, 'I': 0.0, 'S': 0.0, 'U': 0.0, 'N/A': 0.0}
+            'D-': 0.7, 'F': 0.0}
     return dict[grade]
 
 
