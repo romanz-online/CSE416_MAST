@@ -101,13 +101,13 @@
                     <td> {{ student.gpa }}</td>
                 </tr>
                 <tr>
-                {% if not student.graduated %}
-                    <td>Not Graduated</td>
-                    <td><span uk-icon="icon: close"></span></td>
-                {% else %}
-                    <td>Graduated in {{ student.graduation_date }}</td>
-                    <td><span uk-icon="icon: check"></span></td>
-                {% endif %}
+                    {% if not student.graduated %}
+                        <td>Not Graduated</td>
+                        <td><span uk-icon="icon: close"></span></td>
+                    {% else %}
+                        <td>Graduated in {{ student.graduation_date }}</td>
+                        <td><span uk-icon="icon: check"></span></td>
+                    {% endif %}
                 </tr>
                 <tr>
                     <td>Withdrew?</td>

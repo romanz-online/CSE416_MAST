@@ -85,13 +85,15 @@
             {% endif %}
         </select>
         <br>
-        Graduation Semester:
-        <select name="graduation_semester">
-            {% for s in semesters %}
-                <option value={{ s.id }}>{{ s }}</option>
-            {% endfor %}
-        </select>
-        <br>
+        {% if student.graduated %}
+            Graduation Semester:
+            <select name="graduation_semester">
+                {% for s in semesters %}
+                    <option value={{ s.id }}>{{ s }}</option>
+                {% endfor %}
+            </select>
+            <br>
+        {% endif %}
         <br>
         Withdrew:
         <select name="withdrew">

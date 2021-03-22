@@ -3,99 +3,99 @@
 <head>
 
     <style>
-h1{
-        margin-top: -10px;
-        margin-left: -10px;
-        margin-right: -10px;
-        padding: 30px;
-        margin-bottom: 40px;
-        text-align: center;
-        background-color: #490000;
-        color:white;
-    }
+        h1 {
+            margin-top: -10px;
+            margin-left: -10px;
+            margin-right: -10px;
+            padding: 30px;
+            margin-bottom: 40px;
+            text-align: center;
+            background-color: #490000;
+            color: white;
+        }
 
-    h2{
-        color: #490000;
-        margin-bottom: -5px;
-    }
+        h2 {
+            color: #490000;
+            margin-bottom: -5px;
+        }
 
-    button[type=submit]{
-    color: #490000;
-      border: none;
-      background-color: rgb(255, 255, 255);
-      padding: 3px 3px;
-      text-align: center;
-      
-      display: inline-block;
-      font-size: 12px;
-      cursor: pointer;
-    }
+        button[type=submit] {
+            color: #490000;
+            border: none;
+            background-color: rgb(255, 255, 255);
+            padding: 3px 3px;
+            text-align: center;
 
-  
-    input[type=submit] {
-        background-color: #490000;
-      border: none;
-      color: rgb(255, 255, 255);
-      padding: 10px 10px;
-      text-align: center;
-      text-decoration: none;
-      display: inline-block;
-      font-size: 15px;
-      cursor: pointer;
+            display: inline-block;
+            font-size: 12px;
+            cursor: pointer;
+        }
 
-      
-}
 
-.done {
-    position: fixed;
-    bottom: 0;
-    right: 20;
-}
+        input[type=submit] {
+            background-color: #490000;
+            border: none;
+            color: rgb(255, 255, 255);
+            padding: 10px 10px;
+            text-align: center;
+            text-decoration: none;
+            display: inline-block;
+            font-size: 15px;
+            cursor: pointer;
 
-.semester{
-    margin-left: 10px;
-    margin-right: 75px;
-    padding-left: 10px;
-    padding-top: 1px;
-    background-color: #f2f2f2;
-    margin-bottom: 7px;
-}
+
+        }
+
+        .done {
+            position: fixed;
+            bottom: 0;
+            right: 20;
+        }
+
+        .semester {
+            margin-left: 10px;
+            margin-right: 75px;
+            padding-left: 10px;
+            padding-top: 1px;
+            background-color: #f2f2f2;
+            margin-bottom: 7px;
+        }
     </style>
 
 </head>
 
-<h1>{{ student.first_name }} {{student.last_name}}'s Schedule:</h1>
+<h1>{{ student.first_name }} {{ student.last_name }}'s Schedule:</h1>
 <br>
 
 {% for semester in semester_list %}
-<div class=semester>
-    <h2>{{ semester }}</h2><br>
+    <div class=semester>
+        <h2>{{ semester }}</h2><br>
 
-    {% for record in schedule %}
-        {% if record.course.semester == semester and record.course.name != ''  %}
-            <form action="{% url 'mast:remove_scheduled_course' student.sbu_id record.course.id %}" method="get">
-                {{ record.course }}
-                <button type="submit">Remove</button>
-                <br>
-            </form>
-        {% endif %}
-    
-    {% endfor %}
-    <br>
-            <hr color=#4900000>
-    <form action="{% url 'mast:add_scheduled_course' student.sbu_id %}" method="get">
-        <select name="course">
-            {% for class in course_list %}
-                {% if class.semester == semester and class.name != '' %}
-                    <option value={{ class.id }}>{{ class }}</option>
-                {% endif %}
-            {% endfor %}
-        </select>
-        <button type="submit">Add to {{ semester }}</button>
+        {% for record in schedule %}
+            {% if record.course.semester == semester and record.course.name != '' %}
+                <form action="{% url 'mast:remove_scheduled_course' student.sbu_id record.course.id %}" method="get">
+                    {{ record.course }}
+                    <button type="submit">Remove</button>
+                    <br>
+                </form>
+            {% endif %}
+
+        {% endfor %}
         <br>
-    </form>
-    <br>
-</div>
+        <hr color=#4900000>
+        <form action="{% url 'mast:add_scheduled_course' student.sbu_id %}" method="get">
+            <select name="course">
+                {% for class in course_list %}
+                    {% if class.semester == semester and class.name != '' %}
+                        <option value={{ class.id }}>{{ class }}</option>
+                    {% endif %}
+                {% endfor %}
+            </select>
+            <button type="submit">Add to {{ semester }}</button>
+            <br>
+        </form>
+        <br>
+    </div>
 {% endfor %}
 <br>
 
@@ -104,10 +104,10 @@ h1{
     <input type="submit" value="Add Semester">
 </form>
 <div class=done>
-<form action="{% url 'mast:detail' student.sbu_id %}" method="post">
-    {% csrf_token %}
-    <input type="submit" value="Done">
-</form>
+    <form action="{% url 'mast:detail' student.sbu_id %}" method="post">
+        {% csrf_token %}
+        <input type="submit" value="Done">
+    </form>
 </div>
 
 </html>

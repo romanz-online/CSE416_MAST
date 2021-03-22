@@ -49,9 +49,8 @@
         }
 
         .responsive-table .table-header {
-            background-color: gray;
+            background-color: #bdbdbd;
             font-size: 14px;
-            /*text-transform: uppercase;*/
             letter-spacing: 0.03em;
         }
 
@@ -65,10 +64,14 @@
         }
 
         .responsive-table .col-2 {
-            flex-basis: 40%;
+            flex-basis: 25%;
         }
 
         .responsive-table .col-3 {
+            flex-basis: 15%;
+        }
+
+        .responsive-table .col-4 {
             flex-basis: 25%;
         }
 
@@ -98,6 +101,18 @@
                 text-align: right;
             }
         }
+
+        .add-student {
+            position: fixed;
+            top: 20%;
+            left: 20px;
+        }
+
+        .return-home {
+            position: fixed;
+            top: 26%;
+            left: 20px;
+        }
     </style>
 
 </head>
@@ -105,8 +120,12 @@
 <div>
 
     <center>
-        <a href="{% url 'mast:add_student' %}" class="button">Add Student</a>
-        <a href="{% url 'mast:gpd_landing' %}" class="button">Return Home</a>
+        <div class="add-student">
+            <a href="{% url 'mast:add_student' %}" class="button">Add Student</a>
+        </div>
+        <div class="return-home">
+            <a href="{% url 'mast:gpd_landing' %}" class="button">Return Home</a>
+        </div>
     </center>
     <br>
 
@@ -156,7 +175,8 @@
             <li class="table-header">
                 <div class="col col-1">ID</div>
                 <div class="col col-2">Name</div>
-                <div class="col col-3">Satisfied-Pending-Unsatisfied</div>
+                <div class="col col-3">Graduation</div>
+                <div class="col col-4">Satisfied-Pending-Unsatisfied</div>
             </li>
             {% if student_list %}
                 {% for student in student_list %}
@@ -167,7 +187,14 @@
                         <div class="col col-2" data-label="Name">
                             <a href="{% url 'mast:detail' student.sbu_id %}">{{ student.last_name }}, {{ student.first_name }} </a>
                         </div>
-                        <div class="col col-3" data-label="Status">
+                        <div class="col col-3" data-label="Name">
+                            {% if student.graduated %}
+                                {{ student.graduation_date }}
+                            {% else %}
+                                N/A
+                            {% endif %}
+                        </div>
+                        <div class="col col-4" data-label="Status">
                             {{ student.satisfied_courses }} - {{ student.pending_courses }}
                             - {{ student.unsatisfied_courses }}
                         </div>
