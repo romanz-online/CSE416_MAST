@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
-<body>
-<head>
+<head >
+    <title>MAST Student Index</title>
     <style>
         div {
             margin-left: 15px;
@@ -113,9 +113,14 @@
             top: 26%;
             left: 20px;
         }
+
+        .label:hover {
+            color: white;
+        }
     </style>
 
 </head>
+<body>
 <h1>Student Search</h1>
 <div>
 
@@ -173,10 +178,10 @@
     <div class="container">
         <ul class="responsive-table">
             <li class="table-header">
-                <div class="col col-1">ID</div>
-                <div class="col col-2">Name</div>
-                <div class="col col-3">Graduation</div>
-                <div class="col col-4">Satisfied-Pending-Unsatisfied</div>
+                <div class="col col-1 label">ID</div>
+                <div class="col col-2 label">Name</div>
+                <div class="col col-3 label">Graduation</div>
+                <div class="col col-4 label">Satisfied-Pending-Unsatisfied</div>
             </li>
             {% if student_list %}
                 {% for student in student_list %}
