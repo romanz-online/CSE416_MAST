@@ -85,15 +85,13 @@
             {% endif %}
         </select>
         <br>
-        {% if student.graduated %}
-            Graduation Semester:
-            <select name="graduation_semester">
-                {% for s in semesters %}
-                    <option value={{ s.id }}>{{ s }}</option>
-                {% endfor %}
-            </select>
-            <br>
-        {% endif %}
+        Graduation Semester:
+        <select name="graduation_semester">
+            {% for s in semesters %}
+                <option value={{ s.id }}>{{ s }}</option>
+            {% endfor %}
+        </select>
+        <br>
         <br>
         Withdrew:
         <select name="withdrew">
@@ -153,13 +151,19 @@
         {% endfor %}
         <br>
 
-        <input type="submit" value="Submit"/>
+        <input type="submit" value="Save"/>
     </form>
     <br>
 
     <form action="{% url 'mast:edit' student.sbu_id %}" method="post">
         {% csrf_token %}
         <input type="submit" value="Reset">
+    </form>
+    <br>
+
+    <form action="{% url 'mast:detail' student.sbu_id %}" method="post">
+        {% csrf_token %}
+        <input type="submit" value="Leave Without Saving">
     </form>
 
 </div>

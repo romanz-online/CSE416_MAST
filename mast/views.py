@@ -113,6 +113,10 @@ def sort_by_id(request):
 
 def sort_by_name(request):
     print(request)
+    # if request is equal to student_index request:
+    #     do stuff
+    # else:
+    #     get stuff from request and then do stuff
     return
 
 
@@ -243,9 +247,6 @@ def commit_edit(request, sbu_id):
         withdrew = True if request.GET['withdrew'] == 'yes' else False
         entry_semester = request.GET['entry_semester']
         requirement_semester = request.GET['requirement_semester']
-        if student.graduated:
-            graduation_semester = request.GET['graduation_semester']
-            graduation_semester = Semester.objects.get(id=int(graduation_semester))
 
         student.first_name = first_name
         student.last_name = last_name
@@ -256,6 +257,8 @@ def commit_edit(request, sbu_id):
         student.entry_semester=Semester.objects.get(id=int(entry_semester))
         student.requirement_semester=Requirement_Semester.objects.get(id=int(requirement_semester))
         if student.graduated:
+            graduation_semester = request.GET['graduation_semester']
+            graduation_semester = Semester.objects.get(id=int(graduation_semester))
             student.graduation_season = graduation_semester.season
             student.graduation_year = graduation_semester.year
 
