@@ -8,6 +8,15 @@ from .models import Student, Major, Course, Required_Classes_for_Track, Classes_
     Comment, Student_Course_Schedule, Semester, Requirement_Semester
 
 
+global current_search
+current_search = {'student_list': Student.objects.order_by('sbu_id'),
+                  'major_list': Major.objects.order_by('name'),
+                  'name_search': '',
+                  'sbu_id_search': '',
+                  'graduated_search': False,
+                  'withdrew_search': False,
+                  'major_search': 0}
+
 def home(request):
     return render(request, 'mast/home.html', {})
 
@@ -66,11 +75,15 @@ def commit_new_student(request):
 
 
 def student_index(request):
+    global current_search
     context = {'student_list': Student.objects.order_by('sbu_id'), 'major_list': Major.objects.order_by('name')}
+    current_search['student_list'] = Student.objects.order_by('sbu_id')
+    current_search['major_list'] = Major.objects.order_by('name')
     return render(request, 'mast/student_index.html', context)
 
 
 def search(request):
+    global current_search
     name_search = request.GET['name']
     sbu_id_search = request.GET['sbu_id']
     major_search = request.GET['major']
@@ -104,6 +117,8 @@ def search(request):
                'graduated_search': graduated_search,
                'withdrew_search': withdrew_search,
                'major_search': int(major_search)}
+
+    current_search = context
     return render(request, 'mast/student_index.html', context)
 
 
@@ -112,12 +127,10 @@ def sort_by_id(request):
 
 
 def sort_by_name(request):
-    print(request)
-    # if request is equal to student_index request:
-    #     do stuff
-    # else:
-    #     get stuff from request and then do stuff
-    return
+    global current_search
+    current_search['student_list'] = sorted(current_search['student_list'], key=operator.attrgetter('last_name'))
+    context = current_search
+    return render(request, 'mast/student_index.html', context)
 
 
 def sort_by_graduation(request):
