@@ -1,17 +1,15 @@
 <!DOCTYPE html>
-<html lang="en"></html>
+<html lang="en">
 
 {% load static %}
-<link rel="stylesheet" type="text/css" href="{% static 'mast/generic_style.css' %}" />
+<link rel="stylesheet" type="text/css" href="{% static 'mast/generic_style.css' %}"/>
 
 <head>
+    <title>MAST</title>
     <style>
         h1 {
-            margin-top: -10px;
-            margin-left: -10px;
-            margin-right: -10px;
             padding: 30px;
-            margin-bottom: 40px;
+            margin: -10px -10px 40px;
             text-align: center;
             background-color: #490000;
             color: white;
@@ -34,14 +32,14 @@
 </head>
 
 
-<body>
+<body style="overflow-x: hidden;">
 
 
 <h1>Welcome to MAST!</h1>
 
-<a href="gpd_landing" class="button">Director Login</a>
+<a href="{% url 'mast:gpd_landing' %}" class="button">Director Login</a>
 <br>
-<a href="749382951" class="button">Student Login</a>
+<a href="{% url 'mast:detail' 1 %}" class="button">Student Login</a>
 <br>
 {not fully implemented}
 
