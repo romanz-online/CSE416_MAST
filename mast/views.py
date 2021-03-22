@@ -107,6 +107,23 @@ def search(request):
     return render(request, 'mast/student_index.html', context)
 
 
+def sort_by_id(request):
+    return
+
+
+def sort_by_name(request):
+    print(request)
+    return
+
+
+def sort_by_graduation(request):
+    return
+
+
+def sort_by_attendance(request):
+    return
+
+
 def detail(request, sbu_id):
     student = get_object_or_404(Student, pk=sbu_id)
     comment_list = Comment.objects.filter(student=sbu_id)

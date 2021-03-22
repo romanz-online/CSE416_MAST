@@ -2,7 +2,13 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="433e10ab-7bf6-49f7-ab54-8658f67b786e" name="Default Changelist" comment="">
+      <change afterPath="$PROJECT_DIR$/mast/static/mast/images/leavesinriverwallpaper.png" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/mast/static/mast/generic_style.css" beforeDir="false" afterPath="$PROJECT_DIR$/mast/static/mast/generic_style.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/mast/templates/mast/home.html" beforeDir="false" afterPath="$PROJECT_DIR$/mast/templates/mast/home.html" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/mast/templates/mast/student_index.html" beforeDir="false" afterPath="$PROJECT_DIR$/mast/templates/mast/student_index.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/mast/urls.py" beforeDir="false" afterPath="$PROJECT_DIR$/mast/urls.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/mast/views.py" beforeDir="false" afterPath="$PROJECT_DIR$/mast/views.py" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -15,11 +21,11 @@
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file pinned="false" current-in-tab="false">
+      <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/mast/views.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="356">
-              <caret line="235" column="48" lean-forward="true" selection-start-line="235" selection-start-column="48" selection-end-line="235" selection-end-column="48" />
+            <state relative-caret-position="403">
+              <caret line="114" column="17" selection-start-line="114" selection-start-column="17" selection-end-line="114" selection-end-column="17" />
               <folding>
                 <element signature="e#429#473#0" />
                 <element signature="e#506#557#0" />
@@ -33,6 +39,7 @@
                 <element signature="e#9001#9419#0" />
                 <element signature="e#9460#9833#0" />
                 <element signature="e#9867#10751#0" />
+                <element signature="e#10757#13942#0" />
                 <element signature="e#13672#13851#0" />
                 <element signature="e#13897#14415#0" />
                 <element signature="e#14478#15393#0" />
@@ -41,11 +48,20 @@
           </provider>
         </entry>
       </file>
-      <file pinned="false" current-in-tab="true">
+      <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/mast/templates/mast/student_index.html">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="242">
-              <caret line="177" column="27" lean-forward="true" selection-start-line="177" selection-start-column="27" selection-end-line="177" selection-end-column="27" />
+            <state relative-caret-position="190">
+              <caret line="183" lean-forward="true" selection-start-line="183" selection-end-line="183" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/mast/urls.py">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="408">
+              <caret line="26" column="102" selection-start-line="26" selection-start-column="102" selection-end-line="26" selection-end-column="102" />
             </state>
           </provider>
         </entry>
@@ -111,18 +127,18 @@
         <option value="$PROJECT_DIR$/mast/templates/mast/major_index.html" />
         <option value="$PROJECT_DIR$/mast/static/mast/style.css" />
         <option value="$PROJECT_DIR$/mast/admin.py" />
-        <option value="$PROJECT_DIR$/mast/urls.py" />
         <option value="$PROJECT_DIR$/mast/templates/mast/style.scss" />
         <option value="$PROJECT_DIR$/mast/static/mast/indexstyle.css" />
-        <option value="$PROJECT_DIR$/mast/templates/mast/home.html" />
-        <option value="$PROJECT_DIR$/mast/static/mast/generic_style.css" />
         <option value="$PROJECT_DIR$/mast/templates/mast/new_student.html" />
         <option value="$PROJECT_DIR$/mast/models.py" />
         <option value="$PROJECT_DIR$/mast/templates/mast/detail.html" />
         <option value="$PROJECT_DIR$/mast/templates/mast/edit_schedule.html" />
         <option value="$PROJECT_DIR$/mast/templates/mast/edit.html" />
-        <option value="$PROJECT_DIR$/mast/views.py" />
+        <option value="$PROJECT_DIR$/mast/static/mast/generic_style.css" />
+        <option value="$PROJECT_DIR$/mast/templates/mast/home.html" />
         <option value="$PROJECT_DIR$/mast/templates/mast/student_index.html" />
+        <option value="$PROJECT_DIR$/mast/urls.py" />
+        <option value="$PROJECT_DIR$/mast/views.py" />
       </list>
     </option>
   </component>
@@ -146,24 +162,6 @@
               <item name="cse416_MAST" type="b2602c69:ProjectViewProjectNode" />
               <item name="cse416_MAST" type="462c0819:PsiDirectoryNode" />
             </path>
-            <path>
-              <item name="cse416_MAST" type="b2602c69:ProjectViewProjectNode" />
-              <item name="cse416_MAST" type="462c0819:PsiDirectoryNode" />
-              <item name="mast" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="cse416_MAST" type="b2602c69:ProjectViewProjectNode" />
-              <item name="cse416_MAST" type="462c0819:PsiDirectoryNode" />
-              <item name="mast" type="462c0819:PsiDirectoryNode" />
-              <item name="templates" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="cse416_MAST" type="b2602c69:ProjectViewProjectNode" />
-              <item name="cse416_MAST" type="462c0819:PsiDirectoryNode" />
-              <item name="mast" type="462c0819:PsiDirectoryNode" />
-              <item name="templates" type="462c0819:PsiDirectoryNode" />
-              <item name="mast" type="462c0819:PsiDirectoryNode" />
-            </path>
           </expand>
           <select />
         </subPane>
@@ -181,19 +179,19 @@
     <property name="settings.editor.selected.configurable" value="watcher.settings" />
   </component>
   <component name="RecentsManager">
-    <key name="CopyFile.RECENT_KEYS">
-      <recent name="C:\Users\dread\Documents\cse416_MAST\mast\static\mast\images" />
-      <recent name="C:\Users\dread\Documents\cse416_MAST\mast\templates\mast" />
-      <recent name="C:\Users\dread\Documents\cse416_MAST\mast" />
-      <recent name="C:\Users\dread\Documents\cse416_MAST\cse416_MAST\templates\admin" />
-      <recent name="C:\Users\dread\Documents\cse416_MAST\polls\static\polls\images" />
-    </key>
     <key name="MoveFile.RECENT_KEYS">
       <recent name="C:\Users\dread\Documents\cse416_MAST\mast\static\mast\images" />
       <recent name="C:\Users\dread\Documents\cse416_MAST\mast\templates\mast\img" />
       <recent name="C:\Users\dread\Documents\cse416_MAST\mast\templates" />
       <recent name="C:\Users\dread\Documents\cse416_MAST\mast\templates\mast" />
       <recent name="C:\Users\dread\Documents\cse416_MAST\mast\static\mast" />
+    </key>
+    <key name="CopyFile.RECENT_KEYS">
+      <recent name="C:\Users\dread\Documents\cse416_MAST\mast\static\mast\images" />
+      <recent name="C:\Users\dread\Documents\cse416_MAST\mast\templates\mast" />
+      <recent name="C:\Users\dread\Documents\cse416_MAST\mast" />
+      <recent name="C:\Users\dread\Documents\cse416_MAST\cse416_MAST\templates\admin" />
+      <recent name="C:\Users\dread\Documents\cse416_MAST\polls\static\polls\images" />
     </key>
   </component>
   <component name="RunDashboard">
@@ -295,7 +293,7 @@
       <workItem from="1616288067112" duration="404000" />
       <workItem from="1616297904361" duration="4447000" />
       <workItem from="1616354870328" duration="1347000" />
-      <workItem from="1616362010517" duration="4263000" />
+      <workItem from="1616362010517" duration="8125000" />
     </task>
     <servers />
   </component>
@@ -305,7 +303,7 @@
     </history-entry>
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="131514000" />
+    <option name="totallyTimeSpent" value="135376000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="-1608" y="-8" width="1616" height="876" extended-state="6" />
@@ -439,13 +437,6 @@
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/mast/static/mast/style.css" />
-    <entry file="file://$PROJECT_DIR$/mast/urls.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="357">
-          <caret line="23" column="1" selection-start-line="23" selection-start-column="1" selection-end-line="23" selection-end-column="1" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/mast/admin.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="221">
@@ -472,20 +463,6 @@
           <folding>
             <element signature="e#312#336#0" expanded="true" />
           </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/mast/templates/mast/home.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="68">
-          <caret line="4" column="74" selection-start-line="4" selection-start-column="74" selection-end-line="4" selection-end-column="74" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/mast/static/mast/generic_style.css">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="51">
-          <caret line="3" column="1" lean-forward="true" selection-start-line="3" selection-start-column="1" selection-end-line="3" selection-end-column="1" />
         </state>
       </provider>
     </entry>
@@ -530,10 +507,38 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/mast/static/mast/generic_style.css">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="51">
+          <caret line="3" column="1" lean-forward="true" selection-start-line="3" selection-start-column="1" selection-end-line="3" selection-end-column="1" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/mast/templates/mast/home.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="323">
+          <caret line="28" column="28" lean-forward="true" selection-start-line="28" selection-start-column="28" selection-end-line="28" selection-end-column="28" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/mast/templates/mast/student_index.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="190">
+          <caret line="183" lean-forward="true" selection-start-line="183" selection-end-line="183" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/mast/urls.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="408">
+          <caret line="26" column="102" selection-start-line="26" selection-start-column="102" selection-end-line="26" selection-end-column="102" />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/mast/views.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="356">
-          <caret line="235" column="48" lean-forward="true" selection-start-line="235" selection-start-column="48" selection-end-line="235" selection-end-column="48" />
+        <state relative-caret-position="403">
+          <caret line="114" column="17" selection-start-line="114" selection-start-column="17" selection-end-line="114" selection-end-column="17" />
           <folding>
             <element signature="e#429#473#0" />
             <element signature="e#506#557#0" />
@@ -547,17 +552,11 @@
             <element signature="e#9001#9419#0" />
             <element signature="e#9460#9833#0" />
             <element signature="e#9867#10751#0" />
+            <element signature="e#10757#13942#0" />
             <element signature="e#13672#13851#0" />
             <element signature="e#13897#14415#0" />
             <element signature="e#14478#15393#0" />
           </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/mast/templates/mast/student_index.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="242">
-          <caret line="177" column="27" lean-forward="true" selection-start-line="177" selection-start-column="27" selection-end-line="177" selection-end-column="27" />
         </state>
       </provider>
     </entry>

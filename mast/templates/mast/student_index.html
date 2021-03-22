@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
-<head >
+<head>
     <title>MAST Student Index</title>
     <style>
         div {
@@ -9,10 +9,7 @@
         }
 
         h1 {
-            margin-top: -10px;
-            margin-left: -10px;
-            margin-right: -10px;
-            margin-bottom: 40px;
+            margin: -10px -10px 40px;
             padding: 30px;
             text-align: center;
             background-color: #490000;
@@ -30,6 +27,16 @@
             display: inline-block;
             font-size: 15px;
             cursor: pointer;
+        }
+
+        a.label {
+            cursor: pointer;
+            color: black;
+            text-decoration: none;
+        }
+
+        a.label:hover {
+            color: white;
         }
 
         .container {
@@ -56,7 +63,7 @@
 
         .responsive-table .table-row {
             background-color: #ffffff;
-            box-shadow: 0px 0px 9px 0px rgba(0, 0, 0, 0.3);
+            box-shadow: 0 0 9px 0 rgba(0, 0, 0, 0.3);
         }
 
         .responsive-table .col-1 {
@@ -105,23 +112,17 @@
         .add-student {
             position: fixed;
             top: 20%;
-            left: 20px;
         }
 
         .return-home {
             position: fixed;
-            top: 26%;
-            left: 20px;
-        }
-
-        .label:hover {
-            color: white;
+            padding-top: 75px;
         }
     </style>
 
 </head>
 <body>
-<h1>Student Search</h1>
+<h1>Student Index</h1>
 <div>
 
     <center>
@@ -139,37 +140,43 @@
             <input name="name" type="text" placeholder="Name" autocomplete="on" value={{ name_search }}>
             <input name="sbu_id" type="text" placeholder="SBU ID" autocomplete="on" value={{ sbu_id_search }}>
 
-            Major:
-            <select name="major">
-                {% for major in major_list %}
-                    {% if major.id == major_search %}
-                        <option selected value={{ major.id }}>{{ major }}</option>
-                    {% else %}
-                        <option value= {{ major.id }}>{{ major }}</option>
-                    {% endif %}
-                {% endfor %}
-            </select>
+            <label>
+                Major:
+                <select name="major">
+                    {% for major in major_list %}
+                        {% if major.id == major_search %}
+                            <option selected value={{ major.id }}>{{ major }}</option>
+                        {% else %}
+                            <option value= {{ major.id }}>{{ major }}</option>
+                        {% endif %}
+                    {% endfor %}
+                </select>
+            </label>
             <br>
-            Show Graduated Students:
-            <select name="graduated">
-                {% if graduated_search %}
-                    <option value="yes" selected>Yes</option>
-                    <option value="no">No</option>
-                {% else %}
-                    <option value="yes">Yes</option>
-                    <option value="no" selected>No</option>
-                {% endif %}
-            </select>
-            Show Withdrawn Students:
-            <select name="withdrew">
-                {% if withdrew_search %}
-                    <option value="yes" selected>Yes</option>
-                    <option value="no">No</option>
-                {% else %}
-                    <option value="yes">Yes</option>
-                    <option value="no" selected>No</option>
-                {% endif %}
-            </select>
+            <label>
+                Show Graduated Students:
+                <select name="graduated">
+                    {% if graduated_search %}
+                        <option value="yes" selected>Yes</option>
+                        <option value="no">No</option>
+                    {% else %}
+                        <option value="yes">Yes</option>
+                        <option value="no" selected>No</option>
+                    {% endif %}
+                </select>
+            </label>
+            <label>
+                Show Withdrawn Students:
+                <select name="withdrew">
+                    {% if withdrew_search %}
+                        <option value="yes" selected>Yes</option>
+                        <option value="no">No</option>
+                    {% else %}
+                        <option value="yes">Yes</option>
+                        <option value="no" selected>No</option>
+                    {% endif %}
+                </select>
+            </label>
             <button type="submit">Search</button>
         </form>
     </center>
@@ -178,10 +185,10 @@
     <div class="container">
         <ul class="responsive-table">
             <li class="table-header">
-                <div class="col col-1 label">ID</div>
-                <div class="col col-2 label">Name</div>
-                <div class="col col-3 label">Graduation</div>
-                <div class="col col-4 label">Satisfied-Pending-Unsatisfied</div>
+                <div class="col col-1 label"><a class="label" href="{% url 'mast:sort_by_name' %}">ID</a></div>
+                <div class="col col-2"><a class="label" href="{% url 'mast:sort_by_name' %}">Name</a></div>
+                <div class="col col-3 label"><a class="label" href="{% url 'mast:sort_by_name' %}">Graduation</a></div>
+                <div class="col col-4 label"><a class="label" href="{% url 'mast:sort_by_name' %}">Satisfied-Pending-Unsatisfied</a></div>
             </li>
             {% if student_list %}
                 {% for student in student_list %}

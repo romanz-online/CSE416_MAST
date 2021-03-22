@@ -21,4 +21,8 @@ urlpatterns = [
     path('edit/<int:sbu_id>/add_taken_course', views.add_taken_course, name='add_taken_course'),
     path('edit/<int:sbu_id>/modify_course_in_progress/<int:record>', views.modify_course_in_progress, name='modify_course_in_progress'),
     path('student_index/search/', views.search, name='search'),
+    path('student_index/search/sort_by_id', views.sort_by_id, name='sort_by_id'),
+    path('student_index/search/sort_by_name', views.sort_by_name, name='sort_by_name'),
+    path('student_index/search/sort_by_graduation', views.sort_by_graduation, name='sort_by_graduation'),
+    path('student_index/search/sort_by_attendance', views.sort_by_attendance, name='sort_by_attendance'),
 ]
