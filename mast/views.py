@@ -142,10 +142,12 @@ def search(request):
 def sort_by_id(request):
     global current_search, sorted_by
     if sorted_by == SortedBy.ID:
-        current_search['student_list'] = sorted(current_search['student_list'], key=operator.attrgetter('sbu_id'), reverse=True)
+        current_search['student_list'] = sorted(current_search['student_list'],
+                                                key=operator.attrgetter('sbu_id'), reverse=True)
         sorted_by = SortedBy.ID_INV
     else:
-        current_search['student_list'] = sorted(current_search['student_list'], key=operator.attrgetter('sbu_id'))
+        current_search['student_list'] = sorted(current_search['student_list'],
+                                                key=operator.attrgetter('sbu_id'))
         sorted_by = SortedBy.ID
     context = current_search
     return render(request, 'mast/student_index.html', context)
@@ -154,10 +156,12 @@ def sort_by_id(request):
 def sort_by_name(request):
     global current_search, sorted_by
     if sorted_by == SortedBy.NAME:
-        current_search['student_list'] = sorted(current_search['student_list'], key=operator.attrgetter('last_name'), reverse=True)
+        current_search['student_list'] = sorted(current_search['student_list'],
+                                                key=operator.attrgetter('last_name'), reverse=True)
         sorted_by = SortedBy.NAME_INV
     else:
-        current_search['student_list'] = sorted(current_search['student_list'], key=operator.attrgetter('last_name'))
+        current_search['student_list'] = sorted(current_search['student_list'],
+                                                key=operator.attrgetter('last_name'))
         sorted_by = SortedBy.NAME
     context = current_search
     return render(request, 'mast/student_index.html', context)
@@ -165,13 +169,17 @@ def sort_by_name(request):
 
 def sort_by_graduation(request):
     global current_search, sorted_by
-    if sorted_by == SortedBy.NAME:
-        current_search['student_list'] = sorted(current_search['student_list'], key=operator.attrgetter('graduation_year'), reverse=True)
-        current_search['student_list'] = sorted(current_search['student_list'], key=operator.attrgetter('graduation_season'))
+    if sorted_by == SortedBy.GRADUATION:
+        current_search['student_list'] = sorted(current_search['student_list'],
+                                                key=operator.attrgetter('graduation_season'))
+        current_search['student_list'] = sorted(current_search['student_list'],
+                                                key=operator.attrgetter('graduation_year'), reverse=True)
         sorted_by = SortedBy.GRADUATION_INV
     else:
-        current_search['student_list'] = sorted(current_search['student_list'], key=operator.attrgetter('graduation_season'), reverse=True)
-        current_search['student_list'] = sorted(current_search['student_list'], key=operator.attrgetter('graduation_year'))
+        current_search['student_list'] = sorted(current_search['student_list'],
+                                                key=operator.attrgetter('graduation_season'), reverse=True)
+        current_search['student_list'] = sorted(current_search['student_list'],
+                                                key=operator.attrgetter('graduation_year'))
         sorted_by = SortedBy.GRADUATION
     context = current_search
     return render(request, 'mast/student_index.html', context)
