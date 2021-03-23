@@ -7,7 +7,7 @@ class Season(models.TextChoices):
     SPRING = 'Spring'
     SUMMER = 'Summer'
     FALL = 'Fall'
-    NOT_APPLICABLE = 'N/A'
+    NOT_APPLICABLE = '(N/A)'
 
 
 class CourseStatus(models.TextChoices):

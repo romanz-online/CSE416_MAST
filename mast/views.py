@@ -6,7 +6,7 @@ from django.shortcuts import get_object_or_404, render
 from django.http import HttpResponseRedirect
 from django.urls import reverse
 from .models import Student, Major, Course, Required_Classes_for_Track, Classes_Taken_by_Student, Grade, CourseStatus, \
-    Comment, Student_Course_Schedule, Semester, Requirement_Semester
+    Comment, Student_Course_Schedule, Semester, Requirement_Semester, Season
 
 global current_search
 current_search = {'student_list': Student.objects.order_by('sbu_id'),
@@ -166,12 +166,12 @@ def sort_by_name(request):
 def sort_by_graduation(request):
     global current_search, sorted_by
     if sorted_by == SortedBy.NAME:
-        current_search['student_list'] = sorted(current_search['student_list'], key=operator.attrgetter('graduation_season'))
         current_search['student_list'] = sorted(current_search['student_list'], key=operator.attrgetter('graduation_year'), reverse=True)
+        current_search['student_list'] = sorted(current_search['student_list'], key=operator.attrgetter('graduation_season'))
         sorted_by = SortedBy.GRADUATION_INV
     else:
-        current_search['student_list'] = sorted(current_search['student_list'], key=operator.attrgetter('graduation_year'))
         current_search['student_list'] = sorted(current_search['student_list'], key=operator.attrgetter('graduation_season'), reverse=True)
+        current_search['student_list'] = sorted(current_search['student_list'], key=operator.attrgetter('graduation_year'))
         sorted_by = SortedBy.GRADUATION
     context = current_search
     return render(request, 'mast/student_index.html', context)
@@ -316,6 +316,9 @@ def commit_edit(request, sbu_id):
             graduation_semester = Semester.objects.get(id=int(graduation_semester))
             student.graduation_season = graduation_semester.season
             student.graduation_year = graduation_semester.year
+        else:
+            student.graduation_season = Season.NOT_APPLICABLE
+            student.graduation_year = 0
 
         for course in Classes_Taken_by_Student.objects.all():
             if course.student == student and course.status != 'Pending':
