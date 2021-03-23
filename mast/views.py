@@ -187,8 +187,24 @@ def sort_by_graduation(request):
 
 def sort_by_attendance(request):
     global current_search, sorted_by
-    sorted_by = SortedBy.ATTENDANCE
-    return
+    if sorted_by == SortedBy.ATTENDANCE:
+        current_search['student_list'] = sorted(current_search['student_list'],
+                                                key=operator.attrgetter('unsatisfied_courses'), reverse=True)
+        current_search['student_list'] = sorted(current_search['student_list'],
+                                                key=operator.attrgetter('pending_courses'), reverse=True)
+        current_search['student_list'] = sorted(current_search['student_list'],
+                                                key=operator.attrgetter('satisfied_courses'), reverse=True)
+        sorted_by = SortedBy.ATTENDANCE_INV
+    else:
+        current_search['student_list'] = sorted(current_search['student_list'],
+                                                key=operator.attrgetter('unsatisfied_courses'))
+        current_search['student_list'] = sorted(current_search['student_list'],
+                                                key=operator.attrgetter('pending_courses'))
+        current_search['student_list'] = sorted(current_search['student_list'],
+                                                key=operator.attrgetter('satisfied_courses'))
+        sorted_by = SortedBy.ATTENDANCE
+    context = current_search
+    return render(request, 'mast/student_index.html', context)
 
 
 def detail(request, sbu_id):
@@ -265,7 +281,6 @@ def add_scheduled_course(request, sbu_id):
 def remove_scheduled_course(request, sbu_id, course):
     student = get_object_or_404(Student, pk=sbu_id)
     course_record = get_object_or_404(Course, pk=course)
-    print(course_record)
     try:
         c = Student_Course_Schedule.objects.get(student=student, course=course_record)
         c.delete()
