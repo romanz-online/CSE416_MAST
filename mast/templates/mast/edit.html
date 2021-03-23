@@ -137,6 +137,15 @@
         {% for record in classes_taken %}
             {% if record.student == student and record.status != 'Pending' %}
                 {{ record.course }}
+                <select name={{ record.getStatus }}>
+                    {% for status in course_status_list %}
+                        {% if status == record.status %}
+                            <option selected value={{ status }}>{{ status }}</option>
+                        {% else %}
+                            <option value={{ status }}>{{ status }}</option>
+                        {% endif %}
+                    {% endfor %}
+                </select>
                 <select name={{ record.id }}>
                     {% for grade in grade_list %}
                         {% if grade == record.grade %}
@@ -169,13 +178,13 @@
 </div>
 
 <div>
-    Courses in progress: <br>
+    Pending Courses: <br>
     {% for record in classes_taken %}
         {% if record.student == student and record.status == 'Pending' %}
             {{ record.course }}
             <form action="{% url 'mast:modify_course_in_progress' student.sbu_id record.id %}" method="get">
-                <button type="submit" name="action" value="complete_s">Complete (Satisfied)</button>
-                <button type="submit" name="action" value="complete_u">Complete (Unsatisfied)</button>
+                <button type="submit" name="action" value="pass">Pass</button>
+                <button type="submit" name="action" value="fail">Fail</button>
                 <button type="submit" name="action" value="drop">Drop</button>
             </form>
         {% endif %}
@@ -190,15 +199,15 @@
                 {% endif %}
             {% endfor %}
         </select>
-        <select name="grade">
-            {% for grade in grade_list %}
-                <option value={{ grade }}>{{ grade }}</option>
-            {% endfor %}
-        </select>
+{#        <select name="grade">#}
+{#            {% for grade in grade_list %}#}
+{#                <option value={{ grade }}>{{ grade }}</option>#}
+{#            {% endfor %}#}
+{#        </select>#}
         <button type="submit">Add Course</button>
         <br>
         <br>
-        Courses added here will be presented as "In Progress" until they are marked as Complete or Dropped.
+        Courses added here will be presented as "Pending" until they are Passed, Failed, or Dropped.
     </form>
 </div>
 

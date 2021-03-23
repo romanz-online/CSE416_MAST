@@ -346,9 +346,12 @@ def commit_edit(request, sbu_id):
         for course in Classes_Taken_by_Student.objects.all():
             if course.student == student and course.status != 'Pending':
                 new_grade = request.GET[str(course.id)]
+                new_status = request.GET[str(course.id) + 'status']
                 if course.grade != new_grade:
                     course.grade = new_grade
-                    course.save()
+                if course.status != new_status:
+                    course.status = new_status
+                course.save()
 
         sum = 0
         total = 0
@@ -391,11 +394,9 @@ def add_taken_course(request, sbu_id):
     try:
         new_course = request.GET['course']
         new_course = Course.objects.get(id=new_course)
-        new_grade = request.GET['grade']
-        c = Classes_Taken_by_Student(student=student, course=new_course, grade=new_grade)
+        # new_grade = request.GET['grade']
+        c = Classes_Taken_by_Student(student=student, course=new_course, grade='A')
         c.save()
-        student.pending_courses += 1
-        student.save()
     except:
         return HttpResponseRedirect(reverse('mast:edit', args=(sbu_id,)))
     return HttpResponseRedirect(reverse('mast:edit', args=(sbu_id,)))
@@ -405,21 +406,18 @@ def modify_course_in_progress(request, sbu_id, record):
     student = get_object_or_404(Student, pk=sbu_id)
     try:
         r = Classes_Taken_by_Student.objects.get(id=record)
-        if request.GET['action'] == 'complete_s':
-            r.status = CourseStatus.SATISFIED
+        if request.GET['action'] == 'pass':
+            r.status = CourseStatus.PASSED
+            r.grade = 'A'
             r.save()
-            student.pending_courses -= 1
-            student.satisfied_courses += 1
             student.save()
-        elif request.GET['action'] == 'complete_u':
-            r.status = CourseStatus.UNSATISFIED
+        elif request.GET['action'] == 'fail':
+            r.status = CourseStatus.FAILED
+            r.grade = 'F'
             r.save()
-            student.pending_courses -= 1
-            student.unsatisfied_courses += 1
             student.save()
         elif request.GET['action'] == 'drop':
             r.delete()
-            student.pending_courses -= 1
             student.save()
         else:
             raise Exception()

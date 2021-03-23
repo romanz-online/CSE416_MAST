@@ -4,6 +4,8 @@ from . import views
 
 app_name = 'mast'
 urlpatterns = [
+path('', views.home, name='home'),
+    
     path('', views.home, name='home'),
     path('gpd_landing', views.gpd_landing, name='gpd_landing'),
     path('student_index/', views.student_index, name='student_index'),

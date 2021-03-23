@@ -11,9 +11,9 @@ class Season(models.TextChoices):
 
 
 class CourseStatus(models.TextChoices):
-    SATISFIED = 'Satisfied'
     PENDING = 'Pending'
-    UNSATISFIED = 'Unsatisfied'
+    PASSED = 'Passed'
+    FAILED = 'Failed'
 
 
 class Grade(models.TextChoices):
@@ -140,6 +140,9 @@ class Classes_Taken_by_Student(models.Model):
 
     def __str__(self):
         return str(self.student) + ' - ' + str(self.course)
+
+    def getStatus(self):
+        return str(self.id) + 'status'
 
 
 class Student_Course_Schedule(models.Model):
