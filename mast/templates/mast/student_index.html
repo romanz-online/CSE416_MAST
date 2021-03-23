@@ -184,10 +184,10 @@
     <div class="container">
         <ul class="responsive-table">
             <li class="table-header">
-                <div class="col col-1 label"><a class="label" href="{% url 'mast:sort_by_name' %}">ID</a></div>
+                <div class="col col-1 label"><a class="label" href="{% url 'mast:sort_by_id' %}">ID</a></div>
                 <div class="col col-2"><a class="label" href="{% url 'mast:sort_by_name' %}">Name</a></div>
-                <div class="col col-3 label"><a class="label" href="{% url 'mast:sort_by_name' %}">Graduation</a></div>
-                <div class="col col-4 label"><a class="label" href="{% url 'mast:sort_by_name' %}">Satisfied-Pending-Unsatisfied</a>
+                <div class="col col-3 label"><a class="label" href="{% url 'mast:sort_by_graduation' %}">Graduation</a></div>
+                <div class="col col-4 label"><a class="label" href="{% url 'mast:sort_by_attendance' %}">Satisfied-Pending-Unsatisfied</a>
                 </div>
             </li>
             {% if student_list %}

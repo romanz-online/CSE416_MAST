@@ -1,4 +1,5 @@
 from datetime import datetime
+from enum import Enum
 import operator
 
 from django.shortcuts import get_object_or_404, render
@@ -6,7 +7,6 @@ from django.http import HttpResponseRedirect
 from django.urls import reverse
 from .models import Student, Major, Course, Required_Classes_for_Track, Classes_Taken_by_Student, Grade, CourseStatus, \
     Comment, Student_Course_Schedule, Semester, Requirement_Semester
-
 
 global current_search
 current_search = {'student_list': Student.objects.order_by('sbu_id'),
@@ -16,6 +16,22 @@ current_search = {'student_list': Student.objects.order_by('sbu_id'),
                   'graduated_search': False,
                   'withdrew_search': False,
                   'major_search': 0}
+
+class SortedBy(Enum):
+    NONE = 0
+    ID = 1
+    NAME = 2
+    GRADUATION = 3
+    ATTENDANCE = 4
+    ID_INV = 5
+    NAME_INV = 6
+    GRADUATION_INV = 7
+    ATTENDANCE_INV = 8
+
+
+
+global sorted_by
+sorted_by = SortedBy.NONE
 
 def home(request):
     return render(request, 'mast/home.html', {})
@@ -75,10 +91,11 @@ def commit_new_student(request):
 
 
 def student_index(request):
-    global current_search
+    global current_search, sorted_by
     context = {'student_list': Student.objects.order_by('sbu_id'), 'major_list': Major.objects.order_by('name')}
     current_search['student_list'] = Student.objects.order_by('sbu_id')
     current_search['major_list'] = Major.objects.order_by('name')
+    sorted_by = SortedBy.NONE
     return render(request, 'mast/student_index.html', context)
 
 
@@ -123,21 +140,46 @@ def search(request):
 
 
 def sort_by_id(request):
-    return
+    global current_search, sorted_by
+    if sorted_by == SortedBy.ID:
+        current_search['student_list'] = sorted(current_search['student_list'], key=operator.attrgetter('sbu_id'), reverse=True)
+        sorted_by = SortedBy.ID_INV
+    else:
+        current_search['student_list'] = sorted(current_search['student_list'], key=operator.attrgetter('sbu_id'))
+        sorted_by = SortedBy.ID
+    context = current_search
+    return render(request, 'mast/student_index.html', context)
 
 
 def sort_by_name(request):
-    global current_search
-    current_search['student_list'] = sorted(current_search['student_list'], key=operator.attrgetter('last_name'))
+    global current_search, sorted_by
+    if sorted_by == SortedBy.NAME:
+        current_search['student_list'] = sorted(current_search['student_list'], key=operator.attrgetter('last_name'), reverse=True)
+        sorted_by = SortedBy.NAME_INV
+    else:
+        current_search['student_list'] = sorted(current_search['student_list'], key=operator.attrgetter('last_name'))
+        sorted_by = SortedBy.NAME
     context = current_search
     return render(request, 'mast/student_index.html', context)
 
 
 def sort_by_graduation(request):
-    return
+    global current_search, sorted_by
+    if sorted_by == SortedBy.NAME:
+        current_search['student_list'] = sorted(current_search['student_list'], key=operator.attrgetter('graduation_season'))
+        current_search['student_list'] = sorted(current_search['student_list'], key=operator.attrgetter('graduation_year'), reverse=True)
+        sorted_by = SortedBy.GRADUATION_INV
+    else:
+        current_search['student_list'] = sorted(current_search['student_list'], key=operator.attrgetter('graduation_year'))
+        current_search['student_list'] = sorted(current_search['student_list'], key=operator.attrgetter('graduation_season'), reverse=True)
+        sorted_by = SortedBy.GRADUATION
+    context = current_search
+    return render(request, 'mast/student_index.html', context)
 
 
 def sort_by_attendance(request):
+    global current_search, sorted_by
+    sorted_by = SortedBy.ATTENDANCE
     return
 
 
