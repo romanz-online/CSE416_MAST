@@ -75,6 +75,11 @@ div {
     <input type="submit" value="Add New Student">
 </center>
 </form>
+<br>
+    <form action="{% url 'mast:student_index' %}" method="post">
+        {% csrf_token %}
+        <input type="submit" value="Leave Without Saving">
+    </form>
 </div>
 </center>
 </html>

@@ -293,6 +293,8 @@ def add_comment(request, sbu_id):
     student = get_object_or_404(Student, pk=sbu_id)
     try:
         new_comment = request.GET['new_comment']
+        if new_comment == '':
+            raise Exception
         c = Comment(student=student, text=str(new_comment), post_date=str(datetime.now()))
         c.save()
     except:

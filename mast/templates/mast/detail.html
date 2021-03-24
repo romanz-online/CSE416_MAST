@@ -168,13 +168,13 @@
                 {% for record in classes_taken %}
                     {% if record.student == student %}
 
-                        <div class=semester>
+{#                        <div class=semester>#}
                             <tr>
                                 <td>{{ record.course }}</td>
                                 <td>{{ record.grade }}</td>
                                 <td>{{ record.status }}</td>
                             </tr>
-                        </div>
+{#                        </div>#}
                     {% endif %}
                 {% endfor %}
                 </tbody>
