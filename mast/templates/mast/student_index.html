@@ -108,16 +108,12 @@
                 text-align: right;
             }
         }
-
-        .add-student {
+        .back {
             position: fixed;
-            top: 20%;
+            margin-left: 10px;
+            top: 95%;
         }
-
-        .return-home {
-            position: fixed;
-            top: 26%;
-        }
+        
     </style>
 
 </head>
@@ -126,12 +122,11 @@
 <div>
 
     <center>
-        <div class="add-student">
+        
             <a href="{% url 'mast:add_student' %}" class="button">Add Student</a>
-        </div>
-        <div class="return-home">
-            <a href="{% url 'mast:gpd_landing' %}" class="button">Return Home</a>
-        </div>
+        
+       
+ 
     </center>
     <br>
 
@@ -221,6 +216,8 @@
     </div>
 
 </div>
-
+<div class=back>
+<a href="{% url 'mast:gpd_landing' %}" class="button">Return Home</a>
+</div>
 </body>
 </html>
