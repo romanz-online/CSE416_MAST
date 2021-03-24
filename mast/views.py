@@ -17,6 +17,7 @@ current_search = {'student_list': Student.objects.order_by('sbu_id'),
                   'withdrew_search': False,
                   'major_search': 0}
 
+
 class SortedBy(Enum):
     NONE = 0
     ID = 1
@@ -29,9 +30,9 @@ class SortedBy(Enum):
     ATTENDANCE_INV = 8
 
 
-
 global sorted_by
 sorted_by = SortedBy.NONE
+
 
 def home(request):
     return render(request, 'mast/home.html', {})
@@ -210,7 +211,7 @@ def sort_by_attendance(request):
 def detail(request, sbu_id):
     student = get_object_or_404(Student, pk=sbu_id)
     comment_list = Comment.objects.filter(student=sbu_id)
-    semester_list = {i.course.semester:1 for i in Student_Course_Schedule.objects.filter(student=sbu_id)}.keys()
+    semester_list = {i.course.semester: 1 for i in Student_Course_Schedule.objects.filter(student=sbu_id)}.keys()
     semester_list = sorted(semester_list, key=operator.attrgetter('year'))
     return render(request, 'mast/detail.html', {'student': student,
                                                 'major_list': Major.objects.order_by('name'),
@@ -224,14 +225,15 @@ def detail(request, sbu_id):
 def edit_schedule(request, sbu_id):
     student = get_object_or_404(Student, pk=sbu_id)
     grade_list = [i[0] for i in Grade.choices]
-    semester_list = {i.course.semester:1 for i in Student_Course_Schedule.objects.filter(student=sbu_id)}.keys()
+    semester_list = {i.course.semester: 1 for i in Student_Course_Schedule.objects.filter(student=sbu_id)}.keys()
     semester_list = sorted(semester_list, key=operator.attrgetter('year'))
     return render(request, 'mast/edit_schedule.html', {'student': student,
                                                        'grade_list': grade_list,
                                                        'course_list': Course.objects.order_by('department'),
                                                        'classes_taken': Classes_Taken_by_Student.objects.all(),
                                                        'semester_list': semester_list,
-                                                       'schedule': Student_Course_Schedule.objects.filter(student=sbu_id)
+                                                       'schedule': Student_Course_Schedule.objects.filter(
+                                                           student=sbu_id)
                                                        })
 
 
@@ -239,7 +241,7 @@ def add_scheduled_semester(request, sbu_id):
     student = get_object_or_404(Student, pk=sbu_id)
     grade_list = [i[0] for i in Grade.choices]
     current_semester = Semester.objects.get(is_current_semester=True)
-    semester_list = {i.course.semester:1 for i in Student_Course_Schedule.objects.filter(student=sbu_id)}.keys()
+    semester_list = {i.course.semester: 1 for i in Student_Course_Schedule.objects.filter(student=sbu_id)}.keys()
     semester_list = sorted(semester_list, key=operator.attrgetter('year'))
     if semester_list:
         full_semester_list = [i for i in Semester.objects.all()]
@@ -249,7 +251,8 @@ def add_scheduled_semester(request, sbu_id):
         while full_semester_list[i] in semester_list:
             i += 1
         semester_list.append(full_semester_list[i])
-        empty_course = Course(name='', department='', number=0, semester=full_semester_list[i], section=0, timeslot=datetime.now())
+        empty_course = Course(name='', department='', number=0, semester=full_semester_list[i], section=0,
+                              timeslot=datetime.now())
     else:
         semester_list.append(current_semester)
         empty_course = Course(name='', department='', number=0, semester=current_semester, section=0,
@@ -262,7 +265,8 @@ def add_scheduled_semester(request, sbu_id):
                                                        'course_list': Course.objects.order_by('department'),
                                                        'classes_taken': Classes_Taken_by_Student.objects.all(),
                                                        'semester_list': semester_list,
-                                                       'schedule': Student_Course_Schedule.objects.filter(student=sbu_id)
+                                                       'schedule': Student_Course_Schedule.objects.filter(
+                                                           student=sbu_id)
                                                        })
 
 
@@ -316,6 +320,32 @@ def edit(request, sbu_id):
                                               'requirement_semesters': Requirement_Semester.objects.order_by('year')})
 
 
+def delete_record(request, sbu_id):
+    global current_search, sorted_by
+    student = get_object_or_404(Student, pk=sbu_id)
+    try:
+        student.delete()
+    except:
+        grade_list = [i[0] for i in Grade.choices]
+        course_status_list = [i[0] for i in CourseStatus.choices]
+        return render(request, 'mast/edit.html', {'student': student,
+                                                  'major_list': Major.objects.order_by('name'),
+                                                  'course_list': Course.objects.order_by('name'),
+                                                  'classes_taken': Classes_Taken_by_Student.objects.all(),
+                                                  'grade_list': grade_list,
+                                                  'course_status_list': course_status_list,
+                                                  'semesters': Semester.objects.order_by('year'),
+                                                  'requirement_semesters': Requirement_Semester.objects.order_by(
+                                                      'year'),
+                                                  'error_message': "Something went wrong."
+                                                  })
+    context = {'student_list': Student.objects.order_by('sbu_id'), 'major_list': Major.objects.order_by('name')}
+    current_search['student_list'] = Student.objects.order_by('sbu_id')
+    current_search['major_list'] = Major.objects.order_by('name')
+    sorted_by = SortedBy.NONE
+    return render(request, 'mast/student_index.html', context)
+
+
 def commit_edit(request, sbu_id):
     student = get_object_or_404(Student, pk=sbu_id)
     try:
@@ -334,8 +364,8 @@ def commit_edit(request, sbu_id):
         student.major = Major.objects.get(id=int(major))
         student.graduated = graduated
         student.withdrew = withdrew
-        student.entry_semester=Semester.objects.get(id=int(entry_semester))
-        student.requirement_semester=Requirement_Semester.objects.get(id=int(requirement_semester))
+        student.entry_semester = Semester.objects.get(id=int(entry_semester))
+        student.requirement_semester = Requirement_Semester.objects.get(id=int(requirement_semester))
         if student.graduated:
             graduation_semester = request.GET['graduation_semester']
             graduation_semester = Semester.objects.get(id=int(graduation_semester))
@@ -379,7 +409,8 @@ def commit_edit(request, sbu_id):
                                                   'grade_list': grade_list,
                                                   'course_status_list': course_status_list,
                                                   'semesters': Semester.objects.order_by('year'),
-                                                  'requirement_semesters': Requirement_Semester.objects.order_by('year'),
+                                                  'requirement_semesters': Requirement_Semester.objects.order_by(
+                                                      'year'),
                                                   'error_message': "Something went wrong."
                                                   })
     return HttpResponseRedirect(reverse('mast:detail', args=(sbu_id,)))

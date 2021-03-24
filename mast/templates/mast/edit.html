@@ -3,14 +3,17 @@
 <head>
     <style>
         h1 {
-            margin-top: -10px;
-            margin-left: -10px;
-            margin-right: -10px;
             padding: 20px;
-            margin-bottom: 40px;
+            margin: -10px -10px 40px;
             text-align: center;
             background-color: #490000;
             color: white;
+        }
+
+        .delete {
+            position: fixed;
+            bottom: 2%;
+            right: 2%;
         }
 
         body {
@@ -199,17 +202,18 @@
                 {% endif %}
             {% endfor %}
         </select>
-{#        <select name="grade">#}
-{#            {% for grade in grade_list %}#}
-{#                <option value={{ grade }}>{{ grade }}</option>#}
-{#            {% endfor %}#}
-{#        </select>#}
         <button type="submit">Add Course</button>
         <br>
         <br>
         Courses added here will be presented as "Pending" until they are Passed, Failed, or Dropped.
     </form>
 </div>
+
+
+<form action="{% url 'mast:delete_record' student.sbu_id %}" method="post" class="delete">
+    {% csrf_token %}
+    <input type="submit" value="Delete Record">
+</form>
 
 </body>
 </html>
