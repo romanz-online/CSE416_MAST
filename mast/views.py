@@ -80,12 +80,14 @@ def commit_new_student(request):
     except:
         if id_taken:
             return render(request, 'mast/new_student.html', {
-                'major_list': Major.objects.order_by('name'),
+                'major_list': Major.objects.order_by('name')[1:], 'semesters': Semester.objects.order_by('year'),
+                'requirement_semesters': Requirement_Semester.objects.order_by('year'),
                 'error_message': "ID taken."
             })
         else:
             return render(request, 'mast/new_student.html', {
-                'major_list': Major.objects.order_by('name'),
+                'major_list': Major.objects.order_by('name')[1:], 'semesters': Semester.objects.order_by('year'),
+                'requirement_semesters': Requirement_Semester.objects.order_by('year'),
                 'error_message': "Something went wrong."
             })
     return HttpResponseRedirect(reverse('mast:detail', args=(sbu_id,)))
