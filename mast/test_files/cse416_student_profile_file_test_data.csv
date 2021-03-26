@@ -1,0 +1,4 @@
+sbu_id,first_name,last_name,email,department,track,entry_semester,entry_year,requirement_version_semester,requirement_version_year,graduation_semester,graduation_year,password
+111222333,Linus,van Pelt,lvanpelt@stonybrook.edu,AMS,,Fall,2020,Fall,2020,Fall,2021,security_blanket
+222333444,Charles,Brown,cbrown@stonybrook.edu,CSE,special project,Spring,2020,Fall,2020,Spring,2021,WheresMyDog
+333444555,Peppermint,"""Patty, Jr""",ppatty@stonybrook.edu,BMI,Clinical Informatics with thesis,Spring,2021,Spring,2021,Spring,2022,baseball!!
