@@ -5,7 +5,7 @@ from django.shortcuts import get_object_or_404, render
 from django.http import HttpResponseRedirect
 from django.urls import reverse
 from .models import Student, Major, Course, Required_Classes_for_Track, Classes_Taken_by_Student, Grade, CourseStatus, \
-    Comment, Student_Course_Schedule, Semester, Requirement_Semester, Season
+    Comment, Student_Course_Schedule, Semester, Requirement_Semester, Season, Tracks_in_Major
 
 
 def home(request):
@@ -18,7 +18,8 @@ def gpd_landing(request):
 
 def major_index(request):
     context = {'major_list': Major.objects.order_by('name')[1:],
-               'required_classes_for_major_list': Required_Classes_for_Track.objects.order_by('major')}
+               'course_list': Course.objects.all(),
+               'track_list': Tracks_in_Major.objects.all()}
     return render(request, 'mast/major_index.html', context)
 
 

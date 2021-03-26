@@ -3,7 +3,6 @@
 <body>
 
 {% load static %}
-<link rel="stylesheet" type="text/css" href="{% static 'mast/style.css' %}">
 
 <h1>Majors</h1>
 
@@ -12,11 +11,19 @@
 {% if major_list %}
     {% for major in major_list %}
         {{ major }}<br>
-        {% if required_classes_for_major_list %}
-            Required Classes:<br>
-            {% for class in required_classes_for_major_list %}
-                {% if class.major == major %}
-                    {{ class.required_class }}<br>
+        {% if track_list %}
+            Available Tracks:<br>
+            {% for track in track_list %}
+                {% if track.major == major %}
+                    {{ track }}<br>
+                {% endif %}
+            {% endfor %}
+        {% endif %}
+        {% if course_list %}
+            Offered Classes:<br>
+            {% for class in course_list %}
+                {% if class.department == major.department %}
+                    {{ class }}<br>
                 {% endif %}
             {% endfor %}
         {% endif %}
