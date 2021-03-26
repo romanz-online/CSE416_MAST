@@ -2,6 +2,7 @@
 <html lang="en">
 
 <head>
+    <title>MAST Director</title>
     <style>
         h1 {
             margin-top: -10px;
@@ -31,10 +32,18 @@
 </head>
 
 <h1>Graduate Program Director Home</h1>
-<center>
+<div style="text-align: center;">
+    <br>This menu looks jank. We should fix it up a bit to look more usable (rather than just having a million buttons).<br>
     <a href="{% url 'mast:student_index' %}" class="button">Student Index</a> <br>
     <a href="{% url 'mast:major_index' %}" class="button">Major Index</a> <br>
+    <br>To be completed (currently stubs):<br>
+    <a href="{% url 'mast:major_index' %}" class="button">Import Student Data</a> <br>
+    <a href="{% url 'mast:major_index' %}" class="button">Import Grades</a> <br>
+    <a href="{% url 'mast:major_index' %}" class="button">Scrape Course Info</a> <br>
+    <a href="{% url 'mast:major_index' %}" class="button">Import Degree Reqs</a> <br>
+    <a href="{% url 'mast:major_index' %}" class="button">Import Course Offerings</a> <br>
     <br>
     Log Out[not implemented]
-</center>
+</div>
+
 </html>
