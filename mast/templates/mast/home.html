@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+
+{% load static %}
+<link rel="stylesheet" type="text/css" href="{% static 'mast/generic_style.css' %}"/>
+
+<head>
+    <title>MAST</title>
+    <style>
+        h1 {
+            padding: 30px;
+            text-align: center;
+            background-color: #490000;
+            color: white;
+            margin: -10px -10px 7%;
+        }
+
+        a.button {
+            background-color: #490000;
+            border: none;
+            width: 300px;
+            color: rgb(255, 255, 255);
+            padding: 15px 32px;
+            text-align: center;
+            text-decoration: none;
+            font-size: 50px;
+            cursor: pointer;
+            display: flex;
+            justify-content: center;
+            margin-left: auto;
+            margin-right: auto;
+        }
+    </style>
+</head>
+
+
+<body style="overflow-x: hidden;">
+
+
+<h1>Welcome to MAST!</h1>
+
+<a href="{% url 'mast:gpd_landing' %}" class="button">Director Login</a>
+<br>
+<a href="{% url 'mast:detail' 1 %}" class="button">Student Login</a>
+
+</body>
+</html>

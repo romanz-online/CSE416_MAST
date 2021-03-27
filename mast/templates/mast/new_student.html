@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <style>
+ h1{
+                margin-top: -10px;
+                margin-left: -10px;
+                margin-right: -10px;
+                padding: 30px;
+                margin-bottom: 40px;
+                text-align: center;
+                background-color: #490000;
+                color:white;
+            }
+    
+          
+    input[type=button], input[type=submit], input[type=reset] {
+        background-color: #490000;
+      border: none;
+      
+      color: rgb(255, 255, 255);
+      padding: 10px 10px;
+      text-align: center;
+      text-decoration: none;
+      display: inline-block;
+      font-size: 15px;
+      cursor: pointer;
+}
+div {
+  border-radius: 5px;
+  background-color: #f2f2f2;
+  padding: 10px;
+  width: 750px
+}
+    </style>
+</head>
+
+<h1>New Student Form</h1>
+<center>
+{% if error_message %}<p><strong>{{ error_message }}</strong></p>{% endif %}
+<div>
+<form action="{% url 'mast:commit_new_student' %}" method="get">
+    Stony Brook ID: <input name="sbu_id" type="number" autocomplete="on"> <br>
+    <br>
+    First Name: <input name="first_name" type="text" autocomplete="on"> <br>
+    <br>
+    Last Name: <input name="last_name" type="text" autocomplete="on"> <br>
+    <br>
+    Email: <input name="email" type="text" autocomplete="on"> <br>
+    <br>
+    Password: <input name="password" type="text"> <br>
+    <br>
+    Enrollment Semester:
+    <select name="entry_semester">
+        {% for s in semesters %}
+            <option value={{ s.id }}>{{ s }}</option>
+        {% endfor %}
+    </select>
+    <br><br>
+    Requirement Version Semester:
+    <select name="requirement_semester">
+        {% for s in requirement_semesters %}
+            <option value={{ s.id }}>{{ s }}</option>
+        {% endfor %}
+    </select>
+    <br><br>
+    Major:
+    <select name="major">
+        {% for major in major_list %}
+            <option value = {{ major.id }}>{{ major }}</option>
+        {% endfor %}
+    </select> <br> <br>
+<center>
+    <input type="submit" value="Add New Student">
+</center>
+</form>
+<br>
+    <form action="{% url 'mast:student_index' %}" method="post">
+        {% csrf_token %}
+        <input type="submit" value="Leave Without Saving">
+    </form>
+</div>
+</center>
+</html>

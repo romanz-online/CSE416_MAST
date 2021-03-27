@@ -1,0 +1,258 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/uikit@3.6.17/dist/css/uikit.min.css"/>
+
+    <!-- UIkit JS -->
+    <script src="https://cdn.jsdelivr.net/npm/uikit@3.6.17/dist/js/uikit.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/uikit@3.6.17/dist/js/uikit-icons.min.js"></script>
+    <style>
+        .left {
+            display: flex;
+            text-align: left;
+            vertical-align: center;
+
+        }
+
+        input[type=button], input[type=submit], input[type=reset] {
+            background-color: #490000;
+            border: none;
+            color: rgb(255, 255, 255);
+            padding: 10px 10px;
+            margin-left: 10px;
+            text-align: center;
+            text-decoration: none;
+            display: inline-block;
+            font-size: 13px;
+            cursor: pointer;
+
+
+        }
+
+        td {
+            color: black;
+            padding-right: 50px;
+        }
+
+        .info {
+            color: black;
+            margin-top: 10px;
+            margin-left: 20px;
+            margin-right: 20px;
+            padding-bottom: 10px;
+            border-style: solid;
+        }
+
+        .schedule {
+            margin-top: 10px;
+            padding-left: 10px;
+            margin-left: 20px;
+            margin-bottom: 5px;
+            margin-right: 20px;
+            padding-bottom: 10px;
+            border-style: solid;
+
+        }
+
+        .semester {
+            margin-left: 10px;
+            margin-right: 10px;
+            padding-left: 10px;
+            padding-top: 1px;
+            background-color: #f2f2f2;
+            margin-bottom: 7px;
+        }
+
+        .back {
+            position: fixed;
+            top: 95%;
+            right: 95%;
+        }
+
+        h1 {
+            background-color: #490000;
+            color: white;
+            text-align: center;
+            padding-bottom: 10px;
+        }
+
+    </style>
+</head>
+
+
+<div class="uk-flex">
+    <div class='uk-width-1-2'>
+        <div class=info>
+            <h1>{{ student.first_name }} {{ student.last_name }}</h1>
+
+            {% if error_message %}<p><strong>{{ error_message }}</strong></p>{% endif %}
+            <table class="uk-table uk-table-divider">
+                <tbody>
+                <tr>
+                    <td>ID Number</td>
+                    <td>{{ student.sbu_id }}</td>
+                </tr>
+                <tr>
+                    <td>Email</td>
+                    <td> {{ student.email }}</td>
+                </tr>
+                <tr>
+                    <td>GPA</td>
+                    <td> {{ student.gpa }}</td>
+                </tr>
+                <tr>
+                    {% if not student.graduated %}
+                        <td>Not Graduated</td>
+                        <td><span uk-icon="icon: close"></span></td>
+                    {% else %}
+                        <td>Graduated in {{ student.graduation_date }}</td>
+                        <td><span uk-icon="icon: check"></span></td>
+                    {% endif %}
+                </tr>
+                <tr>
+                    <td>Withdrew?</td>
+                    <td>
+                        {% if student.withdrew %}
+                            <span uk-icon="icon: check"></s
+                                <link rel="stylesheet"
+                                      href="https://cdn.jsdelivr.net/npm/uikit@3.6.17/dist/css/uikit.min.css"/></span>
+                            <!-- UIkit JS -->
+                        {% else %}
+                            <span uk-icon="icon: close"></span>
+                        {% endif %}
+                    </td>
+                </tr>
+                <tr>
+                    <td>Enrollment Semester</td>
+                    <td>{{ student.entry_semester }}</td>
+                </tr>
+                <tr>
+                    <td>Requirement Version Semester</td>
+                    <td>{{ student.requirement_semester }}</td>
+                </tr>
+                <tr>
+                    <td>Major:</td>
+                    <td>{{ student.major }}</td>
+                </tr>
+                <tr>
+                    <td>Track:</td>
+                    <td>{{ student.track }}</td>
+                </tr>
+
+
+                </tbody>
+            </table>
+
+            <form action="{% url 'mast:edit' student.sbu_id %}" method="post">
+                {% csrf_token %}
+                <input type="submit" value="Edit Student">
+            </form>
+        </div>
+
+    </div>
+
+
+    <div class=" uk-width-1-2">
+        <div class="schedule">
+            <table>
+                <thead>
+                <th>
+                    <font color=#490000>
+                        Courses Taken
+                    </font>
+                </th>
+                </thead>
+                <tbody>
+
+
+                {% for record in classes_taken %}
+                    {% if record.student == student %}
+
+{#                        <div class=semester>#}
+                            <tr>
+                                <td>{{ record.course }}</td>
+                                <td>{{ record.grade }}</td>
+                                <td>{{ record.status }}</td>
+                            </tr>
+{#                        </div>#}
+                    {% endif %}
+                {% endfor %}
+                </tbody>
+            </table>
+            <br>
+            <font color=#4900000>
+                Schedule:
+            </font>
+            <br><br>
+            {% for semester in semester_list %}
+                <div class=semester>
+                    <font color=#4900000>
+                        <u>{{ semester }}</u>
+                    </font>
+                    <br>
+                    {% for record in schedule %}
+
+                        {% if record.course.semester == semester and record.course.name != '' %}
+                            <font color=black>
+                                {{ record.course }}<br>
+                            </font>
+                        {% endif %}
+
+                    {% endfor %}
+                    <br>
+                </div>
+            {% endfor %}
+            <br>
+
+            <form action="{% url 'mast:edit_schedule' student.sbu_id %}" method="post">
+                {% csrf_token %}
+                <input type="submit" value="Edit Schedule">
+            </form>
+        </div>
+        <div class=schedule>
+            <font color=#4900000>
+                Comments:
+            </font> <br>
+            {% for comment in comment_list %}
+                <article class="uk-comment">
+                    <header class="uk-comment-header">
+                        <div class="uk-width-expand"></div>
+                        <img class="uk-comment-avatar" src="" alt="">
+                        <h4 class="uk-comment-title uk-margin-remove"><a class="uk-link-reset" href="#">
+                            <font color=#490000>
+                                {{ comment.author }}
+                            </font>
+                        </a></h4>
+                        <ul class="uk-comment-meta uk-subnav uk-subnav-divider uk-margin-remove-top">
+                            <li><a href="#">{{ comment.post_date }}</a></li>
+                        </ul>
+                    </header>
+
+                    <div class="uk-comment-body">
+                        <font color=black>
+                            {{ comment.text }}
+                        </font>
+                    </div>
+
+                </article>
+            {% endfor %}
+
+
+            <form action="{% url 'mast:add_comment' student.sbu_id %}" method="get">
+                <input type="text" name="new_comment" placeholder="Type your comment here.">
+                <input type="submit" value="Comment">
+            </form>
+
+
+            </form>
+        </div>
+    </div>
+</div>
+<br>
+<div class=back>
+    <form action="{% url 'mast:student_index' %}" method="post">
+        {% csrf_token %}
+        <input type="submit" value="Back">
+    </form>
+</div>
+</html>

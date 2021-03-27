@@ -1,0 +1,219 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <style>
+        h1 {
+            padding: 20px;
+            margin: -10px -10px 40px;
+            text-align: center;
+            background-color: #490000;
+            color: white;
+        }
+
+        .delete {
+            position: fixed;
+            bottom: 2%;
+            right: 2%;
+        }
+
+        body {
+            background-color: #f2f2f2;
+        }
+
+        button[type=submit] {
+            color: #490000;
+            border: none;
+            background-color: #f2f2f2;
+            padding: 3px 3px;
+            text-align: center;
+
+            display: inline-block;
+            font-size: 12px;
+            cursor: pointer;
+        }
+
+
+        input[type=submit] {
+            display: inline-block;
+            background-color: #490000;
+            border: none;
+            color: rgb(255, 255, 255);
+            padding: 10px 10px;
+            text-align: center;
+            text-decoration: none;
+            display: inline-block;
+            font-size: 15px;
+            cursor: pointer;
+
+        }
+
+        div {
+            background-color: white;
+            width: 100%;
+            float: left;
+            padding: 10px 10px 10px 10px;
+            margin-left: 10px;
+            width: 47%;
+            border: solid;
+        }
+
+        form {
+            margin-bottom: 10px;
+
+        }
+    </style>
+</head>
+
+<body>
+<h1> {{ student.first_name }} {{ student.last_name }}</h1>
+
+{% if error_message %}<p><strong>{{ error_message }}</strong></p>{% endif %}
+
+<div>
+    <form action="{% url 'mast:commit_edit' student.sbu_id %}" method="get">
+        First Name: <input name="first_name" type="text" autocomplete="on" value={{ student.first_name }}> <br>
+        <br>
+        Last Name: <input name="last_name" type="text" autocomplete="on" value={{ student.last_name }}> <br>
+        <br>
+        Email: <input name="email" type="text" autocomplete="on" value={{ student.email }}> <br>
+        <br>
+        Graduated:
+        <select name="graduated">
+            {% if student.graduated %}
+                <option value="yes" selected>Yes</option>
+                <option value="no">No</option>
+            {% else %}
+                <option value="yes">Yes</option>
+                <option value="no" selected>No</option>
+            {% endif %}
+        </select>
+        <br>
+        Graduation Semester:
+        <select name="graduation_semester">
+            {% for s in semesters %}
+                <option value={{ s.id }}>{{ s }}</option>
+            {% endfor %}
+        </select>
+        <br>
+        <br>
+        Withdrew:
+        <select name="withdrew">
+            {% if student.withdrew %}
+                <option value="yes" selected>Yes</option>
+                <option value="no">No</option>
+            {% else %}
+                <option value="yes">Yes</option>
+                <option value="no" selected>No</option>
+            {% endif %}
+        </select>
+        <br>
+        <br>
+        Enrollment Semester:
+        <select name="entry_semester">
+            {% for s in semesters %}
+                <option value={{ s.id }}>{{ s }}</option>
+            {% endfor %}
+        </select>
+        <br>
+        Requirement Version Semester:
+        <select name="requirement_semester">
+            {% for s in requirement_semesters %}
+                <option value={{ s.id }}>{{ s }}</option>
+            {% endfor %}
+        </select>
+        <br>
+        <br>
+        Major:
+        <select name="major">
+            {% for major in major_list %}
+                {% if major.id == student.major.id %}
+                    <option selected value={{ major.id }}>{{ major }}</option>
+                {% else %}
+                    <option value= {{ major.id }}>{{ major }}</option>
+                {% endif %}
+            {% endfor %}
+        </select>
+        <br>
+        <br>
+        Courses taken:
+        <br>
+        {% for record in classes_taken %}
+            {% if record.student == student and record.status != 'Pending' %}
+                {{ record.course }}
+                <select name={{ record.getStatus }}>
+                    {% for status in course_status_list %}
+                        {% if status == record.status %}
+                            <option selected value={{ status }}>{{ status }}</option>
+                        {% else %}
+                            <option value={{ status }}>{{ status }}</option>
+                        {% endif %}
+                    {% endfor %}
+                </select>
+                <select name={{ record.id }}>
+                    {% for grade in grade_list %}
+                        {% if grade == record.grade %}
+                            <option selected value={{ grade }}>{{ grade }}</option>
+                        {% else %}
+                            <option value= {{ grade }}>{{ grade }}</option>
+                        {% endif %}
+                    {% endfor %}
+                </select>
+                <br>
+            {% endif %}
+        {% endfor %}
+        <br>
+
+        <input type="submit" value="Save"/>
+    </form>
+    <br>
+
+    <form action="{% url 'mast:edit' student.sbu_id %}" method="post">
+        {% csrf_token %}
+        <input type="submit" value="Reset">
+    </form>
+    <br>
+
+    <form action="{% url 'mast:detail' student.sbu_id %}" method="post">
+        {% csrf_token %}
+        <input type="submit" value="Leave Without Saving">
+    </form>
+
+</div>
+
+<div>
+    Pending Courses: <br>
+    {% for record in classes_taken %}
+        {% if record.student == student and record.status == 'Pending' %}
+            {{ record.course }}
+            <form action="{% url 'mast:modify_course_in_progress' student.sbu_id record.id %}" method="get">
+                <button type="submit" name="action" value="pass">Pass</button>
+                <button type="submit" name="action" value="fail">Fail</button>
+                <button type="submit" name="action" value="drop">Drop</button>
+            </form>
+        {% endif %}
+    {% endfor %}
+    <br>
+
+    <form action="{% url 'mast:add_taken_course' student.sbu_id %}" method="get">
+        <select name="course">
+            {% for class in course_list %}
+                {% if class.name != '' %}
+                    <option value={{ class.id }}>{{ class }}</option>
+                {% endif %}
+            {% endfor %}
+        </select>
+        <button type="submit">Add Course</button>
+        <br>
+        <br>
+        Courses added here will be presented as "Pending" until they are Passed, Failed, or Dropped.
+    </form>
+</div>
+
+
+<form action="{% url 'mast:delete_record' student.sbu_id %}" method="post" class="delete">
+    {% csrf_token %}
+    <input type="submit" value="Delete Record">
+</form>
+
+</body>
+</html>
