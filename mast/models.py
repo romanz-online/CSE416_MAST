@@ -73,8 +73,8 @@ class Prerequisite_Classes_for_Course(models.Model):
 
 
 class Major(models.Model):
-    name = models.CharField(max_length=50)
     department = models.CharField(max_length=3)
+    name = models.CharField(max_length=50)
     requirement_semester = models.ForeignKey(Requirement_Semester, null=True, on_delete=models.SET_NULL)
 
     def __str__(self):
