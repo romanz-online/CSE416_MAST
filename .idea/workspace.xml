@@ -2,61 +2,9 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="433e10ab-7bf6-49f7-ab54-8658f67b786e" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/mast/migrations/0002_auto_20210313_2208.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/mast/migrations/0003_auto_20210313_2214.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/mast/migrations/0004_auto_20210313_2216.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/mast/migrations/0005_auto_20210313_2223.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/mast/migrations/0006_auto_20210314_0009.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/mast/migrations/0007_course_required_classes_for_major.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/mast/migrations/0008_classes_taken_by_student.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/mast/migrations/0009_remove_student_password.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/mast/migrations/0010_auto_20210314_1915.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/mast/migrations/0011_classes_taken_by_student_grade.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/mast/migrations/0012_auto_20210314_1942.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/mast/migrations/0013_auto_20210314_2109.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/mast/migrations/0014_classes_taken_by_student_in_progress.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/mast/migrations/0015_auto_20210315_1303.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/mast/migrations/0016_auto_20210315_1304.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/mast/migrations/0017_auto_20210315_1345.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/mast/migrations/0018_comment.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/mast/migrations/0019_auto_20210315_1609.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/mast/migrations/0020_auto_20210315_1757.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/mast/migrations/0021_auto_20210315_1757.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/mast/migrations/0022_auto_20210315_1758.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/mast/migrations/0023_auto_20210315_1812.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/mast/migrations/0024_auto_20210315_1817.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/mast/migrations/0025_auto_20210315_1817.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/mast/migrations/0026_auto_20210315_1818.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/mast/migrations/0027_auto_20210315_1818.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/mast/migrations/0028_auto_20210315_1823.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/mast/migrations/0029_auto_20210315_1823.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/mast/migrations/0030_delete_comment.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/mast/migrations/0031_auto_20210315_1842.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/mast/migrations/0032_comment.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/mast/migrations/0033_auto_20210315_1857.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/mast/migrations/0034_auto_20210315_1857.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/mast/migrations/0035_auto_20210315_1858.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/mast/migrations/0036_auto_20210315_1858.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/mast/migrations/0037_auto_20210315_1906.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/mast/migrations/0038_auto_20210315_1908.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/mast/migrations/0039_auto_20210315_1909.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/mast/migrations/0040_auto_20210315_1913.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/mast/migrations/0041_auto_20210315_2135.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/mast/migrations/0042_tracks_in_major_required_gpa.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/mast/migrations/0043_auto_20210315_2212.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/mast/migrations/0044_student_valid_schedule.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/mast/migrations/0045_auto_20210316_1959.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/mast/migrations/0046_auto_20210316_2143.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/mast/migrations/0047_auto_20210316_2150.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/mast/migrations/0048_auto_20210317_1546.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/mast/migrations/0049_director.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/mast/migrations/0050_auto_20210317_1915.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/mast/migrations/0051_auto_20210317_1916.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/mast/migrations/0052_auto_20210317_1920.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/mast/migrations/0053_auto_20210319_2042.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/mast/migrations/0054_auto_20210321_1933.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/mast/migrations/0055_auto_20210322_2004.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/mast/migrations/0056_auto_20210323_1412.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/mast/templates/mast/gpd_landing.html" beforeDir="false" afterPath="$PROJECT_DIR$/mast/templates/mast/gpd_landing.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/mast/urls.py" beforeDir="false" afterPath="$PROJECT_DIR$/mast/urls.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/mast/views.py" beforeDir="false" afterPath="$PROJECT_DIR$/mast/views.py" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -72,8 +20,8 @@
       <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/mast/views.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="590">
-              <caret line="95" lean-forward="true" selection-start-line="95" selection-end-line="95" />
+            <state relative-caret-position="437">
+              <caret line="114" column="52" lean-forward="true" selection-start-line="114" selection-start-column="52" selection-end-line="114" selection-end-column="52" />
               <folding>
                 <element signature="e#0#29#0" expanded="true" />
               </folding>
@@ -94,31 +42,22 @@
         </entry>
       </file>
       <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/mast/templates/mast/major_index.html">
+        <entry file="file://$PROJECT_DIR$/mast/templates/mast/gpd_landing.html">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="187">
-              <caret line="11" column="33" selection-start-line="11" selection-start-column="33" selection-end-line="11" selection-end-column="33" />
+            <state relative-caret-position="522">
+              <caret line="39" column="40" selection-start-line="39" selection-start-column="40" selection-end-line="39" selection-end-column="40" />
             </state>
           </provider>
         </entry>
       </file>
       <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/mast/admin.py">
+        <entry file="file://$PROJECT_DIR$/mast/urls.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="187">
-              <caret line="11" column="28" selection-start-line="11" selection-start-column="28" selection-end-line="11" selection-end-column="28" />
+            <state relative-caret-position="323">
+              <caret line="19" column="60" selection-start-line="19" selection-start-column="60" selection-end-line="19" selection-end-column="60" />
               <folding>
-                <element signature="e#0#32#0" expanded="true" />
+                <element signature="e#0#28#0" expanded="true" />
               </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/mast/templates/mast/student_index.html">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="86">
-              <caret line="130" column="8" selection-start-line="130" selection-start-column="8" selection-end-line="130" selection-end-column="8" />
             </state>
           </provider>
         </entry>
@@ -206,11 +145,11 @@
         <option value="$PROJECT_DIR$/mast/templates/mast/home.html" />
         <option value="$PROJECT_DIR$/mast/modifying_schedule.py" />
         <option value="$PROJECT_DIR$/mast/searching.py" />
-        <option value="$PROJECT_DIR$/mast/urls.py" />
         <option value="$PROJECT_DIR$/mast/editing_student.py" />
+        <option value="$PROJECT_DIR$/mast/templates/mast/major_index.html" />
         <option value="$PROJECT_DIR$/mast/views.py" />
         <option value="$PROJECT_DIR$/mast/templates/mast/gpd_landing.html" />
-        <option value="$PROJECT_DIR$/mast/templates/mast/major_index.html" />
+        <option value="$PROJECT_DIR$/mast/urls.py" />
       </list>
     </option>
   </component>
@@ -243,12 +182,6 @@
               <item name="cse416_MAST" type="b2602c69:ProjectViewProjectNode" />
               <item name="cse416_MAST" type="462c0819:PsiDirectoryNode" />
               <item name="mast" type="462c0819:PsiDirectoryNode" />
-              <item name="migrations" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="cse416_MAST" type="b2602c69:ProjectViewProjectNode" />
-              <item name="cse416_MAST" type="462c0819:PsiDirectoryNode" />
-              <item name="mast" type="462c0819:PsiDirectoryNode" />
               <item name="templates" type="462c0819:PsiDirectoryNode" />
             </path>
             <path>
@@ -257,6 +190,12 @@
               <item name="mast" type="462c0819:PsiDirectoryNode" />
               <item name="templates" type="462c0819:PsiDirectoryNode" />
               <item name="mast" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="cse416_MAST" type="b2602c69:ProjectViewProjectNode" />
+              <item name="cse416_MAST" type="462c0819:PsiDirectoryNode" />
+              <item name="mast" type="462c0819:PsiDirectoryNode" />
+              <item name="test_files" type="462c0819:PsiDirectoryNode" />
             </path>
           </expand>
           <select />
@@ -410,7 +349,7 @@
     </history-entry>
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="154407000" />
+    <option name="totallyTimeSpent" value="155046000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="-1608" y="-8" width="1616" height="876" extended-state="6" />
@@ -618,42 +557,12 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/mast/urls.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="255">
-          <caret line="17" column="26" selection-start-line="17" selection-start-column="26" selection-end-line="17" selection-end-column="26" />
-          <folding>
-            <element signature="e#0#28#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/mast/modifying_schedule.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="17">
           <caret line="7" selection-start-line="7" selection-end-line="7" />
           <folding>
             <element signature="e#0#29#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/mast/views.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="590">
-          <caret line="95" lean-forward="true" selection-start-line="95" selection-end-line="95" />
-          <folding>
-            <element signature="e#0#29#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/mast/templates/mast/gpd_landing.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="352">
-          <caret line="29" column="9" lean-forward="true" selection-start-line="29" selection-start-column="9" selection-end-line="29" selection-end-column="9" />
-          <folding>
-            <element signature="n#style#0;n#div#0;n#html#0;n#!!top" expanded="true" />
           </folding>
         </state>
       </provider>
@@ -671,6 +580,33 @@
           <caret line="134" column="45" lean-forward="true" selection-start-line="134" selection-start-column="45" selection-end-line="134" selection-end-column="45" />
           <folding>
             <element signature="e#0#28#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/mast/templates/mast/gpd_landing.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="522">
+          <caret line="39" column="40" selection-start-line="39" selection-start-column="40" selection-end-line="39" selection-end-column="40" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/mast/urls.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="323">
+          <caret line="19" column="60" selection-start-line="19" selection-start-column="60" selection-end-line="19" selection-end-column="60" />
+          <folding>
+            <element signature="e#0#28#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/mast/views.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="437">
+          <caret line="114" column="52" lean-forward="true" selection-start-line="114" selection-start-column="52" selection-end-line="114" selection-end-column="52" />
+          <folding>
+            <element signature="e#0#29#0" expanded="true" />
           </folding>
         </state>
       </provider>

@@ -11,6 +11,7 @@ urlpatterns = [
     path('majors/', views.major_index, name='major_index'),
     path('<int:sbu_id>/', views.detail, name='detail'),
     path('<int:sbu_id>/add_comment', views.add_comment, name='add_comment'),
+    path('import_student', views.import_student, name='import_student'),
 
     path('edit_schedule/<int:sbu_id>/', modifying_schedule.edit_schedule, name='edit_schedule'),
     path('edit_schedule/<int:sbu_id>/add_scheduled_course/', modifying_schedule.add_scheduled_course, name='add_scheduled_course'),

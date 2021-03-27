@@ -1,5 +1,5 @@
 from datetime import datetime
-import operator
+import operator, csv
 
 from django.shortcuts import get_object_or_404, render
 from django.http import HttpResponseRedirect
@@ -93,3 +93,31 @@ def add_comment(request, sbu_id):
     except:
         return HttpResponseRedirect(reverse('mast:detail', args=(sbu_id,)))
     return HttpResponseRedirect(reverse('mast:detail', args=(sbu_id,)))
+
+
+def import_student(request):
+    with open('mast/test_files/cse416_student_profile_file_test_data.csv', newline='') as file:
+        lines = csv.reader(file)
+        for line in lines:
+            if line[4] != 'department':
+                student = Student()
+                if line[0]:
+                    student.sbu_id = line[0]
+                student.first_name = line[1]
+                student.last_name = line[2]
+                student.email = line[3]
+                if line[4] and Major.objects.filter(department=line[4]):
+                    student.major = Major.objects.filter(department=line[4])[0]
+                if line[4] and line[5] and Major.objects.filter(department=line[4]) and Tracks_in_Major.objects.filter(name=line[5]):
+                    student.track = Tracks_in_Major.objects.get(name=line[5], major=Major.objects.filter(department=line[4])[0])
+                student.entry_semester = Semester.objects.get(season=line[6], year=line[7])
+                student.requirement_semester = Requirement_Semester.objects.get(season=line[8], year=line[9])
+                student.graduation_season = line[10]
+                student.graduation_year = line[11]
+                student.password = line[12]
+                student.save()
+
+    context = {'major_list': Major.objects.order_by('name')[1:],
+               'course_list': Course.objects.all(),
+               'track_list': Tracks_in_Major.objects.all()}
+    return render(request, 'mast/major_index.html', context)
