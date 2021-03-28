@@ -94,7 +94,7 @@ class Tracks_in_Major(models.Model):
     project_required = models.BooleanField(default=False)
 
     def __str__(self):
-        return str(self.major) + ' - ' + str(self.name)
+        return str(self.name)
 
 
 class Director(models.Model):

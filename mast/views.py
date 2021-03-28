@@ -99,23 +99,47 @@ def import_student(request):
     with open('mast/test_files/cse416_student_profile_file_test_data.csv', newline='') as file:
         lines = csv.reader(file)
         for line in lines:
-            if line[4] != 'department':
+            if line[0] != 'sbu_id':
                 student = Student()
+                if Student.objects.get(sbu_id=line[0]):
+                    s = Student.objects.get(sbu_id=line[0])
+                    s.delete()
                 if line[0]:
                     student.sbu_id = line[0]
-                student.first_name = line[1]
-                student.last_name = line[2]
-                student.email = line[3]
+                if line[1]:
+                    student.first_name = line[1]
+                if line[2]:
+                    student.last_name = line[2]
+                if line[3]:
+                    student.email = line[3]
                 if line[4] and Major.objects.filter(department=line[4]):
                     student.major = Major.objects.filter(department=line[4])[0]
                 if line[4] and line[5] and Major.objects.filter(department=line[4]) and Tracks_in_Major.objects.filter(name=line[5]):
                     student.track = Tracks_in_Major.objects.get(name=line[5], major=Major.objects.filter(department=line[4])[0])
-                student.entry_semester = Semester.objects.get(season=line[6], year=line[7])
-                student.requirement_semester = Requirement_Semester.objects.get(season=line[8], year=line[9])
-                student.graduation_season = line[10]
-                student.graduation_year = line[11]
-                student.password = line[12]
+                if line[6] and line[7]:
+                    student.entry_semester = Semester.objects.get(season=line[6], year=line[7])
+                if line[8] and line[9]:
+                    student.requirement_semester = Requirement_Semester.objects.get(season=line[8], year=line[9])
+                if line[10]:
+                    student.graduation_season = line[10]
+                if line[11]:
+                    student.graduation_year = line[11]
+                if line[10] and line[11]:
+                    student.graduated = True
+                if line[12]:
+                    student.password = line[12]
                 student.save()
+
+    with open('mast/test_files/cse416_student_course_plan_file_test_data.csv', newline='') as file:
+        lines = csv.reader(file)
+        for line in lines:
+            if line[0] != 'sbu_id':
+                new_class = Classes_Taken_by_Student()
+                if line[0] and Student.objects.get(sbu_id=line[0]):
+                    new_class.student = Student.objects.get(sbu_id=line[0])
+                if line[1] and Major.objects.filter(department=line[1]):
+                    new_class.major = Major.objects.filter(department=line[1])[0]
+
 
     context = {'major_list': Major.objects.order_by('name')[1:],
                'course_list': Course.objects.all(),
