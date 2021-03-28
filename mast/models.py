@@ -58,7 +58,9 @@ class Course(models.Model):
     department = models.CharField(max_length=3)
     number = models.IntegerField()
     semester = models.ForeignKey(Semester, null=True, on_delete=models.SET_NULL)
-    timeslot = models.TimeField()
+    time_start = models.TimeField(null=True)
+    time_end = models.TimeField(null=True)
+    days = models.CharField(max_length=10, null=True)
     section = models.IntegerField()
 
     def __str__(self):
