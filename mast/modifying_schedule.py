@@ -8,6 +8,16 @@ from .models import Student, Course, Classes_Taken_by_Student, Grade, Student_Co
 
 
 def edit_schedule(request, sbu_id):
+    """
+    Retrieves and renders a specific student's schedule to be edited on their respective page.
+    
+        Parameters:
+            request (HttpRequest): The request object used to pass states through the system. 
+            sbu_id (int): The SBU ID used to retrieve the student object. 
+
+        Returns:
+            render (HttpResponse): Returns the respective view containing the respective information of the student schedule retrieved.     
+    """
     student = get_object_or_404(Student, pk=sbu_id)
     grade_list = [i[0] for i in Grade.choices]
     semester_list = {i.course.semester: 1 for i in Student_Course_Schedule.objects.filter(student=sbu_id)}.keys()
@@ -23,6 +33,16 @@ def edit_schedule(request, sbu_id):
 
 
 def add_scheduled_semester(request, sbu_id):
+    """
+    Adds a scheduled semester to the student list.
+    
+        Parameters:
+            request (HttpRequest): The request object used to pass states through the system. 
+            sbu_id (int): The SBU ID used to retrieve the student object. 
+
+        Returns:
+            render (HttpResponse): Returns the respective view containing the respective information of the student schedule retrieved.     
+    """
     student = get_object_or_404(Student, pk=sbu_id)
     grade_list = [i[0] for i in Grade.choices]
     current_semester = Semester.objects.get(is_current_semester=True)
@@ -56,6 +76,16 @@ def add_scheduled_semester(request, sbu_id):
 
 
 def add_scheduled_course(request, sbu_id):
+    """
+    Adds a scheduled course to the student schedule.
+    
+        Parameters:
+            request (HttpRequest): The request object used to pass states through the system. 
+            sbu_id (int): The SBU ID used to retrieve the student object. 
+
+        Returns:
+            render (HttpResponse): Returns the respective view containing the respective information of the student schedule retrieved.     
+    """
     student = get_object_or_404(Student, pk=sbu_id)
     try:
         new_course = request.GET['course']
@@ -68,6 +98,16 @@ def add_scheduled_course(request, sbu_id):
 
 
 def remove_scheduled_course(request, sbu_id, course):
+    """
+    Removes a scheduled course from the student schedule.
+    
+        Parameters:
+            request (HttpRequest): The request object used to pass states through the system. 
+            sbu_id (int): The SBU ID used to retrieve the student object. 
+
+        Returns:
+            render (HttpResponse): Returns the respective view containing the respective information of the student schedule retrieved.     
+    """
     student = get_object_or_404(Student, pk=sbu_id)
     course_record = get_object_or_404(Course, pk=course)
     try:
