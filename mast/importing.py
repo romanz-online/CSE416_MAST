@@ -3,7 +3,7 @@ import re
 from django.shortcuts import render
 from django.contrib import messages
 from .models import Student, Major, Course, Classes_Taken_by_Student, Semester, Requirement_Semester, Tracks_in_Major, \
-    CourseStatus
+    CourseStatus, Grade
 
 
 def import_student(request):
@@ -79,32 +79,38 @@ def import_student(request):
         if line[0]:
             new_class.student = Student.objects.get(sbu_id=line[0])
         if line[1] and Major.objects.filter(department=line[1]) and line[2]:
-            m = Major.objects.filter(department=line[1])[0]
-            s = Semester.objects.filter(season=line[4], year=line[5])
-            if line[3] and Course.objects.filter(department=m, number=line[2], semester=s, section=line[3]):
-                new_class.course = Course.objects.get(department=m, number=line[2], semester=s, section=line[3])[0]
-            elif not line[3] and Course.objects.filter(department=m, number=line[2], semester=s, section=1):
-                new_class.course = Course.objects.get(department=m, number=line[2], semester=s, section=1)[0]
+            department = line[1]
+            semester = Semester.objects.filter(season=line[4], year=line[5])[0]
+            section = 1 if not line[3] else int(line[3])
+            if Course.objects.filter(department=department, number=int(line[2]), semester=semester, section=section):
+                new_class.course = Course.objects.filter(department=department, number=int(line[2]), semester=semester, section=section)[0]
             else:
-                error_string = 'Class ' + line[1] + line[2] + ' section ' + line[3]
+                error_string = 'Class ' + line[1] + line[2] + ' section ' + line[3] + ' could not be found.'
                 messages.error(request, error_string)
                 continue
-        if Classes_Taken_by_Student.objects.get(student=new_class.student, course=new_class.course):
+        if Classes_Taken_by_Student.objects.filter(student=new_class.student, course=new_class.course):
             error_string = 'Class ' + str(new_class.course) + ' already taken by student ' + str(new_class.student)
             messages.error(request, error_string)
             continue
         if line[6]:
-            if line[6] in ['A', 'A-', 'B+', 'B', 'B-', 'C+', 'C', 'S']:
+            new_class.grade = get_grade(re.sub(r'\W+', '', line[6]))
+            if new_class.grade in [Grade.A, Grade.A_MINUS, Grade.B_PLUS, Grade.B, Grade.B_MINUS, Grade.C_PLUS, Grade.C, Grade.SATISFIED]:
                 new_class.status = CourseStatus.PASSED
-            elif line[6] in ['C-', 'D+', 'D', 'D-', 'F', 'W', 'U']:
+            elif new_class.grade in [Grade.C_MINUS, Grade.D_PLUS, Grade.D, Grade.D_MINUS, Grade.F, Grade.WITHDREW, Grade.UNSATISFIED]:
                 new_class.status = CourseStatus.FAILED
-            elif line[6] == 'I':
+            else:
                 new_class.status = CourseStatus.PENDING
-        else:
-            new_class.status = CourseStatus.PENDING
         new_class.save()
 
     return render(request, 'mast/import_student.html', context)
+
+
+def get_grade(g):
+    d = {'A': Grade.A, 'A-': Grade.A_MINUS, 'B+': Grade.B_PLUS, 'B': Grade.B, 'B-': Grade.B_MINUS, 'C+': Grade.C_PLUS,
+         'C': Grade.C, 'C-': Grade.C_MINUS, 'D+': Grade.D_PLUS, 'D': Grade.D, 'D-': Grade.D_MINUS, 'F': Grade.F,
+         'W': Grade.WITHDREW, 'S': Grade.SATISFIED, 'U': Grade.UNSATISFIED, 'I': Grade.INCOMPLETE}
+    return d[g]
+
 
 
 def import_courses(request):
