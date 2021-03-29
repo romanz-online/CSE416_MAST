@@ -15,7 +15,7 @@
     <form action="" method="POST" enctype="multipart/form-data">
         {% csrf_token %}
         <label for="pro_file"> Upload Profile Data</label>
-        <!-- GET IT BECAUSE PRO AS IN PROFILE AND FILE AS IN FILE BUT ITS STILL JUST PROFILE OKAY BYE -->
+        <!-- GET IT BECAUSE PRO AS IN PROFILE AND FILE AS IN FILE BUT ITS STILL JUST PROFILE -->
         <input type="file" id="pro_file" name="pro_file">
         <label for="course_file"> Upload Course Plan Data</label>
         <input type="file" id="course_file" name="course_file">
@@ -24,6 +24,6 @@
     </form>
     {% endif %}
 
-
+    <a href="{% url 'mast:gpd_landing' %}" class="button">Return Home</a>
 </body>
 </html>

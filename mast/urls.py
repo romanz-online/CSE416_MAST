@@ -29,6 +29,7 @@ urlpatterns = [
          name='modify_course_in_progress'),
 
     path('student_index/', searching.student_index, name='student_index'),
+    path('student_index/upload', importing.import_student, name='import_student'),
     path('student_index/search/', searching.search, name='search'),
     path('student_index/search/sort_by_id', searching.sort_by_id, name='sort_by_id'),
     path('student_index/search/sort_by_name', searching.sort_by_name, name='sort_by_name'),

@@ -2,25 +2,86 @@
 <html lang="en">
 <head>
     <title>Import Course Offerings</title>
+    <style>
+        h1 {
+            margin-top: -10px;
+            margin-left: -10px;
+            margin-right: -10px;
+            padding: 30px;
+            margin-bottom: 10px;
+            text-align: center;
+            background-color: #490000;
+            color: white;
+        }
+
+        h2 {
+            color: #490000;
+            margin-bottom: 5px;
+        }
+
+        h3{
+            color:#490000;
+            text-align:center;
+        }
+
+        .sideBox{
+            float:right;
+            width: 30%;
+            padding: 10px;
+            margin-right: 10px;
+            border-style: solid;
+            outline: black;
+
+        }
+
+        .form{
+            float:left;
+            width: 60%;
+            padding: 10px;
+            
+        }
+
+        button[type=submit] {
+            color: #490000;
+            border: none;
+            background-color: rgb(255, 255, 255);
+            padding: 3px 3px;
+            text-align: center;
+
+            display: inline-block;
+            font-size: 12px;
+            cursor: pointer;
+        }
+
+
+        input[type=submit] {
+            background-color: #490000;
+            border: none;
+            color: rgb(255, 255, 255);
+            padding: 10px 10px;
+            text-align: center;
+            text-decoration: none;
+            display: inline-block;
+            font-size: 15px;
+            cursor: pointer;
+
+
+        }
+
+    </style>
 </head>
 <body>
-    {% if messages %}
-        {% for message in messages %}
-            <div>
-                <strong>{{message|safe}}</strong>
-            </div>
-        {% endfor %}
-    {% else %}
-    {{ order }}
+    <h1>Import Courses</h1>
+    <div class=form>
     <form action="" method="POST" enctype="multipart/form-data">
         {% csrf_token %}
-        <label for="file1"> Upload a file</label>
+        <label for="file1"> Upload Course File</label>
         <input type="file" id="file1" name="file">
-        <small>Only accepts CSV files</small>
+        <br>
         <button type="submit">Upload</button>
     </form>
-    {% endif %}
 
+<h2>Current Classes</h2>
     {% if course_list %}
             {% for course in course_list %}
                 {{course.name}}
@@ -28,6 +89,14 @@
             {% endfor %}
     {% endif %}
 
-
+</div>
+<div class=sideBox>
+<h3>File Conventions</h3>
+<ul>
+    <li>File must be a CSV</li>
+    <li>Column order should be: department, course number, section, semester, year, timeslot</li>
+</ul>
+</div>
+<a href="{% url 'mast:gpd_landing' %}" class="button">Return Home</a>
 </body>
 </html>

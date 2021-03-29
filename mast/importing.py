@@ -11,7 +11,7 @@ def import_student(request):
 
     # if we just taking a look
     if request.method == "GET":
-        return render(request, 'mast/import_student.html', context)
+        return render(request, 'mast/student_index.html', context)
 
     pro_file = request.FILES['pro_file']
     course_file = request.FILES['course_file']
@@ -30,86 +30,95 @@ def import_student(request):
     profiles = profile_data.split('\n')
     profiles.pop(0)
 
+    students = Student.objects.all()
     # read in new students and add to database
     for row in profiles:
         # regex for splitting by comma unless in quotes
         line = re.split(',(?=(?:[^\"]*\"[^\"]*\")*[^\"]*$)', row)
         student = Student()
-        if Student.objects.filter(sbu_id=line[0]):
-            s = Student.objects.get(sbu_id=line[0])
-            s.delete()
-        if line[0]:
-            student.sbu_id = line[0]
-        if line[1]:
-            student.first_name = line[1]
-        if line[2]:
-            student.last_name = line[2]
-        if line[3]:
-            student.email = line[3]
-        if line[4] and Major.objects.filter(department=line[4]):
-            student.major = Major.objects.filter(department=line[4])[0]
-        if line[4] and line[5]\
-                and Major.objects.filter(department=line[4]) and Tracks_in_Major.objects.filter(name=line[5]):
-            student.track = Tracks_in_Major.objects.get(name=line[5], major=Major.objects.filter(department=line[4])[0])
-        if line[6] and line[7]:
-            student.entry_semester = Semester.objects.get(season=line[6], year=line[7])
-        if line[8] and line[9]:
-            student.requirement_semester = Requirement_Semester.objects.get(season=line[8], year=line[9])
-        if line[10]:
-            student.graduation_season = line[10]
-        if line[11]:
-            student.graduation_year = line[11]
-        if line[10] and line[11]:
-            student.graduated = True
-        if line[12]:
-            student.password = line[12]
-        student.save()
+        if line != ['']:
+            if Student.objects.filter(sbu_id=line[0]):
+                s = Student.objects.get(sbu_id=line[0])
+                s.delete()
+            if line[0]:
+                student.sbu_id = line[0]
+            if line[1]:
+                student.first_name = line[1]
+            if line[2]:
+                student.last_name = line[2]
+            if line[3]:
+                student.email = line[3]
+            if line[4] and Major.objects.filter(department=line[4]):
+                student.major = Major.objects.filter(department=line[4])[0]
+            if line[4] and line[5]\
+                    and Major.objects.filter(department=line[4]) and Tracks_in_Major.objects.filter(name=line[5]):
+                student.track = Tracks_in_Major.objects.get(name=line[5], major=Major.objects.filter(department=line[4])[0])
+            if line[6] and line[7]:
+                student.entry_semester = Semester.objects.get(season=line[6], year=line[7])
+            if line[8] and line[9]:
+                student.requirement_semester = Requirement_Semester.objects.get(season=line[8], year=line[9])
+            if line[10]:
+                student.graduation_season = line[10]
+            if line[11]:
+                student.graduation_year = line[11]
+            if line[10] and line[11]:
+                student.graduated = True
+            if line[12]:
+                student.password = line[12]
+            student.save()
 
     # import new students' courses
     course_plans = course_data.split('\n')
     course_plans.pop(0)
+    
 
     for row in course_plans:
         # regex for splitting by comma unless in quotes
         line = re.split(',(?=(?:[^\"]*\"[^\"]*\")*[^\"]*$)', row)
-        new_class = Classes_Taken_by_Student()
-        if line[0] and not Student.objects.get(sbu_id=line[0]):
-            messages.error(request, bytes('No student with id', line[0]))
-            continue
-        if line[0]:
-            new_class.student = Student.objects.get(sbu_id=line[0])
-        if line[1] and Major.objects.filter(department=line[1]) and line[2]:
-            department = line[1]
-            semester = Semester.objects.filter(season=line[4], year=line[5])[0]
-            section = 1 if not line[3] else int(line[3])
-            if Course.objects.filter(department=department, number=int(line[2]), semester=semester, section=section):
-                new_class.course = Course.objects.filter(department=department, number=int(line[2]), semester=semester, section=section)[0]
-            else:
-                error_string = 'Class ' + line[1] + line[2] + ' section ' + line[3] + ' could not be found.'
+        if '\r' in line:
+            line[line.index('\r')] = ''
+        if line != ['']:
+            new_class = Classes_Taken_by_Student()
+            if line[0] and not Student.objects.get(sbu_id=line[0]):
+                messages.error(request, bytes('No student with id', line[0]))
+                continue
+            if line[0]:
+                new_class.student = Student.objects.get(sbu_id=line[0])
+            if line[1] and Major.objects.filter(department=line[1]) and line[2]:
+                department = line[1]
+                semester = Semester.objects.filter(season=line[4], year=line[5])[0]
+                section = 1 if not line[3] else int(line[3])
+                if Course.objects.filter(department=department, number=int(line[2]), semester=semester, section=section):
+                    new_class.course = Course.objects.filter(department=department, number=int(line[2]), semester=semester, section=section)[0]
+                else:
+                    error_string = 'Class ' + line[1] + line[2] + ' section ' + line[3] + ' could not be found.'
+                    messages.error(request, error_string)
+                continue
+            if Classes_Taken_by_Student.objects.filter(student=new_class.student, course=new_class.course):
+                error_string = 'Class ' + str(new_class.course) + ' already taken by student ' + str(new_class.student)
                 messages.error(request, error_string)
                 continue
-        if Classes_Taken_by_Student.objects.filter(student=new_class.student, course=new_class.course):
-            error_string = 'Class ' + str(new_class.course) + ' already taken by student ' + str(new_class.student)
-            messages.error(request, error_string)
-            continue
-        if line[6]:
-            new_class.grade = get_grade(re.sub(r'\W+', '', line[6]))
-            if new_class.grade in [Grade.A, Grade.A_MINUS, Grade.B_PLUS, Grade.B, Grade.B_MINUS, Grade.C_PLUS, Grade.C, Grade.SATISFIED]:
-                new_class.status = CourseStatus.PASSED
-            elif new_class.grade in [Grade.C_MINUS, Grade.D_PLUS, Grade.D, Grade.D_MINUS, Grade.F, Grade.WITHDREW, Grade.UNSATISFIED]:
-                new_class.status = CourseStatus.FAILED
-            else:
-                new_class.status = CourseStatus.PENDING
-        new_class.save()
+            if line[6]:
+                new_class.grade = get_grade(re.sub(r'\W+', '', line[6]))
+                if new_class.grade in [Grade.A, Grade.A_MINUS, Grade.B_PLUS, Grade.B, Grade.B_MINUS, Grade.C_PLUS, Grade.C, Grade.SATISFIED]:
+                    new_class.status = CourseStatus.PASSED
+                elif new_class.grade in [Grade.C_MINUS, Grade.D_PLUS, Grade.D, Grade.D_MINUS, Grade.F, Grade.WITHDREW, Grade.UNSATISFIED]:
+                    new_class.status = CourseStatus.FAILED
+                else:
+                    new_class.status = CourseStatus.PENDING
+            new_class.save()
 
-    return render(request, 'mast/import_student.html', context)
+    return render(request, 'mast/student_index.html', context)
 
 
 def get_grade(g):
     d = {'A': Grade.A, 'A-': Grade.A_MINUS, 'B+': Grade.B_PLUS, 'B': Grade.B, 'B-': Grade.B_MINUS, 'C+': Grade.C_PLUS,
          'C': Grade.C, 'C-': Grade.C_MINUS, 'D+': Grade.D_PLUS, 'D': Grade.D, 'D-': Grade.D_MINUS, 'F': Grade.F,
          'W': Grade.WITHDREW, 'S': Grade.SATISFIED, 'U': Grade.UNSATISFIED, 'I': Grade.INCOMPLETE}
-    return d[g]
+    if g in d:
+        return d[g]
+    else:
+        return 'pending'
 
 
 
@@ -167,8 +176,8 @@ def import_courses(request):
             course.days = line[5][0:line[5].index(' ')]
             # get each time
             times = line[5][line[5].index(''):]
-            course.time_start = times[0:times.index('-')]
-            course.time_end = times[times.index('-') + 1:]
+            time_start = times[0:times.index('-')]
+            time_end = times[times.index('-') + 1:]
         course.save()
         processed_lines += row
     context = {'course_list': Course.objects.all()}
