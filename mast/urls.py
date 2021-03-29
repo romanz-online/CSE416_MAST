@@ -1,6 +1,6 @@
 from django.urls import path
 
-from . import views, modifying_schedule, searching, editing_student
+from . import views, modifying_schedule, searching, editing_student, importing
 
 app_name = 'mast'
 urlpatterns = [
@@ -11,8 +11,8 @@ urlpatterns = [
     path('majors/', views.major_index, name='major_index'),
     path('<int:sbu_id>/', views.detail, name='detail'),
     path('<int:sbu_id>/add_comment', views.add_comment, name='add_comment'),
-    path('import_student', views.import_student, name='import_student'),
-    path('import_courses', views.import_courses, name="import_courses"),
+    path('import_student', importing.import_student, name='import_student'),
+    path('import_courses', importing.import_courses, name="import_courses"),
 
     path('edit_schedule/<int:sbu_id>/', modifying_schedule.edit_schedule, name='edit_schedule'),
     path('edit_schedule/<int:sbu_id>/add_scheduled_course/', modifying_schedule.add_scheduled_course, name='add_scheduled_course'),
