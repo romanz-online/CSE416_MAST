@@ -108,10 +108,8 @@ def import_student(request):
 
 
 def import_courses(request):
-    # all courses
-    courses = Course.objects.all()
     prompt = {'order': 'Order of CSV should be department, course_num, section, semester, year, timeslot',
-              'courses': courses}
+              'courses': Course.objects.all()}
 
     # if get request, render page
     if request.method == "GET":
@@ -127,7 +125,20 @@ def import_courses(request):
     lines = file.split('\n')
     # skip header line
     lines.pop(0)
+
+    # delete all courses from the semesters referenced by the uploaded file
     for row in lines:
+        line = re.split(',(?=(?:[^\"]*\"[^\"]*\")*[^\"]*$)', row)
+        if line[3] and line[4]:
+            semester = Semester.objects.get(season=line[3], year=line[4])
+            for course in Course.objects.all():
+                if course.semester == semester:
+                    course.delete()
+
+    processed_lines = []
+    for row in lines:
+        if row in processed_lines:
+            continue
         # regex for splitting by comma unless in quotes
         line = re.split(',(?=(?:[^\"]*\"[^\"]*\")*[^\"]*$)', row)
         course = Course()
@@ -143,14 +154,16 @@ def import_courses(request):
             course.section = 1
         if line[3] and line[4]:
             course.semester = Semester.objects.get(season=line[3], year=line[4])
+
         # manipulate string of type DDDD TT:TTMM-TT:TTMM
         if line[5]:
             # remove days
             course.days = line[5][0:line[5].index(' ')]
             # get each time
             times = line[5][line[5].index(''):]
-            time_start = times[0:times.index('-')]
-            time_end = times[times.index('-') + 1:]
+            course.time_start = times[0:times.index('-')]
+            course.time_end = times[times.index('-') + 1:]
         course.save()
+        processed_lines += row
     context = {'course_list': Course.objects.all()}
     return render(request, 'mast/import_courses.html', context)
