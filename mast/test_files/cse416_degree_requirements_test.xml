@@ -1,0 +1,85 @@
+<degree_reqs>
+
+    <!--Unfinished-->
+    <major>
+        <name>Computer Science</name>
+        <department>CS</department>
+        <requiredGPA>3.0</requiredGPA>
+        <minCredits>31</minCredits>
+        <projectRequired>False</projectRequired>
+        <thesisRequired>False</thesisRequired>
+    </major>
+
+    <!--Unfinished-->
+    <major>
+        <name>Applied Mathematics and Statistics</name>
+        <department>AMS</department>
+        <requirement_semester>Spring 2021</requirement_semester>
+
+        <Tracks_In_Major>
+            <name>Computational Applied Mathematics</name>
+            <projectRequired>False</projectRequired>
+            <thesisRequired>False</thesisRequired>
+            <requiredGPA>3.0</requiredGPA>
+            <minCredits>30</minCredits>
+            <required_areas_for_track>
+                <numberofAreas>1</numberofAreas>
+                <required_elective_class_sets_for_track>
+                    <area>1</area>
+                    <numberOfElectives>4</numberOfElectives>
+                </required_elective_class_sets_for_track>
+            </required_areas_for_track>
+        </Tracks_In_Major>
+
+        <Tracks_In_Major>
+            <name>Computational Biology</name>
+            <projectRequired>False</projectRequired>
+            <thesisRequired>False</thesisRequired>
+            <requiredGPA>3.0</requiredGPA>
+            <minCredits>30</minCredits>            
+        </Tracks_In_Major>
+
+        <Tracks_In_Major>
+            <name>Operations Research</name>
+            <projectRequired>False</projectRequired>
+            <thesisRequired>False</thesisRequired>
+            <requiredGPA>3.0</requiredGPA>
+            <minCredits>30</minCredits>            
+        </Tracks_In_Major>
+
+        <Tracks_In_Major>
+            <name>Statistics</name>
+            <projectRequired>False</projectRequired>
+            <thesisRequired>False</thesisRequired>
+            <requiredGPA>3.0</requiredGPA>
+            <minCredits>30</minCredits>            
+        </Tracks_In_Major>
+
+        <Tracks_In_Major>
+            <name>Quantitative Finance</name>
+            <projectRequired>False</projectRequired>
+            <thesisRequired>False</thesisRequired>
+            <requiredGPA>3.0</requiredGPA>
+            <minCredits>30</minCredits>            
+        </Tracks_In_Major>
+    </major>
+
+    <!--Unfinished-->
+    <major>
+        <name>Biomedical Informatics</name>
+        <department>BI</department>
+        <projectRequired></projectRequired>
+    </major>
+    
+    <!--Unfinished-->
+    <major>
+        <name>Computer Engineering</name>
+        <department>CE</department>
+        <requiredGPA>3.0</requiredGPA>
+        <minCredits>30</minCredits>
+
+        <projectRequired>False</projectRequired>
+        <thesisRequired>False</thesisRequired>
+    </major>    
+    
+</degree_reqs>
