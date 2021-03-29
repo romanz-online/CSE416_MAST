@@ -61,7 +61,7 @@ class Course(models.Model):
     time_start = models.TimeField(null=True)
     time_end = models.TimeField(null=True)
     days = models.CharField(max_length=10, null=True)
-    section = models.IntegerField()
+    section = models.IntegerField(default=1)
 
     def __str__(self):
         return self.department + str(self.number) + ':' + str(self.section)

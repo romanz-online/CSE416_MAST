@@ -2,7 +2,8 @@ import re
 
 from django.shortcuts import render
 from django.contrib import messages
-from .models import Student, Major, Course, Classes_Taken_by_Student, Semester, Requirement_Semester, Tracks_in_Major
+from .models import Student, Major, Course, Classes_Taken_by_Student, Semester, Requirement_Semester, Tracks_in_Major, \
+    CourseStatus
 
 
 def import_student(request):
@@ -34,7 +35,7 @@ def import_student(request):
         # regex for splitting by comma unless in quotes
         line = re.split(',(?=(?:[^\"]*\"[^\"]*\")*[^\"]*$)', row)
         student = Student()
-        if Student.objects.get(sbu_id=line[0]):
+        if Student.objects.filter(sbu_id=line[0]):
             s = Student.objects.get(sbu_id=line[0])
             s.delete()
         if line[0]:
@@ -47,8 +48,8 @@ def import_student(request):
             student.email = line[3]
         if line[4] and Major.objects.filter(department=line[4]):
             student.major = Major.objects.filter(department=line[4])[0]
-        if line[4] and line[5] and Major.objects.filter(department=line[4]) and Tracks_in_Major.objects.filter(
-                name=line[5]):
+        if line[4] and line[5]\
+                and Major.objects.filter(department=line[4]) and Tracks_in_Major.objects.filter(name=line[5]):
             student.track = Tracks_in_Major.objects.get(name=line[5], major=Major.objects.filter(department=line[4])[0])
         if line[6] and line[7]:
             student.entry_semester = Semester.objects.get(season=line[6], year=line[7])
@@ -77,8 +78,31 @@ def import_student(request):
             continue
         if line[0]:
             new_class.student = Student.objects.get(sbu_id=line[0])
-        if line[1] and Major.objects.filter(department=line[1]):
-            new_class.major = Major.objects.filter(department=line[1])[0]
+        if line[1] and Major.objects.filter(department=line[1]) and line[2]:
+            m = Major.objects.filter(department=line[1])[0]
+            s = Semester.objects.filter(season=line[4], year=line[5])
+            if line[3] and Course.objects.filter(department=m, number=line[2], semester=s, section=line[3]):
+                new_class.course = Course.objects.get(department=m, number=line[2], semester=s, section=line[3])[0]
+            elif not line[3] and Course.objects.filter(department=m, number=line[2], semester=s, section=1):
+                new_class.course = Course.objects.get(department=m, number=line[2], semester=s, section=1)[0]
+            else:
+                error_string = 'Class ' + line[1] + line[2] + ' section ' + line[3]
+                messages.error(request, error_string)
+                continue
+        if Classes_Taken_by_Student.objects.get(student=new_class.student, course=new_class.course):
+            error_string = 'Class ' + str(new_class.course) + ' already taken by student ' + str(new_class.student)
+            messages.error(request, error_string)
+            continue
+        if line[6]:
+            if line[6] in ['A', 'A-', 'B+', 'B', 'B-', 'C+', 'C', 'S']:
+                new_class.status = CourseStatus.PASSED
+            elif line[6] in ['C-', 'D+', 'D', 'D-', 'F', 'W', 'U']:
+                new_class.status = CourseStatus.FAILED
+            elif line[6] == 'I':
+                new_class.status = CourseStatus.PENDING
+        else:
+            new_class.status = CourseStatus.PENDING
+        new_class.save()
 
     return render(request, 'mast/import_student.html', context)
 
@@ -86,7 +110,7 @@ def import_student(request):
 def import_courses(request):
     # all courses
     courses = Course.objects.all()
-    prompt = {'order': 'Order of CSV should be department, course_num, section, semester, year, timesot',
+    prompt = {'order': 'Order of CSV should be department, course_num, section, semester, year, timeslot',
               'courses': courses}
 
     # if get request, render page
