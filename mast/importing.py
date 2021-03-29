@@ -7,33 +7,42 @@ from .models import Student, Major, Course, Classes_Taken_by_Student, Semester, 
 
 
 def import_student(request):
+    """
+    Imports a student profile through reading a .csv file  
+    
+        Parameters:
+            request (HttpRequest): The request object used to pass states through the system. 
+
+        Returns:
+            render (HttpResponse): Returns the respective view containing the respective information of the student schedule retrieved.     
+    """
     context = {'': None}
 
-    # if we just taking a look
+    # GET file 
     if request.method == "GET":
         return render(request, 'mast/student_index.html', context)
 
     pro_file = request.FILES['pro_file']
     course_file = request.FILES['course_file']
 
-    # if the user is dumb and gave us a non-csv
+    # User gave a non-csv file 
     if not pro_file.name.endswith('.csv'):
         messages.error(request, "Incorrect file type for student profiles.")
     if not course_file.name.endswith('.csv'):
         messages.error(request, "Incorrect file type for course plan data.")
 
-    # read both files in
+    # Read both files in 
     profile_data = pro_file.read().decode("utf-8")
     course_data = course_file.read().decode("utf-8")
 
-    # profiles first, split data and skip header
+    # Profiles first, split data and skip header
     profiles = profile_data.split('\n')
     profiles.pop(0)
 
     students = Student.objects.all()
-    # read in new students and add to database
+    # Read in new students and add to database
     for row in profiles:
-        # regex for splitting by comma unless in quotes
+        # Regex for splitting by comma unless in quotes
         line = re.split(',(?=(?:[^\"]*\"[^\"]*\")*[^\"]*$)', row)
         student = Student()
         if line != ['']:
@@ -67,13 +76,13 @@ def import_student(request):
                 student.password = line[12]
             student.save()
 
-    # import new students' courses
+    # Import new students' courses
     course_plans = course_data.split('\n')
     course_plans.pop(0)
     
 
     for row in course_plans:
-        # regex for splitting by comma unless in quotes
+        # Regex for splitting by comma unless in quotes
         line = re.split(',(?=(?:[^\"]*\"[^\"]*\")*[^\"]*$)', row)
         if '\r' in line:
             line[line.index('\r')] = ''
@@ -112,6 +121,9 @@ def import_student(request):
 
 
 def get_grade(g):
+    """
+    Retrieve grade value based on the letter grade.
+    """
     d = {'A': Grade.A, 'A-': Grade.A_MINUS, 'B+': Grade.B_PLUS, 'B': Grade.B, 'B-': Grade.B_MINUS, 'C+': Grade.C_PLUS,
          'C': Grade.C, 'C-': Grade.C_MINUS, 'D+': Grade.D_PLUS, 'D': Grade.D, 'D-': Grade.D_MINUS, 'F': Grade.F,
          'W': Grade.WITHDREW, 'S': Grade.SATISFIED, 'U': Grade.UNSATISFIED, 'I': Grade.INCOMPLETE}
@@ -123,25 +135,34 @@ def get_grade(g):
 
 
 def import_courses(request):
+    """
+    Imports course offerings for the semester.
+    
+        Parameters:
+            request (HttpRequest): The request object used to pass states through the system. 
+
+        Returns:
+            render (HttpResponse): Returns the respective view containing the respective information of the student schedule retrieved.     
+    """
     prompt = {'order': 'Order of CSV should be department, course_num, section, semester, year, timeslot',
               'courses': Course.objects.all()}
 
-    # if get request, render page
+    # If get request, render page
     if request.method == "GET":
         return render(request, 'mast/import_courses.html', prompt)
 
-    # if file uploaded
+    # If file uploaded
     file_name = request.FILES['file']
-    # if the user is dumb and gave us a non-csv
+    # If non-csv file 
     if not file_name.name.endswith('.csv'):
         messages.error(request, "Incorrect file type.")
 
     file = file_name.read().decode("utf-8")
     lines = file.split('\n')
-    # skip header line
+    # Skip header line
     lines.pop(0)
 
-    # delete all courses from the semesters referenced by the uploaded file
+    # Delete all courses from the semesters referenced by the uploaded file
     for row in lines:
         line = re.split(',(?=(?:[^\"]*\"[^\"]*\")*[^\"]*$)', row)
         if line[3] and line[4]:
@@ -154,7 +175,7 @@ def import_courses(request):
     for row in lines:
         if row in processed_lines:
             continue
-        # regex for splitting by comma unless in quotes
+        # Regex for splitting by comma unless in quotes
         line = re.split(',(?=(?:[^\"]*\"[^\"]*\")*[^\"]*$)', row)
         course = Course()
         if line[0]:
@@ -170,11 +191,11 @@ def import_courses(request):
         if line[3] and line[4]:
             course.semester = Semester.objects.get(season=line[3], year=line[4])
 
-        # manipulate string of type DDDD TT:TTMM-TT:TTMM
+        # Manipulate string of type DDDD TT:TTMM-TT:TTMM
         if line[5]:
-            # remove days
+            # Remove days
             course.days = line[5][0:line[5].index(' ')]
-            # get each time
+            # Get each time
             times = line[5][line[5].index(''):]
             time_start = times[0:times.index('-')]
             time_end = times[times.index('-') + 1:]
