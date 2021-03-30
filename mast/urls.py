@@ -12,9 +12,9 @@ urlpatterns = [
     path('<int:sbu_id>/', views.detail, name='detail'),
     path('<int:sbu_id>/add_comment', views.add_comment, name='add_comment'),
 
-    path('import_student', importing.import_student, name='import_student'),
-    path('import_grades', importing.import_grades, name='import_grades'),
-    path('import_courses', importing.import_courses, name="import_courses"),
+    path('student_index/import_student/', importing.import_student, name='import_student'),
+    path('student_index/import_grades/', importing.import_grades, name='import_grades'),
+    path('import_courses/', importing.import_courses, name="import_courses"),
 
     path('edit_schedule/<int:sbu_id>/', modifying_schedule.edit_schedule, name='edit_schedule'),
     path('edit_schedule/<int:sbu_id>/add_scheduled_course/', modifying_schedule.add_scheduled_course, name='add_scheduled_course'),
@@ -31,7 +31,6 @@ urlpatterns = [
          name='modify_course_in_progress'),
 
     path('student_index/', searching.student_index, name='student_index'),
-    path('student_index/upload', importing.import_student, name='import_student'),
     path('student_index/search/', searching.search, name='search'),
     path('student_index/search/sort_by_id', searching.sort_by_id, name='sort_by_id'),
     path('student_index/search/sort_by_name', searching.sort_by_name, name='sort_by_name'),

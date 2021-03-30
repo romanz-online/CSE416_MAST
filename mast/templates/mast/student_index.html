@@ -139,7 +139,8 @@
 <div class=overlay id=overlay>
     <div class=manual id=manual>
         <center>
-            This doesn't 100% work right now. It works if you enter everything correctly, but doing anything wrong sends you to /mast/new_student/ <br><br>
+            This doesn't 100% work right now. It works if you enter everything correctly, but doing anything wrong sends
+            you to /mast/new_student/ <br><br>
             <div>
                 <form action="{% url 'mast:commit_new_student' %}" method="get">
                     <label>
@@ -196,24 +197,35 @@
     </div>
 
     <div class=upload id=upload>
-        Upload File
         <a href='#' onclick='overlayUpload()' class="exit">&#10799;</a>
-        <form action="" method="POST" enctype="multipart/form-data">
+        Upload Students and Courses:
+        <form action="{% url 'mast:import_student' %}" method="POST" enctype="multipart/form-data">
             {% csrf_token %}
-            <label for="pro_file"> Upload Profile Data</label>
+            <label for="pro_file">Upload Profile Data</label>
             <input type="file" id="pro_file" name="pro_file">
-
-            <label for="course_file"> Upload Course Plan Data</label>
+            <br>
+            <label for="course_file">Upload Course Data</label>
             <input type="file" id="course_file" name="course_file">
-
-            <small>Only accepts CSV files</small>
+            <br>
+            <small>Only accepts CSV files. Empty files are accepted.</small>
+            <br>
+            <button type="submit">Upload</button>
+        </form>
+        <strong>or</strong>
+        <br>
+        just courses:
+        <form action="{% url 'mast:import_grades' %}" method="POST" enctype="multipart/form-data">
+            {% csrf_token %}
+            <label for="course_file">Upload Course Data</label>
+            <input type="file" id="course_file" name="course_file">
+            <br>
             <button type="submit">Upload</button>
         </form>
     </div>
 
     <div id=add class=add>
         <a href='#' onclick='overlayManual()' class='button'>Manual</a>
-        <a href="{% url 'mast:import_student' %}#" onclick='overlayUpload()' class='button'>Upload File</a>
+        <a href="#" onclick='overlayUpload()' class='button'>Upload File</a>
         <a href='#' onclick='overlayAdd()' class="exit">&#10799;</a>
     </div>
 </div>

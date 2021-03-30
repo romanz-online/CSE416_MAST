@@ -2,6 +2,8 @@ import re
 
 from django.shortcuts import render
 from django.contrib import messages
+from django.http import HttpResponseRedirect
+from django.urls import reverse
 from .models import Student, Major, Course, Classes_Taken_by_Student, Semester, Requirement_Semester, Tracks_in_Major, \
     CourseStatus, Grade
 
@@ -18,7 +20,7 @@ def import_student(request):
     """
     context = {'': None}
 
-    # GET file 
+    # GET file
     if request.method == "GET":
         return render(request, 'mast/student_index.html', context)
 
@@ -104,7 +106,7 @@ def import_student(request):
                 else:
                     error_string = 'Class ' + line[1] + line[2] + ' section ' + line[3] + ' could not be found.'
                     messages.error(request, error_string)
-                continue
+                    continue
             if Classes_Taken_by_Student.objects.filter(student=new_class.student, course=new_class.course):
                 error_string = 'Class ' + str(new_class.course) + ' already taken by student ' + str(new_class.student)
                 messages.error(request, error_string)
@@ -123,7 +125,7 @@ def import_student(request):
                 new_class.status = CourseStatus.PENDING
             new_class.save()
 
-    return render(request, 'mast/student_index.html', context)
+    return HttpResponseRedirect(reverse('mast:student_index', args=()))
 
 
 def import_grades(request):
@@ -140,7 +142,7 @@ def import_grades(request):
 
     # GET file
     if request.method == "GET":
-        return render(request, 'mast/import_grades.html', context)
+        return render(request, 'mast/student_index.html', context)
 
     course_file = request.FILES['course_file']
 
@@ -199,7 +201,7 @@ def import_grades(request):
 
             new_class.save()
 
-    return render(request, 'mast/import_grades.html', context)
+    return HttpResponseRedirect(reverse('mast:student_index', args=()))
 
 
 def get_grade(g):
