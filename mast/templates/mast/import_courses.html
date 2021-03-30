@@ -4,11 +4,8 @@
     <title>Import Course Offerings</title>
     <style>
         h1 {
-            margin-top: -10px;
-            margin-left: -10px;
-            margin-right: -10px;
             padding: 30px;
-            margin-bottom: 10px;
+            margin: -10px -10px 10px;
             text-align: center;
             background-color: #490000;
             color: white;
@@ -19,13 +16,13 @@
             margin-bottom: 5px;
         }
 
-        h3{
-            color:#490000;
-            text-align:center;
+        h3 {
+            color: #490000;
+            text-align: center;
         }
 
-        .sideBox{
-            float:right;
+        .sideBox {
+            float: right;
             width: 30%;
             padding: 10px;
             margin-right: 10px;
@@ -34,11 +31,11 @@
 
         }
 
-        .form{
-            float:left;
+        .form {
+            float: left;
             width: 60%;
             padding: 10px;
-            
+
         }
 
         button[type=submit] {
@@ -64,15 +61,12 @@
             display: inline-block;
             font-size: 15px;
             cursor: pointer;
-
-
         }
-
     </style>
 </head>
 <body>
-    <h1>Import Courses</h1>
-    <div class=form>
+<h1>Import Courses</h1>
+<div class=form>
     <form action="" method="POST" enctype="multipart/form-data">
         {% csrf_token %}
         <label for="file1"> Upload Course File</label>
@@ -81,24 +75,24 @@
         <button type="submit">Upload</button>
     </form>
 
-<h2>Current Classes</h2>
+    <h2>Current Classes</h2>
     {% if course_list %}
-            {% for course in course_list %}
-                {{course.name}}
-                {{course.section}}
-                {{course.semester}}
-                {{course.year}}
-                <br>
-            {% endfor %}
+        {% for course in course_list %}
+            {{ course.name }}
+            {{ course.section }}
+            {{ course.semester }}
+            {{ course.year }}
+            <br>
+        {% endfor %}
     {% endif %}
 
 </div>
 <div class=sideBox>
-<h3>File Conventions</h3>
-<ul>
-    <li>File must be a CSV</li>
-    <li>Column order should be: department, course number, section, semester, year, timeslot</li>
-</ul>
+    <h3>File Conventions</h3>
+    <ul>
+        <li>File must be a CSV</li>
+        <li>Column order should be: department, course number, section, semester, year, timeslot</li>
+    </ul>
 </div>
 <a href="{% url 'mast:gpd_landing' %}" class="button">Return Home</a>
 </body>
