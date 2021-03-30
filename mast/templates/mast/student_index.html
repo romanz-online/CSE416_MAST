@@ -28,17 +28,19 @@
             font-size: 15px;
             cursor: pointer;
         }
-        a.exit{
+
+        a.exit {
             background-color: #f2f2f2;
             color: #490000;
             text-decoration: none;
             padding: 10px 10px;
             font-size: 15px;
-            position:absolute; 
-            top:5; 
-            right:5;
+            position: absolute;
+            top: 5;
+            right: 5;
             cursor: pointer;
         }
+
         a.label {
             cursor: pointer;
             color: black;
@@ -118,51 +120,55 @@
                 text-align: right;
             }
         }
+
         .back {
             position: fixed;
             margin-left: 10px;
             top: 95%;
         }
-        .add{
+
+        .add {
             visibility: hidden;
             margin: 100px auto;
-            position:fixed;
+            position: fixed;
             background-color: white;
-            width:50%;
-            height:50%;
+            width: 50%;
+            height: 50%;
             left: 25%;
             border: solid black;
-            text-align:center;
+            text-align: center;
             padding: 20px;
             z-index: 11;
         }
 
-        .upload{
+        .upload {
             visibility: hidden;
             margin: 100px auto;
-            position:fixed;
+            position: fixed;
             background-color: white;
-            width:50%;
-            height:50%;
+            width: 50%;
+            height: 50%;
             left: 25%;
             border: solid black;
-            text-align:center;
+            text-align: center;
             padding: 20px;
             z-index: 12;
         }
-        .manual{
+
+        .manual {
             visibility: hidden;
             margin: 100px auto;
-            position:fixed;
+            position: fixed;
             background-color: white;
-            width:50%;
-            height:50%;
+            width: 50%;
+            height: 50%;
             left: 25%;
             border: solid black;
-            text-align:center;
+            text-align: center;
             padding: 20px;
             z-index: 12;
         }
+
         .overlay {
             visibility: hidden;
             position: fixed;
@@ -170,37 +176,56 @@
             left: 0;
             height: 100%;
             width: 100%;
-            z-index: 10;
-}
-        
+            z-index: 999;
+        }
+
+        div#overlay_dimmer {
+            height: 100%;
+            width: 100%;
+            margin: 0;
+            padding: 0;
+            z-index: 99;
+            position: fixed;
+            top: 0;
+            left: 0;
+            opacity: 0.3;
+            background: black;
+            {#display: none;#}
+            visibility: hidden;
+        }
     </style>
 
     <!-- script for each of the pop-ups to make them go on and off -->
-<script>
-    
-function overlayUpload() {
-	u = document.getElementById("upload");
-	u.style.visibility = (u.style.visibility == "visible") ? "hidden" : "visible";
-    
-}
-function overlayAdd() {
-	a = document.getElementById("add");
-	a.style.visibility = (a.style.visibility == "visible") ? "hidden" : "visible";
-}
+    <script>
+        function overlayUpload() {
+            u = document.getElementById("upload");
+            u.style.visibility = (u.style.visibility === "visible") ? "hidden" : "visible";
+        }
 
-function overlayManual() {
-	m = document.getElementById("manual");
-	m.style.visibility = (m.style.visibility == "visible") ? "hidden" : "visible";
-}
-</script>
+        function overlayAdd() {
+            a = document.getElementById("add");
+            b = document.getElementById("overlay_dimmer");
+            b.style.visibility = (b.style.visibility === "visible") ? "hidden" : "visible";
+            a.style.visibility = (a.style.visibility === "visible") ? "hidden" : "visible";
+        }
+
+        function overlayManual() {
+            m = document.getElementById("manual");
+            m.style.visibility = (m.style.visibility === "visible") ? "hidden" : "visible";
+        }
+    </script>
 
 </head>
 <body>
+
 <h1>Student Index</h1>
+
+<div id="overlay_dimmer"></div>
+
 <div>
-    <center>  
-            <a href="{% url 'mast:add_student' %}" class="button">Add Student</a>
-            <a href='#' onclick='overlayAdd()' class="button">Add Student (pop-up)</a>
+    <center>
+        <a href="{% url 'mast:add_student' %}" class="button">Add Student</a>
+        <a href='#' onclick='overlayAdd()' class="button">Add Student (pop-up)</a>
     </center>
 
     <br>
@@ -256,7 +281,9 @@ function overlayManual() {
             <li class="table-header">
                 <div class="col col-1 label"><a class="label" href="{% url 'mast:sort_by_id' %}">ID</a></div>
                 <div class="col col-2"><a class="label" href="{% url 'mast:sort_by_name' %}">Name</a></div>
-                <div class="col col-3 label"><a class="label" href="{% url 'mast:sort_by_graduation' %}">Graduation</a></div>
+                <div class="col col-3 label"><a class="label"
+                                                href="{% url 'mast:sort_by_graduation' %}">Graduation</a>
+                </div>
                 <div class="col col-4 label"><a class="label" href="{% url 'mast:sort_by_attendance' %}">Satisfied-Pending-Unsatisfied</a>
                 </div>
             </li>
@@ -292,11 +319,12 @@ function overlayManual() {
 
 </div>
 <div class=back>
-<a href="{% url 'mast:gpd_landing' %}" class="button">Return Home</a>
+    <a href="{% url 'mast:gpd_landing' %}" class="button">Return Home</a>
 </div>
 
+
+<!-- add student popup -->
 <div class=overlay id=overlay>
-   
     <div class=manual id=manual>
         Manual
         <a href='#' onclick='overlayManual()' class="exit">x</a>
@@ -308,16 +336,17 @@ function overlayManual() {
         <form action="" method="POST" enctype="multipart/form-data">
             {% csrf_token %}
             <label for="pro_file"> Upload Profile Data</label>
-            <!-- GET IT BECAUSE PRO AS IN PROFILE AND FILE AS IN FILE BUT ITS STILL JUST PROFILE -->
             <input type="file" id="pro_file" name="pro_file">
+
             <label for="course_file"> Upload Course Plan Data</label>
             <input type="file" id="course_file" name="course_file">
+
             <small>Only accepts CSV files</small>
             <button type="submit">Upload</button>
         </form>
     </div>
 
-    <div id=add class=add>  
+    <div id=add class=add>
         <a href='#' onclick='overlayManual()' class='button'>Manual</a>
         <a href="{% url 'mast:import_student' %}#" onclick='overlayUpload()' class='button'>Upload File</a>
         <a href='#' onclick='overlayAdd()' class="exit">x</a>
