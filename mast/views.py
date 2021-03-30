@@ -60,10 +60,11 @@ def commit_new_student(request):
                 'error_message': "ID taken."
             })
         else:
-            return render(request, 'mast/new_student.html', {
+            return render(request, 'mast/student_index.html', {
                 'major_list': Major.objects.order_by('name')[1:], 'semesters': Semester.objects.order_by('year'),
                 'requirement_semesters': Requirement_Semester.objects.order_by('year'),
-                'error_message': "Something went wrong."
+                'error_message': True,
+                'student_list': Student.objects.order_by('sbu_id')
             })
     return HttpResponseRedirect(reverse('mast:detail', args=(sbu_id,)))
 

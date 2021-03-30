@@ -17,13 +17,18 @@
         function overlayAdd() {
             a = document.getElementById("add");
             b = document.getElementById("overlay_dimmer");
+            e = document.getElementById("wrong")
+            e.style.visibility = "hidden";
             b.style.visibility = (b.style.visibility === "visible") ? "hidden" : "visible";
             a.style.visibility = (a.style.visibility === "visible") ? "hidden" : "visible";
         }
 
         function overlayManual() {
             m = document.getElementById("manual");
+            b = document.getElementById("overlay_dimmer");
+            b.style.visibility = (m.style.visibility === "visible") ? "hidden" : "visible";
             m.style.visibility = (m.style.visibility === "visible") ? "hidden" : "visible";
+
         }
     </script>
 
@@ -139,8 +144,18 @@
 <div class=overlay id=overlay>
     <div class=manual id=manual>
         <center>
-            This doesn't 100% work right now. It works if you enter everything correctly, but doing anything wrong sends
-            you to /mast/new_student/ <br><br>
+            {% if error_message %}
+            <div id="wrong">
+            SOMETHING WENT WRONG REDO IT
+            </div>
+            <script>
+                overlayManual()
+            </script>
+            {% else %}
+            <div id="wrong">
+            </div>
+            {% endif %} 
+            <br><br>
             <div>
                 <form action="{% url 'mast:commit_new_student' %}" method="get">
                     <label>
