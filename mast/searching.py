@@ -2,7 +2,7 @@ import operator
 from enum import Enum
 
 from django.shortcuts import render
-from .models import Student, Major
+from .models import Student, Major, Semester, Requirement_Semester
 
 
 global current_search
@@ -33,7 +33,10 @@ sorted_by = SortedBy.NONE
 
 def student_index(request):
     global current_search, sorted_by
-    context = {'student_list': Student.objects.order_by('sbu_id'), 'major_list': Major.objects.order_by('name')}
+    context = {'student_list': Student.objects.order_by('sbu_id'),
+               'major_list': Major.objects.order_by('name'),
+               'semesters': Semester.objects.all(),
+               'requirement_semesters': Requirement_Semester.objects.all()}
     current_search['student_list'] = Student.objects.order_by('sbu_id')
     current_search['major_list'] = Major.objects.order_by('name')
     sorted_by = SortedBy.NONE

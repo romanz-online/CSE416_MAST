@@ -1,199 +1,11 @@
 <!DOCTYPE html>
 <html lang="en">
+
+{% load static %}
+<link rel="stylesheet" type="text/css" href="{% static 'mast/student_index.css' %}"/>
+
 <head>
     <title>MAST Student Index</title>
-    <style>
-        div {
-            margin-left: 15px;
-            color: black;
-        }
-
-        h1 {
-            margin: -10px -10px 40px;
-            padding: 30px;
-            text-align: center;
-            background-color: #490000;
-            color: white;
-        }
-
-        a.button {
-            background-color: #490000;
-            border: none;
-            width: 150px;
-            color: white;
-            padding: 10px 10px;
-            text-align: center;
-            text-decoration: none;
-            display: inline-block;
-            font-size: 15px;
-            cursor: pointer;
-        }
-
-        a.exit {
-            background-color: #f2f2f2;
-            color: #490000;
-            text-decoration: none;
-            padding: 10px 10px;
-            font-size: 15px;
-            position: absolute;
-            top: 5;
-            right: 5;
-            cursor: pointer;
-        }
-
-        a.label {
-            cursor: pointer;
-            color: black;
-            text-decoration: none;
-        }
-
-        a.label:hover {
-            color: white;
-        }
-
-        .container {
-            max-width: 1000px;
-            margin-left: auto;
-            margin-right: auto;
-            padding-left: 10px;
-            padding-right: 10px;
-        }
-
-        .responsive-table li {
-            border-radius: 3px;
-            padding: 15px 20px;
-            display: flex;
-            justify-content: space-between;
-            margin-bottom: 10px;
-        }
-
-        .responsive-table .table-header {
-            background-color: #bdbdbd;
-            font-size: 14px;
-            letter-spacing: 0.03em;
-        }
-
-        .responsive-table .table-row {
-            background-color: #ffffff;
-            box-shadow: 0 0 9px 0 rgba(0, 0, 0, 0.3);
-        }
-
-        .responsive-table .col-1 {
-            flex-basis: 10%;
-        }
-
-        .responsive-table .col-2 {
-            flex-basis: 25%;
-        }
-
-        .responsive-table .col-3 {
-            flex-basis: 15%;
-        }
-
-        .responsive-table .col-4 {
-            flex-basis: 25%;
-        }
-
-        @media (max-width: 767px) {
-            .responsive-table .table-header {
-                display: none;
-            }
-
-            .responsive-table li {
-                display: block;
-            }
-
-            .responsive-table .col {
-                flex-basis: 100%;
-            }
-
-            .responsive-table .col {
-                display: flex;
-                padding: 10px 0;
-            }
-
-            .responsive-table .col:before {
-                color: #6C7A89;
-                padding-right: 10px;
-                content: attr(data-label);
-                flex-basis: 50%;
-                text-align: right;
-            }
-        }
-
-        .back {
-            position: fixed;
-            margin-left: 10px;
-            top: 95%;
-        }
-
-        .add {
-            visibility: hidden;
-            margin: 100px auto;
-            position: fixed;
-            background-color: white;
-            width: 50%;
-            height: 50%;
-            left: 25%;
-            border: solid black;
-            text-align: center;
-            padding: 20px;
-            z-index: 11;
-        }
-
-        .upload {
-            visibility: hidden;
-            margin: 100px auto;
-            position: fixed;
-            background-color: white;
-            width: 50%;
-            height: 50%;
-            left: 25%;
-            border: solid black;
-            text-align: center;
-            padding: 20px;
-            z-index: 12;
-        }
-
-        .manual {
-            visibility: hidden;
-            margin: 100px auto;
-            position: fixed;
-            background-color: white;
-            width: 50%;
-            height: 50%;
-            left: 25%;
-            border: solid black;
-            text-align: center;
-            padding: 20px;
-            z-index: 12;
-        }
-
-        .overlay {
-            visibility: hidden;
-            position: fixed;
-            top: 0;
-            left: 0;
-            height: 100%;
-            width: 100%;
-            z-index: 999;
-        }
-
-        div#overlay_dimmer {
-            height: 100%;
-            width: 100%;
-            margin: 0;
-            padding: 0;
-            z-index: 99;
-            position: fixed;
-            top: 0;
-            left: 0;
-            opacity: 0.3;
-            background: black;
-            {#display: none;#}
-            visibility: hidden;
-        }
-    </style>
 
     <!-- script for each of the pop-ups to make them go on and off -->
     <script>
@@ -318,21 +130,74 @@
     </div>
 
 </div>
+
 <div class=back>
     <a href="{% url 'mast:gpd_landing' %}" class="button">Return Home</a>
 </div>
 
-
 <!-- add student popup -->
 <div class=overlay id=overlay>
     <div class=manual id=manual>
-        Manual
-        <a href='#' onclick='overlayManual()' class="exit">x</a>
+        <center>
+            This doesn't 100% work right now. It works if you enter everything correctly, but doing anything wrong sends you to /mast/new_student/ <br><br>
+            <div>
+                <form action="{% url 'mast:commit_new_student' %}" method="get">
+                    <label>
+                        Stony Brook ID:
+                        <input name="sbu_id" type="number" autocomplete="on">
+                    </label> <br> <br>
+                    <label>
+                        First Name:
+                        <input name="first_name" type="text" autocomplete="on">
+                    </label> <br> <br>
+                    <label>
+                        Last Name:
+                        <input name="last_name" type="text" autocomplete="on">
+                    </label> <br> <br>
+                    <label>
+                        Email:
+                        <input name="email" type="text" autocomplete="on">
+                    </label> <br> <br>
+                    <label>
+                        Password:
+                        <input name="password" type="text">
+                    </label> <br> <br>
+                    <label>
+                        Enrollment Semester:
+                        <select name="entry_semester">
+                            {% for s in semesters %}
+                                <option value={{ s.id }}>{{ s }}</option>
+                            {% endfor %}
+                        </select>
+                    </label> <br> <br>
+                    <label>
+                        Requirement Version Semester:
+                        <select name="requirement_semester">
+                            {% for s in requirement_semesters %}
+                                <option value={{ s.id }}>{{ s }}</option>
+                            {% endfor %}
+                        </select>
+                    </label> <br> <br>
+                    <label>
+                        Major:
+                        <select name="major">
+                            {% for major in major_list %}
+                                <option value= {{ major.id }}>{{ major }}</option>
+                            {% endfor %}
+                        </select>
+                    </label> <br> <br>
+                    <center>
+                        <input type="submit" value="Add New Student">
+                    </center>
+                </form>
+            </div>
+        </center>
+        <a href='#' onclick='overlayManual()' class="exit">&#10799;</a>
     </div>
 
     <div class=upload id=upload>
         Upload File
-        <a href='#' onclick='overlayUpload()' class="exit">x</a>
+        <a href='#' onclick='overlayUpload()' class="exit">&#10799;</a>
         <form action="" method="POST" enctype="multipart/form-data">
             {% csrf_token %}
             <label for="pro_file"> Upload Profile Data</label>
@@ -349,7 +214,7 @@
     <div id=add class=add>
         <a href='#' onclick='overlayManual()' class='button'>Manual</a>
         <a href="{% url 'mast:import_student' %}#" onclick='overlayUpload()' class='button'>Upload File</a>
-        <a href='#' onclick='overlayAdd()' class="exit">x</a>
+        <a href='#' onclick='overlayAdd()' class="exit">&#10799;</a>
     </div>
 </div>
 
