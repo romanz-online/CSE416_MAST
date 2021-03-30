@@ -9,6 +9,23 @@
 
     <!-- script for each of the pop-ups to make them go on and off -->
     <script>
+        function returnToManual(){
+            overlayAdd();
+            m = document.getElementById("manual");
+            m.style.visibility = (m.style.visibility === "visible") ? "hidden" : "visible";
+        }
+
+        function removeOverlays() {
+            u = document.getElementById("upload");
+            a = document.getElementById("add");
+            m = document.getElementById("manual");
+            b = document.getElementById("overlay_dimmer");
+            u.style.visibility = "hidden";
+            a.style.visibility = "hidden";
+            m.style.visibility = "hidden";
+            b.style.visibility = "hidden";
+        }
+
         function overlayUpload() {
             u = document.getElementById("upload");
             u.style.visibility = (u.style.visibility === "visible") ? "hidden" : "visible";
@@ -17,18 +34,13 @@
         function overlayAdd() {
             a = document.getElementById("add");
             b = document.getElementById("overlay_dimmer");
-            e = document.getElementById("wrong")
-            e.style.visibility = "hidden";
             b.style.visibility = (b.style.visibility === "visible") ? "hidden" : "visible";
             a.style.visibility = (a.style.visibility === "visible") ? "hidden" : "visible";
         }
 
         function overlayManual() {
             m = document.getElementById("manual");
-            b = document.getElementById("overlay_dimmer");
-            b.style.visibility = (m.style.visibility === "visible") ? "hidden" : "visible";
             m.style.visibility = (m.style.visibility === "visible") ? "hidden" : "visible";
-
         }
     </script>
 
@@ -37,12 +49,12 @@
 
 <h1>Student Index</h1>
 
-<div id="overlay_dimmer"></div>
+<div id="overlay_dimmer" onclick="removeOverlays()"></div>
 
 <div>
     <center>
-        <a href="{% url 'mast:add_student' %}" class="button">Add Student</a>
-        <a href='#' onclick='overlayAdd()' class="button">Add Student (pop-up)</a>
+{#        <a href="{% url 'mast:add_student' %}" class="button">Add Student</a>#}
+        <a href='#' onclick='overlayAdd()' class="button">Add Student</a>
     </center>
 
     <br>
@@ -143,71 +155,7 @@
 <!-- add student popup -->
 <div class=overlay id=overlay>
     <div class=manual id=manual>
-        <center>
-            {% if error_message %}
-            <div id="wrong">
-            SOMETHING WENT WRONG REDO IT
-            </div>
-            <script>
-                overlayManual()
-            </script>
-            {% else %}
-            <div id="wrong">
-            </div>
-            {% endif %} 
-            <br><br>
-            <div>
-                <form action="{% url 'mast:commit_new_student' %}" method="get">
-                    <label>
-                        Stony Brook ID:
-                        <input name="sbu_id" type="number" autocomplete="on">
-                    </label> <br> <br>
-                    <label>
-                        First Name:
-                        <input name="first_name" type="text" autocomplete="on">
-                    </label> <br> <br>
-                    <label>
-                        Last Name:
-                        <input name="last_name" type="text" autocomplete="on">
-                    </label> <br> <br>
-                    <label>
-                        Email:
-                        <input name="email" type="text" autocomplete="on">
-                    </label> <br> <br>
-                    <label>
-                        Password:
-                        <input name="password" type="text">
-                    </label> <br> <br>
-                    <label>
-                        Enrollment Semester:
-                        <select name="entry_semester">
-                            {% for s in semesters %}
-                                <option value={{ s.id }}>{{ s }}</option>
-                            {% endfor %}
-                        </select>
-                    </label> <br> <br>
-                    <label>
-                        Requirement Version Semester:
-                        <select name="requirement_semester">
-                            {% for s in requirement_semesters %}
-                                <option value={{ s.id }}>{{ s }}</option>
-                            {% endfor %}
-                        </select>
-                    </label> <br> <br>
-                    <label>
-                        Major:
-                        <select name="major">
-                            {% for major in major_list %}
-                                <option value= {{ major.id }}>{{ major }}</option>
-                            {% endfor %}
-                        </select>
-                    </label> <br> <br>
-                    <center>
-                        <input type="submit" value="Add New Student">
-                    </center>
-                </form>
-            </div>
-        </center>
+        {% include "mast/new_student.html" %}
         <a href='#' onclick='overlayManual()' class="exit">&#10799;</a>
     </div>
 
@@ -244,6 +192,12 @@
         <a href='#' onclick='overlayAdd()' class="exit">&#10799;</a>
     </div>
 </div>
+
+{% if error_message == 'ID taken.' or error_message == 'Invalid or missing value.' %}
+    <script>
+        returnToManual();
+    </script>
+{% endif %}
 
 </body>
 </html>

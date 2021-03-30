@@ -3,40 +3,42 @@
 
 <head>
     <title>New Student</title>
-    <style>
-        h1 {
-            padding: 30px;
-            margin: -10px -10px 40px;
-            text-align: center;
-            background-color: #490000;
-            color: white;
-        }
-
-        input[type=button], input[type=submit], input[type=reset] {
-            background-color: #490000;
-            border: none;
-
-            color: rgb(255, 255, 255);
-            padding: 10px 10px;
-            text-align: center;
-            text-decoration: none;
-            display: inline-block;
-            font-size: 15px;
-            cursor: pointer;
-        }
-
-        div {
-            border-radius: 5px;
-            background-color: #f2f2f2;
-            padding: 10px;
-            width: 750px
-        }
-    </style>
+    {#    <style>#}
+    {#        h1 {#}
+    {#            padding: 30px;#}
+    {#            margin: -10px -10px 40px;#}
+    {#            text-align: center;#}
+    {#            background-color: #490000;#}
+    {#            color: white;#}
+    {#        }#}
+    {##}
+    {#        input[type=button], input[type=submit], input[type=reset] {#}
+    {#            background-color: #490000;#}
+    {#            border: none;#}
+    {##}
+    {#            color: rgb(255, 255, 255);#}
+    {#            padding: 10px 10px;#}
+    {#            text-align: center;#}
+    {#            text-decoration: none;#}
+    {#            display: inline-block;#}
+    {#            font-size: 15px;#}
+    {#            cursor: pointer;#}
+    {#        }#}
+    {##}
+    {#        div {#}
+    {#            border-radius: 5px;#}
+    {#            background-color: #f2f2f2;#}
+    {#            padding: 10px;#}
+    {#            width: 750px#}
+    {#        }#}
+    {#    </style>#}
 </head>
 
-<h1>New Student Form</h1>
+{#<h1>New Student Form</h1>#}
 <center>
-    {% if error_message %}<p><strong>{{ error_message }}</strong></p>{% endif %}
+    {% if error_message %}<strong>{{ error_message }}</strong>{% endif %}
+    <br>
+    <br>
     <div>
         <form action="{% url 'mast:commit_new_student' %}" method="get">
             <label>
@@ -101,11 +103,11 @@
                 <input type="submit" value="Add New Student">
             </center>
         </form>
-        <br>
-        <form action="{% url 'mast:student_index' %}" method="post">
-            {% csrf_token %}
-            <input type="submit" value="Leave Without Saving">
-        </form>
+        {#        <br>#}
+        {#        <form action="{% url 'mast:student_index' %}" method="post">#}
+        {#            {% csrf_token %}#}
+        {#            <input type="submit" value="Leave Without Saving">#}
+        {#        </form>#}
     </div>
 </center>
 </html>

@@ -54,16 +54,19 @@ def commit_new_student(request):
         student.save()
     except:
         if id_taken:
-            return render(request, 'mast/new_student.html', {
-                'major_list': Major.objects.order_by('name')[1:], 'semesters': Semester.objects.order_by('year'),
+            return render(request, 'mast/student_index.html', {
+                'major_list': Major.objects.order_by('name'),
+                'semesters': Semester.objects.order_by('year'),
                 'requirement_semesters': Requirement_Semester.objects.order_by('year'),
+                'student_list': Student.objects.order_by('sbu_id'),
                 'error_message': "ID taken."
             })
         else:
             return render(request, 'mast/student_index.html', {
-                'major_list': Major.objects.order_by('name')[1:], 'semesters': Semester.objects.order_by('year'),
+                'major_list': Major.objects.order_by('name'),
+                'semesters': Semester.objects.order_by('year'),
                 'requirement_semesters': Requirement_Semester.objects.order_by('year'),
-                'error_message': True,
+                'error_message': "Invalid or missing value.",
                 'student_list': Student.objects.order_by('sbu_id')
             })
     return HttpResponseRedirect(reverse('mast:detail', args=(sbu_id,)))
