@@ -14,6 +14,7 @@ urlpatterns = [
 
     path('student_index/import_student/', importing.import_student, name='import_student'),
     path('student_index/import_grades/', importing.import_grades, name='import_grades'),
+    path('student_index/import_grades_stub/', importing.import_grades_stub, name='import_grades_stub'),
     path('import_courses/', importing.import_courses, name="import_courses"),
 
     path('edit_schedule/<int:sbu_id>/', modifying_schedule.edit_schedule, name='edit_schedule'),

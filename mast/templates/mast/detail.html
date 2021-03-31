@@ -1,19 +1,13 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+    <title>Student {{ student.sbu_id }}</title>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/uikit@3.6.17/dist/css/uikit.min.css"/>
 
     <!-- UIkit JS -->
     <script src="https://cdn.jsdelivr.net/npm/uikit@3.6.17/dist/js/uikit.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/uikit@3.6.17/dist/js/uikit-icons.min.js"></script>
     <style>
-        .left {
-            display: flex;
-            text-align: left;
-            vertical-align: center;
-
-        }
-
         input[type=button], input[type=submit], input[type=reset] {
             background-color: #490000;
             border: none;
@@ -25,8 +19,6 @@
             display: inline-block;
             font-size: 13px;
             cursor: pointer;
-
-
         }
 
         td {
@@ -105,7 +97,7 @@
                         <td>Not Graduated</td>
                         <td><span uk-icon="icon: close"></span></td>
                     {% else %}
-                        <td>Graduated in {{ student.graduation_date }}</td>
+                        <td>Graduated in {{ student.graduation_semester }}</td>
                         <td><span uk-icon="icon: check"></span></td>
                     {% endif %}
                 </tr>
@@ -168,13 +160,13 @@
                 {% for record in classes_taken %}
                     {% if record.student == student %}
 
-{#                        <div class=semester>#}
-                            <tr>
-                                <td>{{ record.course }}</td>
-                                <td>{{ record.grade }}</td>
-                                <td>{{ record.status }}</td>
-                            </tr>
-{#                        </div>#}
+                        {#                        <div class=semester>#}
+                        <tr>
+                            <td>{{ record.course }}</td>
+                            <td>{{ record.grade }}</td>
+                            <td>{{ record.status }}</td>
+                        </tr>
+                        {#                        </div>#}
                     {% endif %}
                 {% endfor %}
                 </tbody>
@@ -192,7 +184,7 @@
                     <br>
                     {% for record in schedule %}
 
-                        {% if record.course.semester == semester and record.course.name != '' %}
+                        {% if record.course.semester == semester and record.course.section != 999 %}
                             <font color=black>
                                 {{ record.course }}<br>
                             </font>

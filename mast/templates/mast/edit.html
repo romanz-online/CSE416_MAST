@@ -117,7 +117,7 @@
         <br>
         Requirement Version Semester:
         <select name="requirement_semester">
-            {% for s in requirement_semesters %}
+            {% for s in semesters %}
                 <option value={{ s.id }}>{{ s }}</option>
             {% endfor %}
         </select>
@@ -140,7 +140,7 @@
         {% for record in classes_taken %}
             {% if record.student == student and record.status != 'Pending' %}
                 {{ record.course }}
-                <select name={{ record.getStatus }}>
+                <select name={{ record.get_status }}>
                     {% for status in course_status_list %}
                         {% if status == record.status %}
                             <option selected value={{ status }}>{{ status }}</option>

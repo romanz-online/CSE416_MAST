@@ -127,7 +127,7 @@
                         </div>
                         <div class="col col-3" data-label="Name">
                             {% if student.graduated %}
-                                {{ student.graduation_date }}
+                                {{ student.graduation_semester }}
                             {% else %}
                                 N/A
                             {% endif %}
@@ -177,7 +177,7 @@
         <strong>or</strong>
         <br>
         just courses:
-        <form action="{% url 'mast:import_grades' %}" method="POST" enctype="multipart/form-data">
+        <form action="{% url 'mast:import_grades_stub' %}" method="POST" enctype="multipart/form-data">
             {% csrf_token %}
             <label for="course_file">Upload Course Data</label>
             <input type="file" id="course_file" name="course_file">

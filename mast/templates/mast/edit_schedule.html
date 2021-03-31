@@ -49,7 +49,7 @@
         .done {
             position: fixed;
             bottom: 0;
-            right: 20;
+            right: 20px;
         }
 
         .semester {
@@ -72,7 +72,7 @@
         <h2>{{ semester }}</h2><br>
 
         {% for record in schedule %}
-            {% if record.course.semester == semester and record.course.name != '' %}
+            {% if record.course.semester == semester and record.course.section != 999 %}
                 <form action="{% url 'mast:remove_scheduled_course' student.sbu_id record.course.id %}" method="get">
                     {{ record.course }}
                     <button type="submit">Remove</button>
@@ -86,7 +86,7 @@
         <form action="{% url 'mast:add_scheduled_course' student.sbu_id %}" method="get">
             <select name="course">
                 {% for class in course_list %}
-                    {% if class.semester == semester and class.name != '' %}
+                    {% if class.semester == semester and class.section != 999 %}
                         <option value={{ class.id }}>{{ class }}</option>
                     {% endif %}
                 {% endfor %}

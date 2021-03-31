@@ -1,8 +1,8 @@
 from django.shortcuts import get_object_or_404, render
 from django.http import HttpResponseRedirect
 from django.urls import reverse
-from .models import Student, Major, Course, Classes_Taken_by_Student, Grade, CourseStatus, Semester,\
-    Requirement_Semester, Season
+from .models import Student, Major, CourseInstance, CoursesTakenByStudent, Grade, CourseStatus, Semester
+
 
 def edit(request, sbu_id):
     """
@@ -23,12 +23,12 @@ def edit(request, sbu_id):
     # Render view with student information 
     return render(request, 'mast/edit.html', {'student': student,
                                               'major_list': Major.objects.order_by('name'),
-                                              'course_list': Course.objects.order_by('name'),
-                                              'classes_taken': Classes_Taken_by_Student.objects.all(),
+                                              'course_list': CourseInstance.objects.all(),
+                                              'classes_taken': CoursesTakenByStudent.objects.all(),
                                               'grade_list': grade_list,
                                               'course_status_list': course_status_list,
-                                              'semesters': Semester.objects.order_by('year'),
-                                              'requirement_semesters': Requirement_Semester.objects.order_by('year')})
+                                              'semesters': Semester.objects.order_by('year')
+                                              })
 
 
 def delete_record(request, sbu_id):
@@ -53,13 +53,11 @@ def delete_record(request, sbu_id):
         course_status_list = [i[0] for i in CourseStatus.choices]
         return render(request, 'mast/edit.html', {'student': student,
                                                   'major_list': Major.objects.order_by('name'),
-                                                  'course_list': Course.objects.order_by('name'),
-                                                  'classes_taken': Classes_Taken_by_Student.objects.all(),
+                                                  'course_list': CourseInstance.objects.all(),
+                                                  'classes_taken': CoursesTakenByStudent.objects.all(),
                                                   'grade_list': grade_list,
                                                   'course_status_list': course_status_list,
                                                   'semesters': Semester.objects.order_by('year'),
-                                                  'requirement_semesters': Requirement_Semester.objects.order_by(
-                                                      'year'),
                                                   'error_message': "Something went wrong."
                                                   })
     # If the deletion was successful, return to the home page 
@@ -99,29 +97,26 @@ def commit_edit(request, sbu_id):
         student.graduated = graduated
         student.withdrew = withdrew
         student.entry_semester = Semester.objects.get(id=int(entry_semester))
-        student.requirement_semester = Requirement_Semester.objects.get(id=int(requirement_semester))
+        student.requirement_semester = Semester.objects.get(id=int(requirement_semester))
         if student.graduated:
             graduation_semester = request.GET['graduation_semester']
-            graduation_semester = Semester.objects.get(id=int(graduation_semester))
-            student.graduation_season = graduation_semester.season
-            student.graduation_year = graduation_semester.year
-        else:
-            student.graduation_season = Season.NOT_APPLICABLE
-            student.graduation_year = 0
+            student.graduation_semester = Semester.objects.get(id=int(graduation_semester))
 
-        for course in Classes_Taken_by_Student.objects.all():
-            if course.student == student and course.status != 'Pending':
-                new_grade = request.GET[str(course.id)]
+        for course in CoursesTakenByStudent.objects.filter(student=student):
+            if course.status != 'Pending':
                 new_status = request.GET[str(course.id) + 'status']
+                new_grade = request.GET[str(course.id)]
                 if course.grade != new_grade:
                     course.grade = new_grade
                 if course.status != new_status:
                     course.status = new_status
+                    if new_status == 'Pending':
+                        course.grade = 'N/A'
                 course.save()
 
         sum = 0
         total = 0
-        for course in Classes_Taken_by_Student.objects.all():
+        for course in CoursesTakenByStudent.objects.all():
             if course.student == student and course.status != 'Pending':
                 if course.grade not in ['W', 'S', 'U', 'I', 'N/A']:
                     sum += get_grade_number(course.grade)
@@ -139,13 +134,11 @@ def commit_edit(request, sbu_id):
         course_status_list = [i[0] for i in CourseStatus.choices]
         return render(request, 'mast/edit.html', {'student': student,
                                                   'major_list': Major.objects.order_by('name'),
-                                                  'course_list': Course.objects.order_by('name'),
-                                                  'classes_taken': Classes_Taken_by_Student.objects.all(),
+                                                  'course_list': CourseInstance.objects.all(),
+                                                  'classes_taken': CoursesTakenByStudent.objects.all(),
                                                   'grade_list': grade_list,
                                                   'course_status_list': course_status_list,
                                                   'semesters': Semester.objects.order_by('year'),
-                                                  'requirement_semesters': Requirement_Semester.objects.order_by(
-                                                      'year'),
                                                   'error_message': "Something went wrong."
                                                   })
     return HttpResponseRedirect(reverse('mast:detail', args=(sbu_id,)))
@@ -161,9 +154,9 @@ def get_grade_number(grade):
         Returns:
             dict[grade] (int): The numerical grade converted from the letter grade.
     """
-    dict = {'A': 4.0, 'A-': 3.7, 'B+': 3.3, 'B': 3.0, 'B-': 2.7, 'C+': 2.3, 'C': 2.0, 'C-': 1.7, 'D+': 1.3, 'D': 1.0,
+    d = {'A': 4.0, 'A-': 3.7, 'B+': 3.3, 'B': 3.0, 'B-': 2.7, 'C+': 2.3, 'C': 2.0, 'C-': 1.7, 'D+': 1.3, 'D': 1.0,
             'D-': 0.7, 'F': 0.0, 'S': 4.0}
-    return dict[grade]
+    return d[grade]
 
 
 def add_taken_course(request, sbu_id):
@@ -182,8 +175,8 @@ def add_taken_course(request, sbu_id):
     try:
         # Attempt to add taken course 
         new_course = request.GET['course']
-        new_course = Course.objects.get(id=new_course)
-        c = Classes_Taken_by_Student(student=student, course=new_course, grade='A')
+        new_course = CourseInstance.objects.get(id=new_course)
+        c = CoursesTakenByStudent(student=student, course=new_course, grade='A')
         c.save()
     except:
         return HttpResponseRedirect(reverse('mast:edit', args=(sbu_id,)))
@@ -206,7 +199,7 @@ def modify_course_in_progress(request, sbu_id, record):
     student = get_object_or_404(Student, pk=sbu_id)
     try:
         # Attempt to modify course in progress 
-        r = Classes_Taken_by_Student.objects.get(id=record)
+        r = CoursesTakenByStudent.objects.get(id=record)
         if request.GET['action'] == 'pass':
             r.status = CourseStatus.PASSED
             r.grade = 'A'
