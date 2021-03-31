@@ -111,10 +111,16 @@ class TrackCourseSet(models.Model):
     name = models.CharField(max_length=50, default='Default')
     number_required = models.IntegerField(default=1)
 
+    def __str__(self):
+        return self.name
+
 
 class CourseInTrackSet(models.Model):
     course_set = models.ForeignKey(TrackCourseSet, on_delete=models.CASCADE)
     course = models.ForeignKey(Course, on_delete=models.CASCADE)
+
+    def __str__(self):
+        return str(self.course)
 
 
 # for prerequisite courses, primary_course is the course you're looking at and related_course is its prerequisite
@@ -123,6 +129,12 @@ class CourseToCourseRelation(models.Model):
     primary_course = models.ForeignKey(Course, on_delete=models.CASCADE, related_name='primary_course')
     related_course = models.ForeignKey(Course, on_delete=models.CASCADE, related_name='related_course')
     relation = models.CharField(max_length=20, choices=CourseRelation.choices, default=CourseRelation.NONE)
+
+    def __str__(self):
+        if self.relation == CourseRelation.PREREQUISITE:
+            return str(self.related_course) + ' is a prerequisite of ' + str(self.primary_course)
+        elif self.relation == CourseRelation.XOR:
+            return ''
 
 
 class Director(models.Model):

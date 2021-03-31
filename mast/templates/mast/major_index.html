@@ -8,30 +8,28 @@
 
 <a href="{% url 'mast:gpd_landing' %}">Back to landing</a> <br><br>
 
-{% if major_list %}
-    {% for major in major_list %}
-        {{ major }}<br>
-        {% if track_list %}
-            Available Tracks:<br>
-            {% for track in track_list %}
-                {% if track.major == major %}
-                    {{ track }}<br>
+{% for major in major_list %}
+    {{ major }}<br>
+    Tracks:<br>
+    {% for track in track_list %}
+        {% if track.major == major %}
+            {{ track }}<br>
+        {% endif %}
+        {% for set in track_course_sets %}
+            {{ set }}<br>
+            {% for course in courses_in_sets %}
+                {% if course.course_set == set %}
+                    {{ course }}<br>
+                    {% for relation in course_relations %}
+                        {% if relation.primary_course == course or relation.related_course == course %}
+                            - {{ relation }}
+                        {% endif %}
+                    {% endfor %}
                 {% endif %}
             {% endfor %}
-        {% endif %}
-        {% if course_list %}
-            Offered Classes:<br>
-            {% for class in course_list %}
-                {% if class.department == major.department %}
-                    {{ class }}<br>
-                {% endif %}
-            {% endfor %}
-        {% endif %}
-        <br>
+        {% endfor %}
     {% endfor %}
-{% else %}
-    <p>No majors found.</p>
-{% endif %}
+{% endfor %}
 
 </body>
 </html>

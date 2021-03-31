@@ -4,8 +4,8 @@ import operator
 from django.shortcuts import get_object_or_404, render
 from django.http import HttpResponseRedirect
 from django.urls import reverse
-from django.db.models import Q
-from .models import Student, Major, Course, CoursesTakenByStudent, Comment, StudentCourseSchedule, Semester, Track
+from .models import Student, Major, Course, CoursesTakenByStudent, Comment, StudentCourseSchedule, Semester, Track, \
+    TrackCourseSet, CourseInTrackSet, CourseToCourseRelation
 
 
 def home(request):
@@ -18,13 +18,15 @@ def gpd_landing(request):
 
 def major_index(request):
     context = {'major_list': Major.objects.order_by('name')[1:],
-               'course_list': Course.objects.all(),
-               'track_list': Track.objects.all()}
+               'track_list': Track.objects.all(),
+               'track_course_sets': TrackCourseSet.objects.all(),
+               'courses_in_sets': CourseInTrackSet.objects.all(),
+               'course_relations': CourseToCourseRelation.objects.all()}
     return render(request, 'mast/major_index.html', context)
 
 
 def add_student(request):
-    context = {'major_list': Major.objects.exclude(department='None'), 'semesters': Semester.objects.order_by('year')}
+    context = {'major_list': Major.objects.all(), 'semesters': Semester.objects.order_by('year')}
     return render(request, 'mast/new_student.html', context)
 
 
