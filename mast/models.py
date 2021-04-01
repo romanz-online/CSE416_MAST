@@ -65,7 +65,7 @@ class Course(models.Model):
     department = models.CharField(max_length=3, choices=Department.choices, default=Department.NONE)
     number = models.IntegerField(default=100)
     credits = models.IntegerField(default=3)
-
+    description = models.CharField(max_length=200, default="no class description")
     def __str__(self):
         return self.department + str(self.number)
 
