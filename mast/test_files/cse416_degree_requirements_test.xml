@@ -1,67 +1,379 @@
-<degree_reqs>
+<majors>
 
     <!--Unfinished-->
     <major>
         <name>Computer Science</name>
         <department>CS</department>
+        <requirement_semester>
+            <season>Spring</season>
+            <year>2021</year>
+        </requirement_semester>
         <requiredGPA>3.0</requiredGPA>
         <minCredits>31</minCredits>
         <projectRequired>False</projectRequired>
         <thesisRequired>False</thesisRequired>
     </major>
 
-    <!--Unfinished-->
+    <!--AMS: Finished, Not Revised-->
     <major>
-        <name>Applied Mathematics and Statistics</name>
         <department>AMS</department>
-        <requirement_semester>Spring 2021</requirement_semester>
+        <name>Applied Mathematics and Statistics</name>
+        <requirement_semester>
+            <season>Spring</season>
+            <year>2021</year>
+        </requirement_semester>
 
-        <Tracks_In_Major>
+        <Track>
             <name>Computational Applied Mathematics</name>
-            <projectRequired>False</projectRequired>
-            <thesisRequired>False</thesisRequired>
-            <requiredGPA>3.0</requiredGPA>
-            <minCredits>30</minCredits>
-            <required_areas_for_track>
-                <numberofAreas>1</numberofAreas>
-                <required_elective_class_sets_for_track>
-                    <area>1</area>
-                    <numberOfElectives>4</numberOfElectives>
-                </required_elective_class_sets_for_track>
-            </required_areas_for_track>
-        </Tracks_In_Major>
+            <TrackCourseSet> 
+                <number_required>7</number_required>
+                <CourseInTrackSet>
+                    <course>AMS 501</course>
+                </CourseinTrackSet>
+                <CourseInTrackSet>
+                    <course>AMS 503</course>
+                </CourseinTrackSet>
+                <CourseInTrackSet>
+                    <course>AMS 510</course>
+                </CourseinTrackSet>
+                <CourseInTrackSet>
+                    <course>AMS 526</course>
+                </CourseinTrackSet>
+                <CourseInTrackSet>
+                    <course>AMS 527</course>
+                </CourseinTrackSet>
+                <CourseInTrackSet>
+                    <course>AMS 528</course>
+                </CourseinTrackSet>
+                <CourseInTrackSet>
+                    <course>AMS 595</course>
+                </CourseinTrackSet>
+            </TrackCourseSet>
+            <TrackCourseSet> 
+                <name>Elective</name>
+                <number_required>4</number_required>
+            </TrackCourseSet>
+        </Track>
 
-        <Tracks_In_Major>
+        <Track>
             <name>Computational Biology</name>
-            <projectRequired>False</projectRequired>
-            <thesisRequired>False</thesisRequired>
-            <requiredGPA>3.0</requiredGPA>
-            <minCredits>30</minCredits>            
-        </Tracks_In_Major>
+             <TrackCourseSet> 
+                <number_required>10</number_required>
+                <CourseInTrackSet>
+                    <course>AMS 507</course>
+                </CourseinTrackSet>
+                <CourseInTrackSet>
+                    <course>AMS 510</course>
+                </CourseinTrackSet>
+                <TrackCourseSet>
+                    <parent_track>Computational Biology</parent_track>
+                    <number_required>1</number_required>
+                    <CourseInTrackSet>
+                        <course>MCB 520</course>
+                    </CourseinTrackSet>
+                    <CourseInTrackSet>
+                        <course>CHE 541</course>
+                    </CourseinTrackSet>
+                </TrackCourseSet>
+                <CourseInTrackSet>
+                    <course>AMS 531</course>
+                </CourseinTrackSet>
+                <CourseInTrackSet>
+                    <course>AMS 532</course>
+                </CourseinTrackSet>
+                <CourseInTrackSet>
+                    <course>AMS 533</course>
+                </CourseinTrackSet>
+                <CourseInTrackSet>
+                    <course>AMS 535</course>
+                </CourseinTrackSet>
+                <CourseInTrackSet>
+                    <course>AMS 537</course>
+                </CourseinTrackSet>
+                <CourseInTrackSet>
+                    <course>AMS 539</course>
+                </CourseinTrackSet>
+                <CourseInTrackSet>
+                    <course>CSE 549</course>
+                </CourseinTrackSet>
+            </TrackCourseSet>
+            <TrackCourseSet> 
+                <name>Elective</name>
+                <number_required>3</number_required>
+            </TrackCourseSet>
+        </Track>
 
-        <Tracks_In_Major>
+        <Track>
             <name>Operations Research</name>
-            <projectRequired>False</projectRequired>
-            <thesisRequired>False</thesisRequired>
-            <requiredGPA>3.0</requiredGPA>
-            <minCredits>30</minCredits>            
-        </Tracks_In_Major>
+            <TrackCourseSet>
+                <number_required>7</number_required>
+                <CourseInTrackSet>
+                    <course>AMS 510</course>
+                </CourseinTrackSet>
+                <CourseInTrackSet>
+                    <course>AMS 507</course>
+                </CourseinTrackSet>
+                <CourseInTrackSet>
+                    <course>AMS 540</course>
+                </CourseinTrackSet>
+                <CourseInTrackSet>
+                    <course>AMS 550</course>
+                </CourseinTrackSet>
+                <TrackCourseSet>
+                    <parent_track>Operations Research</parent_track>
+                    <number_required>1</number_required>
+                    <CourseInTrackSet>
+                        <course>AMS 553</course>
+                    </CourseinTrackSet>
+                    <CourseInTrackSet>
+                        <course>CSE 529</course>
+                    </CourseinTrackSet>
+                </TrackCourseSet>
+                <TrackCourseSet>
+                    <parent_track>Operations Research</parent_track>
+                    <number_required>1</number_required>
+                    <CourseInTrackSet>
+                        <course>AMS 570</course>
+                    </CourseinTrackSet>
+                    <CourseInTrackSet>
+                        <course>AMS 571</course>
+                    </CourseinTrackSet>
+                    <CourseInTrackSet>
+                        <course>AMS 572</course>
+                    </CourseinTrackSet>
+                    <CourseInTrackSet>
+                        <course>AMS 573</course>
+                    </CourseinTrackSet>
+                    <CourseInTrackSet>
+                        <course>AMS 575</course>
+                    </CourseinTrackSet>
+                    <CourseInTrackSet>
+                        <course>AMS 577</course>
+                    </CourseinTrackSet>
+                    <CourseInTrackSet>
+                        <course>AMS 578</course>
+                    </CourseinTrackSet>
+                    <CourseInTrackSet>
+                        <course>AMS 580</course>
+                    </CourseinTrackSet>
+                    <CourseInTrackSet>
+                        <course>AMS 581</course>
+                    </CourseinTrackSet>
+                    <CourseInTrackSet>
+                        <course>AMS 582</course>
+                    </CourseinTrackSet>
+                    <CourseInTrackSet>
+                        <course>AMS 583</course>
+                    </CourseinTrackSet>
+                    <CourseInTrackSet>
+                        <course>AMS 585</course>
+                    </CourseinTrackSet>
+                    <CourseInTrackSet>
+                        <course>AMS 586</course>
+                    </CourseinTrackSet>
+                </TrackCourseSet>                    
+                <CourseInTrackSet>
+                    <course>AMS 595</course>
+                </CourseinTrackSet>
+            </TrackCourseSet>
+            <TrackCourseSet> 
+                <name>Elective</name>
+                <number_required>4</number_required>
+                <CourseInTrackSet>
+                     <course>AMS 542</course>
+                </CourseinTrackSet>
+                <CourseInTrackSet>
+                     <course>AMS 544</course>
+                </CourseinTrackSet>
+                <CourseInTrackSet>
+                     <course>AMS 545</course>
+                </CourseinTrackSet>
+                <CourseInTrackSet>
+                     <course>AMS 546</course>
+                </CourseinTrackSet>
+                <CourseInTrackSet>
+                     <course>AMS 547</course>
+                </CourseinTrackSet>
+                <CourseInTrackSet>
+                     <course>AMS 548</course>
+                </CourseinTrackSet>
+                <CourseInTrackSet>
+                     <course>AMS 549</course>
+                </CourseinTrackSet>
+                <CourseInTrackSet>
+                     <course>AMS 550</course>
+                </CourseinTrackSet>
+                <CourseInTrackSet>
+                     <course>AMS 552</course>
+                </CourseinTrackSet>
+                <CourseInTrackSet>
+                     <course>AMS 553</course>
+                </CourseinTrackSet>
+                <CourseInTrackSet>
+                     <course>AMS 555</course>
+                </CourseinTrackSet>
+                <CourseInTrackSet>
+                     <course>AMS 556</course>
+                </CourseinTrackSet>
+                <TrackCourseSet> 
+                    <number_required>1</number_required>
+                    <CourseInTrackSet>
+                        <course>AMS 570</course>
+                    </CourseinTrackSet>
+                    <CourseInTrackSet>
+                        <course>AMS 571</course>
+                    </CourseinTrackSet>
+                    <CourseInTrackSet>
+                        <course>AMS 572</course>
+                    </CourseinTrackSet>
+                    <CourseInTrackSet>
+                        <course>AMS 573</course>
+                    </CourseinTrackSet>
+                    <CourseInTrackSet>
+                        <course>AMS 575</course>
+                    </CourseinTrackSet>
+                    <CourseInTrackSet>
+                        <course>AMS 577</course>
+                    </CourseinTrackSet>
+                    <CourseInTrackSet>
+                        <course>AMS 578</course>
+                    </CourseinTrackSet>
+                    <CourseInTrackSet>
+                        <course>AMS 580</course>
+                    </CourseinTrackSet>
+                    <CourseInTrackSet>
+                        <course>AMS 581</course>
+                    </CourseinTrackSet>
+                    <CourseInTrackSet>
+                        <course>AMS 582</course>
+                    </CourseinTrackSet>
+                    <CourseInTrackSet>
+                        <course>AMS 583</course>
+                    </CourseinTrackSet>
+                    <CourseInTrackSet>
+                        <course>AMS 585</course>
+                    </CourseinTrackSet>
+                    <CourseInTrackSet>
+                        <course>AMS 586</course>
+                    </CourseinTrackSet>             
+                </TrackCourseSet>
+                <TrackCourseSet>
+                    <number_required>1</number_required>
+                    <CourseInTrackSet>
+                        <course>AMS 511</course>
+                    </CourseinTrackSet>         
+                    <CourseInTrackSet>
+                        <course>AMS 512</course>
+                    </CourseinTrackSet>  
+                    <CourseInTrackSet>
+                        <course>AMS 513</course>
+                    </CourseinTrackSet>  
+                    <CourseInTrackSet>
+                        <course>AMS 514</course>
+                    </CourseinTrackSet>  
+                    <CourseInTrackSet>
+                        <course>AMS 515</course>
+                    </CourseinTrackSet>  
+                    <CourseInTrackSet>
+                        <course>AMS 516</course>
+                    </CourseinTrackSet>  
+                    <CourseInTrackSet>
+                        <course>AMS 517</course>
+                    </CourseinTrackSet>  
+                    <CourseInTrackSet>
+                        <course>AMS 518</course>
+                    </CourseinTrackSet>  
+                    <CourseInTrackSet>
+                        <course>AMS 519</course>
+                    </CourseinTrackSet>  
+                    <CourseInTrackSet>
+                        <course>AMS 522</course>
+                    </CourseinTrackSet>  
+                    <CourseInTrackSet>
+                        <course>AMS 523</course>
+                    </CourseinTrackSet>  
+                </TrackCourseSet>
+            </TrackCourseSet>
+        </Track>
 
-        <Tracks_In_Major>
-            <name>Statistics</name>
-            <projectRequired>False</projectRequired>
-            <thesisRequired>False</thesisRequired>
-            <requiredGPA>3.0</requiredGPA>
-            <minCredits>30</minCredits>            
-        </Tracks_In_Major>
+        <Track>
+            <name>Statistics</name>     
+            <TrackCourseSet>
+                <number_required>8</number_required>
+                <CourseInTrackSet>
+                     <course>AMS 510</course>
+                </CourseinTrackSet>
+                <CourseInTrackSet>
+                     <course>AMS 507</course>
+                </CourseinTrackSet>
+                <CourseInTrackSet>
+                     <course>AMS 570</course>
+                </CourseinTrackSet>
+                <CourseInTrackSet>
+                     <course>AMS 572</course>
+                </CourseinTrackSet>
+                <CourseInTrackSet>
+                     <course>AMS 573</course>
+                </CourseinTrackSet>
+                <CourseInTrackSet>
+                     <course>AMS 578</course>
+                </CourseinTrackSet>
+                <CourseInTrackSet>
+                     <course>AMS 582</course>
+                </CourseinTrackSet>
+                <CourseInTrackSet>
+                     <course>AMS 597</course>
+                </CourseinTrackSet>
+            </TrackCourseSet>
+            <TrackCourseSet> 
+                <name>Elective</name>
+                <number_required>2</number_required>
+            </TrackCourseSet>
+        </Track>
 
-        <Tracks_In_Major>
-            <name>Quantitative Finance</name>
-            <projectRequired>False</projectRequired>
-            <thesisRequired>False</thesisRequired>
-            <requiredGPA>3.0</requiredGPA>
-            <minCredits>30</minCredits>            
-        </Tracks_In_Major>
+        <Track>
+            <name>Quantitative Finance</name> 
+            <TrackCourseSet>
+                <number_required>11</number_required>
+                <CourseInTrackSet>
+                     <course>AMS 507</course>
+                </CourseinTrackSet>
+                <CourseInTrackSet>
+                     <course>AMS 510</course>
+                </CourseinTrackSet>
+                <CourseInTrackSet>
+                     <course>AMS 511</course>
+                </CourseinTrackSet>
+                <CourseInTrackSet>
+                     <course>AMS 512</course>
+                </CourseinTrackSet>
+                <CourseInTrackSet>
+                     <course>AMS 513</course>
+                </CourseinTrackSet>
+                <CourseInTrackSet>
+                     <course>AMS 514</course>
+                </CourseinTrackSet>
+                <CourseInTrackSet>
+                     <course>AMS 516</course>
+                </CourseinTrackSet>
+                <CourseInTrackSet>
+                     <course>AMS 517</course>
+                </CourseinTrackSet>
+                <CourseInTrackSet>
+                     <course>AMS 518</course>
+                </CourseinTrackSet>
+                <CourseInTrackSet>
+                     <course>AMS 572</course>
+                </CourseinTrackSet>
+                <CourseInTrackSet>
+                     <course>FIN 539</course>
+                </CourseinTrackSet>
+            </TrackCourseSet>
+            <TrackCourseSet> 
+                <name>Elective</name>
+                <number_required>1</number_required>
+            </TrackCourseSet>
+        </Track>
     </major>
 
     <!--Unfinished-->
@@ -82,4 +394,4 @@
         <thesisRequired>False</thesisRequired>
     </major>    
     
-</degree_reqs>
+</majors>
