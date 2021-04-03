@@ -1,6 +1,6 @@
 <majors>
 
-    <!--Unfinished-->
+    <!--CSE: Finished, but not Reviewed-->
     <major>
         <name>Computer Science</name>
         <department>CS</department>
@@ -8,6 +8,407 @@
             <season>Spring</season>
             <year>2021</year>
         </requirement_semester>
+        <Track>
+            <name>Non-Thesis</name>
+            <minimum_credits_required>31</minimum_credits_required>
+            <TrackCourseSet> 
+                <number_required>1</number_required>
+                <name>Theory</name>
+                <CourseInTrackSet>
+                    <course>CSE 512</course>
+                </CourseinTrackSet>
+                <CourseInTrackSet>
+                    <course>CSE 526</course>
+                </CourseinTrackSet>
+                <CourseInTrackSet>
+                    <course>CSE 540</course>
+                </CourseinTrackSet>
+                <CourseInTrackSet>
+                    <course>CSE 541</course>
+                </CourseinTrackSet>
+                <CourseInTrackSet>
+                    <course>CSE 547</course>
+                </CourseinTrackSet>
+                <CourseInTrackSet>
+                    <course>CSE 548</course>
+                </CourseinTrackSet>
+                <CourseInTrackSet>
+                    <course>CSE 549</course>
+                </CourseinTrackSet>                
+            </TrackCourseSet>
+            <TrackCourseSet> 
+                <number_required>1</number_required>
+                <name>Systems</name>
+                <CourseInTrackSet>
+                    <course>CSE 502</course>
+                </CourseinTrackSet>
+                <CourseInTrackSet>
+                    <course>CSE 504</course>
+                </CourseinTrackSet>
+                <CourseInTrackSet>
+                    <course>CSE 506</course>
+                </CourseinTrackSet>
+                <CourseInTrackSet>
+                    <course>CSE 508</course>
+                </CourseinTrackSet>
+                <CourseInTrackSet>
+                    <course>CSE 509</course>
+                </CourseinTrackSet>
+                <CourseInTrackSet>
+                    <course>CSE 532</course>
+                </CourseinTrackSet>
+                <CourseInTrackSet>
+                    <course>CSE 534</course>
+                </CourseinTrackSet>            
+                <CourseInTrackSet>
+                    <course>CSE 535</course>
+                </CourseinTrackSet>        
+            </TrackCourseSet>
+            <TrackCourseSet> 
+                <number_required>1</number_required>
+                <name>Information and Intelligent Systems</name>
+                <CourseInTrackSet>
+                    <course>CSE 505</course>
+                </CourseinTrackSet>
+                <CourseInTrackSet>
+                    <course>CSE 519</course>
+                </CourseinTrackSet>
+                <CourseInTrackSet>
+                    <course>CSE 527</course>
+                </CourseinTrackSet>
+                <CourseInTrackSet>
+                    <course>CSE 528</course>
+                </CourseinTrackSet>
+                <CourseInTrackSet>
+                    <course>CSE 537</course>
+                </CourseinTrackSet>
+                <CourseInTrackSet>
+                    <course>CSE 538</course>
+                </CourseinTrackSet>
+                <CourseInTrackSet>
+                    <course>CSE 564</course>
+                </CourseinTrackSet>                
+            </TrackCourseSet>
+        </Track>
+        <Track>
+            <name>Thesis</name>
+            <minimum_credits_required>31</minimum_credits_required>
+            <thesis_required>yes</thesis_required>
+            <TrackCourseSet> 
+                <number_required>1</number_required>
+                <name>Theory</name>
+                <CourseInTrackSet>
+                    <course>CSE 512</course>
+                </CourseinTrackSet>
+                <CourseInTrackSet>
+                    <course>CSE 526</course>
+                </CourseinTrackSet>
+                <CourseInTrackSet>
+                    <course>CSE 540</course>
+                </CourseinTrackSet>
+                <CourseInTrackSet>
+                    <course>CSE 541</course>
+                </CourseinTrackSet>
+                <CourseInTrackSet>
+                    <course>CSE 547</course>
+                </CourseinTrackSet>
+                <CourseInTrackSet>
+                    <course>CSE 548</course>
+                </CourseinTrackSet>
+                <CourseInTrackSet>
+                    <course>CSE 549</course>
+                </CourseinTrackSet>                
+            </TrackCourseSet>
+            <TrackCourseSet> 
+                <number_required>1</number_required>
+                <name>Systems</name>
+                <CourseInTrackSet>
+                    <course>CSE 502</course>
+                </CourseinTrackSet>
+                <CourseInTrackSet>
+                    <course>CSE 504</course>
+                </CourseinTrackSet>
+                <CourseInTrackSet>
+                    <course>CSE 506</course>
+                </CourseinTrackSet>
+                <CourseInTrackSet>
+                    <course>CSE 508</course>
+                </CourseinTrackSet>
+                <CourseInTrackSet>
+                    <course>CSE 509</course>
+                </CourseinTrackSet>
+                <CourseInTrackSet>
+                    <course>CSE 532</course>
+                </CourseinTrackSet>
+                <CourseInTrackSet>
+                    <course>CSE 534</course>
+                </CourseinTrackSet>            
+                <CourseInTrackSet>
+                    <course>CSE 535</course>
+                </CourseinTrackSet>        
+            </TrackCourseSet>
+            <TrackCourseSet> 
+                <number_required>1</number_required>
+                <name>Information and Intelligent Systems</name>
+                <CourseInTrackSet>
+                    <course>CSE 505</course>
+                </CourseinTrackSet>
+                <CourseInTrackSet>
+                    <course>CSE 519</course>
+                </CourseinTrackSet>
+                <CourseInTrackSet>
+                    <course>CSE 527</course>
+                </CourseinTrackSet>
+                <CourseInTrackSet>
+                    <course>CSE 528</course>
+                </CourseinTrackSet>
+                <CourseInTrackSet>
+                    <course>CSE 537</course>
+                </CourseinTrackSet>
+                <CourseInTrackSet>
+                    <course>CSE 538</course>
+                </CourseinTrackSet>
+                <CourseInTrackSet>
+                    <course>CSE 564</course>
+                </CourseinTrackSet>                
+            </TrackCourseSet>
+            <TrackCourseSet>
+                <name>Thesis Course</name>
+                <number_required>1</number_required>
+                <CourseinTrackSet>
+                    <course>CSE 599</course>
+                </CourseInTrackSet>
+            </TrackCourseSet>
+        </Track>
+        <Track>
+            <name>Advanced Project</name>
+            <minimum_credits_required>31</minimum_credits_required>
+            <project_required>True</project_required>
+            <TrackCourseSet> 
+                <name>Advanced Project Courses></name>
+                <number_required>1</number_required>
+                <CourseinTrackSet>
+                    <course>CSE 523</course>
+                </CourseInTrackSet>
+                <CourseinTrackSet>
+                    <course>CSE 524</course>
+                </CourseInTrackSet>    
+            </TrackCourseSet>
+            <TrackCourseSet> 
+                <name>Cannot take these</name>
+                <number_required>0</number_required>
+                <CourseinTrackSet>
+                    <course>CSE 599</course>
+                </CourseInTrackSet>
+            </TrackCourseSet>           
+            <TrackCourseSet> 
+                <number_required>1</number_required>
+                <name>Theory</name>
+                <CourseInTrackSet>
+                    <course>CSE 512</course>
+                </CourseinTrackSet>
+                <CourseInTrackSet>
+                    <course>CSE 526</course>
+                </CourseinTrackSet>
+                <CourseInTrackSet>
+                    <course>CSE 540</course>
+                </CourseinTrackSet>
+                <CourseInTrackSet>
+                    <course>CSE 541</course>
+                </CourseinTrackSet>
+                <CourseInTrackSet>
+                    <course>CSE 547</course>
+                </CourseinTrackSet>
+                <CourseInTrackSet>
+                    <course>CSE 548</course>
+                </CourseinTrackSet>
+                <CourseInTrackSet>
+                    <course>CSE 549</course>
+                </CourseinTrackSet>                
+            </TrackCourseSet>
+            <TrackCourseSet> 
+                <number_required>1</number_required>
+                <name>Systems</name>
+                <CourseInTrackSet>
+                    <course>CSE 502</course>
+                </CourseinTrackSet>
+                <CourseInTrackSet>
+                    <course>CSE 504</course>
+                </CourseinTrackSet>
+                <CourseInTrackSet>
+                    <course>CSE 506</course>
+                </CourseinTrackSet>
+                <CourseInTrackSet>
+                    <course>CSE 508</course>
+                </CourseinTrackSet>
+                <CourseInTrackSet>
+                    <course>CSE 509</course>
+                </CourseinTrackSet>
+                <CourseInTrackSet>
+                    <course>CSE 532</course>
+                </CourseinTrackSet>
+                <CourseInTrackSet>
+                    <course>CSE 534</course>
+                </CourseinTrackSet>            
+                <CourseInTrackSet>
+                    <course>CSE 535</course>
+                </CourseinTrackSet>        
+            </TrackCourseSet>
+            <TrackCourseSet> 
+                <number_required>1</number_required>
+                <name>Information and Intelligent Systems</name>
+                <CourseInTrackSet>
+                    <course>CSE 505</course>
+                </CourseinTrackSet>
+                <CourseInTrackSet>
+                    <course>CSE 519</course>
+                </CourseinTrackSet>
+                <CourseInTrackSet>
+                    <course>CSE 527</course>
+                </CourseinTrackSet>
+                <CourseInTrackSet>
+                    <course>CSE 528</course>
+                </CourseinTrackSet>
+                <CourseInTrackSet>
+                    <course>CSE 537</course>
+                </CourseinTrackSet>
+                <CourseInTrackSet>
+                    <course>CSE 538</course>
+                </CourseinTrackSet>
+                <CourseInTrackSet>
+                    <course>CSE 564</course>
+                </CourseinTrackSet>                
+            </TrackCourseSet>
+        </Track>
+
+        <Track>
+            <name>Special Project</name>
+            <minimum_credits_required>31</minimum_credits_required>
+            <project_required>True</project_required>
+            <TrackCourseSet>
+                <name>Special Project Courses</name>
+                <number_required>1</number_required>    
+                <CourseInTrackSet>
+                    <course>CSE 522</course>
+                </CourseinTrackSet>   
+            </TrackCourseSet>
+            <TrackCourseSet>
+                <name>At Most</name>
+                <limiter>True</limiter>
+                <CourseinTrackSet>
+                    <course>CSE 590</course>
+                </CourseInTrackSet>
+                <CourseinTrackSet>
+                    <course>CSE 591</course>
+                </CourseInTrackSet>
+                <CourseinTrackSet>
+                    <course>CSE 592</course>
+                </CourseInTrackSet>
+                <CourseinTrackSet>
+                    <course>CSE 593</course>
+                </CourseInTrackSet>
+                <CourseinTrackSet>
+                    <course>CSE 594</course>
+                </CourseInTrackSet>
+                <CourseinTrackSet>
+                    <course>CSE 595</course>
+                </CourseInTrackSet>
+                <CourseinTrackSet>
+                    <course_lower>CSE 600</course_lower>
+                </CourseInTrackSet>
+            </TrackCourseSet>
+            <TrackCourseSet>
+                <name>Cannot take these</name>
+                <number_required>0</number_required>
+                <CourseInTrackSet>
+                    <course>CSE 523</course>
+                </CourseinTrackSet>   
+                <CourseInTrackSet>
+                    <course>CSE 524</course>
+                </CourseinTrackSet>   
+                <CourseInTrackSet>
+                    <course>CSE 599</course>
+                </CourseinTrackSet>   
+            </TrackCourseSet>
+            <TrackCourseSet> 
+                <number_required>1</number_required>
+                <name>Theory</name>
+                <CourseInTrackSet>
+                    <course>CSE 512</course>
+                </CourseinTrackSet>
+                <CourseInTrackSet>
+                    <course>CSE 526</course>
+                </CourseinTrackSet>
+                <CourseInTrackSet>
+                    <course>CSE 540</course>
+                </CourseinTrackSet>
+                <CourseInTrackSet>
+                    <course>CSE 541</course>
+                </CourseinTrackSet>
+                <CourseInTrackSet>
+                    <course>CSE 547</course>
+                </CourseinTrackSet>
+                <CourseInTrackSet>
+                    <course>CSE 548</course>
+                </CourseinTrackSet>
+                <CourseInTrackSet>
+                    <course>CSE 549</course>
+                </CourseinTrackSet>                
+            </TrackCourseSet>
+            <TrackCourseSet> 
+                <number_required>1</number_required>
+                <name>Systems</name>
+                <CourseInTrackSet>
+                    <course>CSE 502</course>
+                </CourseinTrackSet>
+                <CourseInTrackSet>
+                    <course>CSE 504</course>
+                </CourseinTrackSet>
+                <CourseInTrackSet>
+                    <course>CSE 506</course>
+                </CourseinTrackSet>
+                <CourseInTrackSet>
+                    <course>CSE 508</course>
+                </CourseinTrackSet>
+                <CourseInTrackSet>
+                    <course>CSE 509</course>
+                </CourseinTrackSet>
+                <CourseInTrackSet>
+                    <course>CSE 532</course>
+                </CourseinTrackSet>
+                <CourseInTrackSet>
+                    <course>CSE 534</course>
+                </CourseinTrackSet>            
+                <CourseInTrackSet>
+                    <course>CSE 535</course>
+                </CourseinTrackSet>        
+            </TrackCourseSet>
+            <TrackCourseSet> 
+                <number_required>1</number_required>
+                <name>Information and Intelligent Systems</name>
+                <CourseInTrackSet>
+                    <course>CSE 505</course>
+                </CourseinTrackSet>
+                <CourseInTrackSet>
+                    <course>CSE 519</course>
+                </CourseinTrackSet>
+                <CourseInTrackSet>
+                    <course>CSE 527</course>
+                </CourseinTrackSet>
+                <CourseInTrackSet>
+                    <course>CSE 528</course>
+                </CourseinTrackSet>
+                <CourseInTrackSet>
+                    <course>CSE 537</course>
+                </CourseinTrackSet>
+                <CourseInTrackSet>
+                    <course>CSE 538</course>
+                </CourseinTrackSet>
+                <CourseInTrackSet>
+                    <course>CSE 564</course>
+                </CourseinTrackSet>                
+            </TrackCourseSet>
+        </Track>
     </major>
 
     <!--AMS: Finished, Not Revised-->
@@ -21,6 +422,7 @@
 
         <Track>
             <name>Computational Applied Mathematics</name>
+            <number_of_areas>2</number_of_areas>
             <TrackCourseSet> 
                 <number_required>7</number_required>
                 <CourseInTrackSet>
@@ -53,6 +455,7 @@
 
         <Track>
             <name>Computational Biology</name>
+            <number_of_areas>2</number_of_areas>
              <TrackCourseSet> 
                 <number_required>10</number_required>
                 <CourseInTrackSet>
@@ -101,6 +504,7 @@
 
         <Track>
             <name>Operations Research</name>
+            <number_of_areas>2</number_of_areas>
             <TrackCourseSet>
                 <number_required>7</number_required>
                 <CourseInTrackSet>
@@ -294,6 +698,7 @@
 
         <Track>
             <name>Statistics</name>     
+            <number_of_areas>2</number_of_areas>
             <TrackCourseSet>
                 <number_required>8</number_required>
                 <CourseInTrackSet>
@@ -329,6 +734,7 @@
 
         <Track>
             <name>Quantitative Finance</name> 
+            <number_of_areas>2</number_of_areas>
             <TrackCourseSet>
                 <number_required>11</number_required>
                 <CourseInTrackSet>
@@ -376,7 +782,16 @@
     <major>
         <name>Biomedical Informatics</name>
         <department>BI</department>
-        <projectRequired></projectRequired>
+        <requirement_semester>
+            <season>Spring</season>
+            <year>2021</year>
+        </requirement_semester>
+        <Track>
+        
+            <name>Non-Thesis</name>
+        
+        </Track>
+
     </major>
     
     <!--CE: Finished, Not Revised-->
@@ -390,6 +805,7 @@
 
         <Track>
             <name>Non-Thesis</name>
+            <number_of_areas>6</number_of_areas>
             <TrackCourseSet>  
                 <name>Hardware</name>
                 <number_required>1</number_required>
@@ -508,6 +924,7 @@
 
         <Track>
             <name>Thesis</name>
+            <number_of_areas>6</number_of_areas>
             <thesis_required>True</thesis_required>
             <TrackCourseSet>  
                 <name>Hardware</name>
