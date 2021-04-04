@@ -1,0 +1,247 @@
+   <!--Unfinished-->
+    <major>
+        <name>Biomedical Informatics</name>
+        <department>BI</department>
+        <requirement_semester>
+            <season>Spring</season>
+            <year>2021</year>
+        </requirement_semester>
+
+        <Track>
+            <name>Imaging Informatics - Thesis</name>
+            <thesis_required>true</thesis_required>
+            <minimum_credits_required>33</minimum_credits_required>
+            <TrackCourseSet>
+                <number_required>9</number_required>
+                <CourseInTrackSet>
+                     <course>BMI 501</course>
+                </CourseinTrackSet> 
+                <TrackCourseSet>
+                    <number_required>1</number_required>
+                    <CourseInTrackSet>
+                         <course>BMI 502</course>
+                    </CourseInTrackSet>
+                    <CourseInTrackSet>
+                         <course>BMI 503</course>
+                    </CourseInTrackSet>
+                </TrackCourseSet>           
+                <CourseInTrackSet>
+                     <course>BMI 513</course>
+                </CourseinTrackSet> 
+                <CourseInTrackSet>
+                     <course>BMI 514</course>
+                </CourseinTrackSet> 
+                <CourseInTrackSet>
+                     <course>BMI 520</course>
+                </CourseinTrackSet> 
+                <CourseInTrackSet>
+                     <course>BMI 530</course>
+                </CourseinTrackSet> 
+                <CourseInTrackSet>
+                     <course>BMI 540</course>
+                </CourseinTrackSet> 
+                <CourseInTrackSet>
+                     <course>BMI 592</course>
+                     <each_semester>true</each_semester>
+                </CourseinTrackSet> 
+                <CourseInTrackSet>
+                     <course>BMI 599</course>
+                </CourseinTrackSet>     
+            </TrackCourseSet>
+        </Track>
+        <Track>
+            <name>Clinical Informatics - Thesis</name>
+            <thesis_required>true</thesis_required>
+            <minimum_credits_required>33</minimum_credits_required>
+            <TrackCourseSet>
+                <number_required>8</number_required>
+                <CourseInTrackSet>
+                     <course>BMI 501</course>
+                </CourseinTrackSet> 
+                <TrackCourseSet>
+                    <number_required>1</number_required>
+                    <CourseInTrackSet>
+                         <course>BMI 502</course>
+                    </CourseInTrackSet>
+                    <CourseInTrackSet>
+                         <course>BMI 503</course>
+                    </CourseInTrackSet>
+                </TrackCourseSet>   
+                <CourseInTrackSet>
+                     <course>BMI 512</course>
+                </CourseinTrackSet>         
+                <CourseInTrackSet>
+                     <course>BMI 540</course>
+                </CourseinTrackSet> 
+                <CourseInTrackSet>
+                     <course>BMI 550</course>
+                </CourseinTrackSet> 
+                <CourseInTrackSet>
+                     <course>BMI 551</course>
+                <CourseInTrackSet>
+                     <course>BMI 592</course>
+                     <each_semester>true</each_semester>
+                </CourseinTrackSet> 
+                <CourseInTrackSet>
+                     <course>BMI 599</course>
+                </CourseinTrackSet>     
+            </TrackCourseSet>
+        </Track>
+        <Track>
+            <name>Translational Bio-Informatics - Thesis</name>
+            <thesis_required>true</thesis_required>
+            <minimum_credits_required>33</minimum_credits_required>
+            <TrackCourseSet>
+                <number_required>8</number_required>
+                <CourseInTrackSet>
+                     <course>BMI 501</course>
+                </CourseinTrackSet> 
+                <TrackCourseSet>
+                    <number_required>1</number_required>
+                    <CourseInTrackSet>
+                         <course>BMI 502</course>
+                    </CourseInTrackSet>
+                    <CourseInTrackSet>
+                         <course>BMI 503</course>
+                    </CourseInTrackSet>
+                </TrackCourseSet>   
+                <CourseInTrackSet>
+                     <course>BMI 511</course>
+                </CourseinTrackSet>         
+                <CourseInTrackSet>
+                     <course>BMI 520</course>
+                </CourseinTrackSet> 
+                <CourseInTrackSet>
+                     <course>BMI 530</course>
+                </CourseinTrackSet> 
+                <CourseInTrackSet>
+                     <course>BMI 540</course>
+                <CourseInTrackSet>
+                     <course>BMI 592</course>
+                     <each_semester>true</each_semester>
+                </CourseinTrackSet> 
+                <CourseInTrackSet>
+                     <course>BMI 599</course>
+                </CourseinTrackSet>     
+            </TrackCourseSet>
+        </Track>
+
+        <Track>
+            <name>Imaging Informatics - Capstone</name>
+            <project_required>true</project_required>
+            <name>Capstone</name>
+            <TrackCourseSet>
+                <number_required>9</number_required>
+                <CourseInTrackSet>
+                     <course>BMI 501</course>
+                </CourseinTrackSet> 
+                <TrackCourseSet>
+                    <number_required>1</number_required>
+                    <CourseInTrackSet>
+                         <course>BMI 502</course>
+                    </CourseInTrackSet>
+                    <CourseInTrackSet>
+                         <course>BMI 503</course>
+                    </CourseInTrackSet>
+                </TrackCourseSet>           
+                <CourseInTrackSet>
+                     <course>BMI 513</course>
+                </CourseinTrackSet> 
+                <CourseInTrackSet>
+                     <course>BMI 514</course>
+                </CourseinTrackSet> 
+                <CourseInTrackSet>
+                     <course>BMI 520</course>
+                </CourseinTrackSet> 
+                <CourseInTrackSet>
+                     <course>BMI 530</course>
+                </CourseinTrackSet> 
+                <CourseInTrackSet>
+                     <course>BMI 540</course>
+                </CourseinTrackSet> 
+                <CourseInTrackSet>
+                     <course>BMI 592</course>
+                     <each_semester>true</each_semester>
+                </CourseinTrackSet> 
+                <CourseInTrackSet>
+                     <course>BMI 598</course>
+                </CourseinTrackSet>     
+            </TrackCourseSet>
+        </Track>
+        <Track>
+            <name>Clinical Informatics - Capstone</name>
+            <project_required>true</project_required>
+            <name>Capstone</name>
+            <TrackCourseSet>
+                <number_required>8</number_required>
+                <CourseInTrackSet>
+                     <course>BMI 501</course>
+                </CourseinTrackSet> 
+                <TrackCourseSet>
+                    <number_required>1</number_required>
+                    <CourseInTrackSet>
+                         <course>BMI 502</course>
+                    </CourseInTrackSet>
+                    <CourseInTrackSet>
+                         <course>BMI 503</course>
+                    </CourseInTrackSet>
+                </TrackCourseSet>   
+                <CourseInTrackSet>
+                     <course>BMI 512</course>
+                </CourseinTrackSet>         
+                <CourseInTrackSet>
+                     <course>BMI 540</course>
+                </CourseinTrackSet> 
+                <CourseInTrackSet>
+                     <course>BMI 550</course>
+                </CourseinTrackSet> 
+                <CourseInTrackSet>
+                     <course>BMI 551</course>
+                <CourseInTrackSet>
+                     <course>BMI 592</course>
+                     <each_semester>true</each_semester>
+                </CourseinTrackSet> 
+                <CourseInTrackSet>
+                     <course>BMI 598</course>
+                </CourseinTrackSet>     
+            </TrackCourseSet>
+        </Track>
+        <Track>
+            <name>Translational Bio-Informatics - Capstone</name>
+            <project_required>true</project_required>
+            <name>Capstone</name>
+            <TrackCourseSet>
+                <number_required>8</number_required>
+                <CourseInTrackSet>
+                     <course>BMI 501</course>
+                </CourseinTrackSet> 
+                <TrackCourseSet>
+                    <number_required>1</number_required>
+                    <CourseInTrackSet>
+                         <course>BMI 502</course>
+                    </CourseInTrackSet>
+                    <CourseInTrackSet>
+                         <course>BMI 503</course>
+                    </CourseInTrackSet>
+                </TrackCourseSet>   
+                <CourseInTrackSet>
+                     <course>BMI 511</course>
+                </CourseinTrackSet>         
+                <CourseInTrackSet>
+                     <course>BMI 520</course>
+                </CourseinTrackSet> 
+                <CourseInTrackSet>
+                     <course>BMI 530</course>
+                </CourseinTrackSet> 
+                <CourseInTrackSet>
+                     <course>BMI 540</course>
+                <CourseInTrackSet>
+                     <course>BMI 592</course>
+                     <each_semester>true</each_semester>
+                </CourseinTrackSet> 
+                <CourseInTrackSet>
+                     <course>BMI 598</course>
+                </CourseinTrackSet>     
+            </TrackCourseSet>
+        </Track>
+    </major>
