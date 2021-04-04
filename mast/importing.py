@@ -4,7 +4,8 @@ from django.shortcuts import render
 from django.contrib import messages
 from django.http import HttpResponseRedirect
 from django.urls import reverse
-from .models import Student, Major, Course, CourseInstance, CoursesTakenByStudent, Semester, Track, CourseStatus, Grade
+from .models import Student, Major, Course, CourseInstance, CoursesTakenByStudent, Semester, Track, CourseStatus, Grade,\
+    Season
 
 
 def import_student(request):
@@ -62,6 +63,20 @@ def import_student(request):
                                                   major=Major.objects.filter(department=line[4])[0])
             if line[6] and line[7]:
                 student.entry_semester = Semester.objects.get(season=line[6], year=line[7])
+                e = Semester.objects.get(season=line[6], year=line[7])
+                if Semester.objects.filter(is_current_semester=True):
+                    current_semester = Semester.objects.filter(is_current_semester=True)[0]
+                    if e.year < current_semester.year:
+                        i = e.year
+                        count = 0
+                        while i < current_semester.year:
+                            if Semester.objects.filter(year=i):
+                                count += Semester.objects.filter(year=i).count()
+                            i += 1
+                        count += 1
+                        if current_semester.season == Season.FALL:
+                            count += 1
+                        student.semesters_enrolled = count
             if line[8] and line[9]:
                 student.requirement_semester = Semester.objects.get(season=line[8], year=line[9])
             if line[10] and line[11]:
@@ -69,6 +84,9 @@ def import_student(request):
                 student.graduated = True
             if line[12]:
                 student.password = line[12]
+
+
+
             student.save()
 
     course_file = request.FILES['course_file']
