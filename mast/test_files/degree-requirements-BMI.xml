@@ -1,4 +1,4 @@
-   <!--Unfinished-->
+   <!--Finished, needs revision-->
     <major>
         <name>Biomedical Informatics</name>
         <department>BI</department>
@@ -88,6 +88,55 @@
                     <course>BMI 598</course>
                </CourseInTrackSet>
             </TrackCourseSet>
+            <TrackCourseSet>
+               <limiter>True</limiter>
+               <size>4</size>
+               <CourseinTrackSet>
+                    <course>BMI 599</course>
+               </CourseInTrackSet>
+            </TrackCourseSet>
+            <TrackCourseSet>
+               <limiter>True</limiter>
+               <size>2</size>
+               <CourseinTrackSet>
+                    <course>BMI 596</course>
+               </CourseInTrackSet>
+               <CourseinTrackSet>
+                    <course>BMI 696</course>
+               </CourseInTrackSet>
+            </TrackCourseSet>
+            <TrackCourseSet>
+               <name>Limiter</name>
+               <limiter>True</limiter>
+               <size>1</size>
+               <CourseInTrackSet>
+                    <course>BMI 590</course>
+               </CourseinTrackSet> 
+               <CourseInTrackSet>
+                    <course>BMI 591</course>
+               </CourseinTrackSet> 
+               <CourseInTrackSet>
+                    <course>BMI 592</course>
+               </CourseinTrackSet> 
+               <CourseInTrackSet>
+                    <course>BMI 595</course>
+               </CourseinTrackSet> 
+               <CourseInTrackSet>
+                    <course>BMI 596</course>
+               </CourseinTrackSet> 
+               <CourseInTrackSet>
+                    <course>BMI 690</course>
+               </CourseinTrackSet> 
+               <CourseInTrackSet>
+                    <course>BMI 691</course>
+               </CourseinTrackSet> 
+               <CourseInTrackSet>
+                    <course>BMI 695</course>
+               </CourseinTrackSet> 
+               <CourseInTrackSet>
+                    <course>BMI 696</course>
+               </CourseinTrackSet> 
+            </TrackCourseSet>
         </Track>
         <Track>
             <name>Clinical Informatics - Thesis</name>
@@ -175,6 +224,55 @@
                     <course>BMI 598</course>
                </CourseInTrackSet>
             </TrackCourseSet>
+            <TrackCourseSet>
+               <limiter>True</limiter>
+               <size>4</size>
+               <CourseinTrackSet>
+                    <course>BMI 599</course>
+               </CourseInTrackSet>
+            </TrackCourseSet>
+            <TrackCourseSet>
+               <limiter>True</limiter>
+               <size>2</size>
+               <CourseinTrackSet>
+                    <course>BMI 596</course>
+               </CourseInTrackSet>
+               <CourseinTrackSet>
+                    <course>BMI 696</course>
+               </CourseInTrackSet>
+            </TrackCourseSet>
+            <TrackCourseSet>
+               <name>Limiter</name>
+               <limiter>True</limiter>
+               <size>1</size>
+               <CourseInTrackSet>
+                    <course>BMI 590</course>
+               </CourseinTrackSet> 
+               <CourseInTrackSet>
+                    <course>BMI 591</course>
+               </CourseinTrackSet> 
+               <CourseInTrackSet>
+                    <course>BMI 592</course>
+               </CourseinTrackSet> 
+               <CourseInTrackSet>
+                    <course>BMI 595</course>
+               </CourseinTrackSet> 
+               <CourseInTrackSet>
+                    <course>BMI 596</course>
+               </CourseinTrackSet> 
+               <CourseInTrackSet>
+                    <course>BMI 690</course>
+               </CourseinTrackSet> 
+               <CourseInTrackSet>
+                    <course>BMI 691</course>
+               </CourseinTrackSet> 
+               <CourseInTrackSet>
+                    <course>BMI 695</course>
+               </CourseinTrackSet> 
+               <CourseInTrackSet>
+                    <course>BMI 696</course>
+               </CourseinTrackSet> 
+            </TrackCourseSet>
         </Track>
         <Track>
             <name>Translational Bio-Informatics - Thesis</name>
@@ -255,6 +353,55 @@
                <CourseinTrackSet>
                     <course>BMI 598</course>
                </CourseInTrackSet>
+            </TrackCourseSet>
+            <TrackCourseSet>
+               <limiter>True</limiter>
+               <size>4</size>
+               <CourseinTrackSet>
+                    <course>BMI 599</course>
+               </CourseInTrackSet>
+            </TrackCourseSet>
+            <TrackCourseSet>
+               <limiter>True</limiter>
+               <size>2</size>
+               <CourseinTrackSet>
+                    <course>BMI 596</course>
+               </CourseInTrackSet>
+               <CourseinTrackSet>
+                    <course>BMI 696</course>
+               </CourseInTrackSet>
+            </TrackCourseSet>
+            <TrackCourseSet>
+               <name>Limiter</name>
+               <limiter>True</limiter>
+               <size>1</size>
+               <CourseInTrackSet>
+                    <course>BMI 590</course>
+               </CourseinTrackSet> 
+               <CourseInTrackSet>
+                    <course>BMI 591</course>
+               </CourseinTrackSet> 
+               <CourseInTrackSet>
+                    <course>BMI 592</course>
+               </CourseinTrackSet> 
+               <CourseInTrackSet>
+                    <course>BMI 595</course>
+               </CourseinTrackSet> 
+               <CourseInTrackSet>
+                    <course>BMI 596</course>
+               </CourseinTrackSet> 
+               <CourseInTrackSet>
+                    <course>BMI 690</course>
+               </CourseinTrackSet> 
+               <CourseInTrackSet>
+                    <course>BMI 691</course>
+               </CourseinTrackSet> 
+               <CourseInTrackSet>
+                    <course>BMI 695</course>
+               </CourseinTrackSet> 
+               <CourseInTrackSet>
+                    <course>BMI 696</course>
+               </CourseinTrackSet> 
             </TrackCourseSet>
         </Track>
 
@@ -338,6 +485,55 @@
                <CourseinTrackSet>
                     <course>BMI 599</course>
                </CourseInTrackSet>
+            </TrackCourseSet>
+            <TrackCourseSet>
+               <limiter>True</limiter>
+               <size>2</size>
+               <CourseinTrackSet>
+                    <course>BMI 598</course>
+               </CourseInTrackSet>
+            </TrackCourseSet>
+            <TrackCourseSet>
+               <limiter>True</limiter>
+               <size>2</size>
+               <CourseinTrackSet>
+                    <course>BMI 596</course>
+               </CourseInTrackSet>
+               <CourseinTrackSet>
+                    <course>BMI 696</course>
+               </CourseInTrackSet>
+            </TrackCourseSet>
+            <TrackCourseSet>
+               <name>Limiter</name>
+               <limiter>True</limiter>
+               <size>1</size>
+               <CourseInTrackSet>
+                    <course>BMI 590</course>
+               </CourseinTrackSet> 
+               <CourseInTrackSet>
+                    <course>BMI 591</course>
+               </CourseinTrackSet> 
+               <CourseInTrackSet>
+                    <course>BMI 592</course>
+               </CourseinTrackSet> 
+               <CourseInTrackSet>
+                    <course>BMI 595</course>
+               </CourseinTrackSet> 
+               <CourseInTrackSet>
+                    <course>BMI 596</course>
+               </CourseinTrackSet> 
+               <CourseInTrackSet>
+                    <course>BMI 690</course>
+               </CourseinTrackSet> 
+               <CourseInTrackSet>
+                    <course>BMI 691</course>
+               </CourseinTrackSet> 
+               <CourseInTrackSet>
+                    <course>BMI 695</course>
+               </CourseinTrackSet> 
+               <CourseInTrackSet>
+                    <course>BMI 696</course>
+               </CourseinTrackSet> 
             </TrackCourseSet>
         </Track>
         <Track>
@@ -426,6 +622,55 @@
                     <course>BMI 599</course>
                </CourseInTrackSet>
             </TrackCourseSet>
+            <TrackCourseSet>
+               <limiter>True</limiter>
+               <size>2</size>
+               <CourseinTrackSet>
+                    <course>BMI 598</course>
+               </CourseInTrackSet>
+            </TrackCourseSet>
+            <TrackCourseSet>
+               <limiter>True</limiter>
+               <size>2</size>
+               <CourseinTrackSet>
+                    <course>BMI 596</course>
+               </CourseInTrackSet>
+               <CourseinTrackSet>
+                    <course>BMI 696</course>
+               </CourseInTrackSet>
+            </TrackCourseSet>
+            <TrackCourseSet>
+               <name>Limiter</name>
+               <limiter>True</limiter>
+               <size>1</size>
+               <CourseInTrackSet>
+                    <course>BMI 590</course>
+               </CourseinTrackSet> 
+               <CourseInTrackSet>
+                    <course>BMI 591</course>
+               </CourseinTrackSet> 
+               <CourseInTrackSet>
+                    <course>BMI 592</course>
+               </CourseinTrackSet> 
+               <CourseInTrackSet>
+                    <course>BMI 595</course>
+               </CourseinTrackSet> 
+               <CourseInTrackSet>
+                    <course>BMI 596</course>
+               </CourseinTrackSet> 
+               <CourseInTrackSet>
+                    <course>BMI 690</course>
+               </CourseinTrackSet> 
+               <CourseInTrackSet>
+                    <course>BMI 691</course>
+               </CourseinTrackSet> 
+               <CourseInTrackSet>
+                    <course>BMI 695</course>
+               </CourseinTrackSet> 
+               <CourseInTrackSet>
+                    <course>BMI 696</course>
+               </CourseinTrackSet> 
+            </TrackCourseSet>
         </Track>
         <Track>
             <name>Translational Bio-Informatics - Capstone</name>
@@ -506,6 +751,55 @@
                <CourseinTrackSet>
                     <course>BMI 599</course>
                </CourseInTrackSet>
+            </TrackCourseSet>
+            <TrackCourseSet>
+               <limiter>True</limiter>
+               <size>2</size>
+               <CourseinTrackSet>
+                    <course>BMI 598</course>
+               </CourseInTrackSet>
+            </TrackCourseSet>
+            <TrackCourseSet>
+               <limiter>True</limiter>
+               <size>2</size>
+               <CourseinTrackSet>
+                    <course>BMI 596</course>
+               </CourseInTrackSet>
+               <CourseinTrackSet>
+                    <course>BMI 696</course>
+               </CourseInTrackSet>
+            </TrackCourseSet>
+            <TrackCourseSet>
+               <name>Limiter</name>
+               <limiter>True</limiter>
+               <size>1</size>
+               <CourseInTrackSet>
+                    <course>BMI 590</course>
+               </CourseinTrackSet> 
+               <CourseInTrackSet>
+                    <course>BMI 591</course>
+               </CourseinTrackSet> 
+               <CourseInTrackSet>
+                    <course>BMI 592</course>
+               </CourseinTrackSet> 
+               <CourseInTrackSet>
+                    <course>BMI 595</course>
+               </CourseinTrackSet> 
+               <CourseInTrackSet>
+                    <course>BMI 596</course>
+               </CourseinTrackSet> 
+               <CourseInTrackSet>
+                    <course>BMI 690</course>
+               </CourseinTrackSet> 
+               <CourseInTrackSet>
+                    <course>BMI 691</course>
+               </CourseinTrackSet> 
+               <CourseInTrackSet>
+                    <course>BMI 695</course>
+               </CourseinTrackSet> 
+               <CourseInTrackSet>
+                    <course>BMI 696</course>
+               </CourseinTrackSet> 
             </TrackCourseSet>
         </Track>
     </major>
