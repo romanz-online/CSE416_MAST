@@ -69,7 +69,7 @@
             <CourseInTrackSet>
                 <course>CSE 701</course>
             </CourseinTrackSet>
-        <TrackCourseSet>
+        </TrackCourseSet>
         <TrackCourseSet>
             <size>1</size>
             <name>Theory</name>
@@ -218,6 +218,7 @@
                 <lower_limit>600</lower_limit>
                 <upper_limit>638</upper_limit>
             </TrackCourseSet>   
+        </TrackCourseSet>
         <TrackCourseSet>
             <name>Cannot take these</name>
             <size>0</size>
@@ -388,6 +389,7 @@
                 <lower_limit>600</lower_limit>
                 <upper_limit>638</upper_limit>
             </TrackCourseSet>   
+        </TrackCourseSet>
         <TrackCourseSet>
             <size>1</size>
             <name>Theory</name>
