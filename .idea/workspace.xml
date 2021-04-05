@@ -2,8 +2,10 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="433e10ab-7bf6-49f7-ab54-8658f67b786e" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/mast/models.py" beforeDir="false" afterPath="$PROJECT_DIR$/mast/models.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/mast/test_files/degree-requirements-AMS.xml" beforeDir="false" afterPath="$PROJECT_DIR$/mast/test_files/degree-requirements-AMS.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/mast/test_files/degree-requirements-CSE.xml" beforeDir="false" afterPath="$PROJECT_DIR$/mast/test_files/degree-requirements-CSE.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/mast/test_files/degree-requirements-ESE.xml" beforeDir="false" afterPath="$PROJECT_DIR$/mast/test_files/degree-requirements-ESE.xml" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -19,8 +21,8 @@
       <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/mast/models.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="318">
-              <caret line="119" column="62" lean-forward="true" selection-start-line="119" selection-start-column="62" selection-end-line="119" selection-end-column="62" />
+            <state relative-caret-position="167">
+              <caret line="118" column="87" selection-start-line="118" selection-start-column="87" selection-end-line="118" selection-end-column="87" />
               <folding>
                 <element signature="e#0#28#0" expanded="true" />
               </folding>
@@ -29,12 +31,16 @@
         </entry>
       </file>
       <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/mast/importing.py">
+        <entry file="file://$PROJECT_DIR$/mast/test_files/degree-requirements-AMS.xml">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="289">
-              <caret line="48" column="26" selection-start-line="48" selection-start-column="26" selection-end-line="48" selection-end-column="26" />
+            <state>
+              <caret column="19" selection-start-column="19" selection-end-column="19" />
               <folding>
-                <element signature="e#0#9#0" expanded="true" />
+                <element signature="n#Track#0;n#major#0;n#!!top" />
+                <element signature="n#Track#1;n#major#0;n#!!top" />
+                <element signature="n#Track#2;n#major#0;n#!!top" />
+                <element signature="n#Track#3;n#major#0;n#!!top" />
+                <element signature="n#Track#4;n#major#0;n#!!top" />
               </folding>
             </state>
           </provider>
@@ -53,7 +59,6 @@
   </component>
   <component name="FindInProjectRecents">
     <findStrings>
-      <find>Pogg</find>
       <find>grade_</find>
       <find>department</find>
       <find>depar</find>
@@ -83,6 +88,7 @@
       <find>Class</find>
       <find>required</find>
       <find>section</find>
+      <find>number_required</find>
     </findStrings>
   </component>
   <component name="Git.Settings">
@@ -138,6 +144,9 @@
         <option value="$PROJECT_DIR$/mast/templates/mast/major_index.html" />
         <option value="$PROJECT_DIR$/mast/views.py" />
         <option value="$PROJECT_DIR$/mast/importing.py" />
+        <option value="$PROJECT_DIR$/mast/test_files/degree-requirements-CSE.xml" />
+        <option value="$PROJECT_DIR$/mast/test_files/degree-requirements-ESE.xml" />
+        <option value="$PROJECT_DIR$/mast/test_files/degree-requirements-AMS.xml" />
         <option value="$PROJECT_DIR$/mast/models.py" />
       </list>
     </option>
@@ -178,6 +187,12 @@
               <item name="mast" type="462c0819:PsiDirectoryNode" />
               <item name="templates" type="462c0819:PsiDirectoryNode" />
               <item name="mast" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="CSE416_MAST" type="b2602c69:ProjectViewProjectNode" />
+              <item name="CSE416_MAST" type="462c0819:PsiDirectoryNode" />
+              <item name="mast" type="462c0819:PsiDirectoryNode" />
+              <item name="test_files" type="462c0819:PsiDirectoryNode" />
             </path>
           </expand>
           <select />
@@ -338,7 +353,7 @@
       <workItem from="1617231151106" duration="835000" />
       <workItem from="1617573485512" duration="2301000" />
       <workItem from="1617580898867" duration="1104000" />
-      <workItem from="1617589784568" duration="755000" />
+      <workItem from="1617589784568" duration="4007000" />
     </task>
     <servers />
   </component>
@@ -348,7 +363,7 @@
     </history-entry>
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="207325000" />
+    <option name="totallyTimeSpent" value="210577000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="-1608" y="-8" width="1616" height="876" extended-state="6" />
@@ -404,10 +419,6 @@
     <option name="version" value="1" />
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/polls/admin.py" />
-    <entry file="file://$PROJECT_DIR$/login/templates/base.html" />
-    <entry file="file://$PROJECT_DIR$/login/templates/logged_out.html" />
-    <entry file="file://$PROJECT_DIR$/login/templates/home.html" />
     <entry file="file://$PROJECT_DIR$/login/__init__.py" />
     <entry file="file://$PROJECT_DIR$/login/wsgi.py" />
     <entry file="file://$PROJECT_DIR$/login/settings.py" />
@@ -706,10 +717,45 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/mast/test_files/degree-requirements-CSE.xml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="613">
+          <caret line="415" column="8" lean-forward="true" selection-start-line="415" selection-start-column="8" selection-end-line="415" selection-end-column="8" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/mast/test_files/degree-requirements-BMI.xml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="85">
+          <caret line="5" column="17" lean-forward="true" selection-start-line="5" selection-start-column="17" selection-end-line="5" selection-end-column="17" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/mast/test_files/degree-requirements-ESE.xml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="51">
+          <caret line="3" column="19" selection-start-line="3" selection-start-column="19" selection-end-line="3" selection-end-column="19" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/mast/test_files/degree-requirements-AMS.xml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state>
+          <caret column="19" selection-start-column="19" selection-end-column="19" />
+          <folding>
+            <element signature="n#Track#0;n#major#0;n#!!top" />
+            <element signature="n#Track#1;n#major#0;n#!!top" />
+            <element signature="n#Track#2;n#major#0;n#!!top" />
+            <element signature="n#Track#3;n#major#0;n#!!top" />
+            <element signature="n#Track#4;n#major#0;n#!!top" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/mast/models.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="318">
-          <caret line="119" column="62" lean-forward="true" selection-start-line="119" selection-start-column="62" selection-end-line="119" selection-end-column="62" />
+        <state relative-caret-position="167">
+          <caret line="118" column="87" selection-start-line="118" selection-start-column="87" selection-end-line="118" selection-end-column="87" />
           <folding>
             <element signature="e#0#28#0" expanded="true" />
           </folding>

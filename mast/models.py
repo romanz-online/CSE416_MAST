@@ -108,14 +108,17 @@ class Track(models.Model):
 # for core courses (courses that all need to be taken) there will be one TrackCourseSet whose
 # size is equal to the number of courses it holds. Its name will be "Core"
 #
+# if size == 0, then the classes specifically do NOT fulfill this TrackCourseSet's requirements
+#
 # the limiter variable is used to modify the meaning of the TrackCourseSet's size.
 # if limiter is True, then the size denotes how many of the courses a student CAN take,
 # whereas if limiter is False, the size denotes how many courses a student HAS TO take
 #
 # upper_limit and lower_limit are used to denote a range of classes possible to take,
 # instead of having 99 entries of CourseInTrackSet
+# department_limit simply tells you which department the upper and lower limits are for
 #
-#
+# the parent_course_set attribute allows this structure to be tree-like
 class TrackCourseSet(models.Model):
     track = models.ForeignKey(Track, on_delete=models.CASCADE)
     parent_course_set = models.ForeignKey(to='TrackCourseSet', on_delete=models.CASCADE, null=True)
@@ -124,6 +127,7 @@ class TrackCourseSet(models.Model):
     limiter = models.BooleanField(default=False)
     upper_limit = models.IntegerField(default=100)
     lower_limit = models.IntegerField(default=999)
+    department_limit = models.CharField(max_length=3, choices=Department.choices, default=Department.NONE)
 
     def __str__(self):
         return self.name
@@ -133,6 +137,7 @@ class CourseInTrackSet(models.Model):
     course_set = models.ForeignKey(TrackCourseSet, on_delete=models.CASCADE)
     course = models.ForeignKey(Course, on_delete=models.CASCADE)
     each_semester = models.BooleanField(default=False)
+    how_many_semesters = models.IntegerField(default=1)
 
     def __str__(self):
         return str(self.course)
