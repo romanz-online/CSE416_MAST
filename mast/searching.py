@@ -43,6 +43,22 @@ def student_index(request):
     return render(request, 'mast/student_index.html', context)
 
 
+def delete_all_students(request):
+    global current_search, sorted_by
+
+    for student in Student.objects.all():
+        student.delete()
+
+    context = {'student_list': Student.objects.order_by('sbu_id'),
+               'major_list': Major.objects.order_by('name'),
+               'semesters': Semester.objects.all(),
+               'requirement_semesters': Semester.objects.all()}
+    current_search['student_list'] = Student.objects.order_by('sbu_id')
+    current_search['major_list'] = Major.objects.order_by('name')
+    sorted_by = SortedBy.NONE
+    return render(request, 'mast/student_index.html', context)
+
+
 def search(request):
     global current_search
     name_search = request.GET['name']

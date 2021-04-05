@@ -34,6 +34,7 @@ urlpatterns = [
 
     path('student_index/', searching.student_index, name='student_index'),
     path('student_index/search/', searching.search, name='search'),
+    path('student_index/#', searching.delete_all_students, name='delete_all_students'),
     path('student_index/search/sort_by_id', searching.sort_by_id, name='sort_by_id'),
     path('student_index/search/sort_by_name', searching.sort_by_name, name='sort_by_name'),
     path('student_index/search/sort_by_graduation', searching.sort_by_graduation, name='sort_by_graduation'),
