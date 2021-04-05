@@ -160,6 +160,7 @@ class CourseToCourseRelation(models.Model):
 
 class CoursePrerequisiteSet(models.Model):
     parent_course = models.ForeignKey(Course, on_delete=models.CASCADE)
+    parent_set = models.ForeignKey(to='CoursePrerequisiteSet', on_delete=models.CASCADE, null=True)
     number_required = models.IntegerField(default=1)
 
 
