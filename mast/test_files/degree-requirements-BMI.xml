@@ -12,7 +12,7 @@
             <thesis_required>True</thesis_required>
             <minimum_credits_required>33</minimum_credits_required>
             <TrackCourseSet>
-                <number_required>9</number_required>
+                <size>9</size>
                 <CourseInTrackSet>
                      <course>BMI 501</course>
                 </CourseinTrackSet> 
@@ -46,7 +46,47 @@
                 </CourseinTrackSet> 
                 <CourseInTrackSet>
                      <course>BMI 599</course>
-                </CourseinTrackSet>     
+               </CourseinTrackSet>     
+            </TrackCourseSet>
+            <TrackCourseSet>
+               <name>All Electives</name>
+               <size>1</size>
+               <CourseInTrackSet>
+                    <course>BMI 517</course>
+               </CourseinTrackSet> 
+               <CourseInTrackSet>
+                    <course>BMI 590</course>
+               </CourseinTrackSet> 
+               <CourseInTrackSet>
+                    <course>BMI 591</course>
+               </CourseinTrackSet> 
+               <CourseInTrackSet>
+                    <course>BMI 595</course>
+               </CourseinTrackSet> 
+               <CourseInTrackSet>
+                    <course>BMI 596</course>
+               </CourseinTrackSet> 
+               <CourseInTrackSet>
+                    <course>BMI 625</course>
+               </CourseinTrackSet> 
+               <CourseInTrackSet>
+                    <course>BMI 690</course>
+               </CourseinTrackSet> 
+               <CourseInTrackSet>
+                    <course>BMI 691</course>
+               </CourseinTrackSet> 
+               <CourseInTrackSet>
+                    <course>BMI 695</course>
+               </CourseinTrackSet> 
+               <CourseInTrackSet>
+                    <course>BMI 696</course>
+               </CourseinTrackSet> 
+            </TrackCourseSet>
+            <TrackCourseSet>
+               <size>0</size>
+               <CourseinTrackSet>
+                    <course>BMI 598</course>
+               </CourseInTrackSet>
             </TrackCourseSet>
         </Track>
         <Track>
@@ -54,7 +94,7 @@
             <thesis_required>True</thesis_required>
             <minimum_credits_required>33</minimum_credits_required>
             <TrackCourseSet>
-                <number_required>8</number_required>
+                <size>8</size>
                 <CourseInTrackSet>
                      <course>BMI 501</course>
                 </CourseinTrackSet> 
@@ -86,13 +126,62 @@
                      <course>BMI 599</course>
                 </CourseinTrackSet>     
             </TrackCourseSet>
+            <TrackCourseSet>
+               <name>All Electives</name>
+               <size>1</size>
+               <CourseInTrackSet>
+                    <course>BMI 517</course>
+               </CourseinTrackSet> 
+               <CourseInTrackSet>
+                    <course>BMI 520</course>
+               </CourseinTrackSet> 
+               <CourseInTrackSet>
+                    <course>BMI 530</course>
+               </CourseinTrackSet> 
+               <CourseInTrackSet>
+                    <course>BMI 552</course>
+               </CourseinTrackSet> 
+               <CourseInTrackSet>
+                    <course>BMI 590</course>
+               </CourseinTrackSet> 
+               <CourseInTrackSet>
+                    <course>BMI 591</course>
+               </CourseinTrackSet> 
+               <CourseInTrackSet>
+                    <course>BMI 595</course>
+               </CourseinTrackSet> 
+               <CourseInTrackSet>
+                    <course>BMI 596</course>
+               </CourseinTrackSet> 
+               <CourseInTrackSet>
+                    <course>BMI 622</course>
+               </CourseinTrackSet> 
+               <CourseInTrackSet>
+                    <course>BMI 690</course>
+               </CourseinTrackSet> 
+               <CourseInTrackSet>
+                    <course>BMI 691</course>
+               </CourseinTrackSet> 
+               <CourseInTrackSet>
+                    <course>BMI 695</course>
+               </CourseinTrackSet> 
+               <CourseInTrackSet>
+                    <course>BMI 696</course>
+               </CourseinTrackSet> 
+            </TrackCourseSet>
+            <TrackCourseSet>
+               <size>0</size>
+               <CourseinTrackSet>
+                    <course>BMI 598</course>
+               </CourseInTrackSet>
+            </TrackCourseSet>
         </Track>
         <Track>
             <name>Translational Bio-Informatics - Thesis</name>
             <thesis_required>True</thesis_required>
             <minimum_credits_required>33</minimum_credits_required>
             <TrackCourseSet>
-                <number_required>8</number_required>
+                <size>8</size>>
                 <CourseInTrackSet>
                      <course>BMI 501</course>
                 </CourseinTrackSet> 
@@ -123,6 +212,49 @@
                 <CourseInTrackSet>
                      <course>BMI 599</course>
                 </CourseinTrackSet>     
+            </TrackCourseSet>
+            <TrackCourseSet>
+               <name>All Electives</name>
+               <size>1</size>
+               <CourseInTrackSet>
+                    <course>BMI 517</course>
+               </CourseinTrackSet> 
+               <CourseInTrackSet>
+                    <course>BMI 560</course>
+               </CourseinTrackSet> 
+               <CourseInTrackSet>
+                    <course>BMI 590</course>
+               </CourseinTrackSet> 
+               <CourseInTrackSet>
+                    <course>BMI 591</course>
+               </CourseinTrackSet> 
+               <CourseInTrackSet>
+                    <course>BMI 595</course>
+               </CourseinTrackSet> 
+               <CourseInTrackSet>
+                    <course>BMI 596</course>
+               </CourseinTrackSet> 
+               <CourseInTrackSet>
+                    <course>BMI 622</course>
+               </CourseinTrackSet> 
+               <CourseInTrackSet>
+                    <course>BMI 690</course>
+               </CourseinTrackSet> 
+               <CourseInTrackSet>
+                    <course>BMI 691</course>
+               </CourseinTrackSet> 
+               <CourseInTrackSet>
+                    <course>BMI 695</course>
+               </CourseinTrackSet> 
+               <CourseInTrackSet>
+                    <course>BMI 696</course>
+               </CourseinTrackSet> 
+            </TrackCourseSet>
+            <TrackCourseSet>
+               <size>0</size>
+               <CourseinTrackSet>
+                    <course>BMI 598</course>
+               </CourseInTrackSet>
             </TrackCourseSet>
         </Track>
 
@@ -131,7 +263,7 @@
             <project_required>True</project_required>
             <name>Capstone</name>
             <TrackCourseSet>
-                <number_required>9</number_required>
+                <size>9</size>
                 <CourseInTrackSet>
                      <course>BMI 501</course>
                 </CourseinTrackSet> 
@@ -167,13 +299,53 @@
                      <course>BMI 598</course>
                 </CourseinTrackSet>     
             </TrackCourseSet>
+            <TrackCourseSet>
+               <name>All Electives</name>
+               <size>1</size>
+               <CourseInTrackSet>
+                    <course>BMI 517</course>
+               </CourseinTrackSet> 
+               <CourseInTrackSet>
+                    <course>BMI 590</course>
+               </CourseinTrackSet> 
+               <CourseInTrackSet>
+                    <course>BMI 591</course>
+               </CourseinTrackSet> 
+               <CourseInTrackSet>
+                    <course>BMI 595</course>
+               </CourseinTrackSet> 
+               <CourseInTrackSet>
+                    <course>BMI 596</course>
+               </CourseinTrackSet> 
+               <CourseInTrackSet>
+                    <course>BMI 625</course>
+               </CourseinTrackSet> 
+               <CourseInTrackSet>
+                    <course>BMI 690</course>
+               </CourseinTrackSet> 
+               <CourseInTrackSet>
+                    <course>BMI 691</course>
+               </CourseinTrackSet> 
+               <CourseInTrackSet>
+                    <course>BMI 695</course>
+               </CourseinTrackSet> 
+               <CourseInTrackSet>
+                    <course>BMI 696</course>
+               </CourseinTrackSet> 
+            </TrackCourseSet>
+            <TrackCourseSet>
+               <size>0</size>
+               <CourseinTrackSet>
+                    <course>BMI 599</course>
+               </CourseInTrackSet>
+            </TrackCourseSet>
         </Track>
         <Track>
             <name>Clinical Informatics - Capstone</name>
             <project_required>True</project_required>
             <name>Capstone</name>
             <TrackCourseSet>
-                <number_required>8</number_required>
+                <size>8</size>
                 <CourseInTrackSet>
                      <course>BMI 501</course>
                 </CourseinTrackSet> 
@@ -205,13 +377,62 @@
                      <course>BMI 598</course>
                 </CourseinTrackSet>     
             </TrackCourseSet>
+            <TrackCourseSet>
+               <name>All Electives</name>
+               <size>1</size>
+               <CourseInTrackSet>
+                    <course>BMI 517</course>
+               </CourseinTrackSet> 
+               <CourseInTrackSet>
+                    <course>BMI 520</course>
+               </CourseinTrackSet> 
+               <CourseInTrackSet>
+                    <course>BMI 530</course>
+               </CourseinTrackSet> 
+               <CourseInTrackSet>
+                    <course>BMI 552</course>
+               </CourseinTrackSet> 
+               <CourseInTrackSet>
+                    <course>BMI 590</course>
+               </CourseinTrackSet> 
+               <CourseInTrackSet>
+                    <course>BMI 591</course>
+               </CourseinTrackSet> 
+               <CourseInTrackSet>
+                    <course>BMI 595</course>
+               </CourseinTrackSet> 
+               <CourseInTrackSet>
+                    <course>BMI 596</course>
+               </CourseinTrackSet> 
+               <CourseInTrackSet>
+                    <course>BMI 622</course>
+               </CourseinTrackSet> 
+               <CourseInTrackSet>
+                    <course>BMI 690</course>
+               </CourseinTrackSet> 
+               <CourseInTrackSet>
+                    <course>BMI 691</course>
+               </CourseinTrackSet> 
+               <CourseInTrackSet>
+                    <course>BMI 695</course>
+               </CourseinTrackSet> 
+               <CourseInTrackSet>
+                    <course>BMI 696</course>
+               </CourseinTrackSet> 
+            </TrackCourseSet>
+            <TrackCourseSet>
+               <size>0</size>
+               <CourseinTrackSet>
+                    <course>BMI 599</course>
+               </CourseInTrackSet>
+            </TrackCourseSet>
         </Track>
         <Track>
             <name>Translational Bio-Informatics - Capstone</name>
             <project_required>True</project_required>
             <name>Capstone</name>
             <TrackCourseSet>
-                <number_required>8</number_required>
+                <size>8</size>
                 <CourseInTrackSet>
                      <course>BMI 501</course>
                 </CourseinTrackSet> 
@@ -242,6 +463,49 @@
                 <CourseInTrackSet>
                      <course>BMI 598</course>
                 </CourseinTrackSet>     
+            </TrackCourseSet>
+            <TrackCourseSet>
+               <name>All Electives</name>
+               <size>1</size>
+               <CourseInTrackSet>
+                    <course>BMI 517</course>
+               </CourseinTrackSet> 
+               <CourseInTrackSet>
+                    <course>BMI 560</course>
+               </CourseinTrackSet> 
+               <CourseInTrackSet>
+                    <course>BMI 590</course>
+               </CourseinTrackSet> 
+               <CourseInTrackSet>
+                    <course>BMI 591</course>
+               </CourseinTrackSet> 
+               <CourseInTrackSet>
+                    <course>BMI 595</course>
+               </CourseinTrackSet> 
+               <CourseInTrackSet>
+                    <course>BMI 596</course>
+               </CourseinTrackSet> 
+               <CourseInTrackSet>
+                    <course>BMI 622</course>
+               </CourseinTrackSet> 
+               <CourseInTrackSet>
+                    <course>BMI 690</course>
+               </CourseinTrackSet> 
+               <CourseInTrackSet>
+                    <course>BMI 691</course>
+               </CourseinTrackSet> 
+               <CourseInTrackSet>
+                    <course>BMI 695</course>
+               </CourseinTrackSet> 
+               <CourseInTrackSet>
+                    <course>BMI 696</course>
+               </CourseinTrackSet> 
+            </TrackCourseSet>
+            <TrackCourseSet>
+               <size>0</size>
+               <CourseinTrackSet>
+                    <course>BMI 599</course>
+               </CourseInTrackSet>
             </TrackCourseSet>
         </Track>
     </major>
