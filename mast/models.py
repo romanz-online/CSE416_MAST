@@ -98,7 +98,7 @@ class Track(models.Model):
     required_gpa = models.FloatField(default=3.0)
     thesis_required = models.BooleanField(default=False)
     project_required = models.BooleanField(default=False)
-    minimum_credits_required = models.IntegerField(default=120)
+    minimum_credits_required = models.IntegerField(default=30)
     number_of_areas = models.IntegerField(default=1)
 
     def __str__(self):
@@ -114,8 +114,11 @@ class Track(models.Model):
 #
 # upper_limit and lower_limit are used to denote a range of classes possible to take,
 # instead of having 99 entries of CourseInTrackSet
+#
+#
 class TrackCourseSet(models.Model):
     track = models.ForeignKey(Track, on_delete=models.CASCADE)
+    parent_course_set = models.ForeignKey(to='TrackCourseSet', on_delete=models.CASCADE, null=True)
     name = models.CharField(max_length=50, default='Default')
     size = models.IntegerField(default=1)
     limiter = models.BooleanField(default=False)
