@@ -13,6 +13,64 @@
         <minimum_credits_required>31</minimum_credits_required>
         <thesis_required>True</thesis_required>
         <TrackCourseSet>
+            <name>No Credit Courses</name>
+            <size>0</size>
+            <CourseInTrackSet>
+                <course>CSE 500</course>
+            </CourseinTrackSet>
+            <CourseInTrackSet>
+                <course>CSE 522</course>
+            </CourseinTrackSet>
+            <CourseInTrackSet>
+                <course>CSE 523</course>
+            </CourseinTrackSet>
+            <CourseInTrackSet>
+                <course>CSE 524</course>
+            </CourseinTrackSet>
+            <TrackCourseSet>
+                <name>No Credit Courses</name>
+                <limiter>True</limiter>
+                <size>0</size>
+                <department_limit>CSE</department_limit>
+                <lower_limit>580</lower_limit>
+                <upper_limit>589</upper_limit>
+            </TrackCourseSet>           
+            <CourseInTrackSet>
+                <course>CSE 593</course>
+            </CourseinTrackSet>
+            <TrackCourseSet>
+                <name>No Credit Courses</name>
+                <limiter>True</limiter>
+                <size>0</size>
+                <department_limit>CSE</department_limit>
+                <lower_limit>596</lower_limit>
+                <upper_limit>598</upper_limit>
+            </TrackCourseSet>    
+            <TrackCourseSet>
+                <name>No Credit Courses</name>
+                <limiter>True</limiter>
+                <size>0</size>
+                <department_limit>CSE</department_limit>
+                <lower_limit>600</lower_limit>
+                <upper_limit>638</upper_limit>
+            </TrackCourseSet>   
+            <CourseInTrackSet>
+                <course>CSE 696</course>
+            </CourseinTrackSet>
+            <CourseInTrackSet>
+                <course>CSE 697</course>
+            </CourseinTrackSet>
+            <CourseInTrackSet>
+                <course>CSE 699</course>
+            </CourseinTrackSet>
+            <CourseInTrackSet>
+                <course>CSE 700</course>
+            </CourseinTrackSet>
+            <CourseInTrackSet>
+                <course>CSE 701</course>
+            </CourseinTrackSet>
+        <TrackCourseSet>
+        <TrackCourseSet>
             <size>1</size>
             <name>Theory</name>
             <CourseInTrackSet>
@@ -99,6 +157,14 @@
                 <how_many_semesters>2</how_many_semesters>
             </CourseInTrackSet>
         </TrackCourseSet>
+        <TrackCourseSet>
+            <name>CSE 698</name>
+            <limiter>True</limtiter>
+            <size>1</size>
+            <CourseInTrackSet>
+                <course>CSE 698</course>
+            </CourseInTrackSet>
+        </TrackCourseSet>
     </Track>
 
     <Track>
@@ -116,6 +182,42 @@
                 <course>CSE 524</course>
             </CourseInTrackSet>
         </TrackCourseSet>
+        <TrackCourseSet>
+            <name>No Credit Courses</name>
+            <size>0</size>
+            <CourseInTrackSet>
+                <course>CSE 500</course>
+            </CourseinTrackSet>
+            <CourseInTrackSet>
+                <course>CSE 522</course>
+            </CourseinTrackSet>
+            <TrackCourseSet>
+                <name>No Credit Courses</name>
+                <limiter>True</limiter>
+                <size>0</size>
+                <department_limit>CSE</department_limit>
+                <lower_limit>580</lower_limit>
+                <upper_limit>589</upper_limit>
+            </TrackCourseSet>           
+            <CourseInTrackSet>
+                <course>CSE 593</course>
+            </CourseinTrackSet>
+            <TrackCourseSet>
+                <name>No Credit Courses</name>
+                <limiter>True</limiter>
+                <size>0</size>
+                <department_limit>CSE</department_limit>
+                <lower_limit>596</lower_limit>
+                <upper_limit>599</upper_limit>
+            </TrackCourseSet>    
+            <TrackCourseSet>
+                <name>No Credit Courses</name>
+                <limiter>True</limiter>
+                <size>0</size>
+                <department_limit>CSE</department_limit>
+                <lower_limit>600</lower_limit>
+                <upper_limit>638</upper_limit>
+            </TrackCourseSet>   
         <TrackCourseSet>
             <name>Cannot take these</name>
             <size>0</size>
@@ -200,6 +302,14 @@
             <CourseInTrackSet>
                 <course>CSE 564</course>
             </CourseinTrackSet>
+        </TrackCourseSet>
+        <TrackCourseSet>
+            <name>CSE 698</name>
+            <limiter>True</limtiter>
+            <size>1</size>
+            <CourseInTrackSet>
+                <course>CSE 698</course>
+            </CourseInTrackSet>
         </TrackCourseSet>
     </Track>
 
@@ -237,6 +347,48 @@
             </CourseinTrackSet>
         </TrackCourseSet>
         <TrackCourseSet>
+            <name>No Credit Courses</name>
+            <size>0</size>
+            <CourseInTrackSet>
+                <course>CSE 500</course>
+            </CourseinTrackSet>
+            <CourseInTrackSet>
+                <course>CSE 522</course>
+            </CourseinTrackSet>
+            <CourseInTrackSet>
+                <course>CSE 523</course>
+            </CourseinTrackSet>
+            <CourseInTrackSet>
+                <course>CSE 524</course>
+            </CourseinTrackSet>
+            <TrackCourseSet>
+                <name>No Credit Courses</name>
+                <limiter>True</limiter>
+                <size>0</size>
+                <department_limit>CSE</department_limit>
+                <lower_limit>580</lower_limit>
+                <upper_limit>589</upper_limit>
+            </TrackCourseSet>           
+            <CourseInTrackSet>
+                <course>CSE 593</course>
+            </CourseinTrackSet>
+            <TrackCourseSet>
+                <name>No Credit Courses</name>
+                <limiter>True</limiter>
+                <size>0</size>
+                <department_limit>CSE</department_limit>
+                <lower_limit>596</lower_limit>
+                <upper_limit>599</upper_limit>
+            </TrackCourseSet>    
+            <TrackCourseSet>
+                <name>No Credit Courses</name>
+                <limiter>True</limiter>
+                <size>0</size>
+                <department_limit>CSE</department_limit>
+                <lower_limit>600</lower_limit>
+                <upper_limit>638</upper_limit>
+            </TrackCourseSet>   
+        <TrackCourseSet>
             <size>1</size>
             <name>Theory</name>
             <CourseInTrackSet>
@@ -313,6 +465,14 @@
             <CourseInTrackSet>
                 <course>CSE 564</course>
             </CourseinTrackSet>
+        </TrackCourseSet>
+        <TrackCourseSet>
+            <name>CSE 698</name>
+            <limiter>True</limtiter>
+            <size>1</size>
+            <CourseInTrackSet>
+                <course>CSE 698</course>
+            </CourseInTrackSet>
         </TrackCourseSet>
     </Track>
 </major>
