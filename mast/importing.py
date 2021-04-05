@@ -6,7 +6,11 @@ from django.http import HttpResponseRedirect
 from django.urls import reverse
 from .models import Student, Major, Course, CourseInstance, CoursesTakenByStudent, Semester, Track, CourseStatus, Grade,\
     Season
-
+from pdfminer.pdfparser import PDFParser,PDFDocument
+from pdfminer.pdfinterp import PDFResourceManager, PDFPageInterpreter
+from pdfminer.converter import PDFPageAggregator
+from pdfminer.layout import LTTextBoxHorizontal,LAParams
+from pdfminer.pdfinterp import PDFTextExtractionNotAllowed
 
 def import_student(request):
     """
@@ -315,19 +319,25 @@ def scrape_courses(request):
                                 if(len(text)!=0):
                                     text[-1] = text[-1] + results
     for i in range(len(text)//2):
+        course = Course()
         name = text[i*2]
         description = text[i*2+1]
         print(name)
         print(description)
         number = int(name[5:8])
+        course.department = major
+        course.number = number
+        
+        course.name =  name[8:len(name)]
+        
         name=name.split(":")[1]
         name.replace("\n", ' ')
-        print(number)
-        print(name)
         credits = re.search(r'\d credit', description)
         if(credits != None):
             credits = credits[0][0]
         else:
             credits = "3"
-        print("credits: " + credits )
+        course.credits = int(credits)
+        course.save()
+
     return render(request, 'mast/scrape_courses.html')
