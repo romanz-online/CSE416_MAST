@@ -1,0 +1,284 @@
+<!--ESE: Finished, Revised-->
+<major>
+    <name>Computer Engineering</name>
+    <department>ESE</department>
+    <requirement_semester>
+        <season>Spring</season>
+        <year>2021</year>
+    </requirement_semester>
+
+    <Track>
+        <name>Non-Thesis</name>
+        <number_of_areas>6</number_of_areas>
+        <TrackCourseSet>
+            <name>Hardware</name>
+            <size>1</size>
+            <TrackCourseSet>
+                <size>1</size>
+                <CourseInTrackSet>
+                    <course>CSE 536</course>
+                </CourseInTrackSet>
+                <CourseInTrackSet>
+                    <course>ESE 536</course>
+                </CourseInTrackSet>
+            </TrackCourseSet>
+            <CourseInTrackSet>
+                <course>ESE 545</course>
+            </CourseInTrackSet>
+            <CourseInTrackSet>
+                <course>ESE 566</course>
+            </CourseInTrackSet>
+            <CourseInTrackSet>
+                <course>ESE 587</course>
+            </CourseInTrackSet>
+        </TrackCourseSet>
+        <TrackCourseSet>
+            <name>Networking</name>
+            <size>1</size>
+            <CourseInTrackSet>
+                <course>ESE 505</course>
+            </CourseInTrackSet>
+            <CourseInTrackSet>
+                <course>ESE 506</course>
+            </CourseInTrackSet>
+            <CourseInTrackSet>
+                <course>ESE 546</course>
+            </CourseInTrackSet>
+            <CourseInTrackSet>
+                <course>ESE 548</course>
+            </CourseInTrackSet>
+        </TrackCourseSet>
+        <TrackCourseSet>
+            <name>CAD and VLSI</name>
+            <size>1</size>
+            <CourseInTrackSet>
+                <course>ESE 507</course>
+            </CourseInTrackSet>
+            <CourseInTrackSet>
+                <course>ESE 530</course>
+            </CourseInTrackSet>
+            <CourseInTrackSet>
+                <course>ESE 549</course>
+            </CourseInTrackSet>
+            <CourseInTrackSet>
+                <course>ESE 555</course>
+            </CourseInTrackSet>
+            <CourseInTrackSet>
+                <course>ESE 556</course>
+            </CourseInTrackSet>
+            <CourseInTrackSet>
+                <course>ESE 575</course>
+            </CourseInTrackSet>
+        </TrackCourseSet>
+        <TrackCourseSet>
+            <name>Theory and Software</name>
+            <size>2</size>
+            <CourseInTrackSet>
+                <course>ESE 501</course>
+            </CourseInTrackSet>
+            <CourseInTrackSet>
+                <course>ESE 533</course>
+            </CourseInTrackSet>
+            <CourseInTrackSet>
+                <course>ESE 534</course>
+            </CourseInTrackSet>
+            <CourseInTrackSet>
+                <course>ESE 543</course>
+            </CourseInTrackSet>
+            <CourseInTrackSet>
+                <course>ESE 554</course>
+            </CourseInTrackSet>
+            <CourseInTrackSet>
+                <course>ESE 558</course>
+            </CourseInTrackSet>
+            <CourseInTrackSet>
+                <course>ESE 588</course>
+            </CourseInTrackSet>
+            <CourseInTrackSet>
+                <course>ESE 589</course>
+            </CourseInTrackSet>
+            <CourseInTrackSet>
+                <course>CSE 506</course>
+            </CourseInTrackSet>
+            <CourseInTrackSet>
+                <course>CSE 526</course>
+            </CourseInTrackSet>
+            <TrackCourseSet>
+                <size>1</size>
+                <CourseInTrackSet>
+                    <course>CSE 548</course>
+                </CourseInTrackSet>
+                <CourseInTrackSet>
+                    <course>AMS 542</course>
+                </CourseInTrackSet>
+            </TrackCourseSet>
+        </TrackCourseSet>
+        <TrackCourseSet>
+            <name>Three additional lecture based courses</name>
+            <size>3</size>
+            <TrackCourseSet>
+                <size>0</size>
+                <CourseInTrackSet>
+                    <course>ESE 597</course>
+                </CourseInTrackSet>
+                <CourseInTrackSet>
+                    <course>ESE 599</course>
+                </CourseInTrackSet>
+                <CourseInTrackSet>
+                    <course>ESE 697</course>
+                </CourseInTrackSet>
+                <CourseInTrackSet>
+                    <course>ESE 698</course>
+                </CourseInTrackSet>
+                <CourseInTrackSet>
+                    <course>ESE 699</course>
+                </CourseInTrackSet>
+            </TrackCourseSet>
+        </TrackCourseSet>
+        <TrackCourseSet>
+            <name>ESE 597</name>
+            <size>1</size>
+            <CourseInTrackSet>
+                <course>ESE 597</course>
+            </CourseInTrackSet>
+        </TrackCourseSet>
+    </Track>
+
+    <Track>
+        <name>Thesis</name>
+        <number_of_areas>6</number_of_areas>
+        <thesis_required>True</thesis_required>
+        <TrackCourseSet>
+            <name>Hardware</name>
+            <size>1</size>
+            <TrackCourseSet>
+                <size>1</size>
+                <CourseInTrackSet>
+                    <course>CSE 536</course>
+                </CourseInTrackSet>
+                <CourseInTrackSet>
+                    <course>ESE 536</course>
+                </CourseInTrackSet>
+            </TrackCourseSet>
+            <CourseInTrackSet>
+                <course>ESE 545</course>
+            </CourseInTrackSet>
+            <CourseInTrackSet>
+                <course>ESE 566</course>
+            </CourseInTrackSet>
+            <CourseInTrackSet>
+                <course>ESE 587</course>
+            </CourseInTrackSet>
+        </TrackCourseSet>
+        <TrackCourseSet>
+            <name>Networking</name>
+            <size>1</size>
+            <CourseInTrackSet>
+                <course>ESE 505</course>
+            </CourseInTrackSet>
+            <CourseInTrackSet>
+                <course>ESE 506</course>
+            </CourseInTrackSet>
+            <CourseInTrackSet>
+                <course>ESE 546</course>
+            </CourseInTrackSet>
+            <CourseInTrackSet>
+                <course>ESE 548</course>
+            </CourseInTrackSet>
+        </TrackCourseSet>
+        <TrackCourseSet>
+            <name>CAD and VLSI</name>
+            <size>1</size>
+            <CourseInTrackSet>
+                <course>ESE 507</course>
+            </CourseInTrackSet>
+            <CourseInTrackSet>
+                <course>ESE 530</course>
+            </CourseInTrackSet>
+            <CourseInTrackSet>
+                <course>ESE 549</course>
+            </CourseInTrackSet>
+            <CourseInTrackSet>
+                <course>ESE 555</course>
+            </CourseInTrackSet>
+            <CourseInTrackSet>
+                <course>ESE 556</course>
+            </CourseInTrackSet>
+            <CourseInTrackSet>
+                <course>ESE 575</course>
+            </CourseInTrackSet>
+        </TrackCourseSet>
+        <TrackCourseSet>
+            <name>Theory and Software</name>
+            <size>2</size>
+            <CourseInTrackSet>
+                <course>ESE 501</course>
+            </CourseInTrackSet>
+            <CourseInTrackSet>
+                <course>ESE 533</course>
+            </CourseInTrackSet>
+            <CourseInTrackSet>
+                <course>ESE 534</course>
+            </CourseInTrackSet>
+            <CourseInTrackSet>
+                <course>ESE 543</course>
+            </CourseInTrackSet>
+            <CourseInTrackSet>
+                <course>ESE 554</course>
+            </CourseInTrackSet>
+            <CourseInTrackSet>
+                <course>ESE 558</course>
+            </CourseInTrackSet>
+            <CourseInTrackSet>
+                <course>ESE 588</course>
+            </CourseInTrackSet>
+            <CourseInTrackSet>
+                <course>ESE 589</course>
+            </CourseInTrackSet>
+            <CourseInTrackSet>
+                <course>CSE 506</course>
+            </CourseInTrackSet>
+            <CourseInTrackSet>
+                <course>CSE 526</course>
+            </CourseInTrackSet>
+            <TrackCourseSet>
+                <size>1</size>
+                <CourseInTrackSet>
+                    <course>CSE 548</course>
+                </CourseInTrackSet>
+                <CourseInTrackSet>
+                    <course>AMS 542</course>
+                </CourseInTrackSet>
+            </TrackCourseSet>
+        </TrackCourseSet>
+        <TrackCourseSet>
+            <name>Three additional lecture based courses</name>
+            <size>3</size>
+            <TrackCourseSet>
+                <size>0</size>
+                <CourseInTrackSet>
+                    <course>ESE 597</course>
+                </CourseInTrackSet>
+                <CourseInTrackSet>
+                    <course>ESE 599</course>
+                </CourseInTrackSet>
+                <CourseInTrackSet>
+                    <course>ESE 697</course>
+                </CourseInTrackSet>
+                <CourseInTrackSet>
+                    <course>ESE 698</course>
+                </CourseInTrackSet>
+                <CourseInTrackSet>
+                    <course>ESE 699</course>
+                </CourseInTrackSet>
+            </TrackCourseSet>
+        </TrackCourseSet>
+        <TrackCourseSet>
+            <name>ESE 597</name>
+            <size>1</size>
+            <CourseInTrackSet>
+                <course>ESE 597</course>
+            </CourseInTrackSet>
+        </TrackCourseSet>
+    </Track>
+</major>

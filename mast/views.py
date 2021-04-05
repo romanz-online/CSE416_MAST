@@ -4,7 +4,7 @@ import operator
 from django.shortcuts import get_object_or_404, render
 from django.http import HttpResponseRedirect
 from django.urls import reverse
-from .models import Student, Major, Course, CoursesTakenByStudent, Comment, StudentCourseSchedule, Semester, Track, \
+from .models import Student, Major, Season, CoursesTakenByStudent, Comment, StudentCourseSchedule, Semester, Track, \
     TrackCourseSet, CourseInTrackSet, CourseToCourseRelation
 
 
@@ -40,6 +40,23 @@ def commit_new_student(request):
     major = request.GET['major']
     entry_semester = request.GET['entry_semester']
     requirement_semester = request.GET['requirement_semester']
+    semesters_enrolled = 1
+
+    if Semester.objects.filter(is_current_semester=True):
+        current_semester = Semester.objects.filter(is_current_semester=True)[0]
+        if entry_semester.year < current_semester.year:
+            i = entry_semester.year
+            count = 0
+            while i < current_semester.year:
+                if Semester.objects.filter(year=i):
+                    count += Semester.objects.filter(year=i).count()
+                i += 1
+            count += 1
+            if current_semester.season == Season.FALL:
+                count += 1
+            semesters_enrolled = count
+
+
     try:
         if int(sbu_id) in id_list:
             id_taken = True
@@ -50,7 +67,8 @@ def commit_new_student(request):
                           email=email,
                           major=Major.objects.get(id=int(major)),
                           entry_semester=Semester.objects.get(id=int(entry_semester)),
-                          requirement_semester=Semester.objects.get(id=int(requirement_semester))
+                          requirement_semester=Semester.objects.get(id=int(requirement_semester)),
+                          semesters_enrolled=semesters_enrolled
                           )
         student.save()
     except:

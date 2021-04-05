@@ -25,10 +25,9 @@ class CourseStatus(models.TextChoices):
 
 
 class CourseRelation(models.TextChoices):
-    PREREQUISITE = 'Prerequisite'
-    XOR = 'XOR'
-    FORBIDDEN_CONCURRENCY = 'Concurrency'
-    NONE = 'None'
+    XOR = 'XOR' # means that after you take one class, you can't take the other, ever
+    FORBIDDEN_CONCURRENCY = 'Concurrency' # means that you can't take two specified courses in the same semester
+    NONE = 'None' # default value
 
 
 class Grade(models.TextChoices):
@@ -65,7 +64,8 @@ class Course(models.Model):
     department = models.CharField(max_length=3, choices=Department.choices, default=Department.NONE)
     number = models.IntegerField(default=100)
     credits = models.IntegerField(default=3)
-    description = models.CharField(max_length=200, default="no class description")
+    description = models.CharField(max_length=200, default="No class description.")
+
     def __str__(self):
         return self.department + str(self.number)
 
@@ -91,25 +91,43 @@ class Major(models.Model):
         return self.name
 
 
+# number_of_areas is the number of completed TrackCourseSets required to complete the Track
 class Track(models.Model):
     major = models.ForeignKey(Major, on_delete=models.CASCADE)
     name = models.CharField(max_length=100)
     required_gpa = models.FloatField(default=3.0)
     thesis_required = models.BooleanField(default=False)
     project_required = models.BooleanField(default=False)
-    minimum_credits_required = models.IntegerField(default=120)
+    minimum_credits_required = models.IntegerField(default=30)
     number_of_areas = models.IntegerField(default=1)
 
     def __str__(self):
         return str(self.name)
 
 
-# for core courses (courses that all need to be taken) there will be one RequiredElectiveCourseSet whose
-# number_of_required_electives is equal to the number of courses it holds. Its name will be "Core"
+# for core courses (courses that all need to be taken) there will be one TrackCourseSet whose
+# size is equal to the number of courses it holds. Its name will be "Core"
+#
+# if size == 0, then the classes specifically do NOT fulfill this TrackCourseSet's requirements
+#
+# the limiter variable is used to modify the meaning of the TrackCourseSet's size.
+# if limiter is True, then the size denotes how many of the courses a student CAN take,
+# whereas if limiter is False, the size denotes how many courses a student HAS TO take
+#
+# upper_limit and lower_limit are used to denote a range of classes possible to take,
+# instead of having 99 entries of CourseInTrackSet
+# department_limit simply tells you which department the upper and lower limits are for
+#
+# the parent_course_set attribute allows this structure to be tree-like
 class TrackCourseSet(models.Model):
     track = models.ForeignKey(Track, on_delete=models.CASCADE)
+    parent_course_set = models.ForeignKey(to='TrackCourseSet', on_delete=models.CASCADE, null=True)
     name = models.CharField(max_length=50, default='Default')
-    number_required = models.IntegerField(default=1)
+    size = models.IntegerField(default=1)
+    limiter = models.BooleanField(default=False)
+    upper_limit = models.IntegerField(default=100)
+    lower_limit = models.IntegerField(default=999)
+    department_limit = models.CharField(max_length=3, choices=Department.choices, default=Department.NONE)
 
     def __str__(self):
         return self.name
@@ -118,12 +136,13 @@ class TrackCourseSet(models.Model):
 class CourseInTrackSet(models.Model):
     course_set = models.ForeignKey(TrackCourseSet, on_delete=models.CASCADE)
     course = models.ForeignKey(Course, on_delete=models.CASCADE)
+    each_semester = models.BooleanField(default=False)
+    how_many_semesters = models.IntegerField(default=1)
 
     def __str__(self):
         return str(self.course)
 
 
-# for prerequisite courses, primary_course is the course you're looking at and related_course is its prerequisite
 class CourseToCourseRelation(models.Model):
     track = models.ForeignKey(Track, on_delete=models.CASCADE)
     primary_course = models.ForeignKey(Course, on_delete=models.CASCADE, related_name='primary_course')
@@ -131,10 +150,22 @@ class CourseToCourseRelation(models.Model):
     relation = models.CharField(max_length=20, choices=CourseRelation.choices, default=CourseRelation.NONE)
 
     def __str__(self):
-        if self.relation == CourseRelation.PREREQUISITE:
-            return str(self.related_course) + ' is a prerequisite of ' + str(self.primary_course)
+        if self.relation == CourseRelation.FORBIDDEN_CONCURRENCY:
+            return str(self.primary_course) + ' cannot be taken in the same semester as ' + str(self.related_course) + '.'
         elif self.relation == CourseRelation.XOR:
-            return ''
+            return 'Only one course can be taken between ' + str(self.primary_course) + ' and ' + str(self.related_course) + '.'
+        else:
+            return 'There is no restrictive relation between ' + str(self.primary_course) + ' and ' + str(self.related_course) + '.'
+
+
+class CoursePrerequisiteSet(models.Model):
+    parent_course = models.ForeignKey(Course, on_delete=models.CASCADE)
+    number_required = models.IntegerField(default=1)
+
+
+class Prerequisite(models.Model):
+    course_set = models.ForeignKey(CoursePrerequisiteSet, on_delete=models.CASCADE)
+    course = models.ForeignKey(Course, on_delete=models.CASCADE)
 
 
 class Director(models.Model):
@@ -156,11 +187,16 @@ class Student(models.Model):
     track = models.ForeignKey(Track, null=True, on_delete=models.SET_NULL)
     graduated = models.BooleanField(default=False)
     withdrew = models.BooleanField(default=False)
+    password = models.CharField(max_length=100)
+    semesters_enrolled = models.IntegerField(default=1)
+
     satisfied_courses = models.IntegerField(default=0)
     unsatisfied_courses = models.IntegerField(default=0)
     pending_courses = models.IntegerField(default=0)
+
     valid_schedule = models.BooleanField(default=True)
-    password = models.CharField(max_length=100)
+    schedule_completed = models.BooleanField(default=False)
+
     entry_semester = models.ForeignKey(Semester, null=True, on_delete=models.SET_NULL,
                                        related_name='entry_semester')
     requirement_semester = models.ForeignKey(Semester, null=True, on_delete=models.SET_NULL,
