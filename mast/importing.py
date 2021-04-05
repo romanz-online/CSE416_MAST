@@ -328,8 +328,8 @@ def scrape_courses(request):
         course.department = major
         course.number = number
         
-        course.name =  name[8:len(name)]
-        
+        course.name =  name[9:len(name)]
+        course.description=description
         name=name.split(":")[1]
         name.replace("\n", ' ')
         credits = re.search(r'\d credit', description)
