@@ -4,7 +4,7 @@ from django.shortcuts import render
 from django.contrib import messages
 from django.http import HttpResponseRedirect
 from django.urls import reverse
-from .models import Student, Major, Course, CourseInstance, CoursesTakenByStudent, Semester, Track, CourseStatus, Grade,\
+from .models import Student, Major, Course, CourseInstance, CoursesTakenByStudent, Semester, Track, CourseStatus, Grade, \
     Season
 from pdfminer.pdfparser import PDFParser, PDFDocument
 from pdfminer.pdfinterp import PDFResourceManager, PDFPageInterpreter
@@ -37,8 +37,10 @@ def import_student(request):
     # Profiles first, split data and skip header
     profiles = profile_data.split('\n')
     print(profiles[0])
-    if profiles[0] != 'sbu_id,first_name,last_name,email,department,track,entry_semester,entry_year,requirement_version_semester,requirement_version_year,graduation_semester,graduation_year,password'\
-            and profiles[0] != 'sbu_id,first_name,last_name,email,department,track,entry_semester,entry_year,requirement_version_semester,requirement_version_year,graduation_semester,graduation_year,password\r':
+    if profiles[
+        0] != 'sbu_id,first_name,last_name,email,department,track,entry_semester,entry_year,requirement_version_semester,requirement_version_year,graduation_semester,graduation_year,password' \
+            and profiles[
+        0] != 'sbu_id,first_name,last_name,email,department,track,entry_semester,entry_year,requirement_version_semester,requirement_version_year,graduation_semester,graduation_year,password\r':
         messages.error(request, "Incorrect labels for profile data.")
         return HttpResponseRedirect(reverse('mast:student_index', args=()))
     profiles.pop(0)
@@ -90,8 +92,6 @@ def import_student(request):
             if line[12]:
                 student.password = line[12]
 
-
-
             student.save()
 
     course_file = request.FILES['course_file']
@@ -125,7 +125,7 @@ def import_grades(request, course_file):
 
     # Import new students' courses
     course_plans = course_data.split('\n')
-    if course_plans[0] != 'sbu_id,department,course_num,section,semester,year,grade'\
+    if course_plans[0] != 'sbu_id,department,course_num,section,semester,year,grade' \
             and course_plans[0] != 'sbu_id,department,course_num,section,semester,year,grade\r':
         messages.error(request, "Incorrect labels for course plan data.")
         return HttpResponseRedirect(reverse('mast:student_index', args=()))
@@ -215,7 +215,7 @@ def import_courses(request):
     file = file_name.read().decode("utf-8")
 
     lines = file.split('\n')
-    if lines[0] != 'department,course_num,section,semester,year,timeslot'\
+    if lines[0] != 'department,course_num,section,semester,year,timeslot' \
             and lines[0] != 'department,course_num,section,semester,year,timeslot\r':
         messages.error(request, "Incorrect labels for course offering data.")
         return render(request, 'mast/import_courses.html', prompt)
@@ -269,20 +269,21 @@ def import_courses(request):
     context = {'course_list': Course.objects.all()}
     return render(request, 'mast/import_courses.html', context)
 
+
 def scrape_courses(request):
     if request.method == "GET":
         return render(request, 'mast/scrape_courses.html')
     course_file = request.FILES['file']
     major = request.POST.get('major')
-    praser = PDFParser(course_file)
-    doc = PDFDocument() #create a pdf document
+    parser = PDFParser(course_file)
+    doc = PDFDocument()  # create a pdf document
 
-    praser.set_document(doc)
-    doc.set_parser(praser)
+    parser.set_document(doc)
+    doc.set_parser(parser)
 
     doc.initialize()
     text = []
-   #check if file can be converted to txt
+    # check if file can be converted to txt
     if not doc.is_extractable:
         raise PDFTextExtractionNotAllowed
     else:
@@ -292,49 +293,50 @@ def scrape_courses(request):
         device = PDFPageAggregator(rsrcmgr, laparams=laparams)
         interpreter = PDFPageInterpreter(rsrcmgr, device)
         CSE_started = False
-        
-        for page in doc.get_pages(): 
+
+        for page in doc.get_pages():
             interpreter.process_page(page)
-            
+
             layout = device.get_result()
-            
+
             hasClassTitle = False
-            for x in  (layout):
-                if (isinstance(x, LTTextBoxHorizontal)):
+            for x in layout:
+                if isinstance(x, LTTextBoxHorizontal):
                     results = x.get_text()
                     regex_test_output = re.compile(major + "  \d\d\d")
                     major_regex = re.compile("[A-Z][A-Z][A-Z]\n")
-                    target_major = re.compile(major+"\n")
-                    if(re.match(target_major, results) != None):
+                    target_major = re.compile(major + "\n")
+                    if re.match(target_major, results):
                         CSE_started = True
-                        
-                    elif(CSE_started==True):
-                        if(re.match(major_regex, results)!=None):
+
+                    elif CSE_started:
+                        if re.match(major_regex, results):
                             CSE_started = False
-                        else: 
-                            if (re.search(regex_test_output, results) != None):
+                        else:
+                            if re.search(regex_test_output, results):
                                 text.append(results)
                                 text.append("")
-                    
+
                             else:
-                                if(len(text)!=0):
+                                if len(text) != 0:
                                     text[-1] = text[-1] + results
-    for i in range(len(text)//2):
+
+    for i in range(len(text) // 2):
         course = Course()
-        name = text[i*2]
-        description = text[i*2+1]
+        name = text[i * 2]
+        description = text[i * 2 + 1]
         print(name)
         print(description)
         number = int(name[5:8])
         course.department = major
         course.number = number
-        
-        course.name =  name[9:len(name)]
-        course.description=description
-        name=name.split(":")[1]
+
+        course.name = name[9:len(name)]
+        course.description = description
+        name = name.split(":")[1]
         name.replace("\n", ' ')
         credits = re.search(r'\d credit', description)
-        if(credits != None):
+        if credits:
             credits = credits[0][0]
         else:
             credits = "3"
