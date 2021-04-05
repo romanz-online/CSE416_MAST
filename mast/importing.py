@@ -263,3 +263,71 @@ def import_courses(request):
         processed_lines += row
     context = {'course_list': Course.objects.all()}
     return render(request, 'mast/import_courses.html', context)
+
+def scrape_courses(request):
+    if request.method == "GET":
+        return render(request, 'mast/scrape_courses.html')
+    course_file = request.FILES['file']
+    major = request.POST.get('major')
+    praser = PDFParser(course_file)
+    doc = PDFDocument() #create a pdf document
+
+    praser.set_document(doc)
+    doc.set_parser(praser)
+
+    doc.initialize()
+    text = []
+   #check if file can be converted to txt
+    if not doc.is_extractable:
+        raise PDFTextExtractionNotAllowed
+    else:
+        rsrcmgr = PDFResourceManager()
+
+        laparams = LAParams()
+        device = PDFPageAggregator(rsrcmgr, laparams=laparams)
+        interpreter = PDFPageInterpreter(rsrcmgr, device)
+        CSE_started = False
+        
+        for page in doc.get_pages(): 
+            interpreter.process_page(page)
+            
+            layout = device.get_result()
+            
+            hasClassTitle = False
+            for x in  (layout):
+                if (isinstance(x, LTTextBoxHorizontal)):
+                    results = x.get_text()
+                    regex_test_output = re.compile(major + "  \d\d\d")
+                    major_regex = re.compile("[A-Z][A-Z][A-Z]\n")
+                    target_major = re.compile(major+"\n")
+                    if(re.match(target_major, results) != None):
+                        CSE_started = True
+                        
+                    elif(CSE_started==True):
+                        if(re.match(major_regex, results)!=None):
+                            CSE_started = False
+                        else: 
+                            if (re.search(regex_test_output, results) != None):
+                                text.append(results)
+                                text.append("")
+                    
+                            else:
+                                if(len(text)!=0):
+                                    text[-1] = text[-1] + results
+    for i in range(len(text)//2):
+        name = text[i*2]
+        description = text[i*2+1]
+        print(name)
+        print(description)
+        number = int(name[5:8])
+        name=name.split(":")[1]
+        name.replace("\n", ' ')
+        print(number)
+        print(name)
+        credits = re.search(r'\d credit', description)
+        if(credits != None):
+            credits = credits[0][0]
+        else:
+            credits = "3"
+        print("credits: " + credits )
+    return render(request, 'mast/scrape_courses.html')

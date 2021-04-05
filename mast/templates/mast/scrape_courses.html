@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+
+{% load static %}
+<link rel="stylesheet" type="text/css" href="{% static 'mast/import_courses.css' %}"/>
+
+<head>
+    <title>Import Course Offerings</title>
+    
+</head>
+
+<body>
+<h1>Import Courses</h1>
+
+<div id="overlay_dimmer" onclick="hideExample()"></div>
+<div id="example_image">
+    <a href='#' onclick='showExample()' class="exit">&#10799;</a>
+</div>
+
+<div class=form>
+    <form action="" method="POST" enctype="multipart/form-data">
+        {% csrf_token %}
+        <label for="file1"> Upload Course File</label>
+        <input type="file" id="file1" name="file">
+        <br>
+        <input type="text" id="major" name = "major">
+        <br>
+        <button type="submit">Upload</button>
+    </form>
+
+   
+
+</div>
+<div class=sideBox>
+    <h3>File Conventions</h3>
+    <ul>
+        <li>File must be a PDF</li>
+        
+    <br><br>
+</div>
+<a href="{% url 'mast:gpd_landing' %}" class="button">Return Home</a>
+
+</body>
+</html>
