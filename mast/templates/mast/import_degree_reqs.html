@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>Import Degree Requirements</title>
+</head>
+<body>
+    {% if messages %}
+        {% for message in messages %}
+            <div>
+                <strong>{{message|safe}}</strong>
+            </div>
+        {% endfor %}
+    {% else %}
+    {{order}}
+    <form action="" method="POST" enctype="multipart/form-data">
+        {% csrf_token %}
+        <label for="degree_file"> Upload Degree Requirements XML</label>
+        <input type="file" id="degree_file" name="degree_file">
+        <small>Only accepts CSV files</small>
+        <button type="submit">Upload</button>
+    </form>
+    {% endif %}
+
+    <a href="{% url 'mast:gpd_landing' %}" class="button">Return Home</a>
+</body>
+</html>

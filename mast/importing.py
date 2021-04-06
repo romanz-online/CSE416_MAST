@@ -13,6 +13,23 @@ from pdfminer.layout import LTTextBoxHorizontal, LAParams
 from pdfminer.pdfinterp import PDFTextExtractionNotAllowed
 
 
+def import_degree_requirements(request):
+    # If get request, render page
+    if request.method == "GET":
+        return render(request, 'mast/import_degree_reqs.html', {'':None})
+
+    # If file uploaded
+    degree_file = request.FILES['degree_file']
+    # If non-xml file
+    if not degree_file.name.endswith('.xml') and not degree_file.name.endswith('.xml\r'):
+        messages.error(request, "Incorrect file type.")
+        return render(request, 'mast/import_degree_reqs.html', {'':None})
+
+    # stuff here
+
+    return render(request, 'mast/import_degree_reqs.html', {'': None})
+
+
 def import_student(request):
     """
     Imports a student profile through reading a .csv file  
@@ -211,6 +228,7 @@ def import_courses(request):
     # If non-csv file 
     if not file_name.name.endswith('.csv') and not file_name.name.endswith('.csv\r'):
         messages.error(request, "Incorrect file type.")
+        return render(request, 'mast/import_courses.html', prompt)
 
     file = file_name.read().decode("utf-8")
 
