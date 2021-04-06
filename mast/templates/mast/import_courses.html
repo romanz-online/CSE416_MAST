@@ -43,10 +43,7 @@
     <h2>Current Classes</h2>
     {% if course_list %}
         {% for course in course_list %}
-            {{ course.name }}
-            {{ course.section }}
-            {{ course.semester }}
-            {{ course.year }}
+            {{ course }}
             <br>
         {% endfor %}
     {% endif %}

@@ -217,7 +217,7 @@ def import_courses(request):
             render (HttpResponse): Returns the respective view containing the respective information of the student schedule retrieved.     
     """
     prompt = {'order': 'Order of CSV should be department, course_num, section, semester, year, timeslot',
-              'course_list': Course.objects.all()}
+              'course_list': CourseInstance.objects.all()}
 
     # If get request, render page
     if request.method == "GET":
@@ -284,7 +284,7 @@ def import_courses(request):
         course_instance.course = Course.objects.get(department=course.department, number=course.number)
         course_instance.save()
         processed_lines += row
-    context = {'course_list': Course.objects.all()}
+    context = {'course_list': CourseInstance.objects.all()}
     return render(request, 'mast/import_courses.html', context)
 
 
