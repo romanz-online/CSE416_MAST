@@ -217,7 +217,7 @@ def import_courses(request):
             render (HttpResponse): Returns the respective view containing the respective information of the student schedule retrieved.     
     """
     prompt = {'order': 'Order of CSV should be department, course_num, section, semester, year, timeslot',
-              'courses': Course.objects.all()}
+              'course_list': Course.objects.all()}
 
     # If get request, render page
     if request.method == "GET":
