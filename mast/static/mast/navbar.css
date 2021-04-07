@@ -53,12 +53,12 @@ ul.navbar_container li:hover a:not(.active) a:not(.navbar_item_logout) {
 }
 
 .dropdown_link {
-    background-color: lightgray;
+    background-color: #490000;
     text-align: left;
 }
 
 .dropdown_link:hover {
-    background-color: gray;
+    background-color: dimgray;
 }
 
 ul.navbar_container li.right {
@@ -83,10 +83,12 @@ ul.navbar_container .dropdown-content {
 }
 
 ul.navbar_container .dropdown-content a {
-    color: black;
+    color: white;
+    border: 1px solid white;
+    text-align: left;
 }
 
 ul.navbar_container .dropdown:hover > .dropdown-content {
     display: block;
-    box-shadow: 0 8px 16px 0 rgba(0, 0, 0, 0.2);
+    box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.2);
 }

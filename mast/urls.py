@@ -17,7 +17,8 @@ urlpatterns = [
     path('scrape_courses/', importing.scrape_courses, name="scrape_courses"),
 
     path('edit_schedule/<int:sbu_id>/', modifying_schedule.edit_schedule, name='edit_schedule'),
-    path('edit_schedule/<int:sbu_id>/add_scheduled_course/', modifying_schedule.add_scheduled_course, name='add_scheduled_course'),
+    path('edit_schedule/<int:sbu_id>/add_scheduled_course/', modifying_schedule.add_scheduled_course,
+         name='add_scheduled_course'),
     path('edit_schedule/<int:sbu_id>/remove_scheduled_course/<int:course>', modifying_schedule.remove_scheduled_course,
          name='remove_scheduled_course'),
     path('edit_schedule/<int:sbu_id>/add_scheduled_semester/', modifying_schedule.add_scheduled_semester,
@@ -30,13 +31,7 @@ urlpatterns = [
     path('edit/<int:sbu_id>/modify_course_in_progress/<int:record>', editing_student.modify_course_in_progress,
          name='modify_course_in_progress'),
 
-
     path('student_index/', searching.student_index, name='student_index'),
     path('student_index/search/', searching.search, name='search'),
-    path('student_index/#', searching.delete_all_students, name='delete_all_students'),
-    path('student_index/search/sort_by_id', searching.sort_by_id, name='sort_by_id'),
-    path('student_index/search/sort_by_name', searching.sort_by_name, name='sort_by_name'),
-    path('student_index/search/sort_by_graduation', searching.sort_by_graduation, name='sort_by_graduation'),
-    path('student_index/search/sort_by_attendance', searching.sort_by_attendance, name='sort_by_attendance'),
-
+    path('student_index/#', searching.delete_all_students, name='delete_all_students')
 ]
