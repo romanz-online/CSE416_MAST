@@ -216,6 +216,7 @@ class CoursesTakenByStudent(models.Model):
     course = models.ForeignKey(CourseInstance, null=True, on_delete=models.SET_NULL)
     grade = models.CharField(max_length=3, choices=Grade.choices, default=Grade.NOT_APPLICABLE)
     status = models.CharField(max_length=15, choices=CourseStatus.choices, default=CourseStatus.PENDING)
+    credits_taken = models.IntegerField(default=3)
 
     def __str__(self):
         return str(self.student) + ' - ' + str(self.course)
