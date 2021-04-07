@@ -101,6 +101,7 @@ class Track(models.Model):
     project_required = models.BooleanField(default=False)
     minimum_credits_required = models.IntegerField(default=30)
     number_of_areas = models.IntegerField(default=1)
+    total_requirements = models.IntegerField(default=1)
 
     def __str__(self):
         return str(self.name)
