@@ -63,7 +63,8 @@ class Course(models.Model):
     name = models.CharField(max_length=100)
     department = models.CharField(max_length=3, choices=Department.choices, default=Department.NONE)
     number = models.IntegerField(default=100)
-    credits = models.IntegerField(default=3)
+    lower_credit_limit = models.IntegerField(default=3)
+    upper_credit_limit = models.IntegerField(default=3)
     description = models.TextField(max_length=400, default="No class description.")
 
     def __str__(self):
