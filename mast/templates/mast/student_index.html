@@ -49,6 +49,8 @@
 
 <h1>Student Index</h1>
 
+{% include "mast/navbar.html" %}
+
 <div id="overlay_dimmer" onclick="removeOverlays()"></div>
 
 <div>
@@ -186,11 +188,6 @@
             {% endif %}
         </ul>
     </div>
-
-</div>
-
-<div class=back>
-    <a href="{% url 'mast:gpd_landing' %}" class="button">Return Home</a>
 </div>
 
 <!-- add student popup -->

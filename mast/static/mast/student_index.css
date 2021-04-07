@@ -4,8 +4,8 @@ div {
 }
 
 h1 {
-    margin: -10px -10px 40px;
-    padding: 30px;
+    margin: -10px -10px;
+    padding-top: 30px;
     text-align: center;
     background-color: #490000;
     color: white;
@@ -132,12 +132,6 @@ input[type=button], input[type=submit], input[type=reset] {
     display: inline-block;
     font-size: 15px;
     cursor: pointer;
-}
-
-.back {
-    position: fixed;
-    margin-left: 10px;
-    top: 95%;
 }
 
 .add {

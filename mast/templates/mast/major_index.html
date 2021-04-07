@@ -1,12 +1,14 @@
 <!DOCTYPE html>
 <html lang="en">
-<body>
 
 {% load static %}
+<link rel="stylesheet" type="text/css" href="{% static 'mast/major_index.css' %}"/>
+
+<body>
 
 <h1>Majors</h1>
 
-<a href="{% url 'mast:gpd_landing' %}">Back to landing</a> <br><br>
+{% include "mast/navbar.html" %}
 
 {% for major in major_list %}
     {{ major }}<br>

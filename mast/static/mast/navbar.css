@@ -1,0 +1,35 @@
+#navbar_container {
+    list-style-type: none;
+    margin: -10px -10px 30px;
+    padding-bottom: 0;
+    overflow: hidden;
+    background-color: #490000;
+}
+
+.navbar_item {
+    float: left;
+}
+
+.navbar_item_logout {
+    float: right;
+}
+
+.navbar_item_logout .navbar_link {
+    display: block;
+    color: white;
+    text-align: center;
+    padding: 14px 16px;
+    text-decoration: none;
+}
+
+.navbar_item .navbar_link {
+    display: block;
+    color: white;
+    text-align: center;
+    padding: 14px 16px;
+    text-decoration: none;
+}
+
+.navbar_item .navbar_link:hover {
+    background-color: dimgray;
+}

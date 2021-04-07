@@ -1,6 +1,6 @@
 h1 {
-    padding: 30px;
-    margin: -10px -10px 10px;
+    margin: -10px -10px;
+    padding-top: 30px;
     text-align: center;
     background-color: #490000;
     color: white;
@@ -43,7 +43,6 @@ button[type=submit] {
     font-size: 12px;
     cursor: pointer;
 }
-
 
 input[type=submit] {
     background-color: #490000;
