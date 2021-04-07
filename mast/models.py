@@ -25,9 +25,9 @@ class CourseStatus(models.TextChoices):
 
 
 class CourseRelation(models.TextChoices):
-    XOR = 'XOR' # means that after you take one class, you can't take the other, ever
-    FORBIDDEN_CONCURRENCY = 'Concurrency' # means that you can't take two specified courses in the same semester
-    NONE = 'None' # default value
+    XOR = 'XOR'  # means that after you take one class, you can't take the other, ever
+    FORBIDDEN_CONCURRENCY = 'Concurrency'  # means that you can't take two specified courses in the same semester
+    NONE = 'None'  # default value
 
 
 class Grade(models.TextChoices):
@@ -130,8 +130,10 @@ class TrackCourseSet(models.Model):
     upper_limit = models.IntegerField(default=100)
     lower_limit = models.IntegerField(default=999)
     department_limit = models.CharField(max_length=3, choices=Department.choices, default=Department.NONE)
+
     def __str__(self):
         return self.name
+
 
 class CourseInTrackSet(models.Model):
     course_set = models.ForeignKey(TrackCourseSet, on_delete=models.CASCADE)
@@ -151,15 +153,18 @@ class CourseToCourseRelation(models.Model):
 
     def __str__(self):
         if self.relation == CourseRelation.FORBIDDEN_CONCURRENCY:
-            return str(self.primary_course) + ' cannot be taken in the same semester as ' + str(self.related_course) + '.'
+            return str(self.primary_course) + ' cannot be taken in the same semester as ' + str(
+                self.related_course) + '.'
         elif self.relation == CourseRelation.XOR:
-            return 'Only one course can be taken between ' + str(self.primary_course) + ' and ' + str(self.related_course) + '.'
+            return 'Only one course can be taken between ' + str(self.primary_course) + ' and ' + str(
+                self.related_course) + '.'
         else:
-            return 'There is no restrictive relation between ' + str(self.primary_course) + ' and ' + str(self.related_course) + '.'
+            return 'There is no restrictive relation between ' + str(self.primary_course) + ' and ' + str(
+                self.related_course) + '.'
 
 
 class CoursePrerequisiteSet(models.Model):
-    parent_course = models.ForeignKey(Course, on_delete=models.CASCADE)
+    parent_course = models.ForeignKey(Course, on_delete=models.CASCADE, null=True)
     parent_set = models.ForeignKey(to='CoursePrerequisiteSet', on_delete=models.CASCADE, null=True)
     number_required = models.IntegerField(default=1)
 

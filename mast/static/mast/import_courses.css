@@ -23,14 +23,12 @@ h3 {
     margin-right: 10px;
     border-style: solid;
     outline: black;
-
 }
 
 .form {
     float: left;
     width: 60%;
     padding: 10px;
-
 }
 
 button[type=submit] {

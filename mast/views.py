@@ -1,8 +1,6 @@
 from datetime import datetime
 import operator
 
-from django_datatables_view.base_datatable_view import BaseDatatableView
-from django.utils.html import escape
 from django.shortcuts import get_object_or_404, render
 from django.core.mail import EmailMessage
 from django.http import HttpResponseRedirect
@@ -130,6 +128,8 @@ def create_none_major():
                            name='(None)',
                            requirement_semester=semester)
         none_major.save()
+
+
 def student_datatable(request):
     student = StudentDatatable()
     return render(request, 'mast/student_index.html', {'student': student})
