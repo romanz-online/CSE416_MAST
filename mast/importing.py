@@ -11,6 +11,7 @@ from pdfminer.pdfinterp import PDFResourceManager, PDFPageInterpreter
 from pdfminer.converter import PDFPageAggregator
 from pdfminer.layout import LTTextBoxHorizontal, LAParams
 from pdfminer.pdfinterp import PDFTextExtractionNotAllowed
+from bs4 import BeautifulSoup
 
 
 def import_degree_requirements(request):
@@ -25,7 +26,48 @@ def import_degree_requirements(request):
         messages.error(request, "Incorrect file type.")
         return render(request, 'mast/import_degree_reqs.html', {'':None})
 
-    # stuff here
+    # Open File using BS4
+    infile = open("mast\\test_files\\" + degree_file.name, "r")
+    contents = infile.read()
+    soup = BeautifulSoup(contents, 'xml')
+
+    # Add Major to database
+    department = soup.department.get_text()
+    major_name = soup.find("name").get_text()
+    semester_season = soup.requirement_semester.season.get_text()
+    semester_year = soup.requirement_semester.year.get_text()
+    m = Major(department=department, name=major_name, requirement_semester=Semester.objects.filter(season=semester_season, year=semester_year).get())
+    # m.save()
+
+    # Add tracks + further data to database
+    tracks = soup.find_all("Track")
+    for track in tracks:
+
+        # Add track to database 
+        track_name = track.find("name").get_text()
+        number_of_areas = track.find("number_of_areas")
+        if number_of_areas:
+            number_of_areas = number_of_areas.get_text()
+        else:
+            number_of_areas = 1
+        thesis = track.find("thesis_required")
+        if thesis:
+            thesis = True
+        else:
+            thesis = False 
+        project = track.find("project_required")
+        if project:
+            project = True
+        else: 
+            project = False 
+        min_credits = track.find("minimum_credits_required")
+        if min_credits:
+            min_credits = min_credits.get_text()
+        else:
+            min_credits = 30 
+        t = Track(major=m, name=track_name, thesis_required=thesis, project_required=project, 
+        minimum_credits_required=min_credits, number_of_areas=number_of_areas)
+        # t.save()
 
     return render(request, 'mast/import_degree_reqs.html', {'': None})
 
