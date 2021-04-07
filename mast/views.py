@@ -25,9 +25,9 @@ def major_index(request):
     return render(request, 'mast/major_index.html', context)
 
 
-def add_student(request):
-    context = {'major_list': Major.objects.all(), 'semesters': Semester.objects.order_by('year')}
-    return render(request, 'mast/new_student.html', context)
+# def add_student(request):
+#     context = {'major_list': Major.objects.all(), 'semesters': Semester.objects.order_by('year')}
+#     return render(request, 'mast/new_student.html', context)
 
 
 def commit_new_student(request):
@@ -37,9 +37,13 @@ def commit_new_student(request):
     first_name = request.GET['first_name']
     last_name = request.GET['last_name']
     email = request.GET['email']
-    major = request.GET['major']
+    track = request.GET['major_track']
+    track = Track.objects.get(id=track)
+    major = track.major
     entry_semester = request.GET['entry_semester']
+    entry_semester = Semester.objects.get(id=int(entry_semester))
     requirement_semester = request.GET['requirement_semester']
+    requirement_semester = Semester.objects.get(id=int(requirement_semester))
     semesters_enrolled = 1
 
     if Semester.objects.filter(is_current_semester=True):
@@ -56,7 +60,6 @@ def commit_new_student(request):
                 count += 1
             semesters_enrolled = count
 
-
     try:
         if int(sbu_id) in id_list:
             id_taken = True
@@ -65,9 +68,11 @@ def commit_new_student(request):
                           first_name=first_name,
                           last_name=last_name,
                           email=email,
-                          major=Major.objects.get(id=int(major)),
-                          entry_semester=Semester.objects.get(id=int(entry_semester)),
-                          requirement_semester=Semester.objects.get(id=int(requirement_semester)),
+                          major=major,
+                          track=track,
+                          unsatisfied_courses=track.total_requirements,
+                          entry_semester=entry_semester,
+                          requirement_semester=requirement_semester,
                           semesters_enrolled=semesters_enrolled
                           )
         student.save()
