@@ -4,8 +4,8 @@ from django.shortcuts import render
 from django.contrib import messages
 from django.http import HttpResponseRedirect
 from django.urls import reverse
-from .models import Student, Major, Course, CourseInstance, CoursesTakenByStudent, Semester, Track, CourseStatus, Grade, \
-    Season
+from .models import Student, Major, Course, CourseInstance, CoursesTakenByStudent, Semester, Track, \
+    TrackCourseSet, CourseInTrackSet, CourseStatus, Grade, Department, Season 
 from pdfminer.pdfparser import PDFParser, PDFDocument
 from pdfminer.pdfinterp import PDFResourceManager, PDFPageInterpreter
 from pdfminer.converter import PDFPageAggregator
@@ -37,7 +37,7 @@ def import_degree_requirements(request):
     semester_season = soup.requirement_semester.season.get_text()
     semester_year = soup.requirement_semester.year.get_text()
     m = Major(department=department, name=major_name, requirement_semester=Semester.objects.filter(season=semester_season, year=semester_year).get())
-    # m.save()
+    m.save()
 
     # Add tracks + further data to database
     tracks = soup.find_all("Track")
@@ -67,13 +67,119 @@ def import_degree_requirements(request):
             min_credits = min_credits.get_text()
         else:
             min_credits = 30 
-        # Add all classes as reqs.         
-
-
-        
         t = Track(major=m, name=track_name, thesis_required=thesis, project_required=project, 
-        minimum_credits_required=min_credits, number_of_areas=number_of_areas)
-        # t.save()
+        minimum_credits_required=min_credits, number_of_areas=number_of_areas, total_requirements=total_requirements)
+        t.save()
+
+        # Add TrackCourseSets to database 
+        track_course_sets = track.find_all("TrackCourseSet")
+        for tcs in track_course_sets:
+
+            # Add TCS parents
+            if tcs.parent.name == 'Track':
+                tcs_size = tcs.find("size").get_text()  
+                tcs_name = tcs.find("name")  
+                if tcs_name:
+                    tcs_name = tcs_name.get_text() + " - " + track_name 
+                else:
+                    tcs_name = "Core Set - " + track_name
+                tcs_limiter = tcs.find("limiter")  
+                if tcs_limiter:
+                    tcs_limiter = True 
+                else:
+                    tcs_limiter = False 
+                tcs_upper_limit = tcs.find("upper_limit")  
+                if tcs_upper_limit:
+                    tcs_upper_limit = tcs_upper_limit.get_text()
+                else:
+                    tcs_upper_limit = 100 
+                tcs_lower_limit = tcs.find("lower_limit")
+                if tcs_lower_limit:
+                    tcs_lower_limit = tcs_lower_limit.get_text()
+                else:
+                    tcs_lower_limit = 999
+                tcs_department_limit = tcs.find("department_limit")
+                if tcs_department_limit:
+                    tcs_department_limit = tcs_department_limit.get_text()
+                else:
+                    tcs_department_limit = Department.NONE
+                tcs_save = TrackCourseSet(track=t,name=tcs_name,size=tcs_size, 
+                limiter=tcs_limiter,upper_limit=tcs_upper_limit,lower_limit=tcs_lower_limit,
+                department_limit=tcs_department_limit)
+                tcs_save.save()
+
+                # Add children of TCS 
+                for child in tcs.children:
+                    if child.parent.parent.name == "Track":
+                        if child.name == "TrackCourseSet":
+                            tcs_size = child.find("size").get_text()  
+                            tcs_name = child.find("name")  
+                            if tcs_name:
+                                tcs_name = tcs_name.get_text() + " - " + track_name 
+                            else:
+                                tcs_name = "Nested Core Set - "  + track_name 
+                            tcs_limiter = child.find("limiter")  
+                            if tcs_limiter:
+                                tcs_limiter = True 
+                            else:
+                                tcs_limiter = False 
+                            tcs_upper_limit = child.find("upper_limit")  
+                            if tcs_upper_limit:
+                                tcs_upper_limit = tcs_upper_limit.get_text()
+                            else:
+                                tcs_upper_limit = 100 
+                            tcs_lower_limit = child.find("lower_limit")
+                            if tcs_lower_limit:
+                                tcs_lower_limit = tcs_lower_limit.get_text()
+                            else:
+                                tcs_lower_limit = 999
+                            tcs_department_limit = child.find("department_limit")
+                            if tcs_department_limit:
+                                tcs_department_limit = tcs_department_limit.get_text()
+                            else:
+                                tcs_department_limit = Department.NONE
+                            tcs_child_save = TrackCourseSet(track=t,parent_course_set=tcs_save,name=tcs_name,size=tcs_size, 
+                            limiter=tcs_limiter,upper_limit=tcs_upper_limit,lower_limit=tcs_lower_limit,
+                            department_limit=tcs_department_limit)
+                            tcs_child_save.save()
+                            # do one more loop to find courseintracksets and attach them here. 
+                            for child_second_loop in child.children:
+                                if child_second_loop.name == "CourseInTrackSet":
+                                    child_course = child_second_loop.find("course").get_text()
+                                    child_course = child_course.replace(" ", "")
+                                    print(child_course)
+                                    child_course = Course.objects.get(name=child_course)
+                                    course_each_semester = child_second_loop.find("each_semester")
+                                    if course_each_semester: 
+                                        course_each_semester = True 
+                                    else:
+                                        course_each_semester = False 
+                                    how_many_semesters = child_second_loop.find("how_many_semesters")
+                                    if how_many_semesters:
+                                        how_many_semesters = how_many_semesters.get_text()
+                                    else:
+                                        how_many_semesters = 1    
+                                    course_in_track_set_save = CourseInTrackSet(course_set=tcs_child_save, course=child_course, each_semester=course_each_semester,
+                                    how_many_semesters=how_many_semesters)
+                                    course_in_track_set_save.save()
+                        elif child.name == "CourseInTrackSet":
+                            child_course = child.find("course").get_text()
+                            child_course = child_course.replace(" ", "")
+                            print(child_course)
+                            child_course = Course.objects.get(name=child_course)
+                            course_each_semester = child.find("each_semester")
+                            if course_each_semester: 
+                                course_each_semester = True 
+                            else:
+                                course_each_semester = False 
+                            how_many_semesters = child.find("how_many_semesters")
+                            if how_many_semesters:
+                                how_many_semesters = how_many_semesters.get_text()
+                            else:
+                                how_many_semesters = 1    
+                            course_in_track_set_save = CourseInTrackSet(course_set=tcs_save, course=child_course, each_semester=course_each_semester,
+                            how_many_semesters=how_many_semesters)
+                            course_in_track_set_save.save()
 
     return render(request, 'mast/import_degree_reqs.html', {'': None})
 

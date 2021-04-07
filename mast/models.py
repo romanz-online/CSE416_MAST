@@ -130,10 +130,8 @@ class TrackCourseSet(models.Model):
     upper_limit = models.IntegerField(default=100)
     lower_limit = models.IntegerField(default=999)
     department_limit = models.CharField(max_length=3, choices=Department.choices, default=Department.NONE)
-
     def __str__(self):
         return self.name
-
 
 class CourseInTrackSet(models.Model):
     course_set = models.ForeignKey(TrackCourseSet, on_delete=models.CASCADE)
