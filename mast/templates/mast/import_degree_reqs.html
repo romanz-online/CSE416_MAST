@@ -1,8 +1,17 @@
 <!DOCTYPE html>
 <html lang="en">
+
+{% load static %}
+<link rel="stylesheet" type="text/css" href="{% static 'mast/import_courses.css' %}"/>
+
 <head>
     <title>Import Degree Requirements</title>
 </head>
+
+<h1>Import Degree Requirements</h1>
+
+{% include "mast/navbar.html" %}
+
 <body>
     {% if messages %}
         {% for message in messages %}

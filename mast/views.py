@@ -13,11 +13,6 @@ def home(request):
     return render(request, 'mast/home.html', {})
 
 
-def gpd_landing(request):
-    create_none_major()
-    return render(request, 'mast/gpd_landing.html', {})
-
-
 def major_index(request):
     context = {'major_list': Major.objects.order_by('name')[1:],
                'track_list': Track.objects.all(),

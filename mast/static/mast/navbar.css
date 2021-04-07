@@ -1,4 +1,4 @@
-#navbar_container {
+ul.navbar_container {
     list-style-type: none;
     margin: -10px -10px 30px;
     padding-bottom: 0;
@@ -8,18 +8,6 @@
 
 .navbar_item {
     float: left;
-}
-
-.navbar_item_logout {
-    float: right;
-}
-
-.navbar_item_logout .navbar_link {
-    display: block;
-    color: white;
-    text-align: center;
-    padding: 14px 16px;
-    text-decoration: none;
 }
 
 .navbar_item .navbar_link {
@@ -32,4 +20,73 @@
 
 .navbar_item .navbar_link:hover {
     background-color: dimgray;
+}
+
+.navbar_item_logout {
+    float: right;
+}
+
+.navbar_item_logout .navbar_link {
+    display: block;
+    color: white;
+    text-align: center;
+    padding-top: 14px;
+    padding-right: 48px;
+    text-decoration: none;
+}
+
+ul.navbar_container li {
+    float: left;
+}
+
+ul.navbar_container li a {
+    display: block;
+    color: white;
+    text-align: center;
+    padding: 14px 16px;
+    text-decoration: none;
+}
+
+ul.navbar_container li:hover a:not(.active) a:not(.navbar_item_logout) {
+    background-color: #D3D3D3;
+    color: #000;
+}
+
+.dropdown_link {
+    background-color: lightgray;
+    text-align: left;
+}
+
+.dropdown_link:hover {
+    background-color: gray;
+}
+
+ul.navbar_container li.right {
+    float: right;
+}
+
+@media screen and (max-width: 600px) {
+    ul.navbar_container,
+    ul.navbar_container {
+        position: unset
+    }
+
+    ul.navbar_container li.right,
+    ul.navbar_container li {
+        float: none;
+    }
+}
+
+ul.navbar_container .dropdown-content {
+    display: none;
+    position: absolute;
+}
+
+ul.navbar_container .dropdown-content a {
+    color: black;
+}
+
+ul.navbar_container .dropdown:hover > .dropdown-content {
+    display: block;
+    box-shadow: 0 8px 16px 0 rgba(0, 0, 0, 0.2);
 }

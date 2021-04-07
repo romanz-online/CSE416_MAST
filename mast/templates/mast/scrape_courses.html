@@ -5,12 +5,13 @@
 <link rel="stylesheet" type="text/css" href="{% static 'mast/import_courses.css' %}"/>
 
 <head>
-    <title>Import Course Offerings</title>
-    
+    <title>Scrape Course Offerings</title>
 </head>
 
 <body>
-<h1>Import Courses</h1>
+<h1>Scrape PDF</h1>
+
+{% include "mast/navbar.html" %}
 
 <div id="overlay_dimmer" onclick="hideExample()"></div>
 <div id="example_image">
@@ -20,7 +21,7 @@
 <div class=form>
     <form action="" method="POST" enctype="multipart/form-data">
         {% csrf_token %}
-        <label for="file1"> Upload Course File</label>
+        <label for="file1">Upload PDF</label>
         <input type="file" id="file1" name="file">
         <br>
         Major:

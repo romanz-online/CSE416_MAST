@@ -5,8 +5,6 @@ from . import views, modifying_schedule, searching, editing_student, importing
 app_name = 'mast'
 urlpatterns = [
     path('', views.home, name='home'),
-    path('gpd_landing', views.gpd_landing, name='gpd_landing'),
-    # path('new_student/', views.add_student, name='add_student'),
     path('commit_new_student/', views.commit_new_student, name='commit_new_student'),
     path('majors/', views.major_index, name='major_index'),
     path('<int:sbu_id>/', views.detail, name='detail'),
