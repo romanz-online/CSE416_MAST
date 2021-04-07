@@ -6,7 +6,7 @@ from django.core.mail import EmailMessage
 from django.http import HttpResponseRedirect
 from django.urls import reverse
 from .models import Student, Major, Season, CoursesTakenByStudent, Comment, StudentCourseSchedule, Semester, Track, \
-    TrackCourseSet, CourseInTrackSet, CourseToCourseRelation
+    TrackCourseSet, CourseInTrackSet, CourseToCourseRelation, Department
 
 
 def home(request):
@@ -14,6 +14,7 @@ def home(request):
 
 
 def gpd_landing(request):
+    create_none_major()
     return render(request, 'mast/gpd_landing.html', {})
 
 
@@ -93,6 +94,7 @@ def commit_new_student(request):
 
 
 def detail(request, sbu_id):
+    create_none_major()
     student = get_object_or_404(Student, pk=sbu_id)
     comment_list = Comment.objects.filter(student=sbu_id)
     semester_list = {i.course.semester: 1 for i in StudentCourseSchedule.objects.filter(student=sbu_id)}.keys()
@@ -121,3 +123,12 @@ def add_comment(request, sbu_id):
     except:
         return HttpResponseRedirect(reverse('mast:detail', args=(sbu_id,)))
     return HttpResponseRedirect(reverse('mast:detail', args=(sbu_id,)))
+
+
+def create_none_major():
+    if not Major.objects.filter(department=Department.NONE):
+        semester = Semester.objects.all()[0]
+        none_major = Major(department=Department.NONE,
+                           name='(None)',
+                           requirement_semester=semester)
+        none_major.save()
