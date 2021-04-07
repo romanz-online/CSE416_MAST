@@ -2,6 +2,7 @@ from datetime import datetime
 import operator
 
 from django.shortcuts import get_object_or_404, render
+from django.core.mail import EmailMessage
 from django.http import HttpResponseRedirect
 from django.urls import reverse
 from .models import Student, Major, Season, CoursesTakenByStudent, Comment, StudentCourseSchedule, Semester, Track, \
@@ -23,11 +24,6 @@ def major_index(request):
                'courses_in_sets': CourseInTrackSet.objects.all(),
                'course_relations': CourseToCourseRelation.objects.all()}
     return render(request, 'mast/major_index.html', context)
-
-
-# def add_student(request):
-#     context = {'major_list': Major.objects.all(), 'semesters': Semester.objects.order_by('year')}
-#     return render(request, 'mast/new_student.html', context)
 
 
 def commit_new_student(request):
@@ -116,8 +112,12 @@ def add_comment(request, sbu_id):
         new_comment = request.GET['new_comment']
         if new_comment == '':
             raise Exception
+        email_message = 'A Graduate Program Director has left a comment on your profile:\n"' + new_comment + '"'
+        email = EmailMessage('New Comment from MAST', email_message, to=[str(student.email)])
+        email.send()
         c = Comment(student=student, text=str(new_comment), post_date=str(datetime.now()))
         c.save()
+        print(student.email)
     except:
         return HttpResponseRedirect(reverse('mast:detail', args=(sbu_id,)))
     return HttpResponseRedirect(reverse('mast:detail', args=(sbu_id,)))
