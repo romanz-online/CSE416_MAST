@@ -93,9 +93,9 @@
             <br>
             <label>
                 Major:
-                <select name="major">
-                    {% for major in major_list %}
-                        <option value= {{ major.id }}>{{ major }}</option>
+                <select name="major_track">
+                    {% for major_track in major_track_list %}
+                        <option value= {{ major_track.id }}>{{ major_track.major }} - {{ major_track.track }}</option>
                     {% endfor %}
                 </select>
             </label> <br> <br>

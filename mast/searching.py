@@ -2,7 +2,7 @@ import operator
 from enum import Enum
 
 from django.shortcuts import render
-from .models import Student, Major, Semester
+from .models import Student, Major, Semester, Track, Department
 
 global current_search
 current_search = {'student_list': Student.objects.order_by('sbu_id'),
@@ -30,12 +30,31 @@ global sorted_by
 sorted_by = SortedBy.NONE
 
 
+class MajorTrack:
+    def __init__(self, major, track, id):
+        self.major = major
+        self.track = track
+        self.id = id
+
+
 def student_index(request):
     global current_search, sorted_by
+    if not Major.objects.filter(department=Department.NONE):
+        semester = Semester.objects.all()[0]
+        none_major = Major(department=Department.NONE,
+                           name='(None)',
+                           requirement_semester=semester)
+        none_major.save()
+    major_track_list = []
+    for m in Major.objects.all():
+        for t in Track.objects.all():
+            if t.major == m:
+                major_track_list.append(MajorTrack(m.name, t.name, t.id))
     context = {'student_list': Student.objects.order_by('sbu_id'),
                'major_list': Major.objects.order_by('name'),
                'semesters': Semester.objects.all(),
-               'requirement_semesters': Semester.objects.all()}
+               'requirement_semesters': Semester.objects.all(),
+               'major_track_list': major_track_list}
     current_search['student_list'] = Student.objects.order_by('sbu_id')
     current_search['major_list'] = Major.objects.order_by('name')
     sorted_by = SortedBy.NONE

@@ -2,10 +2,11 @@ from datetime import datetime
 import operator
 
 from django.shortcuts import get_object_or_404, render
+from django.core.mail import EmailMessage
 from django.http import HttpResponseRedirect
 from django.urls import reverse
 from .models import Student, Major, Season, CoursesTakenByStudent, Comment, StudentCourseSchedule, Semester, Track, \
-    TrackCourseSet, CourseInTrackSet, CourseToCourseRelation
+    TrackCourseSet, CourseInTrackSet, CourseToCourseRelation, Department
 
 
 def home(request):
@@ -13,6 +14,7 @@ def home(request):
 
 
 def gpd_landing(request):
+    create_none_major()
     return render(request, 'mast/gpd_landing.html', {})
 
 
@@ -25,11 +27,6 @@ def major_index(request):
     return render(request, 'mast/major_index.html', context)
 
 
-def add_student(request):
-    context = {'major_list': Major.objects.all(), 'semesters': Semester.objects.order_by('year')}
-    return render(request, 'mast/new_student.html', context)
-
-
 def commit_new_student(request):
     id_list = [i.sbu_id for i in Student.objects.all()]
     id_taken = False
@@ -37,9 +34,13 @@ def commit_new_student(request):
     first_name = request.GET['first_name']
     last_name = request.GET['last_name']
     email = request.GET['email']
-    major = request.GET['major']
+    track = request.GET['major_track']
+    track = Track.objects.get(id=track)
+    major = track.major
     entry_semester = request.GET['entry_semester']
+    entry_semester = Semester.objects.get(id=int(entry_semester))
     requirement_semester = request.GET['requirement_semester']
+    requirement_semester = Semester.objects.get(id=int(requirement_semester))
     semesters_enrolled = 1
 
     if Semester.objects.filter(is_current_semester=True):
@@ -56,7 +57,6 @@ def commit_new_student(request):
                 count += 1
             semesters_enrolled = count
 
-
     try:
         if int(sbu_id) in id_list:
             id_taken = True
@@ -65,9 +65,11 @@ def commit_new_student(request):
                           first_name=first_name,
                           last_name=last_name,
                           email=email,
-                          major=Major.objects.get(id=int(major)),
-                          entry_semester=Semester.objects.get(id=int(entry_semester)),
-                          requirement_semester=Semester.objects.get(id=int(requirement_semester)),
+                          major=major,
+                          track=track,
+                          unsatisfied_courses=track.total_requirements,
+                          entry_semester=entry_semester,
+                          requirement_semester=requirement_semester,
                           semesters_enrolled=semesters_enrolled
                           )
         student.save()
@@ -92,6 +94,7 @@ def commit_new_student(request):
 
 
 def detail(request, sbu_id):
+    create_none_major()
     student = get_object_or_404(Student, pk=sbu_id)
     comment_list = Comment.objects.filter(student=sbu_id)
     semester_list = {i.course.semester: 1 for i in StudentCourseSchedule.objects.filter(student=sbu_id)}.keys()
@@ -111,8 +114,21 @@ def add_comment(request, sbu_id):
         new_comment = request.GET['new_comment']
         if new_comment == '':
             raise Exception
+        email_message = 'A Graduate Program Director has left a comment on your profile:\n"' + new_comment + '"'
+        email = EmailMessage('New Comment from MAST', email_message, to=[str(student.email)])
+        email.send()
         c = Comment(student=student, text=str(new_comment), post_date=str(datetime.now()))
         c.save()
+        print(student.email)
     except:
         return HttpResponseRedirect(reverse('mast:detail', args=(sbu_id,)))
     return HttpResponseRedirect(reverse('mast:detail', args=(sbu_id,)))
+
+
+def create_none_major():
+    if not Major.objects.filter(department=Department.NONE):
+        semester = Semester.objects.all()[0]
+        none_major = Major(department=Department.NONE,
+                           name='(None)',
+                           requirement_semester=semester)
+        none_major.save()
