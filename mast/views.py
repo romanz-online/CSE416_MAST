@@ -123,7 +123,6 @@ def add_comment(request, sbu_id):
     return HttpResponseRedirect(reverse('mast:detail', args=(sbu_id,)))
 
 
-<<<<<<< Updated upstream
 def create_none_major():
     if not Major.objects.filter(department=Department.NONE):
         semester = Semester.objects.all()[0]
@@ -131,8 +130,6 @@ def create_none_major():
                            name='(None)',
                            requirement_semester=semester)
         none_major.save()
-=======
 def student_datatable(request):
     student = StudentDatatable()
     return render(request, 'mast/student_index.html', {'student': student})
->>>>>>> Stashed changes

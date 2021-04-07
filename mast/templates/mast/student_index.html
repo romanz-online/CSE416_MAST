@@ -164,6 +164,7 @@
                 <th>ID</th>
                 <th>Name</th>
                 <th>Graduation Semester</th>
+                <th>Total Semesters Enrolled</th>
                 <th>Satisfied-Pending-Unsatisfied</th>
             </tr>
         </thead>
@@ -171,31 +172,23 @@
             <tr>
                 {% if student_list %}
                     {% for student in student_list %}
-                        <td> {{ student.sbu_id }}</td>
+                        <td> <a href ="/mast/{{ student.sbu_id }}">{{ student.sbu_id }}</a></td>
                         <td>{{ student.last_name }}, {{ student.first_name }} </td>
                         <td>{% if student.graduated %}
                             {{ student.graduation_semester }}
                         {% else %}
                             N/A
                         {% endif %}</td>
+                        <td> {{ semesters_enrolled }}</td>
                         <td> {{ student.satisfied_courses }} - {{ student.pending_courses }}
                             - {{ student.unsatisfied_courses }}</td>
 
             </tr>
             {% endfor %}
             {% endif %}
-<<<<<<< Updated upstream
-        </ul>
-    </div>
-=======
         </tbody>
     </table>
 
-
-<div class=back>
-    <a href="{% url 'mast:gpd_landing' %}" class="button">Return Home</a>
->>>>>>> Stashed changes
-</div>
 
 <!-- add student popup -->
 <div class=overlay id=overlay>
