@@ -1,5 +1,4 @@
 from django.urls import path
-
 from . import views, modifying_schedule, searching, editing_student, importing
 
 app_name = 'mast'
@@ -31,6 +30,7 @@ urlpatterns = [
     path('edit/<int:sbu_id>/modify_course_in_progress/<int:record>', editing_student.modify_course_in_progress,
          name='modify_course_in_progress'),
 
+
     path('student_index/', searching.student_index, name='student_index'),
     path('student_index/search/', searching.search, name='search'),
     path('student_index/#', searching.delete_all_students, name='delete_all_students'),
@@ -38,4 +38,5 @@ urlpatterns = [
     path('student_index/search/sort_by_name', searching.sort_by_name, name='sort_by_name'),
     path('student_index/search/sort_by_graduation', searching.sort_by_graduation, name='sort_by_graduation'),
     path('student_index/search/sort_by_attendance', searching.sort_by_attendance, name='sort_by_attendance'),
+
 ]

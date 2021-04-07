@@ -11,6 +11,7 @@ h1 {
     color: white;
 }
 
+
 a.button {
     background-color: #490000;
     border: none;
@@ -199,3 +200,4 @@ div#overlay_dimmer {
     background: black;
     visibility: hidden;
 }
+
