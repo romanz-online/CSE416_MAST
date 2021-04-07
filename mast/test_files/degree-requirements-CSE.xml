@@ -12,6 +12,7 @@
         <number_of_areas>4</number_of_areas>
         <minimum_credits_required>31</minimum_credits_required>
         <thesis_required>True</thesis_required>
+        <total_requirements>6</total_requirements>
         <TrackCourseSet>
             <name>No Credit Courses</name>
             <size>0</size>
@@ -167,6 +168,7 @@
         <number_of_areas>5</number_of_areas>
         <minimum_credits_required>31</minimum_credits_required>
         <project_required>True</project_required>
+        <total_requirements>6</total_requirements>
         <TrackCourseSet>
             <name>Advanced Project Courses></name>
             <size>2</size>
@@ -322,6 +324,7 @@
     <Track>
         <name>Special Project</name>
         <number_of_areas>6</number_of_areas>
+        <total_requirements>6</total_requirements>
         <minimum_credits_required>31</minimum_credits_required>
         <project_required>True</project_required>
         <TrackCourseSet>

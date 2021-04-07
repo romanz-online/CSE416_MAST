@@ -10,6 +10,7 @@
     <Track>
         <name>Non-Thesis</name>
         <number_of_areas>6</number_of_areas>
+        <total_requirements>11</total_requirements>
         <TrackCourseSet>
             <name>Hardware</name>
             <size>1</size>
@@ -148,6 +149,7 @@
         <name>Thesis</name>
         <number_of_areas>6</number_of_areas>
         <thesis_required>True</thesis_required>
+        <total_requirements>12</total_requirements>
         <TrackCourseSet>
             <name>Hardware</name>
             <size>1</size>

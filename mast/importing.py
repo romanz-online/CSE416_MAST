@@ -45,6 +45,8 @@ def import_degree_requirements(request):
 
         # Add track to database 
         track_name = track.find("name").get_text()
+        # DEFAULT REQ: GPA, MIN CREDITS 
+        total_requirements = track.find("total_requirements").get_text()
         number_of_areas = track.find("number_of_areas")
         if number_of_areas:
             number_of_areas = number_of_areas.get_text()
@@ -65,6 +67,10 @@ def import_degree_requirements(request):
             min_credits = min_credits.get_text()
         else:
             min_credits = 30 
+        # Add all classes as reqs.         
+
+
+        
         t = Track(major=m, name=track_name, thesis_required=thesis, project_required=project, 
         minimum_credits_required=min_credits, number_of_areas=number_of_areas)
         # t.save()

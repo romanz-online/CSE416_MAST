@@ -11,6 +11,7 @@
             <name>Imaging Informatics - Thesis</name>
             <thesis_required>True</thesis_required>
             <minimum_credits_required>33</minimum_credits_required>
+            <total_requirements>11</total_requirements>
             <TrackCourseSet>
                 <size>9</size>
                 <CourseInTrackSet>
@@ -142,6 +143,7 @@
             <name>Clinical Informatics - Thesis</name>
             <thesis_required>True</thesis_required>
             <minimum_credits_required>33</minimum_credits_required>
+            <total_requirements>10</total_requirements>
             <TrackCourseSet>
                 <size>8</size>
                 <CourseInTrackSet>
@@ -278,6 +280,7 @@
             <name>Translational Bio-Informatics - Thesis</name>
             <thesis_required>True</thesis_required>
             <minimum_credits_required>33</minimum_credits_required>
+            <total_requirements>10</total_requirements>
             <TrackCourseSet>
                 <size>8</size>>
                 <CourseInTrackSet>
@@ -409,6 +412,7 @@
             <name>Imaging Informatics - Capstone</name>
             <project_required>True</project_required>
             <name>Capstone</name>
+            <total_requirements>11</total_requirements>
             <TrackCourseSet>
                 <size>9</size>
                 <CourseInTrackSet>
@@ -540,6 +544,7 @@
             <name>Clinical Informatics - Capstone</name>
             <project_required>True</project_required>
             <name>Capstone</name>
+            <total_requirements>10</total_requirements>
             <TrackCourseSet>
                 <size>8</size>
                 <CourseInTrackSet>
@@ -676,6 +681,7 @@
             <name>Translational Bio-Informatics - Capstone</name>
             <project_required>True</project_required>
             <name>Capstone</name>
+            <total_requirements>10</total_requirements>
             <TrackCourseSet>
                 <size>8</size>
                 <CourseInTrackSet>
