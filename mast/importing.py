@@ -563,31 +563,42 @@ def scrape_courses(request):
                 temp = temp[match.span()[1]:len(temp)]
             prerequisite_set = CoursePrerequisiteSet(parent_course=course)
             prerequisite_set.save()
-            for i in range(0, len(require_set)):
-                if i == (len(require_set) - 1):
-                    require_major = require_set[i][0:3]
-                    require_number = int(require_set[i][-3:])
+            for j in range(0, len(require_set)):
+                if j == (len(require_set) - 1):
+                    require_major = require_set[j][0:3]
+                    require_number = int(require_set[j][-3:])
                     match_course = Course.objects.filter(department=require_major, number=require_number)
                     if len(match_course) == 0:
+                        match_course = Course(name="Supplementary", department=require_major, number=require_number)
+                        match_course.save()
+                        prereq = Prerequisite(course=match_course, course_set=prerequisite_set) 
+                        prereq.save()
                         break
-                    prereq = Prerequisite(course=match_course[0], course_set=prerequisite_set)
-                    prereq.save()
-                else:
-                    if relation_set[i + 1] == "and":
-                        require_major = require_set[i][0:3]
-                        require_number = int(require_set[i][-3:])
-                        match_course = Course.objects.filter(department=require_major, number=require_number)
-                        if len(match_course) == 0:
-                            continue
+                    else: 
                         prereq = Prerequisite(course=match_course[0], course_set=prerequisite_set)
                         prereq.save()
-                    else:
-                        require_major1 = require_set[i][0:3]
-                        require_number1 = int(require_set[i][-3:])
+                else:
+                    if relation_set[j + 1] == "and":
+                        require_major = require_set[j][0:3]
+                        require_number = int(require_set[j][-3:])
+                        match_course = Course.objects.filter(department=require_major, number=require_number)
+                        if len(match_course) == 0:
+                            match_course = Course(name="Supplementary", department=require_major, number=require_number)
+                            match_course.save()
+                            prereq = Prerequisite(course=match_course, course_set=prerequisite_set) 
+                            prereq.save()
+                            continue 
+                        else:
+                            prereq = Prerequisite(course=match_course[0], course_set=prerequisite_set)
+                            prereq.save()
+                    # is this for or ? 
+                    elif relation_set[j+1] == "or":
+                        require_major1 = require_set[j][0:3]
+                        require_number1 = int(require_set[j][-3:])
                         match_course1 = Course.objects.filter(department=require_major1, number=require_number1)
-                        i += 1
-                        require_major2 = require_set[i][0:3]
-                        require_number2 = int(require_set[i][-3:])
+                        j += 1
+                        require_major2 = require_set[j][0:3]
+                        require_number2 = int(require_set[j][-3:])
                         match_course2 = Course.objects.filter(department=require_major2, number=require_number2)
                         if len(match_course2) or len(match_course1):
                             new_set = CoursePrerequisiteSet(parent_set=prerequisite_set)
@@ -598,5 +609,4 @@ def scrape_courses(request):
                             if len(match_course2) != 0:
                                 prereq = Prerequisite(course=match_course2[0], course_set=new_set)
                                 prereq.save()
-
     return render(request, 'mast/scrape_courses.html')
