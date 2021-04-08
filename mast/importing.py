@@ -452,6 +452,7 @@ def import_courses(request):
 def scrape_courses(request):
     if request.method == "GET":
         return render(request, 'mast/scrape_courses.html')
+
     course_file = request.FILES['file']
     major = request.POST.get('major')
     parser = PDFParser(course_file)
@@ -459,45 +460,44 @@ def scrape_courses(request):
 
     parser.set_document(doc)
     doc.set_parser(parser)
-
     doc.initialize()
     text = []
+
     # check if file can be converted to txt
     if not doc.is_extractable:
         raise PDFTextExtractionNotAllowed
-    else:
-        rsrcmgr = PDFResourceManager()
+        return render(request, 'mast/scrape_courses.html')
 
-        laparams = LAParams()
-        device = PDFPageAggregator(rsrcmgr, laparams=laparams)
-        interpreter = PDFPageInterpreter(rsrcmgr, device)
-        CSE_started = False
+    rsrcmgr = PDFResourceManager()
 
-        for page in doc.get_pages():
-            interpreter.process_page(page)
+    laparams = LAParams()
+    device = PDFPageAggregator(rsrcmgr, laparams=laparams)
+    interpreter = PDFPageInterpreter(rsrcmgr, device)
+    CSE_started = False
 
-            layout = device.get_result()
+    for page in doc.get_pages():
+        interpreter.process_page(page)
 
-            for x in layout:
-                if isinstance(x, LTTextBoxHorizontal):
-                    results = x.get_text()
-                    regex_test_output = re.compile(major + "  \d\d\d")
-                    major_regex = re.compile("[A-Z][A-Z][A-Z]\n")
-                    target_major = re.compile(major + "\n")
-                    if re.match(target_major, results):
-                        CSE_started = True
+        layout = device.get_result()
 
-                    elif CSE_started:
-                        if re.match(major_regex, results):
-                            CSE_started = False
+        for x in layout:
+            if isinstance(x, LTTextBoxHorizontal):
+                results = x.get_text()
+                regex_test_output = re.compile(major + "  \d\d\d")
+                major_regex = re.compile("[A-Z][A-Z][A-Z]\n")
+                target_major = re.compile(major + "\n")
+                if re.match(target_major, results):
+                    CSE_started = True
+                elif CSE_started:
+                    if re.match(major_regex, results):
+                        CSE_started = False
+                    else:
+                        if re.search(regex_test_output, results):
+                            text.append(results)
+                            text.append('')
                         else:
-                            if re.search(regex_test_output, results):
-                                text.append(results)
-                                text.append("")
-
-                            else:
-                                if len(text) != 0:
-                                    text[-1] = text[-1] + results
+                            if len(text) != 0:
+                                text[-1] = text[-1] + results
 
     for i in range(len(text) // 2):
         course = Course()
@@ -520,6 +520,7 @@ def scrape_courses(request):
             credits = "3"
         course.upper_credit_limit = int(credits)
         course.save()
+        
         # prerequisite part
         prerequisite_prefix = re.search(r"Prerequisite.*:", description)
         if prerequisite_prefix:
@@ -538,8 +539,7 @@ def scrape_courses(request):
                 else:
                     relation_set.append("and")
                 temp = temp[match.span()[1]:len(temp)]
-            prerequisite_set = CoursePrerequisiteSet()
-            prerequisite_set.parent_course = course
+            prerequisite_set = CoursePrerequisiteSet(parent_course=course)
             prerequisite_set.save()
             for i in range(0, len(require_set)):
                 if i == (len(require_set) - 1):
@@ -548,10 +548,8 @@ def scrape_courses(request):
                     match_course = Course.objects.filter(department=require_major, number=require_number)
                     if len(match_course) == 0:
                         break
-                    prerequisite1 = Prerequisite()
-                    prerequisite1.course = match_course[0]
-                    prerequisite1.course_set = prerequisite_set
-                    prerequisite1.save()
+                    prereq = Prerequisite(course=match_course[0], course_set=prerequisite_set)
+                    prereq.save()
                 else:
                     if relation_set[i + 1] == "and":
                         require_major = require_set[i][0:3]
@@ -559,10 +557,8 @@ def scrape_courses(request):
                         match_course = Course.objects.filter(department=require_major, number=require_number)
                         if len(match_course) == 0:
                             continue
-                        prerequisite1 = Prerequisite()
-                        prerequisite1.course = match_course[0]
-                        prerequisite1.course_set = prerequisite_set
-                        prerequisite1.save()
+                        prereq = Prerequisite(course=match_course[0], course_set=prerequisite_set)
+                        prereq.save()
                     else:
                         require_major1 = require_set[i][0:3]
                         require_number1 = int(require_set[i][-3:])
@@ -571,21 +567,14 @@ def scrape_courses(request):
                         require_major2 = require_set[i][0:3]
                         require_number2 = int(require_set[i][-3:])
                         match_course2 = Course.objects.filter(department=require_major2, number=require_number2)
-                        if len(match_course2) == 0 and len(match_course1) == 0:
-                            continue
-                        else:
-                            new_set = CoursePrerequisiteSet()
-                            new_set.parent_set = prerequisite_set
+                        if len(match_course2) or len(match_course1):
+                            new_set = CoursePrerequisiteSet(parent_set=prerequisite_set)
                             new_set.save()
                             if len(match_course1) != 0:
-                                prerequisite1 = Prerequisite()
-                                prerequisite1.course = match_course1[0]
-                                prerequisite1.course_set = new_set
-                                prerequisite1.save()
+                                prereq = Prerequisite(course=match_course1[0], course_set=new_set)
+                                prereq.save()
                             if len(match_course2) != 0:
-                                prerequisite2 = Prerequisite()
-                                prerequisite2.course = match_course2[0]
-                                prerequisite2.course_set = new_set
-                                prerequisite2.save()
+                                prereq = Prerequisite(course=match_course2[0], course_set=new_set)
+                                prereq.save()
 
     return render(request, 'mast/scrape_courses.html')
