@@ -25,13 +25,17 @@
         <input type="file" id="file1" name="file">
         <br>
         Major:
-        <input type="text" id="major" name = "major">
+        <input type="text" id="major" name="major">
+        <br>
+        Semester:
+        <select name="semester">
+            {% for semester in semester_list %}
+                <option value={{ semester.id }}>{{ semester }}</option>
+            {% endfor %}
+        </select>
         <br>
         <button type="submit">Upload</button>
     </form>
-
-   
-
 </div>
 <div class=sideBox>
     <h3>File Conventions</h3>

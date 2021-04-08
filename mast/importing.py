@@ -466,10 +466,13 @@ def import_courses(request):
 
 def scrape_courses(request):
     if request.method == "GET":
-        return render(request, 'mast/scrape_courses.html')
+        return render(request, 'mast/scrape_courses.html', {'semester_list':Semester.objects.all()})
 
     course_file = request.FILES['file']
     major = request.POST.get('major')
+    semester = request.POST.get('semester')
+    semester = Semester.objects.get(pk=semester)
+
     parser = PDFParser(course_file)
     doc = PDFDocument()  # create a pdf document
 
@@ -481,7 +484,6 @@ def scrape_courses(request):
     # check if file can be converted to txt
     if not doc.is_extractable:
         raise PDFTextExtractionNotAllowed
-        return render(request, 'mast/scrape_courses.html')
 
     rsrcmgr = PDFResourceManager()
 
@@ -518,8 +520,6 @@ def scrape_courses(request):
         course = Course()
         name = text[i * 2]
         description = text[i * 2 + 1]
-        print(name)
-        print(description)
         number = int(name[5:8])
         course.department = major
         course.number = number
@@ -609,4 +609,4 @@ def scrape_courses(request):
                             if len(match_course2) != 0:
                                 prereq = Prerequisite(course=match_course2[0], course_set=new_set)
                                 prereq.save()
-    return render(request, 'mast/scrape_courses.html')
+    return render(request, 'mast/scrape_courses.html', {'semester_list':Semester.objects.all()})
