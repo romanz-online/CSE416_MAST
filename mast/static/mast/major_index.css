@@ -5,3 +5,45 @@ h1 {
     background-color: #490000;
     color: white;
 }
+
+h2 {
+    color: #490000;
+    margin-bottom: 5px;
+}
+
+h3 {
+    color: #490000;
+    margin-bottom: 2px;
+    margin-top: 2px;
+}
+
+#major_list {
+    margin-left: 8px;
+}
+
+.trackcourses {
+    display: block;
+    float: right;
+    left: 50%;
+    top: 90px;
+    width: 50%;
+    height: 100%;
+    position: absolute;
+    border: 4px solid #490000;
+    padding: 12px;
+}
+
+.btn {
+    color: #490000;
+    padding: 10px 10px;
+    width: 400px;
+    text-align: left;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 15px;
+    cursor: pointer;
+}
+
+.btn:hover {
+    background-color: lightgray;
+}

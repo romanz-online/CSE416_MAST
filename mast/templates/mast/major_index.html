@@ -7,8 +7,14 @@
 <head>
     <title>Major Index</title>
     <script>
-        function overlay(button_name) {
-            u = document.getElementById(button_name);
+        function overlay(name) {
+            let all = document.getElementsByTagName("*");
+            for (let i = 0, max = all.length; i < max; i++) {
+                if (all[i].className === 'trackcourses') {
+                    all[i].style.visibility = "hidden";
+                }
+            }
+            u = document.getElementById(name);
             u.style.visibility = (u.style.visibility === "visible") ? "hidden" : "visible";
         }
     </script>
@@ -20,43 +26,51 @@
 
 {% include "mast/navbar.html" %}
 
-{% for major in major_list %}
-    {{ major }}<br>
-    Tracks:<br>
-    {% for track in track_list %}
-        {% if track.major == major %}
-            <div id="{{ major.id }}_{{ track.id }}_button" onclick="overlay('{{ major.id }}_{{ track.id }}_button')">{{ major }} - {{ track }}</div>
-            <br>
-        {% endif %}
-    {% endfor %}
-{% endfor %}
-
-{% for major in major_list %}
-    {{ major }}<br>
-    Tracks:<br>
-    {% for track in track_list %}
-        {% if track.major == major %}
-            <div id="{{ major.id }}_{{ track.id }}">
-            {{ track }}<br>
-        {% endif %}
-    {% for set in track_course_sets %}
-        {{ set }}<br>
-        {% for course in courses_in_sets %}
-            {% if course.course_set == set %}
-                {% for c in course_list %}
-                    {% if c == course.course %}
-                        <a href="/mast/{{ c.department }}/{{ c.number }}">{{ c }}</a><br>
-                        {% for relation in course_relations %}
-                            {% if relation.primary_course == course or relation.related_course == course %}
-                                - {{ relation }}
-                            {% endif %}
-                        {% endfor %}
-                    {% endif %}
-                {% endfor %}
+<div id="major_list">
+    {% for major in major_list %}
+        <h2>{{ major }}</h2>
+        <br>
+        {% for track in track_list %}
+            {% if track.major == major %}
+                <div id="{{ major.id }}_{{ track.id }}_button" onclick="overlay('{{ major.id }}_{{ track.id }}')"
+                     class="btn">
+                    {{ track }}
+                </div>
+                <br>
             {% endif %}
         {% endfor %}
-        </div>
     {% endfor %}
+</div>
+
+<div style="visibility: visible;" class="trackcourses">
+    <h2>Track Information</h2>
+</div>
+
+{% for major in major_list %}
+    {% for track in track_list %}
+        {% if track.major == major %}
+            <div id="{{ major.id }}_{{ track.id }}" style="visibility: hidden;" class="trackcourses">
+                <h2>{{ track }}</h2>
+                <br>
+                {% for set in track_course_sets %}
+                    {{ set }}<br>
+                    {% for course in courses_in_sets %}
+                        {% if course.course_set == set %}
+                            {% for c in course_list %}
+                                {% if c == course.course %}
+                                    <a href="/mast/{{ c.department }}/{{ c.number }}">{{ c }}</a><br>
+                                    {% for relation in course_relations %}
+                                        {% if relation.primary_course == course or relation.related_course == course %}
+                                            - {{ relation }}
+                                        {% endif %}
+                                    {% endfor %}
+                                {% endif %}
+                            {% endfor %}
+                        {% endif %}
+                    {% endfor %}
+                {% endfor %}
+            </div>
+        {% endif %}
     {% endfor %}
 {% endfor %}
 
