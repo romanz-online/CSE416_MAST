@@ -331,7 +331,7 @@ def import_grades(request, course_file):
         if line != ['']:
             new_class = CoursesTakenByStudent()
             if line[0] and not Student.objects.get(sbu_id=line[0]):
-                messages.error(request, bytes('No student with id', line[0]))
+                messages.error(request, bytes('No student with ID', line[0]))
                 continue
             if line[0]:
                 new_class.student = Student.objects.get(sbu_id=line[0])
@@ -454,9 +454,29 @@ def import_courses(request):
             # Remove days
             course_instance.days = line[5][0:line[5].index(' ')]
             # Get each time
-            times = line[5][line[5].index(''):]
-            # course_instance.time_start = times[0:times.index('-')]
-            # course_instance.time_end = times[times.index('-') + 1:]
+            times = line[5][line[5].index(' ')+1:]
+            start = times[0:times.index('-')]
+            end = times[times.index('-') + 1:]
+            start = start.replace('\r', '')
+            end = end.replace('\r', '')
+            # The database wants military time ._.
+            if start[-2:] == 'PM':
+                t = start[0:2]
+                if int(t) != 12:
+                    t = int(t) + 12
+                    start = str(t) + start[2:]
+
+            print(end[-2:])
+            if end[-2:] == 'PM':
+                t = end[0:2]
+                if int(t) != 12:
+                    t = int(t) + 12
+                    end = str(t) + end[2:]
+                print(end)
+
+            course_instance.time_start = start
+            course_instance.time_end = end
+            
         course_instance.course = Course.objects.get(department=course.department, number=course.number)
         course_instance.save()
         processed_lines += row
