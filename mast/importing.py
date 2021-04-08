@@ -532,8 +532,8 @@ def scrape_courses(request):
             credits = credits.replace(' credit', '')
             if '-' in credits:
                 credit_list = credits.split('-')
-                course.upper_credit_limit = int(credit_list[0])
-                course.lower_credit_limit = int(credit_list[1]) 
+                course.upper_credit_limit = int(credit_list[1])
+                course.lower_credit_limit = int(credit_list[0]) 
             else:
                 course.upper_credit_limit = int(credits)
         else:
