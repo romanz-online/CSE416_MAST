@@ -163,6 +163,7 @@ def import_degree_requirements(request):
                                         child_course = Course.objects.get(department=child_course[0], number=child_course[1])
                                     else:
                                         child_course = Course(name=child_course[0], department=child_course[0], number=child_course[1])
+                                    child_course.save()
                                     course_each_semester = child_second_loop.find("each_semester")
                                     if course_each_semester:
                                         course_each_semester = True
@@ -186,6 +187,7 @@ def import_degree_requirements(request):
                                 child_course = Course.objects.get(department=child_course[0], number=child_course[1])
                             else:
                                 child_course = Course(name=child_course[0], department=child_course[0], number=child_course[1])
+                            child_course.save()
                             course_each_semester = child.find("each_semester")
                             if course_each_semester:
                                 course_each_semester = True

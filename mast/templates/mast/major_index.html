@@ -4,6 +4,16 @@
 {% load static %}
 <link rel="stylesheet" type="text/css" href="{% static 'mast/major_index.css' %}"/>
 
+<head>
+    <title>Major Index</title>
+    <script>
+        function overlay(button_name) {
+            u = document.getElementById(button_name);
+            u.style.visibility = (u.style.visibility === "visible") ? "hidden" : "visible";
+        }
+    </script>
+</head>
+
 <body>
 
 <h1>Majors</h1>
@@ -15,21 +25,38 @@
     Tracks:<br>
     {% for track in track_list %}
         {% if track.major == major %}
+            <div id="{{ major.id }}_{{ track.id }}_button" onclick="overlay('{{ major.id }}_{{ track.id }}_button')">{{ major }} - {{ track }}</div>
+            <br>
+        {% endif %}
+    {% endfor %}
+{% endfor %}
+
+{% for major in major_list %}
+    {{ major }}<br>
+    Tracks:<br>
+    {% for track in track_list %}
+        {% if track.major == major %}
+            <div id="{{ major.id }}_{{ track.id }}">
             {{ track }}<br>
         {% endif %}
-        {% for set in track_course_sets %}
-            {{ set }}<br>
-            {% for course in courses_in_sets %}
-                {% if course.course_set == set %}
-                    {{ course }}<br>
-                    {% for relation in course_relations %}
-                        {% if relation.primary_course == course or relation.related_course == course %}
-                            - {{ relation }}
-                        {% endif %}
-                    {% endfor %}
-                {% endif %}
-            {% endfor %}
+    {% for set in track_course_sets %}
+        {{ set }}<br>
+        {% for course in courses_in_sets %}
+            {% if course.course_set == set %}
+                {% for c in course_list %}
+                    {% if c == course.course %}
+                        <a href="/mast/{{ c.department }}/{{ c.number }}">{{ c }}</a><br>
+                        {% for relation in course_relations %}
+                            {% if relation.primary_course == course or relation.related_course == course %}
+                                - {{ relation }}
+                            {% endif %}
+                        {% endfor %}
+                    {% endif %}
+                {% endfor %}
+            {% endif %}
         {% endfor %}
+        </div>
+    {% endfor %}
     {% endfor %}
 {% endfor %}
 
