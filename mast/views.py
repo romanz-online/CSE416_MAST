@@ -7,7 +7,7 @@ from django.http import HttpResponseRedirect
 from django.urls import reverse
 from .datatables import StudentDatatable
 from .models import Student, Major, Season, CoursesTakenByStudent, Comment, StudentCourseSchedule, Semester, Track, \
-    TrackCourseSet, CourseInTrackSet, CourseToCourseRelation, Department
+    TrackCourseSet, CourseInTrackSet, CourseToCourseRelation, Course, CoursePrerequisiteSet, Prerequisite
 
 
 def home(request):
@@ -104,6 +104,15 @@ def detail(request, sbu_id):
                                                 })
 
 
+def course_detail(request, course_department, course_number):
+    create_none_major()
+    course = get_object_or_404(Course, department=course_department, number=course_number)
+    return render(request, 'mast/course_detail.html', {'course': course,
+                                                       'prerequisite_set_list': CoursePrerequisiteSet.objects.all(),
+                                                       'prerequisite_list': Prerequisite.objects.all()
+                                                       })
+
+
 def add_comment(request, sbu_id):
     student = get_object_or_404(Student, pk=sbu_id)
     try:
@@ -122,9 +131,9 @@ def add_comment(request, sbu_id):
 
 
 def create_none_major():
-    if not Major.objects.filter(department=Department.NONE):
+    if not Major.objects.filter(department='N/A'):
         semester = Semester.objects.all()[0]
-        none_major = Major(department=Department.NONE,
+        none_major = Major(department='N/A',
                            name='(None)',
                            requirement_semester=semester)
         none_major.save()

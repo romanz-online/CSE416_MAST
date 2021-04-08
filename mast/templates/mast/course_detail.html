@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>{{ course.name }}</title>
+</head>
+<body>
+Description: {{ course.description }}
+<br>
+Prerequisites:
+{% for set in prerequisite_set_list %}
+    {% if set.parent_course == course %}
+        {% for prereq in prerequisite_list %}
+            {% if prereq.course_set == set %}
+                {{ prereq.course }}
+            {% endif %}
+        {% endfor %}
+    {% endif %}
+{% endfor %}
+</body>
+</html>

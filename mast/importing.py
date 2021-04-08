@@ -5,7 +5,7 @@ from django.contrib import messages
 from django.http import HttpResponseRedirect
 from django.urls import reverse
 from .models import Student, Major, Course, CourseInstance, CoursesTakenByStudent, Semester, Track, \
-    TrackCourseSet, CourseInTrackSet, CourseStatus, Grade, Department, Season, CoursePrerequisiteSet, Prerequisite
+    TrackCourseSet, CourseInTrackSet, CourseStatus, Grade, Season, CoursePrerequisiteSet, Prerequisite
 from pdfminer.pdfparser import PDFParser, PDFDocument
 from pdfminer.pdfinterp import PDFResourceManager, PDFPageInterpreter
 from pdfminer.converter import PDFPageAggregator
@@ -17,14 +17,14 @@ from bs4 import BeautifulSoup
 def import_degree_requirements(request):
     # If get request, render page
     if request.method == "GET":
-        return render(request, 'mast/import_degree_reqs.html', {'':None})
+        return render(request, 'mast/import_degree_reqs.html', {'': None})
 
     # If file uploaded
     degree_file = request.FILES['degree_file']
     # If non-xml file
     if not degree_file.name.endswith('.xml') and not degree_file.name.endswith('.xml\r'):
         messages.error(request, "Incorrect file type.")
-        return render(request, 'mast/import_degree_reqs.html', {'':None})
+        return render(request, 'mast/import_degree_reqs.html', {'': None})
 
     # Open File using BS4
     infile = open("mast\\test_files\\" + degree_file.name, "r")
@@ -36,7 +36,8 @@ def import_degree_requirements(request):
     major_name = soup.find("name").get_text()
     semester_season = soup.requirement_semester.season.get_text()
     semester_year = soup.requirement_semester.year.get_text()
-    m = Major(department=department, name=major_name, requirement_semester=Semester.objects.filter(season=semester_season, year=semester_year).get())
+    m = Major(department=department, name=major_name,
+              requirement_semester=Semester.objects.filter(season=semester_season, year=semester_year).get())
     m.save()
 
     # Add tracks + further data to database
@@ -56,19 +57,20 @@ def import_degree_requirements(request):
         if thesis:
             thesis = True
         else:
-            thesis = False 
+            thesis = False
         project = track.find("project_required")
         if project:
             project = True
-        else: 
-            project = False 
+        else:
+            project = False
         min_credits = track.find("minimum_credits_required")
         if min_credits:
             min_credits = min_credits.get_text()
         else:
-            min_credits = 30 
-        t = Track(major=m, name=track_name, thesis_required=thesis, project_required=project, 
-        minimum_credits_required=min_credits, number_of_areas=number_of_areas, total_requirements=total_requirements)
+            min_credits = 30
+        t = Track(major=m, name=track_name, thesis_required=thesis, project_required=project,
+                  minimum_credits_required=min_credits, number_of_areas=number_of_areas,
+                  total_requirements=total_requirements)
         t.save()
 
         # Add TrackCourseSets to database 
@@ -77,22 +79,22 @@ def import_degree_requirements(request):
 
             # Add TCS parents
             if tcs.parent.name == 'Track':
-                tcs_size = tcs.find("size").get_text()  
-                tcs_name = tcs.find("name")  
+                tcs_size = tcs.find("size").get_text()
+                tcs_name = tcs.find("name")
                 if tcs_name:
-                    tcs_name = tcs_name.get_text() + " - " + track_name 
+                    tcs_name = tcs_name.get_text() + " - " + track_name
                 else:
                     tcs_name = "Core Set - " + track_name
-                tcs_limiter = tcs.find("limiter")  
+                tcs_limiter = tcs.find("limiter")
                 if tcs_limiter:
-                    tcs_limiter = True 
+                    tcs_limiter = True
                 else:
-                    tcs_limiter = False 
-                tcs_upper_limit = tcs.find("upper_limit")  
+                    tcs_limiter = False
+                tcs_upper_limit = tcs.find("upper_limit")
                 if tcs_upper_limit:
                     tcs_upper_limit = tcs_upper_limit.get_text()
                 else:
-                    tcs_upper_limit = 100 
+                    tcs_upper_limit = 100
                 tcs_lower_limit = tcs.find("lower_limit")
                 if tcs_lower_limit:
                     tcs_lower_limit = tcs_lower_limit.get_text()
@@ -102,32 +104,32 @@ def import_degree_requirements(request):
                 if tcs_department_limit:
                     tcs_department_limit = tcs_department_limit.get_text()
                 else:
-                    tcs_department_limit = Department.NONE
-                tcs_save = TrackCourseSet(track=t,name=tcs_name,size=tcs_size, 
-                limiter=tcs_limiter,upper_limit=tcs_upper_limit,lower_limit=tcs_lower_limit,
-                department_limit=tcs_department_limit)
+                    tcs_department_limit = 'N/A'
+                tcs_save = TrackCourseSet(track=t, name=tcs_name, size=tcs_size,
+                                          limiter=tcs_limiter, upper_limit=tcs_upper_limit, lower_limit=tcs_lower_limit,
+                                          department_limit=tcs_department_limit)
                 tcs_save.save()
 
                 # Add children of TCS 
                 for child in tcs.children:
                     if child.parent.parent.name == "Track":
                         if child.name == "TrackCourseSet":
-                            tcs_size = child.find("size").get_text()  
-                            tcs_name = child.find("name")  
+                            tcs_size = child.find("size").get_text()
+                            tcs_name = child.find("name")
                             if tcs_name:
-                                tcs_name = tcs_name.get_text() + " - " + track_name 
+                                tcs_name = tcs_name.get_text() + " - " + track_name
                             else:
-                                tcs_name = "Nested Core Set - "  + track_name 
-                            tcs_limiter = child.find("limiter")  
+                                tcs_name = "Nested Core Set - " + track_name
+                            tcs_limiter = child.find("limiter")
                             if tcs_limiter:
-                                tcs_limiter = True 
+                                tcs_limiter = True
                             else:
-                                tcs_limiter = False 
-                            tcs_upper_limit = child.find("upper_limit")  
+                                tcs_limiter = False
+                            tcs_upper_limit = child.find("upper_limit")
                             if tcs_upper_limit:
                                 tcs_upper_limit = tcs_upper_limit.get_text()
                             else:
-                                tcs_upper_limit = 100 
+                                tcs_upper_limit = 100
                             tcs_lower_limit = child.find("lower_limit")
                             if tcs_lower_limit:
                                 tcs_lower_limit = tcs_lower_limit.get_text()
@@ -137,10 +139,12 @@ def import_degree_requirements(request):
                             if tcs_department_limit:
                                 tcs_department_limit = tcs_department_limit.get_text()
                             else:
-                                tcs_department_limit = Department.NONE
-                            tcs_child_save = TrackCourseSet(track=t,parent_course_set=tcs_save,name=tcs_name,size=tcs_size, 
-                            limiter=tcs_limiter,upper_limit=tcs_upper_limit,lower_limit=tcs_lower_limit,
-                            department_limit=tcs_department_limit)
+                                tcs_department_limit = 'N/A'
+                            tcs_child_save = TrackCourseSet(track=t, parent_course_set=tcs_save, name=tcs_name,
+                                                            size=tcs_size,
+                                                            limiter=tcs_limiter, upper_limit=tcs_upper_limit,
+                                                            lower_limit=tcs_lower_limit,
+                                                            department_limit=tcs_department_limit)
                             tcs_child_save.save()
                             # do one more loop to find courseintracksets and attach them here. 
                             for child_second_loop in child.children:
@@ -150,17 +154,19 @@ def import_degree_requirements(request):
                                     print(child_course)
                                     child_course = Course.objects.get(name=child_course)
                                     course_each_semester = child_second_loop.find("each_semester")
-                                    if course_each_semester: 
-                                        course_each_semester = True 
+                                    if course_each_semester:
+                                        course_each_semester = True
                                     else:
-                                        course_each_semester = False 
+                                        course_each_semester = False
                                     how_many_semesters = child_second_loop.find("how_many_semesters")
                                     if how_many_semesters:
                                         how_many_semesters = how_many_semesters.get_text()
                                     else:
-                                        how_many_semesters = 1    
-                                    course_in_track_set_save = CourseInTrackSet(course_set=tcs_child_save, course=child_course, each_semester=course_each_semester,
-                                    how_many_semesters=how_many_semesters)
+                                        how_many_semesters = 1
+                                    course_in_track_set_save = CourseInTrackSet(course_set=tcs_child_save,
+                                                                                course=child_course,
+                                                                                each_semester=course_each_semester,
+                                                                                how_many_semesters=how_many_semesters)
                                     course_in_track_set_save.save()
                         elif child.name == "CourseInTrackSet":
                             child_course = child.find("course").get_text()
@@ -168,17 +174,18 @@ def import_degree_requirements(request):
                             print(child_course)
                             child_course = Course.objects.get(name=child_course)
                             course_each_semester = child.find("each_semester")
-                            if course_each_semester: 
-                                course_each_semester = True 
+                            if course_each_semester:
+                                course_each_semester = True
                             else:
-                                course_each_semester = False 
+                                course_each_semester = False
                             how_many_semesters = child.find("how_many_semesters")
                             if how_many_semesters:
                                 how_many_semesters = how_many_semesters.get_text()
                             else:
-                                how_many_semesters = 1    
-                            course_in_track_set_save = CourseInTrackSet(course_set=tcs_save, course=child_course, each_semester=course_each_semester,
-                            how_many_semesters=how_many_semesters)
+                                how_many_semesters = 1
+                            course_in_track_set_save = CourseInTrackSet(course_set=tcs_save, course=child_course,
+                                                                        each_semester=course_each_semester,
+                                                                        how_many_semesters=how_many_semesters)
                             course_in_track_set_save.save()
 
     return render(request, 'mast/import_degree_reqs.html', {'': None})
@@ -471,7 +478,6 @@ def scrape_courses(request):
 
             layout = device.get_result()
 
-            hasClassTitle = False
             for x in layout:
                 if isinstance(x, LTTextBoxHorizontal):
                     results = x.get_text()
@@ -512,23 +518,22 @@ def scrape_courses(request):
             credits = credits[0][0]
         else:
             credits = "3"
-        course.credits = int(credits)
+        course.upper_credit_limit = int(credits)
         course.save()
         # prerequisite part
         prerequisite_prefix = re.search(r"Prerequisite.*:", description)
-        if(prerequisite_prefix != None):
+        if prerequisite_prefix:
             prefix_end = prerequisite_prefix.span()[1]
-            prerequisite = description[prefix_end: len(description)]
             temp = description[prefix_end: len(description)]
             temp = temp.replace("\n", " ")
             course_re = re.compile(r"[A-Z]{3}.?\d{3}")
-            
-            require_set = [] # list of prerequisite class
-            relation_set = [] # list of relation; eg relation[i] is the relation of prerequisite[i] and [i-1]
-            while(re.search(course_re, temp) != None):
+
+            require_set = []  # list of prerequisite class
+            relation_set = []  # list of relation; eg relation[i] is the relation of prerequisite[i] and [i-1]
+            while re.search(course_re, temp):
                 match = re.search(course_re, temp)
                 require_set.append(match.group())
-                if(re.search(r'or', temp[0:match.span()[0]]) != None):
+                if re.search(r'or', temp[0:match.span()[0]]):
                     relation_set.append("or")
                 else:
                     relation_set.append("and")
@@ -537,22 +542,22 @@ def scrape_courses(request):
             prerequisite_set.parent_course = course
             prerequisite_set.save()
             for i in range(0, len(require_set)):
-                if(i == (len(require_set)-1)):
+                if i == (len(require_set) - 1):
                     require_major = require_set[i][0:3]
                     require_number = int(require_set[i][-3:])
                     match_course = Course.objects.filter(department=require_major, number=require_number)
-                    if(len(match_course) == 0):
+                    if len(match_course) == 0:
                         break
                     prerequisite1 = Prerequisite()
                     prerequisite1.course = match_course[0]
                     prerequisite1.course_set = prerequisite_set
                     prerequisite1.save()
                 else:
-                    if(relation_set[i+1] == "and"):
+                    if relation_set[i + 1] == "and":
                         require_major = require_set[i][0:3]
                         require_number = int(require_set[i][-3:])
                         match_course = Course.objects.filter(department=require_major, number=require_number)
-                        if(len(match_course) == 0):
+                        if len(match_course) == 0:
                             continue
                         prerequisite1 = Prerequisite()
                         prerequisite1.course = match_course[0]
@@ -562,26 +567,25 @@ def scrape_courses(request):
                         require_major1 = require_set[i][0:3]
                         require_number1 = int(require_set[i][-3:])
                         match_course1 = Course.objects.filter(department=require_major1, number=require_number1)
-                        i+=1
+                        i += 1
                         require_major2 = require_set[i][0:3]
                         require_number2 = int(require_set[i][-3:])
                         match_course2 = Course.objects.filter(department=require_major2, number=require_number2)
-                        if(len(match_course2) == 0 and len(match_course1) ==0):
+                        if len(match_course2) == 0 and len(match_course1) == 0:
                             continue
                         else:
                             new_set = CoursePrerequisiteSet()
                             new_set.parent_set = prerequisite_set
                             new_set.save()
-                            if(len(match_course1) != 0):
+                            if len(match_course1) != 0:
                                 prerequisite1 = Prerequisite()
                                 prerequisite1.course = match_course1[0]
                                 prerequisite1.course_set = new_set
                                 prerequisite1.save()
-                            if(len(match_course2) != 0):
+                            if len(match_course2) != 0:
                                 prerequisite2 = Prerequisite()
                                 prerequisite2.course = match_course2[0]
                                 prerequisite2.course_set = new_set
                                 prerequisite2.save()
-
 
     return render(request, 'mast/scrape_courses.html')

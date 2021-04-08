@@ -1,5 +1,5 @@
 from django.shortcuts import render
-from .models import Student, Major, Semester, Track, Department
+from .models import Student, Major, Semester, Track
 
 
 class MajorTrack:
@@ -10,9 +10,9 @@ class MajorTrack:
 
 
 def student_index(request):
-    if not Major.objects.filter(department=Department.NONE):
+    if not Major.objects.filter(department='N/A'):
         semester = Semester.objects.all()[0]
-        none_major = Major(department=Department.NONE,
+        none_major = Major(department='N/A',
                            name='(None)',
                            requirement_semester=semester)
         none_major.save()

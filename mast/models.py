@@ -2,14 +2,6 @@ from django.db import models
 from datetime import datetime
 
 
-class Department(models.TextChoices):
-    AMS = 'AMS'
-    BMI = 'BMI'
-    CSE = 'CSE'
-    ECE = 'ECE'
-    NONE = 'N/A'
-
-
 class Season(models.TextChoices):
     WINTER = 'Winter'
     SPRING = 'Spring'
@@ -61,7 +53,7 @@ class Semester(models.Model):
 
 class Course(models.Model):
     name = models.CharField(max_length=100)
-    department = models.CharField(max_length=3, choices=Department.choices, default=Department.NONE)
+    department = models.CharField(max_length=4, default='N/A')
     number = models.IntegerField(default=100)
     lower_credit_limit = models.IntegerField(default=3)
     upper_credit_limit = models.IntegerField(default=3)
@@ -84,7 +76,7 @@ class CourseInstance(models.Model):
 
 
 class Major(models.Model):
-    department = models.CharField(max_length=3, choices=Department.choices, default=Department.NONE)
+    department = models.CharField(max_length=4, default='N/A')
     name = models.CharField(max_length=50)
     requirement_semester = models.ForeignKey(Semester, null=True, on_delete=models.SET_NULL)
 
@@ -129,7 +121,7 @@ class TrackCourseSet(models.Model):
     limiter = models.BooleanField(default=False)
     upper_limit = models.IntegerField(default=100)
     lower_limit = models.IntegerField(default=999)
-    department_limit = models.CharField(max_length=3, choices=Department.choices, default=Department.NONE)
+    department_limit = models.CharField(max_length=4, default='N/A')
 
     def __str__(self):
         return self.name
@@ -168,15 +160,21 @@ class CoursePrerequisiteSet(models.Model):
     parent_set = models.ForeignKey(to='CoursePrerequisiteSet', on_delete=models.CASCADE, null=True)
     number_required = models.IntegerField(default=1)
 
+    def __str__(self):
+        return str(self.parent_course)
+
 
 class Prerequisite(models.Model):
     course_set = models.ForeignKey(CoursePrerequisiteSet, on_delete=models.CASCADE)
     course = models.ForeignKey(Course, on_delete=models.CASCADE)
 
+    def __str__(self):
+        return str(self.course_set) + ' Prerequisite: ' + str(self.course)
+
 
 class Director(models.Model):
     name = models.CharField(max_length=100)
-    department = models.CharField(max_length=3, choices=Department.choices, default=Department.NONE)
+    department = models.CharField(max_length=4, default='N/A')
     password = models.CharField(max_length=100)
 
     def __str__(self):
