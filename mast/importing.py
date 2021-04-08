@@ -150,9 +150,12 @@ def import_degree_requirements(request):
                             for child_second_loop in child.children:
                                 if child_second_loop.name == "CourseInTrackSet":
                                     child_course = child_second_loop.find("course").get_text()
-                                    child_course = child_course.replace(" ", "")
+                                    child_course = child_course.split(" ")
                                     print(child_course)
-                                    child_course = Course.objects.get(name=child_course)
+                                    if Course.objects.filter(department=child_course[0], number=child_course[1]).exists():
+                                        child_course = Course.objects.get(department=child_course[0], number=child_course[1])
+                                    else:
+                                        child_course = Course(name=child_course[0], department=child_course[0], number=child_course[1])
                                     course_each_semester = child_second_loop.find("each_semester")
                                     if course_each_semester:
                                         course_each_semester = True
@@ -170,9 +173,12 @@ def import_degree_requirements(request):
                                     course_in_track_set_save.save()
                         elif child.name == "CourseInTrackSet":
                             child_course = child.find("course").get_text()
-                            child_course = child_course.replace(" ", "")
+                            child_course = child_course.split(" ")
                             print(child_course)
-                            child_course = Course.objects.get(name=child_course)
+                            if Course.objects.filter(department=child_course[0], number=child_course[1]).exists():
+                                child_course = Course.objects.get(department=child_course[0], number=child_course[1])
+                            else:
+                                child_course = Course(name=child_course[0], department=child_course[0], number=child_course[1])
                             course_each_semester = child.find("each_semester")
                             if course_each_semester:
                                 course_each_semester = True
