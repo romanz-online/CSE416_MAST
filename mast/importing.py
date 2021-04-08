@@ -5,7 +5,7 @@ from django.contrib import messages
 from django.http import HttpResponseRedirect
 from django.urls import reverse
 from .models import Student, Major, Course, CourseInstance, CoursesTakenByStudent, Semester, Track, \
-    TrackCourseSet, CourseInTrackSet, CourseStatus, Grade, Department, Season 
+    TrackCourseSet, CourseInTrackSet, CourseStatus, Grade, Department, Season, CoursePrerequisiteSet, Prerequisite
 from pdfminer.pdfparser import PDFParser, PDFDocument
 from pdfminer.pdfinterp import PDFResourceManager, PDFPageInterpreter
 from pdfminer.converter import PDFPageAggregator
@@ -514,5 +514,74 @@ def scrape_courses(request):
             credits = "3"
         course.credits = int(credits)
         course.save()
+        # prerequisite part
+        prerequisite_prefix = re.search(r"Prerequisite.*:", description)
+        if(prerequisite_prefix != None):
+            prefix_end = prerequisite_prefix.span()[1]
+            prerequisite = description[prefix_end: len(description)]
+            temp = description[prefix_end: len(description)]
+            temp = temp.replace("\n", " ")
+            course_re = re.compile(r"[A-Z]{3}.?\d{3}")
+            
+            require_set = [] # list of prerequisite class
+            relation_set = [] # list of relation; eg relation[i] is the relation of prerequisite[i] and [i-1]
+            while(re.search(course_re, temp) != None):
+                match = re.search(course_re, temp)
+                require_set.append(match.group())
+                if(re.search(r'or', temp[0:match.span()[0]]) != None):
+                    relation_set.append("or")
+                else:
+                    relation_set.append("and")
+                temp = temp[match.span()[1]:len(temp)]
+            prerequisite_set = CoursePrerequisiteSet()
+            prerequisite_set.parent_course = course
+            prerequisite_set.save()
+            for i in range(0, len(require_set)):
+                if(i == (len(require_set)-1)):
+                    require_major = require_set[i][0:3]
+                    require_number = int(require_set[i][-3:])
+                    match_course = Course.objects.filter(department=require_major, number=require_number)
+                    if(len(match_course) == 0):
+                        break
+                    prerequisite1 = Prerequisite()
+                    prerequisite1.course = match_course[0]
+                    prerequisite1.course_set = prerequisite_set
+                    prerequisite1.save()
+                else:
+                    if(relation_set[i+1] == "and"):
+                        require_major = require_set[i][0:3]
+                        require_number = int(require_set[i][-3:])
+                        match_course = Course.objects.filter(department=require_major, number=require_number)
+                        if(len(match_course) == 0):
+                            continue
+                        prerequisite1 = Prerequisite()
+                        prerequisite1.course = match_course[0]
+                        prerequisite1.course_set = prerequisite_set
+                        prerequisite1.save()
+                    else:
+                        require_major1 = require_set[i][0:3]
+                        require_number1 = int(require_set[i][-3:])
+                        match_course1 = Course.objects.filter(department=require_major1, number=require_number1)
+                        i+=1
+                        require_major2 = require_set[i][0:3]
+                        require_number2 = int(require_set[i][-3:])
+                        match_course2 = Course.objects.filter(department=require_major2, number=require_number2)
+                        if(len(match_course2) == 0 and len(match_course1) ==0):
+                            continue
+                        else:
+                            new_set = CoursePrerequisiteSet()
+                            new_set.parent_set = prerequisite_set
+                            new_set.save()
+                            if(len(match_course1) != 0):
+                                prerequisite1 = Prerequisite()
+                                prerequisite1.course = match_course1[0]
+                                prerequisite1.course_set = new_set
+                                prerequisite1.save()
+                            if(len(match_course2) != 0):
+                                prerequisite2 = Prerequisite()
+                                prerequisite2.course = match_course2[0]
+                                prerequisite2.course_set = new_set
+                                prerequisite2.save()
+
 
     return render(request, 'mast/scrape_courses.html')
