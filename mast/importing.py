@@ -519,12 +519,18 @@ def scrape_courses(request):
         course.description = description
         name = name.split(":")[1]
         name.replace("\n", ' ')
-        credits = re.search(r'\d credit', description)
+        credits = re.search(r'(\d+-)?\d+ credit', description)
         if credits:
-            credits = credits[0][0]
+            credits = credits.replace(' credit', '')
+            if '-' in credits:
+                credit_list = credits.split('-')
+                course.upper_credit_limit = int(credit_list[0])
+                course.lower_credit_limit = int(credit_list[1]) 
+            else:
+                course.upper_credit_limit = int(credits)
         else:
             credits = "3"
-        course.upper_credit_limit = int(credits)
+            course.upper_credit_limit = int(credits)
         course.save()
         
         # prerequisite part
