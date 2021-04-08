@@ -521,6 +521,7 @@ def scrape_courses(request):
         name.replace("\n", ' ')
         credits = re.search(r'(\d+-)?\d+ credit', description)
         if credits:
+            credits = credits.group(0)
             credits = credits.replace(' credit', '')
             if '-' in credits:
                 credit_list = credits.split('-')
