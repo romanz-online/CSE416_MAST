@@ -510,36 +510,36 @@ def scrape_courses(request):
     laparams = LAParams()
     device = PDFPageAggregator(rsrcmgr, laparams=laparams)
     interpreter = PDFPageInterpreter(rsrcmgr, device)
-    CSE_started = False
+    CSE_started = False  #
 
     for page in doc.get_pages():
         interpreter.process_page(page)
 
         layout = device.get_result()
-
+        
         for x in layout:
             if isinstance(x, LTTextBoxHorizontal):
                 results = x.get_text()
                 regex_test_output = re.compile(major + "  \d\d\d")
                 major_regex = re.compile("[A-Z][A-Z][A-Z]\n")
                 target_major = re.compile(major + "\n")
-                if re.match(target_major, results):
+                if re.match(target_major, results): # the part we want start with "major\n"
                     CSE_started = True
                 elif CSE_started:
-                    if re.match(major_regex, results):
+                    if re.match(major_regex, results): #This means another major part started
                         CSE_started = False
                     else:
-                        if re.search(regex_test_output, results):
+                        if re.search(regex_test_output, results): #check if this is the name part of description part
                             text.append(results)
                             text.append('')
                         else:
                             if len(text) != 0:
                                 text[-1] = text[-1] + results
-
-    for i in range(len(text) // 2):
+    #text stores course name and detail , even index is  course name, odd index is 
+    for course_index in range(len(text) // 2):
         course = Course()
-        name = text[i * 2]
-        description = text[i * 2 + 1]
+        name = text[course_index * 2]
+        description = text[course_index * 2 + 1]
         number = int(name[5:8])
         course.department = major
         course.number = number
@@ -567,24 +567,26 @@ def scrape_courses(request):
         prerequisite_prefix = re.search(r"Prerequisite.*:", description)
         if prerequisite_prefix:
             prefix_end = prerequisite_prefix.span()[1]
-            temp = description[prefix_end: len(description)]
+            temp = description[prefix_end: len(description)] # get the prerequisite part from description
             temp = temp.replace("\n", " ")
             course_re = re.compile(r"[A-Z]{3}.?\d{3}")
 
             require_set = []  # list of prerequisite class
             relation_set = []  # list of relation; eg relation[i] is the relation of prerequisite[i] and [i-1]
-            while re.search(course_re, temp):
+            while re.search(course_re, temp): #iterate through required courses and check the relation between them
                 match = re.search(course_re, temp)
                 require_set.append(match.group())
-                if re.search(r'or', temp[0:match.span()[0]]):
+                if re.search(r'or', temp[0:match.span()[0]]): # relation is or 
                     relation_set.append("or")
-                else:
+                else: # relation is and
                     relation_set.append("and")
                 temp = temp[match.span()[1]:len(temp)]
             prerequisite_set = CoursePrerequisiteSet(parent_course=course)
             prerequisite_set.save()
-            for j in range(0, len(require_set)):
-                if j == (len(require_set) - 1):
+            j = 0 #counter for the while loop to iterate the course_set
+        
+            while (j<len(require_set)):
+                if j == (len(require_set) - 1): # last course dont nedd check relation, just add it
                     require_major = require_set[j][0:3]
                     require_number = int(require_set[j][-3:])
                     match_course = Course.objects.filter(department=require_major, number=require_number)
@@ -593,7 +595,7 @@ def scrape_courses(request):
                         match_course.save()
                         prereq = Prerequisite(course=match_course, course_set=prerequisite_set) 
                         prereq.save()
-                        break
+                        
                     else: 
                         prereq = Prerequisite(course=match_course[0], course_set=prerequisite_set)
                         prereq.save()
@@ -607,11 +609,11 @@ def scrape_courses(request):
                             match_course.save()
                             prereq = Prerequisite(course=match_course, course_set=prerequisite_set) 
                             prereq.save()
-                            continue 
+                             
                         else:
                             prereq = Prerequisite(course=match_course[0], course_set=prerequisite_set)
                             prereq.save()
-                    # is this for or ? 
+                    # if relation is or 
                     elif relation_set[j+1] == "or":
                         require_major1 = require_set[j][0:3]
                         require_number1 = int(require_set[j][-3:])
@@ -620,13 +622,21 @@ def scrape_courses(request):
                         require_major2 = require_set[j][0:3]
                         require_number2 = int(require_set[j][-3:])
                         match_course2 = Course.objects.filter(department=require_major2, number=require_number2)
-                        if len(match_course2) or len(match_course1):
-                            new_set = CoursePrerequisiteSet(parent_set=prerequisite_set)
-                            new_set.save()
-                            if len(match_course1) != 0:
-                                prereq = Prerequisite(course=match_course1[0], course_set=new_set)
-                                prereq.save()
-                            if len(match_course2) != 0:
-                                prereq = Prerequisite(course=match_course2[0], course_set=new_set)
-                                prereq.save()
+                        
+                        new_set = CoursePrerequisiteSet(parent_set=prerequisite_set)
+                        new_set.save()
+                        if len(match_course1) != 0:
+                            prereq = Prerequisite(course=match_course1[0], course_set=new_set)
+                            prereq.save()
+                        else:
+                            match_course1 = Course(name="Supplementary", department=require_major1, number=require_number1)
+                            prereq = Prerequisite(course=match_course1, course_set=new_set)
+                        if len(match_course2) != 0:
+                            prereq = Prerequisite(course=match_course2[0], course_set=new_set)
+                            prereq.save()
+                        else:
+                            match_course2 = Course(name="Supplementary", department=require_major2, number=require_number2)
+                            prereq = Prerequisite(course=match_course2, course_set=new_set)
+
+                j+=1
     return render(request, 'mast/scrape_courses.html', {'semester_list':Semester.objects.all()})
