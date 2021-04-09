@@ -537,13 +537,13 @@ def scrape_courses(request):
                                 text[-1] = text[-1] + results
     #text stores course name and detail , even index is  course name, odd index is 
     for course_index in range(len(text) // 2):
-        course = Course()
+        
         name = text[course_index * 2]
         description = text[course_index * 2 + 1]
         number = int(name[5:8])
         course.department = major
         course.number = number
-
+        course = Course()
         course.name = name[9:len(name)]
         course.description = description
         name = name.split(":")[1]
