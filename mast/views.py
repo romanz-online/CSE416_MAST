@@ -10,7 +10,37 @@ from .models import Student, Major, Season, CoursesTakenByStudent, Comment, Stud
     TrackCourseSet, CourseInTrackSet, CourseToCourseRelation, Course, CoursePrerequisiteSet, Prerequisite
 
 
+def setup():
+    if not Major.objects.filter(department='N/A'):
+        semester = Semester.objects.all()[0]
+        none_major = Major(department='N/A',
+                           name='(None)',
+                           requirement_semester=semester)
+        none_major.save()
+    spring = range(80, 172)
+    summer = range(172, 264)
+    fall = range(264, 355)
+    doy = datetime.today().timetuple().tm_yday
+    if not len(Semester.objects.all()):
+        current_year = int(datetime.today().year)
+        for year in range(current_year-5, current_year+5):
+            for season in Season.choices:
+                if not season[0] == Season.NOT_APPLICABLE:
+                    new_semester = Semester(season=season[0], year=year)
+                    if year == current_year:
+                        if doy in spring and season[0] == Season.SPRING:
+                            new_semester.is_current_semester = True
+                        elif doy in summer and season[0] == Season.SUMMER:
+                            new_semester.is_current_semester = True
+                        elif doy in fall and season[0] == Season.FALL:
+                            new_semester.is_current_semester = True
+                        else:
+                            new_semester.is_current_semester = True
+                    new_semester.save()
+
+
 def home(request):
+    setup()
     return render(request, 'mast/home.html', {})
 
 
@@ -90,7 +120,6 @@ def commit_new_student(request):
 
 
 def detail(request, sbu_id):
-    create_none_major()
     student = get_object_or_404(Student, pk=sbu_id)
     comment_list = Comment.objects.filter(student=sbu_id)
     semester_list = {i.course.semester: 1 for i in StudentCourseSchedule.objects.filter(student=sbu_id)}.keys()
@@ -105,7 +134,6 @@ def detail(request, sbu_id):
 
 
 def course_detail(request, course_department, course_number):
-    create_none_major()
     course = get_object_or_404(Course, department=course_department, number=course_number)
     return render(request, 'mast/course_detail.html', {'course': course,
                                                        'prerequisite_set_list': CoursePrerequisiteSet.objects.all(),
@@ -128,15 +156,6 @@ def add_comment(request, sbu_id):
     except:
         return HttpResponseRedirect(reverse('mast:detail', args=(sbu_id,)))
     return HttpResponseRedirect(reverse('mast:detail', args=(sbu_id,)))
-
-
-def create_none_major():
-    if not Major.objects.filter(department='N/A'):
-        semester = Semester.objects.all()[0]
-        none_major = Major(department='N/A',
-                           name='(None)',
-                           requirement_semester=semester)
-        none_major.save()
 
 
 def student_datatable(request):

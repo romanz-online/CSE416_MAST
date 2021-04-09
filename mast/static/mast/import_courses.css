@@ -54,7 +54,7 @@ input[type=submit] {
     cursor: pointer;
 }
 
-div#example_image {
+div#courses_example_image {
     background-image: url(images/course_offerings_csv_example.png);
     background-repeat: no-repeat;
     width: 700px;
@@ -63,6 +63,19 @@ div#example_image {
     padding: 10px;
     visibility: hidden;
     top:30%;
+    left: 20%;
+    position: fixed;
+}
+
+div#requirements_example_image {
+    background-image: url(images/degree_requirements_xml_example.png);
+    background-repeat: no-repeat;
+    width: 527px;
+    height: 544px;
+    z-index: 999;
+    padding: 20px;
+    visibility: hidden;
+    top: 10%;
     left: 20%;
     position: fixed;
 }

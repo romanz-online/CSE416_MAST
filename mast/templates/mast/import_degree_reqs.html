@@ -6,28 +6,63 @@
 
 <head>
     <title>Import Degree Requirements</title>
+    <script>
+        function showExample() {
+            let u = document.getElementById("requirements_example_image");
+            let a = document.getElementById("overlay_dimmer");
+            u.style.visibility = (u.style.visibility === "visible") ? "hidden" : "visible";
+            a.style.visibility = (a.style.visibility === "visible") ? "hidden" : "visible";
+        }
+
+        function hideExample() {
+            let u = document.getElementById("requirements_example_image");
+            let a = document.getElementById("overlay_dimmer");
+            u.style.visibility = "hidden";
+            a.style.visibility = "hidden";
+        }
+    </script>
 </head>
 
+<body>
 <h1>Import Degree Requirements</h1>
 
 {% include "mast/navbar.html" %}
 
-<body>
-    {% if messages %}
-        {% for message in messages %}
-            <div>
-                <strong>{{message|safe}}</strong>
-            </div>
-        {% endfor %}
-    {% else %}
-    {{order}}
+<div id="overlay_dimmer" onclick="hideExample()"></div>
+<div id="requirements_example_image">
+    <a href='#' onclick='showExample()' class="exit">&#10799;</a>
+</div>
+
+<div class=form>
     <form action="" method="POST" enctype="multipart/form-data">
         {% csrf_token %}
-        <label for="degree_file"> Upload Degree Requirements XML</label>
-        <input type="file" id="degree_file" name="degree_file">
-        <small>Only accepts XML files</small>
-        <button type="submit">Upload</button>
+        {% if messages %}
+            {% for message in messages %}
+                <div>
+                    <strong>{{ message|safe }}</strong>
+                </div>
+            {% endfor %}
+        {% else %}
+            {{ order }}
+            <form action="" method="POST" enctype="multipart/form-data">
+                {% csrf_token %}
+                <label for="degree_file"> Upload Degree Requirements XML</label>
+                <input type="file" id="degree_file" name="degree_file">
+                <br>
+                <button type="submit">Upload</button>
+            </form>
+        {% endif %}
     </form>
-    {% endif %}
+</div>
+<div class=sideBox>
+    <h3>File Conventions</h3>
+    <ul>
+        <li>File must be an XML</li>
+        <br><br>
+        <button type="submit" onclick="showExample()">Show Example</button>
+    </ul>
+    <br><br>
+</div>
+
 </body>
 </html>

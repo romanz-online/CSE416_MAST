@@ -23,10 +23,9 @@
         {% csrf_token %}
         <label for="file1">Upload PDF</label>
         <input type="file" id="file1" name="file">
-        <br>
+        <br><br>
         Major:
-        <input type="text" id="major" name="major">
-        <br>
+        <input type="text" id="major" name="major" placeholder="CSE">
         Semester:
         <select name="semester">
             {% for semester in semester_list %}
