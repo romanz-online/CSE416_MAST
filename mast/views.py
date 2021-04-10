@@ -49,7 +49,8 @@ def major_index(request):
                'track_list': Track.objects.all(),
                'track_course_sets': TrackCourseSet.objects.all(),
                'courses_in_sets': CourseInTrackSet.objects.all(),
-               'course_relations': CourseToCourseRelation.objects.all()}
+               'course_relations': CourseToCourseRelation.objects.all(),
+               'course_list': Course.objects.all()}
     return render(request, 'mast/major_index.html', context)
 
 

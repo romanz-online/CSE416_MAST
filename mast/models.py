@@ -116,7 +116,7 @@ class Track(models.Model):
 class TrackCourseSet(models.Model):
     track = models.ForeignKey(Track, on_delete=models.CASCADE)
     parent_course_set = models.ForeignKey(to='TrackCourseSet', on_delete=models.CASCADE, null=True)
-    name = models.CharField(max_length=50, default='Default')
+    name = models.CharField(max_length=200, default='Default')
     size = models.IntegerField(default=1)
     limiter = models.BooleanField(default=False)
     upper_limit = models.IntegerField(default=100)

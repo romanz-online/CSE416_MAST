@@ -53,21 +53,24 @@
                 <h2>{{ track }}</h2>
                 <br>
                 {% for set in track_course_sets %}
-                    {{ set }}<br>
-                    {% for course in courses_in_sets %}
-                        {% if course.course_set == set %}
-                            {% for c in course_list %}
-                                {% if c == course.course %}
-                                    <a href="/mast/{{ c.department }}/{{ c.number }}">{{ c }}</a><br>
-                                    {% for relation in course_relations %}
-                                        {% if relation.primary_course == course or relation.related_course == course %}
-                                            - {{ relation }}
-                                        {% endif %}
-                                    {% endfor %}
-                                {% endif %}
-                            {% endfor %}
-                        {% endif %}
-                    {% endfor %}
+                    {% if set.track == track %}
+                        {{ set }}<br>
+                        {{ set.size }} course(s) from the following:<br>
+                        {% for course in courses_in_sets %}
+                            {% if course.course_set == set %}
+                                {% for c in course_list %}
+                                    {% if c == course.course %}
+                                        <a href="/mast/{{ c.department }}/{{ c.number }}">{{ c }}</a><br>
+                                        {% for relation in course_relations %}
+                                            {% if relation.primary_course == course or relation.related_course == course %}
+                                                - {{ relation }}
+                                            {% endif %}
+                                        {% endfor %}
+                                    {% endif %}
+                                {% endfor %}
+                            {% endif %}
+                        {% endfor %}
+                    {% endif %}
                 {% endfor %}
             </div>
         {% endif %}

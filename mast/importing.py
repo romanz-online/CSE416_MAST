@@ -158,7 +158,7 @@ def import_degree_requirements(request):
                                 if child_second_loop.name == "CourseInTrackSet":
                                     child_course = child_second_loop.find("course").get_text()
                                     child_course = child_course.split(" ")
-                                    print(child_course)
+                                    # print(child_course)
                                     if Course.objects.filter(department=child_course[0], number=child_course[1]).exists():
                                         child_course = Course.objects.get(department=child_course[0], number=child_course[1])
                                     else:
@@ -182,7 +182,7 @@ def import_degree_requirements(request):
                         elif child.name == "CourseInTrackSet":
                             child_course = child.find("course").get_text()
                             child_course = child_course.split(" ")
-                            print(child_course)
+                            # print(child_course)
                             if Course.objects.filter(department=child_course[0], number=child_course[1]).exists():
                                 child_course = Course.objects.get(department=child_course[0], number=child_course[1])
                             else:
@@ -229,7 +229,7 @@ def import_student(request):
 
     # Profiles first, split data and skip header
     profiles = profile_data.split('\n')
-    print(profiles[0])
+    # print(profiles[0])
     if profiles[
         0] != 'sbu_id,first_name,last_name,email,department,track,entry_semester,entry_year,requirement_version_semester,requirement_version_year,graduation_semester,graduation_year,password' \
             and profiles[
@@ -466,13 +466,13 @@ def import_courses(request):
                     t = int(t) + 12
                     start = str(t) + start[2:]
 
-            print(end[-2:])
+            # print(end[-2:])
             if end[-2:] == 'PM':
                 t = end[0:2]
                 if int(t) != 12:
                     t = int(t) + 12
                     end = str(t) + end[2:]
-                print(end)
+                # print(end)
 
             course_instance.time_start = start
             course_instance.time_end = end
