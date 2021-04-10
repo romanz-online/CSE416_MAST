@@ -44,62 +44,95 @@ def home(request):
     return render(request, 'mast/home.html', {})
 
 
-def display_set_info(course_set, layer):
-    if course_set.parent_course_set:
-        if course_set.parent_course_set.size and not course_set.size:
-            for i in range(layer):
-                print('-', end='')
-            if layer:
-                print('The following courses will not satisfy the requirements (' + course_set.name + '):')
-            else:
-                print('The following courses will not satisfy the track\'s requirements (' + course_set.name + '):')
-    elif not course_set.parent_course_set and not course_set.size:
-        for i in range(layer):
-            print('-', end='')
+def display_set_info(course_set, layer, info):
+    if course_set.parent_course_set and course_set.parent_course_set.size and not course_set.size:
+        for i in range(layer-1):
+            info += '  '
         if layer:
-            print('The following courses will not satisfy the requirements (' + course_set.name + '):')
+            info += 'The following course(s) will not satisfy the requirements (' + course_set.name + '):\n'
         else:
-            print('The following courses will not satisfy the track\'s requirements (' + course_set.name + '):')
+            info += 'The following course(s) will not satisfy the track\'s requirements (' + course_set.name + '):\n'
+    elif not course_set.parent_course_set and not course_set.size:
+        for i in range(layer-1):
+            info += '  '
+        if layer:
+            info += 'The following course(s) will not satisfy the requirements (' + course_set.name + '):\n'
+        else:
+            info += 'The following course(s) will not satisfy the track\'s requirements (' + course_set.name + '):\n'
     elif course_set.size:
+        for i in range(layer-1):
+            info += '  '
         if course_set.limiter:
-            print('At most ' + str(course_set.size) + ' course(s) from ' + course_set.name + ':')
+            info += 'At most ' + str(course_set.size) + ' course(s) from ' + course_set.name + ':\n'
         else:
-            print(str(course_set.size) + ' course(s) from ' + course_set.name + ':')
+            info += str(course_set.size) + ' course(s) from ' + course_set.name + ':\n'
 
     for course in CourseInTrackSet.objects.filter(course_set=course_set):
         for i in range(layer):
-            print('-', end='')
+            info += '  '
         if course.how_many_semesters > 1:
-            print(str(course) + ', taken at least ' + str(course.how_many_semesters) + ' times.')
+            info += str(course) + ', taken at least ' + str(course.how_many_semesters) + ' times.\n'
+        elif course.each_semester:
+            info += str(course) + '[required each semester]\n'
         else:
-            print(str(course))
+            info += str(course) + '\n'
 
     if not course_set.size and course_set.lower_limit != 100 and course_set.upper_limit != 999 and course_set.department_limit != 'N/A':
         for i in range(layer - 1):
-            print('-', end='')
-        print(course_set.department_limit + str(course_set.lower_limit) + '-' + course_set.department_limit + str(
-            course_set.upper_limit))
+            info += '  '
+        info += course_set.department_limit + str(course_set.lower_limit) + '-' + course_set.department_limit + str(
+            course_set.upper_limit) + '\n'
 
     for nested_set in TrackCourseSet.objects.filter(parent_course_set=course_set):
-        display_set_info(nested_set, layer + 1)
+        info = display_set_info(nested_set, layer + 1, info)
+
+    return info + '\n'
 
 
 def display_track_info(track):
-    print(str(track.number_of_areas) + ' areas must be completed from the following:')
+    info = str(track.number_of_areas) + ' area(s) must be completed from the following, for a total of ' + str(
+        track.minimum_credits_required) + ' credits:\n\n'
     for course_set in TrackCourseSet.objects.filter(track=track, parent_course_set=None):
-        display_set_info(course_set, 0)
+        info = display_set_info(course_set, 0, info)
+    return info
+
+
+def wrap_text(text):
+    # wraps text around the 80 characters-per-line limit without fragmenting any words
+    counter = 0
+    text_list = list(text)
+    for i in range(len(text_list)):
+        if text_list[i] == '\n':
+            counter = 0
+        elif counter == 80:
+            position = i
+            while text_list[position] != ' ' and text_list[position] != '\n':
+                position -= 1
+            text_list[position] = '\n'
+            counter = 0
+        else:
+            counter += 1
+
+    return ''.join(text_list)
 
 
 def major_index(request):
-    # for track in Track.objects.all():
-    #     display_track_info(track)
-    # display_track_info(Track.objects.filter(name='Translational Bio-Informatics - Thesis')[0])
+    class TrackInfo():
+        def __init__(self, name, key, value):
+            self.name = name
+            self.key = key
+            self.value = value
+
+    track_info = [TrackInfo(track.name, str(track.major_id) + '_' + str(track.id), wrap_text(display_track_info(track))) for track in
+                  Track.objects.all()]
+
     context = {'major_list': Major.objects.order_by('name')[1:],
                'track_list': Track.objects.all(),
                'track_course_sets': TrackCourseSet.objects.all(),
                'courses_in_sets': CourseInTrackSet.objects.all(),
                'course_relations': CourseToCourseRelation.objects.all(),
-               'course_list': Course.objects.all()}
+               'course_list': Course.objects.all(),
+               'track_info_list': track_info}
     return render(request, 'mast/major_index.html', context)
 
 

@@ -87,7 +87,11 @@ def import_degree_requirements(request):
 
             # Add TCS parents
             if tcs.parent.name == 'Track':
-                tcs_size = tcs.find("size").get_text()
+                tcs_size = tcs.find("size")
+                if tcs_size:
+                    tcs_size = tcs.find("size").get_text()
+                else:
+                    tcs_size = 1
                 tcs_name = tcs.find("name")
                 if tcs_name:
                     tcs_name = tcs_name.get_text() + " - " + track_name
@@ -122,7 +126,11 @@ def import_degree_requirements(request):
                 for child in tcs.children:
                     if child.parent.parent.name == "Track":
                         if child.name == "TrackCourseSet":
-                            tcs_size = child.find("size").get_text()
+                            tcs_size = child.find("size")
+                            if tcs_size:
+                                tcs_size = child.find("size").get_text()
+                            else:
+                                tcs_size = 1
                             tcs_name = child.find("name")
                             if tcs_name:
                                 tcs_name = tcs_name.get_text() + " - " + track_name
@@ -160,10 +168,13 @@ def import_degree_requirements(request):
                                     child_course = child_second_loop.find("course").get_text()
                                     child_course = child_course.split(" ")
                                     # print(child_course)
-                                    if Course.objects.filter(department=child_course[0], number=child_course[1]).exists():
-                                        child_course = Course.objects.get(department=child_course[0], number=child_course[1])
+                                    if Course.objects.filter(department=child_course[0],
+                                                             number=child_course[1]).exists():
+                                        child_course = Course.objects.get(department=child_course[0],
+                                                                          number=child_course[1])
                                     else:
-                                        child_course = Course(name=child_course[0], department=child_course[0], number=child_course[1])
+                                        child_course = Course(name=child_course[0], department=child_course[0],
+                                                              number=child_course[1])
                                     child_course.save()
                                     course_each_semester = child_second_loop.find("each_semester")
                                     if course_each_semester:
@@ -187,7 +198,8 @@ def import_degree_requirements(request):
                             if Course.objects.filter(department=child_course[0], number=child_course[1]).exists():
                                 child_course = Course.objects.get(department=child_course[0], number=child_course[1])
                             else:
-                                child_course = Course(name=child_course[0], department=child_course[0], number=child_course[1])
+                                child_course = Course(name=child_course[0], department=child_course[0],
+                                                      number=child_course[1])
                             child_course.save()
                             course_each_semester = child.find("each_semester")
                             if course_each_semester:
@@ -455,7 +467,7 @@ def import_courses(request):
             # Remove days
             course_instance.days = line[5][0:line[5].index(' ')]
             # Get each time
-            times = line[5][line[5].index(' ')+1:]
+            times = line[5][line[5].index(' ') + 1:]
             start = times[0:times.index('-')]
             end = times[times.index('-') + 1:]
             start = start.replace('\r', '')
@@ -477,7 +489,7 @@ def import_courses(request):
 
             course_instance.time_start = start
             course_instance.time_end = end
-            
+
         course_instance.course = Course.objects.get(department=course.department, number=course.number)
         course_instance.save()
         processed_lines += row
@@ -487,7 +499,7 @@ def import_courses(request):
 
 def scrape_courses(request):
     if request.method == "GET":
-        return render(request, 'mast/scrape_courses.html', {'semester_list':Semester.objects.all()})
+        return render(request, 'mast/scrape_courses.html', {'semester_list': Semester.objects.all()})
 
     course_file = request.FILES['file']
     major = request.POST.get('major')
@@ -517,35 +529,35 @@ def scrape_courses(request):
         interpreter.process_page(page)
 
         layout = device.get_result()
-        
+
         for x in layout:
             if isinstance(x, LTTextBoxHorizontal):
                 results = x.get_text()
                 regex_test_output = re.compile(major + "  \d\d\d")
                 major_regex = re.compile("[A-Z][A-Z][A-Z]\n")
                 target_major = re.compile(major + "\n")
-                if re.match(target_major, results): # the part we want start with "major\n"
+                if re.match(target_major, results):  # the part we want start with "major\n"
                     CSE_started = True
                 elif CSE_started:
-                    if re.match(major_regex, results): #This means another major part started
+                    if re.match(major_regex, results):  # This means another major part started
                         CSE_started = False
                     else:
-                        if re.search(regex_test_output, results): #check if this is the name part of description part
+                        if re.search(regex_test_output, results):  # check if this is the name part of description part
                             text.append(results)
                             text.append('')
                         else:
                             if len(text) != 0:
                                 text[-1] = text[-1] + results
-    #text stores course name and detail , even index is  course name, odd index is 
-    for course_index in range(len(text) // 2):        
+    # text stores course name and detail , even index is  course name, odd index is
+    for course_index in range(len(text) // 2):
         name = text[course_index * 2]
         description = text[course_index * 2 + 1]
         number = int(name[5:8])
         course = Course.objects.filter(department=major, number=number)
-        if(len(course)==0):
+        if (len(course) == 0):
             course = Course()
             course.department = major
-            course.number = number            
+            course.number = number
             course.name = name[9:len(name)]
             course.description = description
             name = name.split(":")[1]
@@ -557,7 +569,7 @@ def scrape_courses(request):
                 if '-' in credits:
                     credit_list = credits.split('-')
                     course.upper_credit_limit = int(credit_list[1])
-                    course.lower_credit_limit = int(credit_list[0]) 
+                    course.lower_credit_limit = int(credit_list[0])
                 else:
                     course.upper_credit_limit = int(credits)
             else:
@@ -566,7 +578,7 @@ def scrape_courses(request):
             course.save()
         else:
             course = course[0]
-        CourseInstance.objects.filter(course = course, semester = semester).delete()
+        CourseInstance.objects.filter(course=course, semester=semester).delete()
         courseInstance = CourseInstance()
         courseInstance.course = course
         courseInstance.semester = semester
@@ -575,26 +587,26 @@ def scrape_courses(request):
         prerequisite_prefix = re.search(r"Prerequisite.*:", description)
         if prerequisite_prefix:
             prefix_end = prerequisite_prefix.span()[1]
-            temp = description[prefix_end: len(description)] # get the prerequisite part from description
+            temp = description[prefix_end: len(description)]  # get the prerequisite part from description
             temp = temp.replace("\n", " ")
             course_re = re.compile(r"[A-Z]{3}.?\d{3}")
 
             require_set = []  # list of prerequisite class
             relation_set = []  # list of relation; eg relation[i] is the relation of prerequisite[i] and [i-1]
-            while re.search(course_re, temp): #iterate through required courses and check the relation between them
+            while re.search(course_re, temp):  # iterate through required courses and check the relation between them
                 match = re.search(course_re, temp)
                 require_set.append(match.group())
-                if re.search(r'or', temp[0:match.span()[0]]): # relation is or 
+                if re.search(r'or', temp[0:match.span()[0]]):  # relation is or
                     relation_set.append("or")
-                else: # relation is and
+                else:  # relation is and
                     relation_set.append("and")
                 temp = temp[match.span()[1]:len(temp)]
             prerequisite_set = CoursePrerequisiteSet(parent_course=courseInstance)
             prerequisite_set.save()
-            j = 0 #counter for the while loop to iterate the course_set
-        
-            while (j<len(require_set)):
-                if j == (len(require_set) - 1): # last course dont nedd check relation, just add it
+            j = 0  # counter for the while loop to iterate the course_set
+
+            while (j < len(require_set)):
+                if j == (len(require_set) - 1):  # last course dont nedd check relation, just add it
                     require_major = require_set[j][0:3]
                     require_number = int(require_set[j][-3:])
                     match_course = Course.objects.filter(department=require_major, number=require_number)
@@ -603,11 +615,11 @@ def scrape_courses(request):
                         match_course.save()
                         match_courseInstance = CourseInstance(course=match_course)
                         match_courseInstance.save()
-                        prereq = Prerequisite(course=match_courseInstance, course_set=prerequisite_set) 
+                        prereq = Prerequisite(course=match_courseInstance, course_set=prerequisite_set)
                         prereq.save()
-                        
-                    else: 
-                        match_courseInstance =CourseInstance.objects.filter(course = match_course[0])[0]
+
+                    else:
+                        match_courseInstance = CourseInstance.objects.filter(course=match_course[0])[0]
                         prereq = Prerequisite(course=match_courseInstance, course_set=prerequisite_set)
                         prereq.save()
                 else:
@@ -620,16 +632,16 @@ def scrape_courses(request):
                             match_course.save()
                             match_courseInstance = CourseInstance(course=match_course)
                             match_courseInstance.save()
-                            prereq = Prerequisite(course=match_courseInstance, course_set=prerequisite_set) 
+                            prereq = Prerequisite(course=match_courseInstance, course_set=prerequisite_set)
                             prereq.save()
-                             
+
                         else:
-                            match_courseInstance =CourseInstance.objects.filter(course = match_course[0])[0]
+                            match_courseInstance = CourseInstance.objects.filter(course=match_course[0])[0]
                             match_courseInstance.save()
                             prereq = Prerequisite(course=match_courseInstance, course_set=prerequisite_set)
                             prereq.save()
                     # if relation is or 
-                    elif relation_set[j+1] == "or":
+                    elif relation_set[j + 1] == "or":
                         require_major1 = require_set[j][0:3]
                         require_number1 = int(require_set[j][-3:])
                         match_course1 = Course.objects.filter(department=require_major1, number=require_number1)
@@ -637,29 +649,31 @@ def scrape_courses(request):
                         require_major2 = require_set[j][0:3]
                         require_number2 = int(require_set[j][-3:])
                         match_course2 = Course.objects.filter(department=require_major2, number=require_number2)
-                        
+
                         new_set = CoursePrerequisiteSet(parent_set=prerequisite_set)
                         new_set.save()
                         if len(match_course1) != 0:
-                            match_courseInstance =CourseInstance.objects.filter(course = match_course1[0])[0]
+                            match_courseInstance = CourseInstance.objects.filter(course=match_course1[0])[0]
                             prereq = Prerequisite(course=match_courseInstance, course_set=new_set)
                             prereq.save()
                         else:
-                            match_course1 = Course(name="Supplementary", department=require_major1, number=require_number1)
+                            match_course1 = Course(name="Supplementary", department=require_major1,
+                                                   number=require_number1)
                             match_course1.save()
                             match_courseInstance = CourseInstance(course=match_course1)
                             match_courseInstance.save()
                             prereq = Prerequisite(course=match_courseInstance, course_set=new_set)
                         if len(match_course2) != 0:
-                            match_courseInstance =CourseInstance.objects.filter(course = match_course2[0])[0]
+                            match_courseInstance = CourseInstance.objects.filter(course=match_course2[0])[0]
                             prereq = Prerequisite(course=match_courseInstance, course_set=new_set)
                             prereq.save()
                         else:
-                            match_course2 = Course(name="Supplementary", department=require_major2, number=require_number2)
+                            match_course2 = Course(name="Supplementary", department=require_major2,
+                                                   number=require_number2)
                             match_course2.save()
                             match_courseInstance = CourseInstance(course=match_course2)
                             match_courseInstance.save()
                             prereq = Prerequisite(course=match_courseInstance, course_set=new_set)
 
-                j+=1
-    return render(request, 'mast/scrape_courses.html', {'semester_list':Semester.objects.all()})
+                j += 1
+    return render(request, 'mast/scrape_courses.html', {'semester_list': Semester.objects.all()})

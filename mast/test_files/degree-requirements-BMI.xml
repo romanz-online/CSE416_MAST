@@ -280,6 +280,7 @@
         <Track>
             <name>Translational Bio-Informatics - Thesis</name>
             <thesis_required>True</thesis_required>
+            <number_of_areas>2</number_of_areas>
             <minimum_credits_required>33</minimum_credits_required>
             <total_requirements>10</total_requirements>
             <TrackCourseSet>
@@ -289,6 +290,7 @@
                 </CourseInTrackSet>
                 <TrackCourseSet>
                     <number_required>1</number_required>
+                    <limiter>True</limiter>
                     <CourseInTrackSet>
                          <course>BMI 502</course>
                     </CourseInTrackSet>
