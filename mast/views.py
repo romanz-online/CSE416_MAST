@@ -23,7 +23,7 @@ def setup():
     doy = datetime.today().timetuple().tm_yday
     if not len(Semester.objects.all()):
         current_year = int(datetime.today().year)
-        for year in range(current_year-5, current_year+5):
+        for year in range(current_year - 5, current_year + 5):
             for season in Season.choices:
                 if not season[0] == Season.NOT_APPLICABLE:
                     new_semester = Semester(season=season[0], year=year)
@@ -49,11 +49,22 @@ def display_set_info(course_set, layer):
         if course_set.parent_course_set.size and not course_set.size:
             for i in range(layer):
                 print('-', end='')
-            print('The following courses will not satisfy the requirement:')
+            if layer:
+                print('The following courses will not satisfy the requirements (' + course_set.name + '):')
+            else:
+                print('The following courses will not satisfy the track\'s requirements (' + course_set.name + '):')
     elif not course_set.parent_course_set and not course_set.size:
         for i in range(layer):
             print('-', end='')
-        print('The following courses will not satisfy the requirement:')
+        if layer:
+            print('The following courses will not satisfy the requirements (' + course_set.name + '):')
+        else:
+            print('The following courses will not satisfy the track\'s requirements (' + course_set.name + '):')
+    elif course_set.size:
+        if course_set.limiter:
+            print('At most ' + str(course_set.size) + ' course(s) from ' + course_set.name + ':')
+        else:
+            print(str(course_set.size) + ' course(s) from ' + course_set.name + ':')
 
     for course in CourseInTrackSet.objects.filter(course_set=course_set):
         for i in range(layer):
@@ -64,30 +75,25 @@ def display_set_info(course_set, layer):
             print(str(course))
 
     if not course_set.size and course_set.lower_limit != 100 and course_set.upper_limit != 999 and course_set.department_limit != 'N/A':
-        for i in range(layer-1):
+        for i in range(layer - 1):
             print('-', end='')
-        print(course_set.department_limit + str(course_set.lower_limit) + '-' + course_set.department_limit + str(course_set.upper_limit))
+        print(course_set.department_limit + str(course_set.lower_limit) + '-' + course_set.department_limit + str(
+            course_set.upper_limit))
 
     for nested_set in TrackCourseSet.objects.filter(parent_course_set=course_set):
-        display_set_info(nested_set, layer+1)
+        display_set_info(nested_set, layer + 1)
 
 
 def display_track_info(track):
     print(str(track.number_of_areas) + ' areas must be completed from the following:')
     for course_set in TrackCourseSet.objects.filter(track=track, parent_course_set=None):
-        if course_set.size:
-            if course_set.limiter:
-                print('At most ' + str(course_set.size) + ' course(s) from ' + course_set.name + ':')
-            else:
-                print(str(course_set.size) + ' course(s) from ' + course_set.name + ':')
         display_set_info(course_set, 0)
-
 
 
 def major_index(request):
     # for track in Track.objects.all():
     #     display_track_info(track)
-    display_track_info(Track.objects.filter(name='Advanced Project')[0])
+    # display_track_info(Track.objects.filter(name='Translational Bio-Informatics - Thesis')[0])
     context = {'major_list': Major.objects.order_by('name')[1:],
                'track_list': Track.objects.all(),
                'track_course_sets': TrackCourseSet.objects.all(),
