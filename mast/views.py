@@ -44,31 +44,50 @@ def home(request):
     return render(request, 'mast/home.html', {})
 
 
-def display_set_info(set):
-    for course in CourseInTrackSet.objects.filter(course_set=set):
+def display_set_info(course_set, layer):
+    if course_set.parent_course_set:
+        if course_set.parent_course_set.size and not course_set.size:
+            for i in range(layer):
+                print('-', end='')
+            print('The following courses will not satisfy the requirement:')
+    elif not course_set.parent_course_set and not course_set.size:
+        for i in range(layer):
+            print('-', end='')
+        print('The following courses will not satisfy the requirement:')
+
+    for course in CourseInTrackSet.objects.filter(course_set=course_set):
+        for i in range(layer):
+            print('-', end='')
         if course.how_many_semesters > 1:
-            print(course + ', taken at least ' + str(course.how_many_semesters) + ' times.')
+            print(str(course) + ', taken at least ' + str(course.how_many_semesters) + ' times.')
         else:
-            print(course)
-    for nested_set in TrackCourseSet.objects.filter(parent_course_set=set):
-        display_set_info(nested_set)
+            print(str(course))
+
+    if not course_set.size and course_set.lower_limit != 100 and course_set.upper_limit != 999 and course_set.department_limit != 'N/A':
+        for i in range(layer-1):
+            print('-', end='')
+        print(course_set.department_limit + str(course_set.lower_limit) + '-' + course_set.department_limit + str(course_set.upper_limit))
+
+    for nested_set in TrackCourseSet.objects.filter(parent_course_set=course_set):
+        display_set_info(nested_set, layer+1)
 
 
 def display_track_info(track):
-    for set in TrackCourseSet.objects.filter(track=track):
-        if set.size:
-            if set.limiter:
-                print('At most ' + str(set.size) + ' course(s) from ' + set.name + ':')
+    print(str(track.number_of_areas) + ' areas must be completed from the following:')
+    for course_set in TrackCourseSet.objects.filter(track=track, parent_course_set=None):
+        if course_set.size:
+            if course_set.limiter:
+                print('At most ' + str(course_set.size) + ' course(s) from ' + course_set.name + ':')
             else:
-                print(str(set.size) + ' course(s) from ' + set.name + ':')
-            display_set_info(set)
+                print(str(course_set.size) + ' course(s) from ' + course_set.name + ':')
+        display_set_info(course_set, 0)
 
 
 
 def major_index(request):
     # for track in Track.objects.all():
     #     display_track_info(track)
-    display_track_info(Track.objects.filter(name='Thesis')[0])
+    display_track_info(Track.objects.filter(name='Advanced Project')[0])
     context = {'major_list': Major.objects.order_by('name')[1:],
                'track_list': Track.objects.all(),
                'track_course_sets': TrackCourseSet.objects.all(),

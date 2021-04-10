@@ -15,25 +15,25 @@
             <size>7</size>
             <CourseInTrackSet>
                 <course>AMS 501</course>
-            </CourseinTrackSet>
+            </CourseInTrackSet>
             <CourseInTrackSet>
                 <course>AMS 503</course>
-            </CourseinTrackSet>
+            </CourseInTrackSet>
             <CourseInTrackSet>
                 <course>AMS 510</course>
-            </CourseinTrackSet>
+            </CourseInTrackSet>
             <CourseInTrackSet>
                 <course>AMS 526</course>
-            </CourseinTrackSet>
+            </CourseInTrackSet>
             <CourseInTrackSet>
                 <course>AMS 527</course>
-            </CourseinTrackSet>
+            </CourseInTrackSet>
             <CourseInTrackSet>
                 <course>AMS 528</course>
-            </CourseinTrackSet>
+            </CourseInTrackSet>
             <CourseInTrackSet>
                 <course>AMS 595</course>
-            </CourseinTrackSet>
+            </CourseInTrackSet>
         </TrackCourseSet>
         <TrackCourseSet>
             <name>Elective</name>
@@ -49,42 +49,42 @@
             <size>10</size>
             <CourseInTrackSet>
                 <course>AMS 507</course>
-            </CourseinTrackSet>
+            </CourseInTrackSet>
             <CourseInTrackSet>
                 <course>AMS 510</course>
-            </CourseinTrackSet>
+            </CourseInTrackSet>
             <TrackCourseSet>
                 <size>1</size>
                 <CourseInTrackSet>
                     <course>MCB 520</course>
-                </CourseinTrackSet>
+                </CourseInTrackSet>
                 <CourseInTrackSet>
                     <course>CHE 541</course>
-                </CourseinTrackSet>
+                </CourseInTrackSet>
             </TrackCourseSet>
             <CourseInTrackSet>
                 <course>AMS 531</course>
                 <how_many_semesters>2</how_many_semesters>
-            </CourseinTrackSet>
+            </CourseInTrackSet>
             <CourseInTrackSet>
                 <course>AMS 532</course>
                 <how_many_semesters>2</how_many_semesters>
-            </CourseinTrackSet>
+            </CourseInTrackSet>
             <CourseInTrackSet>
                 <course>AMS 533</course>
-            </CourseinTrackSet>
+            </CourseInTrackSet>
             <CourseInTrackSet>
                 <course>AMS 535</course>
-            </CourseinTrackSet>
+            </CourseInTrackSet>
             <CourseInTrackSet>
                 <course>AMS 537</course>
-            </CourseinTrackSet>
+            </CourseInTrackSet>
             <CourseInTrackSet>
                 <course>AMS 539</course>
-            </CourseinTrackSet>
+            </CourseInTrackSet>
             <CourseInTrackSet>
                 <course>CSE 549</course>
-            </CourseinTrackSet>
+            </CourseInTrackSet>
         </TrackCourseSet>
         <TrackCourseSet>
             <name>Elective</name>
@@ -100,24 +100,24 @@
             <size>7</size>
             <CourseInTrackSet>
                 <course>AMS 510</course>
-            </CourseinTrackSet>
+            </CourseInTrackSet>
             <CourseInTrackSet>
                 <course>AMS 507</course>
-            </CourseinTrackSet>
+            </CourseInTrackSet>
             <CourseInTrackSet>
                 <course>AMS 540</course>
-            </CourseinTrackSet>
+            </CourseInTrackSet>
             <CourseInTrackSet>
                 <course>AMS 550</course>
-            </CourseinTrackSet>
+            </CourseInTrackSet>
             <TrackCourseSet>
                 <size>1</size>
                 <CourseInTrackSet>
                     <course>AMS 553</course>
-                </CourseinTrackSet>
+                </CourseInTrackSet>
                 <CourseInTrackSet>
                     <course>CSE 529</course>
-                </CourseinTrackSet>
+                </CourseInTrackSet>
             </TrackCourseSet>
             <TrackCourseSet>
                 <size>1</size>
@@ -127,7 +127,7 @@
             </TrackCourseSet>
             <CourseInTrackSet>
                 <course>AMS 595</course>
-            </CourseinTrackSet>
+            </CourseInTrackSet>
         </TrackCourseSet>
         <TrackCourseSet>
             <name>Elective</name>
@@ -160,28 +160,28 @@
             <size>8</size>
             <CourseInTrackSet>
                 <course>AMS 510</course>
-            </CourseinTrackSet>
+            </CourseInTrackSet>
             <CourseInTrackSet>
                 <course>AMS 507</course>
-            </CourseinTrackSet>
+            </CourseInTrackSet>
             <CourseInTrackSet>
                 <course>AMS 570</course>
-            </CourseinTrackSet>
+            </CourseInTrackSet>
             <CourseInTrackSet>
                 <course>AMS 572</course>
-            </CourseinTrackSet>
+            </CourseInTrackSet>
             <CourseInTrackSet>
                 <course>AMS 573</course>
-            </CourseinTrackSet>
+            </CourseInTrackSet>
             <CourseInTrackSet>
                 <course>AMS 578</course>
-            </CourseinTrackSet>
+            </CourseInTrackSet>
             <CourseInTrackSet>
                 <course>AMS 582</course>
-            </CourseinTrackSet>
+            </CourseInTrackSet>
             <CourseInTrackSet>
                 <course>AMS 597</course>
-            </CourseinTrackSet>
+            </CourseInTrackSet>
         </TrackCourseSet>
         <TrackCourseSet>
             <name>Elective</name>
@@ -197,37 +197,37 @@
             <size>11</size>
             <CourseInTrackSet>
                 <course>AMS 507</course>
-            </CourseinTrackSet>
+            </CourseInTrackSet>
             <CourseInTrackSet>
                 <course>AMS 510</course>
-            </CourseinTrackSet>
+            </CourseInTrackSet>
             <CourseInTrackSet>
                 <course>AMS 511</course>
-            </CourseinTrackSet>
+            </CourseInTrackSet>
             <CourseInTrackSet>
                 <course>AMS 512</course>
-            </CourseinTrackSet>
+            </CourseInTrackSet>
             <CourseInTrackSet>
                 <course>AMS 513</course>
-            </CourseinTrackSet>
+            </CourseInTrackSet>
             <CourseInTrackSet>
                 <course>AMS 514</course>
-            </CourseinTrackSet>
+            </CourseInTrackSet>
             <CourseInTrackSet>
                 <course>AMS 516</course>
-            </CourseinTrackSet>
+            </CourseInTrackSet>
             <CourseInTrackSet>
                 <course>AMS 517</course>
-            </CourseinTrackSet>
+            </CourseInTrackSet>
             <CourseInTrackSet>
                 <course>AMS 518</course>
-            </CourseinTrackSet>
+            </CourseInTrackSet>
             <CourseInTrackSet>
                 <course>AMS 572</course>
-            </CourseinTrackSet>
+            </CourseInTrackSet>
             <CourseInTrackSet>
                 <course>FIN 539</course>
-            </CourseinTrackSet>
+            </CourseInTrackSet>
         </TrackCourseSet>
         <TrackCourseSet>
             <name>Elective</name>
