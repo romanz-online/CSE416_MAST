@@ -44,7 +44,31 @@ def home(request):
     return render(request, 'mast/home.html', {})
 
 
+def display_set_info(set):
+    for course in CourseInTrackSet.objects.filter(course_set=set):
+        if course.how_many_semesters > 1:
+            print(course + ', taken at least ' + str(course.how_many_semesters) + ' times.')
+        else:
+            print(course)
+    for nested_set in TrackCourseSet.objects.filter(parent_course_set=set):
+        display_set_info(nested_set)
+
+
+def display_track_info(track):
+    for set in TrackCourseSet.objects.filter(track=track):
+        if set.size:
+            if set.limiter:
+                print('At most ' + str(set.size) + ' course(s) from ' + set.name + ':')
+            else:
+                print(str(set.size) + ' course(s) from ' + set.name + ':')
+            display_set_info(set)
+
+
+
 def major_index(request):
+    # for track in Track.objects.all():
+    #     display_track_info(track)
+    display_track_info(Track.objects.filter(name='Thesis')[0])
     context = {'major_list': Major.objects.order_by('name')[1:],
                'track_list': Track.objects.all(),
                'track_course_sets': TrackCourseSet.objects.all(),
