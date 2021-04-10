@@ -36,15 +36,16 @@ def import_degree_requirements(request):
     major_name = soup.find("name").get_text()
     semester_season = soup.requirement_semester.season.get_text()
     semester_year = soup.requirement_semester.year.get_text()
-    m = Major(department=department, name=major_name,
-              requirement_semester=Semester.objects.filter(season=semester_season, year=semester_year).get())
-    if Major.objects.filter(department=department, name=major_name,
-                            requirement_semester=Semester.objects.filter(season=semester_season,
-                                                                        year=semester_year).get()):
-        old_major = Major.objects.filter(department=department, name=major_name,
-                                         requirement_semester=Semester.objects.filter(season=semester_season,
-                                                                        year=semester_year).get())[0]
-        old_major.delete()
+    semester = Semester.objects.filter(season=semester_season, year=semester_year)
+    if semester:
+        semester = semester[0]
+        if Major.objects.filter(department=department, name=major_name, requirement_semester=semester):
+            old_major = Major.objects.filter(department=department, name=major_name, requirement_semester=semester)[0]
+            old_major.delete()
+    else:
+        semester = Semester(season=semester_season, year=semester_year)
+        semester.save()
+    m = Major(department=department, name=major_name, requirement_semester=semester)
     m.save()
 
     # Add tracks + further data to database
