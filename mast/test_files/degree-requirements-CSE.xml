@@ -148,7 +148,7 @@
             <name>Thesis Course</name>
             <size>3</size>
             <limiter>True</limiter>
-            <CourseinTrackSet>
+            <CourseInTrackSet>
                 <course>CSE 599</course>
                 <how_many_semesters>2</how_many_semesters>
             </CourseInTrackSet>
@@ -172,10 +172,10 @@
         <TrackCourseSet>
             <name>Advanced Project Courses></name>
             <size>2</size>
-            <CourseinTrackSet>
+            <CourseInTrackSet>
                 <course>CSE 523</course>
             </CourseInTrackSet>
-            <CourseinTrackSet>
+            <CourseInTrackSet>
                 <course>CSE 524</course>
             </CourseInTrackSet>
         </TrackCourseSet>
