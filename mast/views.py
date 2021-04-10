@@ -7,7 +7,7 @@ from django.http import HttpResponseRedirect
 from django.urls import reverse
 from .datatables import StudentDatatable
 from .models import Student, Major, Season, CoursesTakenByStudent, Comment, StudentCourseSchedule, Semester, Track, \
-    TrackCourseSet, CourseInTrackSet, CourseToCourseRelation, Course, CoursePrerequisiteSet, Prerequisite
+    TrackCourseSet, CourseInTrackSet, CourseToCourseRelation, Course, CoursePrerequisiteSet, Prerequisite, CourseInstance
 
 
 def setup():
@@ -42,6 +42,10 @@ def setup():
 def home(request):
     setup()
     return render(request, 'mast/home.html', {})
+
+
+def course_index(request):
+    return render(request, 'mast/course_index.html', {'course_list': CourseInstance.objects.all()})
 
 
 def display_set_info(course_set, layer, info):

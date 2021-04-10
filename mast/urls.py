@@ -6,6 +6,7 @@ urlpatterns = [
     path('', views.home, name='home'),
     path('commit_new_student/', views.commit_new_student, name='commit_new_student'),
     path('majors/', views.major_index, name='major_index'),
+    path('courses/', views.course_index, name='course_index'),
     path('<int:sbu_id>/', views.detail, name='detail'),
     path('<int:sbu_id>/add_comment', views.add_comment, name='add_comment'),
 
