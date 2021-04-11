@@ -20,6 +20,13 @@
 
 <div class=form>
     <form action="" method="POST" enctype="multipart/form-data">
+        {% if messages %}
+        {% for message in messages %}
+            <div>
+                <strong>{{ message|safe }}</strong>
+            </div>
+        {% endfor %}
+        {% endif %}
         {% csrf_token %}
         <label for="file1">Upload PDF</label>
         <input type="file" id="file1" name="file">
@@ -39,7 +46,7 @@
 <div class=sideBox>
     <h3>File Conventions</h3>
     <ul>
-        <li>File must be a PDF</li>
+        <li>File must be a txt </li>
     </ul>
     <br><br>
 </div>

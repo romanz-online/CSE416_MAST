@@ -499,10 +499,14 @@ def import_courses(request):
 def scrape_courses(request):
     if request.method == "GET":
         return render(request, 'mast/scrape_courses.html', {'semester_list':Semester.objects.all()})
-
+    
     course_file = request.FILES['file']
     major = request.POST.get('major')
     semester = request.POST.get('semester')
+    semester_list = ["CSE", "ESE", "AMS", "BMI"]
+    if(semester not in semester_list):
+        messages.error(request, "Incorrect major for course offering data.")
+        render (request, 'mast/scrape_courses.html', {'semester_list':Semester.objects.all()})
     semester = Semester.objects.get(pk=semester)
     course_data =course_file.read().decode("utf-8", "ignore")
     lines = course_data.split("\r\n")
