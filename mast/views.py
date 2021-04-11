@@ -104,7 +104,7 @@ def display_set_info(course_set, layer, info):
 
 def display_track_info(track):
     info = 'All of the following areas must be fulfilled or adhered to, for a total of ' + str(
-        track.minimum_credits_required) + ' credits:\n\n'
+        track.minimum_credits_required) + ' credits and a GPA of at least ' + str(track.required_gpa) + ':\n\n'
     for course_set in TrackCourseSet.objects.filter(track=track, parent_course_set=None):
         info = display_set_info(course_set, 0, info)
     return info
@@ -220,19 +220,9 @@ def commit_new_student(request):
 def student_degree_reqs_loop(taken_courses, course_set, layer, info):
     # all this section does is create the sentences before each set of courses
     if course_set.parent_course_set and course_set.parent_course_set.size and not course_set.size:
-        for i in range(layer - 1):
-            info += '  '
-        if layer:
-            info += 'The following course(s) will not satisfy the requirements (' + course_set.name + '):\n'
-        else:
-            info += 'The following course(s) will not satisfy the track\'s requirements (' + course_set.name + '):\n'
+        return info
     elif not course_set.parent_course_set and not course_set.size:
-        for i in range(layer - 1):
-            info += '  '
-        if layer:
-            info += 'The following course(s) will not satisfy the requirements (' + course_set.name + '):\n'
-        else:
-            info += 'The following course(s) will not satisfy the track\'s requirements (' + course_set.name + '):\n'
+        return info
     elif course_set.size:
         for i in range(layer - 1):
             info += '  '
@@ -244,14 +234,16 @@ def student_degree_reqs_loop(taken_courses, course_set, layer, info):
 
     # this is where courses get listed out, along with their properties
     for course in CourseInTrackSet.objects.filter(course_set=course_set):
+        taken_course_lookup = [i for i in taken_courses if i.course.course == course]
+        taken = '' if not len(taken_course_lookup) else '[TAKEN]'
         for i in range(layer):
             info += '  '
         if course.how_many_semesters > 1:
             info += str(course) + ', taken at least ' + str(course.how_many_semesters) + ' times.\n'
         elif course.each_semester:
-            info += str(course) + '[required each semester]\n'
+            info += str(course) + '[required each semester] [TAKEN ' + str(len(taken_course_lookup)) + ' TIMES]\n'
         else:
-            info += str(course) + '\n'
+            info += str(course) + ' ' + taken + '\n'
     # this is where courses get listed out, along with their properties
 
     # this prints out course ranges (CSE500-CSE560)
@@ -283,7 +275,7 @@ def stringify_student_degree_reqs(student):
     total_credits = student_credits + transfer_credits
 
     info = 'All of the following areas must be fulfilled or adhered to, for a total of (' + str(
-        total_credits) + '/' + str(student.track.minimum_credits_required) + ') credits:\n\n'
+        total_credits) + '/' + str(student.track.minimum_credits_required) + ') credits and a GPA of at least ' + str(student.track.required_gpa) + ':\n\n'
 
     for course_set in TrackCourseSet.objects.filter(track=student.track, parent_course_set=None):
         info = student_degree_reqs_loop(taken_courses, course_set, 0, info)
@@ -296,7 +288,10 @@ def detail(request, sbu_id):
     comment_list = Comment.objects.filter(student=sbu_id)
     semester_list = {i.course.semester: 1 for i in StudentCourseSchedule.objects.filter(student=sbu_id)}.keys()
     semester_list = sorted(semester_list, key=operator.attrgetter('year'))
-    degree_requirements_string = wrap_text(stringify_student_degree_reqs(student), 60)
+    if student.track:
+        degree_requirements_string = wrap_text(stringify_student_degree_reqs(student), 60)
+    else:
+        degree_requirements_string = "No track."
     return render(request, 'mast/detail.html', {'student': student,
                                                 'major_list': Major.objects.order_by('name'),
                                                 'classes_taken': CoursesTakenByStudent.objects.filter(student=student),

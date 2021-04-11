@@ -198,7 +198,7 @@
     <form action="{% url 'mast:add_taken_course' student.sbu_id %}" method="get">
         <select name="course">
             {% for class in course_list %}
-                {% if class.name != '' %}
+                {% if class.name != '' and class.section != 999 %}
                     <option value={{ class.id }}>{{ class }}</option>
                 {% endif %}
             {% endfor %}
