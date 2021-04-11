@@ -6,3 +6,22 @@ h1 {
     background-color: #490000;
     color: white;
 }
+input[type=button], input[type=submit], input[type=reset] {
+    background-color: #490000;
+    border: none;
+    color: rgb(255, 255, 255);
+    padding: 10px 10px;
+    margin-left: 10px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 13px;
+    cursor: pointer;
+}
+
+
+.back {
+    position: fixed;
+    top: 95%;
+    right: 95%;
+}

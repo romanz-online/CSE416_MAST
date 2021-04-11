@@ -24,13 +24,6 @@
     {{ course.course.department }} {{ course.course.number}}, Section {{ course.section }} 
 
 </h1>
-<br>
-
-    
-
-<br>
-2. {{ course.course }}
-
 
 <br>
 Semester: {{ course.semester }}
@@ -51,5 +44,13 @@ Description:
 <br>
 Prerequisites:<br>
 <pre>{{ prerequisites }}</pre>
+
+<div class=back>
+    <form action="{% url 'mast:course_index' %}" method="post">
+        {% csrf_token %}
+        <input type="submit" value="Back">
+    </form>
+</div>
+
 </body>
 </html>
