@@ -234,8 +234,8 @@ def student_degree_reqs_loop(taken_courses, course_set, layer, info):
 
     # this is where courses get listed out, along with their properties
     for course in CourseInTrackSet.objects.filter(course_set=course_set):
-        taken_course_lookup = [i for i in taken_courses if i.course.course == course]
-        taken = '' if not len(taken_course_lookup) else '[TAKEN]'
+        taken_course_lookup = len([i for i in taken_courses if i.course.course == course.course])
+        taken = '[TAKEN]' if taken_course_lookup else ''
         for i in range(layer):
             info += '  '
         if course.how_many_semesters > 1:
