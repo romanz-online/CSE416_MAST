@@ -29,6 +29,7 @@ urlpatterns = [
     path('edit/<int:sbu_id>/delete_record', editing_student.delete_record, name='delete_record'),
     path('edit/<int:sbu_id>/commit_edit', editing_student.commit_edit, name='commit_edit'),
     path('edit/<int:sbu_id>/add_taken_course', editing_student.add_taken_course, name='add_taken_course'),
+    path('edit/<int:sbu_id>/add_transfer_course', editing_student.add_transfer_course, name='add_transfer_course'),
     path('edit/<int:sbu_id>/modify_course_in_progress/<int:record>', editing_student.modify_course_in_progress,
          name='modify_course_in_progress'),
 

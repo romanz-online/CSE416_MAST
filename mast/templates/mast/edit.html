@@ -127,7 +127,8 @@
         <select name="major_track">
             {% for major_track in major_track_list %}
                 {% if student.track and major_track.id == student.track.id %}
-                    <option selected value= {{ major_track.id }}>{{ major_track.major }} - {{ major_track.track }}</option>
+                    <option selected value= {{ major_track.id }}>{{ major_track.major }}
+                        - {{ major_track.track }}</option>
                 {% else %}
                     <option value= {{ major_track.id }}>{{ major_track.major }} - {{ major_track.track }}</option>
                 {% endif %}
@@ -138,7 +139,7 @@
         Courses taken:
         <br>
         {% for record in classes_taken %}
-            {% if record.student == student and record.status != 'Pending' %}
+            {% if record.status != 'Pending' and record.status != 'Transfer' %}
                 {{ record.course }}
                 <select name={{ record.get_status }}>
                     {% for status in course_status_list %}
@@ -183,7 +184,7 @@
 <div>
     Pending Courses: <br>
     {% for record in classes_taken %}
-        {% if record.student == student and record.status == 'Pending' %}
+        {% if record.status == 'Pending' %}
             {{ record.course }}
             <form action="{% url 'mast:modify_course_in_progress' student.sbu_id record.id %}" method="get">
                 <button type="submit" name="action" value="pass">Pass</button>
@@ -210,26 +211,34 @@
 </div>
 
 <div style="margin-top: 12px;">
-    Transfer Courses: <br>
+    Transfer Courses:
+    <br><br>
     {% for record in classes_taken %}
-        {% if record.student == student and record.status == 'Pending' %}
-            {{ record.course }}
+        {% if record.status == 'Transfer' %}
+            {{ record.course }} - ({{ record.grade }}) - {{ record.credits_taken }} Credits
         {% endif %}
     {% endfor %}
-    <br>
-
-    <form action="{% url 'mast:add_taken_course' student.sbu_id %}" method="get">
-        <select name="course">
-            {% for class in course_list %}
-                {% if class.name != '' %}
+    <br><br>
+    <form action="{% url 'mast:add_transfer_course' student.sbu_id %}" method="get">
+        <select name="transfer_course">
+            {% for class in transfer_course_list %}
+                {% if class.name != '' and class.section != 999 %}
                     <option value={{ class.id }}>{{ class }}</option>
                 {% endif %}
             {% endfor %}
         </select>
-        <button type="submit">Add Course</button>
-        <br>
-        <br>
-        Courses added here will be presented as "Pending" until they are Passed, Failed, or Dropped.
+        <select name="transfer_course_grade">
+            {% for grade in grade_list %}
+                {% if grade == 'A' or grade == 'A-' or grade == 'B+' or grade == 'B' or grade == 'S' %}
+                    <option value= {{ grade }}>{{ grade }}</option>
+                {% endif %}
+            {% endfor %}
+        </select>
+        <input type="number" name="transfer_course_credits" placeholder="Credits" min="1" max="10">
+        <br><br>
+        <button type="submit">Add Transfer Course</button>
+        <br><br>
+        Entries will only count for up to 12 collective credits.
     </form>
 </div>
 

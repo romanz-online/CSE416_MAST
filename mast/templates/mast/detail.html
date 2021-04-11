@@ -191,12 +191,12 @@
             <table>
                 <thead>
                 <font color=#490000>
-                    Courses Taken
+                    Courses Taken:
                 </font>
                 </thead>
                 <tbody>
                 {% for record in classes_taken %}
-                    {% if record.student == student %}
+                    {% if record.status != 'Transfer' %}
                         <tr>
                             <td>{{ record.course }}</td>
                             <td>{{ record.grade }}</td>
@@ -204,6 +204,27 @@
                         </tr>
                     {% endif %}
                 {% endfor %}
+                <br>
+                </tbody>
+            </table>
+            <br>
+            <table>
+                <thead>
+                <font color=#490000>
+                    Transfer Courses:
+                </font>
+                </thead>
+                <tbody>
+                {% for record in classes_taken %}
+                    {% if record.status == 'Transfer' %}
+                        <tr>
+                            <td>{{ record.course }}</td>
+                            <td>{{ record.grade }}</td>
+                            <td>{{ record.status }}</td>
+                        </tr>
+                    {% endif %}
+                {% endfor %}
+                <br>
                 </tbody>
             </table>
         </div>

@@ -212,6 +212,9 @@ class Student(models.Model):
         return str(self.sbu_id)
 
 
+# records that have status=Transfer will only count towards credits for up to a total of 12
+#
+# records with no course will only be counted towards the minimum credit requirements
 class CoursesTakenByStudent(models.Model):
     student = models.ForeignKey(Student, on_delete=models.CASCADE)
     course = models.ForeignKey(CourseInstance, null=True, on_delete=models.SET_NULL)

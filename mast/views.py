@@ -222,7 +222,7 @@ def detail(request, sbu_id):
     degree_requirements_string = 'DUMMY STRING'
     return render(request, 'mast/detail.html', {'student': student,
                                                 'major_list': Major.objects.order_by('name'),
-                                                'classes_taken': CoursesTakenByStudent.objects.all(),
+                                                'classes_taken': CoursesTakenByStudent.objects.filter(student=student),
                                                 'comment_list': comment_list.order_by('post_date'),
                                                 'semester_list': semester_list,
                                                 'schedule': StudentCourseSchedule.objects.filter(student=sbu_id),

@@ -40,17 +40,29 @@ def edit(request, sbu_id):
             if t.major == m:
                 major_track_list.append(MajorTrack(m.name, t.name, t.id))
 
-    for i in major_track_list:
-        if i.id == student.track.id:
-            print(i.track, ' - ', student.track)
+    class TempCourseInstance:
+        def __init__(self, name):
+            self.name = name
+            self.section = 1
+            self.id = 99999
+
+        def __str__(self):
+            return 'None'
+
+    transfer_course_list = [i for i in CourseInstance.objects.all()]
+    transfer_course_list.insert(0, TempCourseInstance('None'))
+
+    for i in CoursesTakenByStudent.objects.filter(student=student, status=CourseStatus.TRANSFER):
+        print(i)
 
     return render(request, 'mast/edit.html', {'student': student,
                                               'course_list': CourseInstance.objects.all(),
-                                              'classes_taken': CoursesTakenByStudent.objects.all(),
+                                              'classes_taken': CoursesTakenByStudent.objects.filter(student=student),
                                               'grade_list': grade_list,
                                               'course_status_list': course_status_list,
                                               'semesters': Semester.objects.order_by('year'),
-                                              'major_track_list': major_track_list
+                                              'major_track_list': major_track_list,
+                                              'transfer_course_list': transfer_course_list
                                               })
 
 
@@ -140,17 +152,7 @@ def commit_edit(request, sbu_id):
                         course.grade = 'N/A'
                 course.save()
 
-        sum = 0
-        total = 0
-        for course in CoursesTakenByStudent.objects.all():
-            if course.student == student and course.status != 'Pending':
-                if course.grade not in ['W', 'S', 'U', 'I', 'N/A']:
-                    sum += get_grade_number(course.grade)
-                    total += 1
-        if total == 0:
-            total = 1
-        sum = sum / total
-        student.gpa = format(sum, '.2f')
+        student.gpa = get_gpa(student)
 
         student.save()
     except:
@@ -168,6 +170,20 @@ def commit_edit(request, sbu_id):
                                                   'error_message': "Something went wrong."
                                                   })
     return HttpResponseRedirect(reverse('mast:detail', args=(sbu_id,)))
+
+
+def get_gpa(student):
+    sum = 0
+    total = 0
+    for course in CoursesTakenByStudent.objects.all():
+        if course.student == student and course.status != 'Pending' and course.status != 'Transfer':
+            if course.grade not in ['W', 'S', 'U', 'I', 'N/A']:
+                sum += get_grade_number(course.grade)
+                total += 1
+    if total == 0:
+        total = 1
+    sum = sum / total
+    return format(sum, '.2f')
 
 
 def get_grade_number(grade):
@@ -209,6 +225,25 @@ def add_taken_course(request, sbu_id):
     return HttpResponseRedirect(reverse('mast:edit', args=(sbu_id,)))
 
 
+def add_transfer_course(request, sbu_id):
+    # Retrieve student object
+    student = get_object_or_404(Student, pk=sbu_id)
+    try:
+        # Attempt to add transfer course
+        course = request.GET['transfer_course']
+        grade = request.GET['transfer_course_grade']
+        credits = request.GET['transfer_course_credits']
+        if course == '99999':
+            c = CoursesTakenByStudent(student=student, grade=grade, credits_taken=credits, status=CourseStatus.TRANSFER)
+            c.save()
+        else:
+            c = CoursesTakenByStudent(student=student, course=CourseInstance.objects.get(id=course), grade=grade, credits_taken=credits, status=CourseStatus.TRANSFER)
+            c.save()
+    except:
+        return HttpResponseRedirect(reverse('mast:edit', args=(sbu_id,)))
+    return HttpResponseRedirect(reverse('mast:edit', args=(sbu_id,)))
+
+
 def modify_course_in_progress(request, sbu_id, record):
     """
     Modifies a current course in progress to their current state.
@@ -230,11 +265,13 @@ def modify_course_in_progress(request, sbu_id, record):
             r.status = CourseStatus.PASSED
             r.grade = 'A'
             r.save()
+            student.gpa = get_gpa(student)
             student.save()
         elif request.GET['action'] == 'fail':
             r.status = CourseStatus.FAILED
             r.grade = 'F'
             r.save()
+            student.gpa = get_gpa(student)
             student.save()
         elif request.GET['action'] == 'drop':
             r.delete()
