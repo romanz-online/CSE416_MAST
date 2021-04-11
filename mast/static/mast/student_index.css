@@ -4,13 +4,22 @@ div {
 }
 
 h1 {
-    margin: -10px -10px;
+
     padding-top: 30px;
     text-align: center;
     background-color: #490000;
-    color: white;
+    color: rgb(32, 32, 32);
 }
 
+h3{
+    color:#490000;
+}
+
+#bottom{
+    position: absolute;
+    bottom: 0;
+    left: 0;
+}
 
 a.button {
     background-color: #490000;

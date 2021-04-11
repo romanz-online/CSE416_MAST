@@ -201,29 +201,32 @@
 
         <div class=upload id=upload>
             <a href='#' onclick='overlayUpload()' class="exit">&#10799;</a>
-            Upload Students and Courses:
+            <h3>Upload Student and Course Data</h3>
             <form action="{% url 'mast:import_student' %}" method="POST" enctype="multipart/form-data">
                 {% csrf_token %}
                 <label for="pro_file">Upload Profile Data</label>
                 <input type="file" id="pro_file" name="pro_file">
-                <br>
+                <br><br>
                 <label for="course_file">Upload Course Data</label>
                 <input type="file" id="course_file" name="course_file">
-                <br>
-                <small>Only accepts CSV files. Empty files are accepted.</small>
-                <br>
+                <br><br>
                 <button type="submit">Upload</button>
             </form>
+
+            <br>
             <strong>or</strong>
             <br>
-            just courses:
+
+            <h3>Upload Course Data Only</h3>
             <form action="{% url 'mast:import_grades_stub' %}" method="POST" enctype="multipart/form-data">
                 {% csrf_token %}
                 <label for="course_file">Upload Course Data</label>
                 <input type="file" id="course_file" name="course_file">
-                <br>
+                <br><br>
                 <button type="submit">Upload</button>
+
             </form>
+            <div id='bottom'><small>Only accepts CSV files. Empty files are accepted.</small></div>
         </div>
 
         <div id=add class=add>

@@ -1,11 +1,37 @@
 <!DOCTYPE html>
 <html lang="en">
+    {% load static %}
+
+    <link rel="stylesheet" type="text/css" href="{% static 'mast/course_detail.css' %}"/>
+
 <head>
     <meta charset="UTF-8">
     <title>{{ course.name }}</title>
 </head>
 <body>
-Course: {{ course.course }}, Section {{ course.section }}
+
+
+<h1> 
+    <!-- Check if course name is a real name or dep###, print name: dep### if real name, only print dep### if not-->
+{% with course.course.number|stringformat:"s" as num %}
+    {% with course.course.department|add:num as name %}
+        {% ifnotequal name|stringformat:"s" course.course|stringformat:"s" %}
+            {{ course.course }}: 
+        {% endifnotequal %}
+    {% endwith %}
+{% endwith %}
+    {{ course.name }}
+    {{ course.course.department }} {{ course.course.number}}, Section {{ course.section }} 
+
+</h1>
+<br>
+
+    
+
+<br>
+2. {{ course.course }}
+
+
 <br>
 Semester: {{ course.semester }}
 <br>

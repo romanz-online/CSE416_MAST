@@ -9,7 +9,7 @@
 </head>
 
 <body>
-<h1>Scrape PDF</h1>
+<h1>Scrape Text File</h1>
 
 {% include "mast/navbar.html" %}
 
@@ -28,7 +28,7 @@
         {% endfor %}
         {% endif %}
         {% csrf_token %}
-        <label for="file1">Upload PDF</label>
+        <label for="file1">Upload Text File</label>
         <input type="file" id="file1" name="file">
         <br><br>
         Major:
@@ -46,7 +46,7 @@
 <div class=sideBox>
     <h3>File Conventions</h3>
     <ul>
-        <li>File must be a .txt</li>
+        <li>File must be a .txt </li>
     </ul>
     <br><br>
 </div>
