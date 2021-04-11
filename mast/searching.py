@@ -2,14 +2,13 @@ from django.shortcuts import render
 from .models import Student, Major, Semester, Track
 
 
-class MajorTrack:
-    def __init__(self, major, track, id):
-        self.major = major
-        self.track = track
-        self.id = id
-
-
 def student_index(request):
+    class MajorTrack:
+        def __init__(self, major, track, id):
+            self.major = major
+            self.track = track
+            self.id = id
+
     if not Major.objects.filter(department='N/A'):
         semester = Semester.objects.all()[0]
         none_major = Major(department='N/A',

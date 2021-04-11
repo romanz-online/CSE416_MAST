@@ -1,7 +1,7 @@
 from django.shortcuts import get_object_or_404, render
 from django.http import HttpResponseRedirect
 from django.urls import reverse
-from .models import Student, Major, CourseInstance, CoursesTakenByStudent, Grade, CourseStatus, Semester
+from .models import Student, Major, CourseInstance, CoursesTakenByStudent, Grade, CourseStatus, Semester, Track
 
 
 def edit(request, sbu_id):
@@ -20,14 +20,37 @@ def edit(request, sbu_id):
     # Retrieve grade and course status list 
     grade_list = [i[0] for i in Grade.choices]
     course_status_list = [i[0] for i in CourseStatus.choices]
-    # Render view with student information 
+    # Render view with student information
+
+    class MajorTrack:
+        def __init__(self, major, track, id):
+            self.major = major
+            self.track = track
+            self.id = id
+
+    if not Major.objects.filter(department='N/A'):
+        semester = Semester.objects.all()[0]
+        none_major = Major(department='N/A',
+                           name='(None)',
+                           requirement_semester=semester)
+        none_major.save()
+    major_track_list = []
+    for m in Major.objects.all():
+        for t in Track.objects.all():
+            if t.major == m:
+                major_track_list.append(MajorTrack(m.name, t.name, t.id))
+
+    for i in major_track_list:
+        if i.id == student.track.id:
+            print(i.track, ' - ', student.track)
+
     return render(request, 'mast/edit.html', {'student': student,
-                                              'major_list': Major.objects.order_by('name'),
                                               'course_list': CourseInstance.objects.all(),
                                               'classes_taken': CoursesTakenByStudent.objects.all(),
                                               'grade_list': grade_list,
                                               'course_status_list': course_status_list,
-                                              'semesters': Semester.objects.order_by('year')
+                                              'semesters': Semester.objects.order_by('year'),
+                                              'major_track_list': major_track_list
                                               })
 
 
@@ -84,7 +107,9 @@ def commit_edit(request, sbu_id):
         first_name = request.GET['first_name']
         last_name = request.GET['last_name']
         email = request.GET['email']
-        major = request.GET['major']
+        track = request.GET['major_track']
+        track = Track.objects.get(id=track)
+        major = track.major
         graduated = True if request.GET['graduated'] == 'yes' else False
         withdrew = True if request.GET['withdrew'] == 'yes' else False
         entry_semester = request.GET['entry_semester']
@@ -93,7 +118,8 @@ def commit_edit(request, sbu_id):
         student.first_name = first_name
         student.last_name = last_name
         student.email = email
-        student.major = Major.objects.get(id=int(major))
+        student.major = major
+        student.track = track
         student.graduated = graduated
         student.withdrew = withdrew
         student.entry_semester = Semester.objects.get(id=int(entry_semester))

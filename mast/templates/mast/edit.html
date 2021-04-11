@@ -123,13 +123,13 @@
         </select>
         <br>
         <br>
-        Major:
-        <select name="major">
-            {% for major in major_list %}
-                {% if major.id == student.major.id %}
-                    <option selected value={{ major.id }}>{{ major }}</option>
+        Major/Track:
+        <select name="major_track">
+            {% for major_track in major_track_list %}
+                {% if student.track and major_track.id == student.track.id %}
+                    <option selected value= {{ major_track.id }}>{{ major_track.major }} - {{ major_track.track }}</option>
                 {% else %}
-                    <option value= {{ major.id }}>{{ major }}</option>
+                    <option value= {{ major_track.id }}>{{ major_track.major }} - {{ major_track.track }}</option>
                 {% endif %}
             {% endfor %}
         </select>
