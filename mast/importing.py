@@ -89,29 +89,44 @@ def import_degree_requirements(request):
             if tcs.parent.name == 'Track':
                 tcs_size = tcs.find("size")
                 if tcs_size:
-                    tcs_size = tcs.find("size").get_text()
+                    if tcs_size.parent.parent.name == "Track":
+                        tcs_size = tcs_size.get_text()
+                    else:
+                        tcs_size = 1
                 else:
                     tcs_size = 1
                 tcs_name = tcs.find("name")
                 if tcs_name:
-                    tcs_name = tcs_name.get_text() + " - " + track_name
+                    if tcs_name.parent.parent.name == "Track":
+                        tcs_name = tcs_name.get_text() + " - " + track_name
+                    else:
+                        tcs_name = "Core Set - " + track_name
                 else:
                     tcs_name = "Core Set - " + track_name
                 tcs_limiter = tcs.find("limiter")
                 if tcs_limiter:
-                    tcs_limiter = True
+                    if tcs_limiter.parent.parent.name == "Track":
+                        tcs_limiter = True
+                    else:
+                        tcs_limiter = False
                 else:
                     tcs_limiter = False
                 tcs_upper_limit = tcs.find("upper_limit")
                 if tcs_upper_limit:
-                    tcs_upper_limit = tcs_upper_limit.get_text()
+                    if tcs_upper_limit.parent.parent.name == "Track":
+                        tcs_upper_limit = tcs_upper_limit.get_text()
+                    else:
+                        tcs_upper_limit = 999
                 else:
-                    tcs_upper_limit = 100
+                    tcs_upper_limit = 999
                 tcs_lower_limit = tcs.find("lower_limit")
                 if tcs_lower_limit:
-                    tcs_lower_limit = tcs_lower_limit.get_text()
+                    if tcs_lower_limit.parent.parent.name == "Track":
+                        tcs_lower_limit = tcs_lower_limit.get_text()
+                    else:
+                        tcs_lower_limit = 100
                 else:
-                    tcs_lower_limit = 999
+                    tcs_lower_limit = 100
                 tcs_department_limit = tcs.find("department_limit")
                 if tcs_department_limit:
                     tcs_department_limit = tcs_department_limit.get_text()
