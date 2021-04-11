@@ -45,7 +45,8 @@ def home(request):
 
 
 def course_index(request):
-    return render(request, 'mast/course_index.html', {'course_list': CourseInstance.objects.all()})
+    course_list = {i for i in CourseInstance.objects.all() if i.section != 999}
+    return render(request, 'mast/course_index.html', {'course_list': course_list})
 
 
 def display_set_info(course_set, layer, info):
