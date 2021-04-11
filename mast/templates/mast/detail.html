@@ -10,14 +10,24 @@
     <script src="https://cdn.jsdelivr.net/npm/uikit@3.6.17/dist/js/uikit-icons.min.js"></script>
 
     <script>
+        function resize_requirements() {
+            let u = document.getElementById("reqs");
+            let v = document.getElementById("infobox");
+            u.style.height = (String(v.offsetHeight / 1.4)).concat("px");
+            u.style.width = (String(v.offsetWidth / 1.1)).concat("px");
+        }
+
         function showElement(element_id) {
             let all = document.getElementsByTagName("*");
-            for (let i = 0, max = all.length; i < max; i++) {
+            for (let i = 0, max = all.length; i < max; i++)
                 if (all[i].className === 'page') {
                     all[i].style.visibility = "hidden";
                 }
-            }
-            u = document.getElementById(element_id);
+
+            if (element_id === "requirements")
+                resize_requirements();
+
+            let u = document.getElementById(element_id);
             u.style.visibility = "visible";
         }
     </script>
@@ -108,7 +118,7 @@
         }
     </style>
 </head>
-<body>
+<body onresize="resize_requirements()">
 <div class="uk-flex">
     <div class='uk-width-1-2'>
         <div class=info>
@@ -179,7 +189,7 @@
     </div>
 
 
-    <div class="info">
+    <div class="info" id="infobox">
         <ul class="navbar_container">
             <li class="navbar_item" onclick="showElement('schedule')">Schedule</li>
             <li class="navbar_item" onclick="showElement('history')">Course History</li>
@@ -292,8 +302,8 @@
                 <strong>{{ student.major }}</strong><br>{{ student.track }} Requirements:
             </font>
             <br>
-            <br>
-            {{ requirements }}
+            <pre id="reqs"
+                 style="color: black; overflow-y: scroll; overflow-x: hidden;">{{ requirements }}</pre>
         </div>
 
     </div>

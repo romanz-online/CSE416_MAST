@@ -7,7 +7,8 @@ from django.http import HttpResponseRedirect
 from django.urls import reverse
 from .datatables import StudentDatatable
 from .models import Student, Major, Season, CoursesTakenByStudent, Comment, StudentCourseSchedule, Semester, Track, \
-    TrackCourseSet, CourseInTrackSet, CourseToCourseRelation, Course, CoursePrerequisiteSet, Prerequisite, CourseInstance
+    TrackCourseSet, CourseInTrackSet, CourseToCourseRelation, Course, CoursePrerequisiteSet, Prerequisite, \
+    CourseInstance
 
 
 def setup():
@@ -52,21 +53,21 @@ def course_index(request):
 def display_set_info(course_set, layer, info):
     # all this section does is create the sentences before each set of courses
     if course_set.parent_course_set and course_set.parent_course_set.size and not course_set.size:
-        for i in range(layer-1):
+        for i in range(layer - 1):
             info += '  '
         if layer:
             info += 'The following course(s) will not satisfy the requirements (' + course_set.name + '):\n'
         else:
             info += 'The following course(s) will not satisfy the track\'s requirements (' + course_set.name + '):\n'
     elif not course_set.parent_course_set and not course_set.size:
-        for i in range(layer-1):
+        for i in range(layer - 1):
             info += '  '
         if layer:
             info += 'The following course(s) will not satisfy the requirements (' + course_set.name + '):\n'
         else:
             info += 'The following course(s) will not satisfy the track\'s requirements (' + course_set.name + '):\n'
     elif course_set.size:
-        for i in range(layer-1):
+        for i in range(layer - 1):
             info += '  '
         if course_set.limiter:
             info += 'At most ' + str(course_set.size) + ' course(s) from ' + course_set.name + ':\n'
@@ -109,14 +110,14 @@ def display_track_info(track):
     return info
 
 
-def wrap_text(text):
-    # wraps text around the 80 characters-per-line limit without fragmenting any words
+def wrap_text(text, limit):
+    # wraps text around the characters-per-line limit without fragmenting any words
     counter = 0
     text_list = list(text)
     for i in range(len(text_list)):
         if text_list[i] == '\n':
             counter = 0
-        elif counter == 80:
+        elif counter == limit:
             position = i
             while text_list[position] != ' ' and text_list[position] != '\n':
                 position -= 1
@@ -135,8 +136,10 @@ def major_index(request):
             self.key = key
             self.value = value
 
-    track_info = [TrackInfo(track.name, str(track.major_id) + '_' + str(track.id), wrap_text(display_track_info(track))) for track in
-                  Track.objects.all()]
+    track_info = [
+        TrackInfo(track.name, str(track.major_id) + '_' + str(track.id), wrap_text(display_track_info(track), 80)) for
+        track in
+        Track.objects.all()]
 
     context = {'major_list': Major.objects.order_by('name')[1:],
                'track_list': Track.objects.all(),
@@ -214,12 +217,86 @@ def commit_new_student(request):
     return HttpResponseRedirect(reverse('mast:detail', args=(sbu_id,)))
 
 
+def student_degree_reqs_loop(taken_courses, course_set, layer, info):
+    # all this section does is create the sentences before each set of courses
+    if course_set.parent_course_set and course_set.parent_course_set.size and not course_set.size:
+        for i in range(layer - 1):
+            info += '  '
+        if layer:
+            info += 'The following course(s) will not satisfy the requirements (' + course_set.name + '):\n'
+        else:
+            info += 'The following course(s) will not satisfy the track\'s requirements (' + course_set.name + '):\n'
+    elif not course_set.parent_course_set and not course_set.size:
+        for i in range(layer - 1):
+            info += '  '
+        if layer:
+            info += 'The following course(s) will not satisfy the requirements (' + course_set.name + '):\n'
+        else:
+            info += 'The following course(s) will not satisfy the track\'s requirements (' + course_set.name + '):\n'
+    elif course_set.size:
+        for i in range(layer - 1):
+            info += '  '
+        if course_set.limiter:
+            info += 'At most ' + str(course_set.size) + ' course(s) from ' + course_set.name + ':\n'
+        else:
+            info += str(course_set.size) + ' course(s) from ' + course_set.name + ':\n'
+    # all this section does is create the sentences before each set of courses
+
+    # this is where courses get listed out, along with their properties
+    for course in CourseInTrackSet.objects.filter(course_set=course_set):
+        for i in range(layer):
+            info += '  '
+        if course.how_many_semesters > 1:
+            info += str(course) + ', taken at least ' + str(course.how_many_semesters) + ' times.\n'
+        elif course.each_semester:
+            info += str(course) + '[required each semester]\n'
+        else:
+            info += str(course) + '\n'
+    # this is where courses get listed out, along with their properties
+
+    # this prints out course ranges (CSE500-CSE560)
+    if course_set.lower_limit != 100 and course_set.upper_limit != 999 and course_set.department_limit != 'N/A':
+        for i in range(layer - 1):
+            info += '  '
+        info += course_set.department_limit + str(course_set.lower_limit) + '-' + course_set.department_limit + str(
+            course_set.upper_limit)
+    # this prints out course ranges (CSE500-CSE560)
+
+    # this is the recursion call
+    for nested_set in TrackCourseSet.objects.filter(parent_course_set=course_set):
+        info = student_degree_reqs_loop(taken_courses, nested_set, layer + 1, info)
+
+    return info + '\n'
+
+
+def stringify_student_degree_reqs(student):
+    student_credits = 0
+    transfer_credits = 0
+    taken_courses = CoursesTakenByStudent.objects.filter(student=student)
+    for i in taken_courses:
+        if i.status == 'Passed':
+            student_credits += i.credits_taken
+        elif i.status == 'Transfer':
+            transfer_credits += i.credits_taken
+    if transfer_credits > 12:
+        transfer_credits = 12
+    total_credits = student_credits + transfer_credits
+
+    info = 'All of the following areas must be fulfilled or adhered to, for a total of (' + str(
+        total_credits) + '/' + str(student.track.minimum_credits_required) + ') credits:\n\n'
+
+    for course_set in TrackCourseSet.objects.filter(track=student.track, parent_course_set=None):
+        info = student_degree_reqs_loop(taken_courses, course_set, 0, info)
+
+    return info
+
+
 def detail(request, sbu_id):
     student = get_object_or_404(Student, pk=sbu_id)
     comment_list = Comment.objects.filter(student=sbu_id)
     semester_list = {i.course.semester: 1 for i in StudentCourseSchedule.objects.filter(student=sbu_id)}.keys()
     semester_list = sorted(semester_list, key=operator.attrgetter('year'))
-    degree_requirements_string = 'DUMMY STRING'
+    degree_requirements_string = wrap_text(stringify_student_degree_reqs(student), 60)
     return render(request, 'mast/detail.html', {'student': student,
                                                 'major_list': Major.objects.order_by('name'),
                                                 'classes_taken': CoursesTakenByStudent.objects.filter(student=student),
@@ -245,7 +322,7 @@ def course_detail(request, course_department, course_number, section):
             prerequisite_string += str(prerequisite.course.course)
             course_start = False
         if not course_start:
-            if prerequisite_string[len(prerequisite_string)-1] == ',':
+            if prerequisite_string[len(prerequisite_string) - 1] == ',':
                 prerequisite_string = prerequisite_string[:-1]
             prerequisite_string += '\n'
         for nested_set in CoursePrerequisiteSet.objects.filter(parent_set=prerequisite_set):
