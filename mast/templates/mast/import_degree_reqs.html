@@ -36,14 +36,14 @@
 <div class=form>
     <form action="" method="POST" enctype="multipart/form-data">
         {% csrf_token %}
-        {% if messages %}
-            {% for message in messages %}
-                <div>
-                    <strong>{{ message|safe }}</strong>
-                </div>
-            {% endfor %}
-        {% else %}
-            {{ order }}
+{#        {% if messages %}#}
+{#            {% for message in messages %}#}
+{#                <div>#}
+{#                    <strong>{{ message|safe }}</strong>#}
+{#                </div>#}
+{#            {% endfor %}#}
+{#        {% else %}#}
+{#            {{ order }}#}
             <form action="" method="POST" enctype="multipart/form-data">
                 {% csrf_token %}
                 <label for="degree_file"> Upload Degree Requirements XML</label>
@@ -51,7 +51,7 @@
                 <br>
                 <button type="submit">Upload</button>
             </form>
-        {% endif %}
+{#        {% endif %}#}
     </form>
 </div>
 <div class=sideBox>

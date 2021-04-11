@@ -54,6 +54,10 @@ input[type=submit] {
     cursor: pointer;
 }
 
+div#pdf_example_image {
+    visibility: hidden;
+}
+
 div#courses_example_image {
     background-image: url(images/course_offerings_csv_example.png);
     background-repeat: no-repeat;
