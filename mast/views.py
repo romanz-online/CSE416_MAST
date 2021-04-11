@@ -49,6 +49,7 @@ def course_index(request):
 
 
 def display_set_info(course_set, layer, info):
+    # all this section does is create the sentences before each set of courses
     if course_set.parent_course_set and course_set.parent_course_set.size and not course_set.size:
         for i in range(layer-1):
             info += '  '
@@ -70,7 +71,9 @@ def display_set_info(course_set, layer, info):
             info += 'At most ' + str(course_set.size) + ' course(s) from ' + course_set.name + ':\n'
         else:
             info += str(course_set.size) + ' course(s) from ' + course_set.name + ':\n'
+    # all this section does is create the sentences before each set of courses
 
+    # this is where courses get listed out, along with their properties
     for course in CourseInTrackSet.objects.filter(course_set=course_set):
         for i in range(layer):
             info += '  '
@@ -80,13 +83,17 @@ def display_set_info(course_set, layer, info):
             info += str(course) + '[required each semester]\n'
         else:
             info += str(course) + '\n'
+    # this is where courses get listed out, along with their properties
 
-    if not course_set.size and course_set.lower_limit != 100 and course_set.upper_limit != 999 and course_set.department_limit != 'N/A':
+    # this prints out course ranges (CSE500-CSE560)
+    if course_set.lower_limit != 100 and course_set.upper_limit != 999 and course_set.department_limit != 'N/A':
         for i in range(layer - 1):
             info += '  '
         info += course_set.department_limit + str(course_set.lower_limit) + '-' + course_set.department_limit + str(
-            course_set.upper_limit) + '\n'
+            course_set.upper_limit)
+    # this prints out course ranges (CSE500-CSE560)
 
+    # this is the recursion call
     for nested_set in TrackCourseSet.objects.filter(parent_course_set=course_set):
         info = display_set_info(nested_set, layer + 1, info)
 
@@ -94,7 +101,7 @@ def display_set_info(course_set, layer, info):
 
 
 def display_track_info(track):
-    info = 'All these must be fulfilled, for a total of ' + str(
+    info = 'All of the following areas must be fulfilled or adhered to, for a total of ' + str(
         track.minimum_credits_required) + ' credits:\n\n'
     for course_set in TrackCourseSet.objects.filter(track=track, parent_course_set=None):
         info = display_set_info(course_set, 0, info)
@@ -220,9 +227,10 @@ def detail(request, sbu_id):
                                                 })
 
 
-def course_detail(request, course_department, course_number):
-    course = get_object_or_404(Course, department=course_department, number=course_number)
-    return render(request, 'mast/course_detail.html', {'course': course,
+def course_detail(request, course_department, course_number, section):
+    course = Course.objects.get(department=course_department, number=course_number)
+    course_instance = CourseInstance.objects.get(course=course, section=section)
+    return render(request, 'mast/course_detail.html', {'course': course_instance,
                                                        'prerequisite_set_list': CoursePrerequisiteSet.objects.all(),
                                                        'prerequisite_list': Prerequisite.objects.all()
                                                        })

@@ -168,7 +168,7 @@
         <project_required>True</project_required>
         <total_requirements>6</total_requirements>
         <TrackCourseSet>
-            <name>Advanced Project Courses></name>
+            <name>Advanced Project Courses</name>
             <size>2</size>
             <CourseInTrackSet>
                 <course>CSE 523</course>
