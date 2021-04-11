@@ -280,7 +280,6 @@
         <Track>
             <name>Translational Bio-Informatics - Thesis</name>
             <thesis_required>True</thesis_required>
-            <number_of_areas>2</number_of_areas>
             <minimum_credits_required>33</minimum_credits_required>
             <total_requirements>10</total_requirements>
             <TrackCourseSet>

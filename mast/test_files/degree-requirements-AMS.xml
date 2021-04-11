@@ -9,7 +9,6 @@
 
     <Track>
         <name>Computational Applied Mathematics</name>
-        <number_of_areas>2</number_of_areas>
         <total_requirements>13</total_requirements>
         <TrackCourseSet>
             <size>7</size>
@@ -43,7 +42,6 @@
 
     <Track>
         <name>Computational Biology</name>
-        <number_of_areas>2</number_of_areas>
         <total_requirements>15</total_requirements>
         <TrackCourseSet>
             <size>10</size>
@@ -94,7 +92,6 @@
 
     <Track>
         <name>Operations Research</name>
-        <number_of_areas>2</number_of_areas>
         <total_requirements>13</total_requirements>
         <TrackCourseSet>
             <size>7</size>
@@ -154,7 +151,6 @@
 
     <Track>
         <name>Statistics</name>
-        <number_of_areas>2</number_of_areas>
         <total_requirements>12</total_requirements>
         <TrackCourseSet>
             <size>8</size>
@@ -191,7 +187,6 @@
 
     <Track>
         <name>Quantitative Finance</name>
-        <number_of_areas>2</number_of_areas>
         <total_requirements>14</total_requirements>
         <TrackCourseSet>
             <size>11</size>
