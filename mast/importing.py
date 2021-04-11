@@ -154,12 +154,12 @@ def import_degree_requirements(request):
                             if tcs_upper_limit:
                                 tcs_upper_limit = tcs_upper_limit.get_text()
                             else:
-                                tcs_upper_limit = 100
+                                tcs_upper_limit = 999
                             tcs_lower_limit = child.find("lower_limit")
                             if tcs_lower_limit:
                                 tcs_lower_limit = tcs_lower_limit.get_text()
                             else:
-                                tcs_lower_limit = 999
+                                tcs_lower_limit = 100
                             tcs_department_limit = child.find("department_limit")
                             if tcs_department_limit:
                                 tcs_department_limit = tcs_department_limit.get_text()

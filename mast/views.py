@@ -94,7 +94,7 @@ def display_set_info(course_set, layer, info):
 
 
 def display_track_info(track):
-    info = str(track.number_of_areas) + ' area(s) must be completed from the following, for a total of ' + str(
+    info = 'All these must be fulfilled, for a total of ' + str(
         track.minimum_credits_required) + ' credits:\n\n'
     for course_set in TrackCourseSet.objects.filter(track=track, parent_course_set=None):
         info = display_set_info(course_set, 0, info)
