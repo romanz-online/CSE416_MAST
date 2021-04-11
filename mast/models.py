@@ -14,6 +14,7 @@ class CourseStatus(models.TextChoices):
     PENDING = 'Pending'
     PASSED = 'Passed'
     FAILED = 'Failed'
+    TRANSFER = 'Transfer'
 
 
 class CourseRelation(models.TextChoices):

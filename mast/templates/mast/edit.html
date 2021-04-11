@@ -209,6 +209,30 @@
     </form>
 </div>
 
+<div style="margin-top: 12px;">
+    Transfer Courses: <br>
+    {% for record in classes_taken %}
+        {% if record.student == student and record.status == 'Pending' %}
+            {{ record.course }}
+        {% endif %}
+    {% endfor %}
+    <br>
+
+    <form action="{% url 'mast:add_taken_course' student.sbu_id %}" method="get">
+        <select name="course">
+            {% for class in course_list %}
+                {% if class.name != '' %}
+                    <option value={{ class.id }}>{{ class }}</option>
+                {% endif %}
+            {% endfor %}
+        </select>
+        <button type="submit">Add Course</button>
+        <br>
+        <br>
+        Courses added here will be presented as "Pending" until they are Passed, Failed, or Dropped.
+    </form>
+</div>
+
 
 <form action="{% url 'mast:delete_record' student.sbu_id %}" method="post" class="delete">
     {% csrf_token %}
