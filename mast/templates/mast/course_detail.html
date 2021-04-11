@@ -5,17 +5,25 @@
     <title>{{ course.name }}</title>
 </head>
 <body>
-Description: {{ course.description }}
+Course: {{ course.course }}, Section {{ course.section }}
 <br>
-Prerequisites:
-{% for set in prerequisite_set_list %}
-    {% if set.parent_course == course %}
-        {% for prereq in prerequisite_list %}
-            {% if prereq.course_set == set %}
-                {{ prereq.course }}
-            {% endif %}
-        {% endfor %}
-    {% endif %}
-{% endfor %}
+Semester: {{ course.semester }}
+<br>
+Time:
+{% if not course.time_start and not course.time_end %}
+    Unknown
+{% else %}
+    {{ course.time_start }} - {{ course.time_end }}
+{% endif %}
+<br>
+Description:
+{% if course.description %}
+    {{ course.description }}
+{% else %}
+    No description.
+{% endif %}
+<br>
+Prerequisites:<br>
+<pre>{{ prerequisites }}</pre>
 </body>
 </html>

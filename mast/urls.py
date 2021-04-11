@@ -36,5 +36,5 @@ urlpatterns = [
     path('student_index/search/', searching.search, name='search'),
     path('student_index/#', searching.delete_all_students, name='delete_all_students'),
 
-    path('<str:course_department>/<int:course_number>/', views.course_detail, name='course_detail'),
+    path('<str:course_department>/<int:course_number>/<int:section>', views.course_detail, name='course_detail'),
 ]

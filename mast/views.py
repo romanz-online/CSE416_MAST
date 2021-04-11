@@ -218,21 +218,47 @@ def detail(request, sbu_id):
     comment_list = Comment.objects.filter(student=sbu_id)
     semester_list = {i.course.semester: 1 for i in StudentCourseSchedule.objects.filter(student=sbu_id)}.keys()
     semester_list = sorted(semester_list, key=operator.attrgetter('year'))
+    degree_requirements_string = 'DUMMY STRING'
     return render(request, 'mast/detail.html', {'student': student,
                                                 'major_list': Major.objects.order_by('name'),
                                                 'classes_taken': CoursesTakenByStudent.objects.all(),
                                                 'comment_list': comment_list.order_by('post_date'),
                                                 'semester_list': semester_list,
-                                                'schedule': StudentCourseSchedule.objects.filter(student=sbu_id)
+                                                'schedule': StudentCourseSchedule.objects.filter(student=sbu_id),
+                                                'requirements': degree_requirements_string
                                                 })
 
 
 def course_detail(request, course_department, course_number, section):
     course = Course.objects.get(department=course_department, number=course_number)
     course_instance = CourseInstance.objects.get(course=course, section=section)
+    prerequisite_string = 'None.'
+    if CoursePrerequisiteSet.objects.filter(parent_course=course_instance):
+        prerequisite_set = CoursePrerequisiteSet.objects.filter(parent_course=course_instance)[0]
+        prerequisite_string = ''
+        course_start = True
+        set_start = True
+        for prerequisite in Prerequisite.objects.filter(course_set=prerequisite_set):
+            if not course_start:
+                prerequisite_string += ','
+            prerequisite_string += str(prerequisite.course.course)
+            course_start = False
+        if not course_start:
+            if prerequisite_string[len(prerequisite_string)-1] == ',':
+                prerequisite_string = prerequisite_string[:-1]
+            prerequisite_string += '\n'
+        for nested_set in CoursePrerequisiteSet.objects.filter(parent_set=prerequisite_set):
+            for prerequisite in Prerequisite.objects.filter(course_set=nested_set):
+                if not set_start:
+                    prerequisite_string += ' or '
+                prerequisite_string += str(prerequisite.course.course)
+                set_start = False
+            if not set_start:
+                prerequisite_string += '\n'
+            set_start = True
+
     return render(request, 'mast/course_detail.html', {'course': course_instance,
-                                                       'prerequisite_set_list': CoursePrerequisiteSet.objects.all(),
-                                                       'prerequisite_list': Prerequisite.objects.all()
+                                                       'prerequisites': prerequisite_string
                                                        })
 
 

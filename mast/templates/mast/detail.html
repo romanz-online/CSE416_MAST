@@ -2,12 +2,36 @@
 <html lang="en">
 <head>
     <title>Student {{ student.sbu_id }}</title>
+
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/uikit@3.6.17/dist/css/uikit.min.css"/>
 
     <!-- UIkit JS -->
     <script src="https://cdn.jsdelivr.net/npm/uikit@3.6.17/dist/js/uikit.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/uikit@3.6.17/dist/js/uikit-icons.min.js"></script>
+
+    <script>
+        function showElement(element_id) {
+            let all = document.getElementsByTagName("*");
+            for (let i = 0, max = all.length; i < max; i++) {
+                if (all[i].className === 'page') {
+                    all[i].style.visibility = "hidden";
+                }
+            }
+            u = document.getElementById(element_id);
+            u.style.visibility = "visible";
+        }
+    </script>
+
     <style>
+        .page {
+            position: absolute;
+            padding: 12px;
+        }
+
+        body {
+            background-color: #f2f2f2;
+        }
+
         input[type=button], input[type=submit], input[type=reset] {
             background-color: #490000;
             border: none;
@@ -28,29 +52,20 @@
 
         .info {
             color: black;
+            background: white;
             margin-top: 10px;
             margin-left: 20px;
             margin-right: 20px;
             padding-bottom: 10px;
             border-style: solid;
-        }
-
-        .schedule {
-            margin-top: 10px;
-            padding-left: 10px;
-            margin-left: 20px;
-            margin-bottom: 5px;
-            margin-right: 20px;
-            padding-bottom: 10px;
-            border-style: solid;
-
         }
 
         .semester {
             margin-left: 10px;
             margin-right: 10px;
             padding-left: 10px;
-            padding-top: 1px;
+            padding-right: 16px;
+            padding-top: 2px;
             background-color: #f2f2f2;
             margin-bottom: 7px;
         }
@@ -68,10 +83,32 @@
             padding-bottom: 10px;
         }
 
+        ul.navbar_container {
+            list-style-type: none;
+            margin: 0;
+            padding-bottom: 0;
+            overflow: hidden;
+            background-color: #490000;
+        }
+
+        .navbar_item {
+            float: left;
+            display: block;
+            color: white;
+            text-align: center;
+            padding: 14px;
+            margin-left: -30px;
+            margin-right: 30px;
+            text-decoration: none;
+        }
+
+        .navbar_item:hover {
+            background-color: dimgray;
+            cursor: pointer;
+        }
     </style>
 </head>
-
-
+<body>
 <div class="uk-flex">
     <div class='uk-width-1-2'>
         <div class=info>
@@ -105,9 +142,10 @@
                     <td>Withdrew?</td>
                     <td>
                         {% if student.withdrew %}
-                            <span uk-icon="icon: check"></s
+                            <span uk-icon="icon: check">
                                 <link rel="stylesheet"
-                                      href="https://cdn.jsdelivr.net/npm/uikit@3.6.17/dist/css/uikit.min.css"/></span>
+                                      href="https://cdn.jsdelivr.net/npm/uikit@3.6.17/dist/css/uikit.min.css"/>
+                            </span>
                             <!-- UIkit JS -->
                         {% else %}
                             <span uk-icon="icon: close"></span>
@@ -130,8 +168,6 @@
                     <td>Track:</td>
                     <td>{{ student.track }}</td>
                 </tr>
-
-
                 </tbody>
             </table>
 
@@ -140,38 +176,39 @@
                 <input type="submit" value="Edit Student">
             </form>
         </div>
-
     </div>
 
 
-    <div class=" uk-width-1-2">
-        <div class="schedule">
+    <div class="info">
+        <ul class="navbar_container">
+            <li class="navbar_item" onclick="showElement('schedule')">Schedule</li>
+            <li class="navbar_item" onclick="showElement('history')">Course History</li>
+            <li class="navbar_item" onclick="showElement('requirements')">Degree Requirements</li>
+            <li class="navbar_item" onclick="showElement('comments')">Comments</li>
+        </ul>
+
+        <div id="history" style="visibility: hidden;" class="page">
             <table>
                 <thead>
-                <th>
-                    <font color=#490000>
-                        Courses Taken
-                    </font>
-                </th>
+                <font color=#490000>
+                    Courses Taken
+                </font>
                 </thead>
                 <tbody>
-
-
                 {% for record in classes_taken %}
                     {% if record.student == student %}
-
-                        {#                        <div class=semester>#}
                         <tr>
                             <td>{{ record.course }}</td>
                             <td>{{ record.grade }}</td>
                             <td>{{ record.status }}</td>
                         </tr>
-                        {#                        </div>#}
                     {% endif %}
                 {% endfor %}
                 </tbody>
             </table>
-            <br>
+        </div>
+
+        <div id="schedule" style="visibility: hidden;" class="page">
             <font color=#4900000>
                 Schedule:
             </font>
@@ -183,68 +220,69 @@
                     </font>
                     <br>
                     {% for record in schedule %}
-
                         {% if record.course.semester == semester and record.course.section != 999 %}
                             <font color=black>
                                 {{ record.course }}<br>
                             </font>
                         {% endif %}
-
                     {% endfor %}
                     <br>
                 </div>
             {% endfor %}
             <br>
-
             <form action="{% url 'mast:edit_schedule' student.sbu_id %}" method="post">
                 {% csrf_token %}
                 <input type="submit" value="Edit Schedule">
             </form>
         </div>
-        <div class=schedule>
+
+        <div id="comments" class="page">
             <font color=#4900000>
                 Comments:
-            </font> <br>
+            </font>
+            <br>
             {% for comment in comment_list %}
-                <article class="uk-comment">
-                    <header class="uk-comment-header">
-                        <div class="uk-width-expand"></div>
-                        <img class="uk-comment-avatar" src="" alt="">
-                        <h4 class="uk-comment-title uk-margin-remove"><a class="uk-link-reset" href="#">
-                            <font color=#490000>
-                                {{ comment.author }}
-                            </font>
-                        </a></h4>
-                        <ul class="uk-comment-meta uk-subnav uk-subnav-divider uk-margin-remove-top">
-                            <li><a href="#">{{ comment.post_date }}</a></li>
-                        </ul>
-                    </header>
-
-                    <div class="uk-comment-body">
-                        <font color=black>
-                            {{ comment.text }}
+                <header class="uk-comment-header">
+                    <h4 class="uk-comment-title uk-margin-remove">
+                        <font color=#490000>
+                            {{ comment.author }}
                         </font>
-                    </div>
+                    </h4>
+                    <ul class="uk-comment-meta uk-subnav uk-subnav-divider uk-margin-remove-top">
+                        <li>{{ comment.post_date }}</li>
+                    </ul>
+                </header>
 
-                </article>
+                <div class="uk-comment-body">
+                    <font color=black>
+                        {{ comment.text }}
+                    </font>
+                </div>
+                <br>
             {% endfor %}
-
-
             <form action="{% url 'mast:add_comment' student.sbu_id %}" method="get">
                 <input type="text" name="new_comment" placeholder="Type your comment here.">
                 <input type="submit" value="Comment">
             </form>
-
-
-            </form>
         </div>
+
+        <div id="requirements" style="visibility: hidden;" class="page">
+            <font color=#4900000>
+                {{ student.major }}, {{ student.track }} Requirements:
+            </font>
+            <br>
+            {{ requirements }}
+        </div>
+
+    </div>
+    <br>
+
+    <div class=back>
+        <form action="{% url 'mast:student_index' %}" method="post">
+            {% csrf_token %}
+            <input type="submit" value="Back">
+        </form>
     </div>
 </div>
-<br>
-<div class=back>
-    <form action="{% url 'mast:student_index' %}" method="post">
-        {% csrf_token %}
-        <input type="submit" value="Back">
-    </form>
-</div>
+</body>
 </html>
