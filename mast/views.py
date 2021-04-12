@@ -325,7 +325,7 @@ def student_degree_reqs_loop(taken_courses, course_set, layer, info):
         for i in range(layer - 1):
             info += '  '
         info += course_set.department_limit + str(course_set.lower_limit) + '-' + course_set.department_limit + str(
-            course_set.upper_limit)
+            course_set.upper_limit) + '\n'
     # this prints out course ranges (CSE500-CSE560)
 
     # this is the recursion call
