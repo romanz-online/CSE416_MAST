@@ -246,19 +246,29 @@ def student_degree_reqs_loop(taken_courses, course_set, layer, info):
             info += '  '
         if course_set.limiter:
             for course in CourseInTrackSet.objects.filter(course_set=course_set):
-                taken_course_lookup = sum([i.credits_taken for i in taken_courses if i.course.course == course.course and i.status == CourseStatus.PASSED])
-                if taken_course_lookup:
-                    number_taken += taken_course_lookup
-            for track in TrackCourseSet.objects.filter(parent_course_set=course_set):
-                for course in CourseInTrackSet.objects.filter(course_set=track):
-                    taken_course_lookup = len([i for i in taken_courses if i.course.course == course.course])
+                if track.lower_limit != 100 and track.upper_limit != 999:
+                    taken_course_lookup = len([i for i in taken_courses if track.lower_limit <= i.course.course.number <= track.upper_limit])
                     if taken_course_lookup:
                         number_taken += taken_course_lookup
-                taken_course_lookup = len([i for i in taken_courses if i.course.course == course.course])
-                if taken_course_lookup >= track.size:
-                    number_taken += track.size
+                else: 
+                    taken_course_lookup = sum([i.credits_taken for i in taken_courses if i.course.course == course.course and i.status == CourseStatus.PASSED])
+                    if taken_course_lookup:
+                        number_taken += taken_course_lookup
+            for track in TrackCourseSet.objects.filter(parent_course_set=course_set):
+                if track.lower_limit != 100 and track.upper_limit != 999:
+                    taken_course_lookup = len([i for i in taken_courses if track.lower_limit <= i.course.course.number <= track.upper_limit])
+                    if taken_course_lookup:
+                        number_taken += taken_course_lookup
                 else:
-                    number_taken += taken_course_lookup
+                    for course in CourseInTrackSet.objects.filter(course_set=track):
+                        taken_course_lookup = len([i for i in taken_courses if i.course.course == course.course])
+                        if taken_course_lookup:
+                            number_taken += taken_course_lookup
+                    taken_course_lookup = len([i for i in taken_courses if i.course.course == course.course])
+                    if taken_course_lookup >= track.size:
+                        number_taken += track.size
+                    else:
+                        number_taken += taken_course_lookup
             if number_taken >= course_set.size:
                 if course_set.lower_credit_limit != 0:
                     info += str(course_set.lower_credit_limit) + "-" + str(course_set.size) + " [" + str(
