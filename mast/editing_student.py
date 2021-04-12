@@ -185,6 +185,8 @@ def commit_edit(request, sbu_id):
         student.gpa = get_gpa(student)
 
         student.save()
+
+        sync_course_data(student)
     except:
         # Return an error message if their data could not be saved 
         student = get_object_or_404(Student, pk=sbu_id)
@@ -329,6 +331,7 @@ def add_transfer_course(request, sbu_id):
             c = CoursesTakenByStudent(student=student, course=CourseInstance.objects.get(id=course), grade=grade,
                                       credits_taken=credits, status=CourseStatus.TRANSFER)
             c.save()
+        sync_course_data(student)
     except:
         return HttpResponseRedirect(reverse('mast:edit', args=(sbu_id,)))
     return HttpResponseRedirect(reverse('mast:edit', args=(sbu_id,)))
@@ -368,6 +371,39 @@ def modify_course_in_progress(request, sbu_id, record):
             student.save()
         else:
             raise Exception()
+        sync_course_data(student)
     except:
         return HttpResponseRedirect(reverse('mast:edit', args=(sbu_id,)))
     return HttpResponseRedirect(reverse('mast:edit', args=(sbu_id,)))
+
+
+def sync_course_data(student):
+    taken_courses = CoursesTakenByStudent.objects.filter(student=student)
+    track = student.track
+
+    satisfied_requirements = 0
+    pending_requirements = 0
+    unsatisfied_requirements = student.track.total_requirements
+
+    # accounting for GPA
+    if not student.graduated and not student.withdrew:
+        pending_requirements += 1
+        unsatisfied_requirements -= 1
+    else:
+        if student.gpa >= track.required_gpa:
+            satisfied_requirements += 1
+            unsatisfied_requirements -= 1
+
+        # accounting for minimum credit requirement
+        total_credits = 0
+        for i in taken_courses:
+            total_credits += i.credits_taken
+
+        if total_credits >= track.minimum_credits_required:
+            satisfied_requirements += 1
+            unsatisfied_requirements -= 1
+
+    # all other requirements go below this point
+    for course in taken_courses:
+        if course.status != CourseStatus.PENDING:
+            pass

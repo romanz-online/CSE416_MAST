@@ -1,4 +1,5 @@
 import re
+from bs4 import BeautifulSoup
 
 from django.shortcuts import render
 from django.contrib import messages
@@ -6,12 +7,8 @@ from django.http import HttpResponseRedirect
 from django.urls import reverse
 from .models import Student, Major, Course, CourseInstance, CoursesTakenByStudent, Semester, Track, \
     TrackCourseSet, CourseInTrackSet, CourseStatus, Grade, Season, CoursePrerequisiteSet, Prerequisite
-from pdfminer.pdfparser import PDFParser, PDFDocument
-from pdfminer.pdfinterp import PDFResourceManager, PDFPageInterpreter
-from pdfminer.converter import PDFPageAggregator
-from pdfminer.layout import LTTextBoxHorizontal, LAParams
-from pdfminer.pdfinterp import PDFTextExtractionNotAllowed
-from bs4 import BeautifulSoup
+
+from . import editing_student
 
 
 def import_degree_requirements(request):
@@ -434,6 +431,8 @@ def import_grades(request, course_file):
             else:
                 new_class.status = CourseStatus.PENDING
             new_class.save()
+
+            editing_student.sync_course_data(new_class.student)
 
     return HttpResponseRedirect(reverse('mast:student_index', args=()))
 
