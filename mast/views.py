@@ -248,10 +248,13 @@ def student_degree_reqs_loop(taken_courses, course_set, layer, info):
                 taken_course_lookup = len([i for i in taken_courses if i.course.course == course.course])
                 if taken_course_lookup:
                     number_taken += taken_course_lookup
-            if number_taken >= course_set.size:
-                info += "(" + str(number_taken) + "/"+ str(course_set.size) + ') course(s) from ' + course_set.name + ' [COMPLETED]:\n'
+            if "Elective" in course_set.name:
+                info += str(course_set.size * 3) + " credit(s) from " + course_set.name + ".\n"
             else:
-                info += "(" + str(number_taken) + "/"+ str(course_set.size) + ') course(s) from ' + course_set.name + ':\n'
+                if number_taken >= course_set.size:
+                    info += "(" + str(number_taken) + "/"+ str(course_set.size) + ') course(s) from ' + course_set.name + ' [COMPLETED]:\n'
+                else:
+                    info += "(" + str(number_taken) + "/"+ str(course_set.size) + ') course(s) from ' + course_set.name + ':\n'
     # all this section does is create the sentences before each set of courses
 
     # this is where courses get listed out, along with their properties
@@ -261,11 +264,20 @@ def student_degree_reqs_loop(taken_courses, course_set, layer, info):
         for i in range(layer):
             info += '  '
         if course.how_many_semesters > 1:
-            info += str(course) + ', taken at least ' + str(course.how_many_semesters) + ' times.\n'
+            if taken_course_lookup != 0:
+                info += str(course) + ', taken at least ' + str(course.how_many_semesters) + ' times. [TAKEN ' + str(taken_course_lookup) + ' TIME(S)] \n'
+            else:
+                info += str(course) + ', taken at least ' + str(course.how_many_semesters) + ' times.\n'
         elif course.each_semester:
-            info += str(course) + '[required each semester] [TAKEN ' + str(len(taken_course_lookup)) + ' TIMES]\n'
+            if taken_course_lookup != 0:
+                info += str(course) + ' [required each semester] [TAKEN ' + str(taken_course_lookup) + ' TIME(S)]\n'
+            else:
+                info += str(course) + ' [required each semester]\n'
         else:
-            info += str(course) + ' ' + taken + '\n'
+            if course_set.limiter and taken_course_lookup != 0:
+                info += str(course) + ' [TAKEN ' + str(taken_course_lookup) + ' TIME(S)]\n' 
+            else:
+                info += str(course) + ' ' + taken + '\n'
     # this is where courses get listed out, along with their properties
 
     # this prints out course ranges (CSE500-CSE560)
