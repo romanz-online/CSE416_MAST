@@ -133,14 +133,14 @@
             <lower_limit>542</lower_limit>
             <upper_limit>556</upper_limit>
             <TrackCourseSet>
-                <size>1</size>
+                <upper_credit_limit>3</upper_credit_limit>
                 <limiter>True</limiter>
                 <department_limit>AMS</department_limit>
                 <lower_limit>570</lower_limit>
                 <upper_limit>586</upper_limit>
             </TrackCourseSet>
             <TrackCourseSet>
-                <size>1</size>
+                <upper_credit_limit>3</upper_credit_limit>
                 <limiter>True</limiter>
                 <department_limit>AMS</department_limit>
                 <lower_limit>511</lower_limit>

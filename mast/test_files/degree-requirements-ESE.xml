@@ -118,7 +118,7 @@
             <size>3</size>
             <TrackCourseSet>
                 <limiter>True</limiter>
-                <size>0</size>
+                <upper_credit_limit>0</upper_credit_limit>
                 <CourseInTrackSet>
                     <course>ESE 597</course>
                 </CourseInTrackSet>
@@ -257,7 +257,7 @@
             <size>3</size>
             <TrackCourseSet>
                 <limiter>True</limiter>
-                <size>0</size>
+                <upper_credit_limit>0</upper_credit_limit>
                 <CourseInTrackSet>
                     <course>ESE 597</course>
                 </CourseInTrackSet>

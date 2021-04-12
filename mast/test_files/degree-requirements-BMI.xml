@@ -84,7 +84,7 @@
                </CourseInTrackSet>
             </TrackCourseSet>
             <TrackCourseSet>
-               <size>0</size>
+               <upper_credit_limit>0</upper_credit_limit>
                <limiter>True</limiter>
                <CourseInTrackSet>
                     <course>BMI 598</course>
@@ -92,14 +92,14 @@
             </TrackCourseSet>
             <TrackCourseSet>
                <limiter>True</limiter>
-               <size>4</size>
+               <upper_credit_limit>12</upper_credit_limit>
                <CourseInTrackSet>
                     <course>BMI 599</course>
                </CourseInTrackSet>
             </TrackCourseSet>
             <TrackCourseSet>
                <limiter>True</limiter>
-               <size>2</size>
+               <upper_credit_limit>6</upper_credit_limit>
                <CourseInTrackSet>
                     <course>BMI 596</course>
                </CourseInTrackSet>
@@ -110,7 +110,7 @@
             <TrackCourseSet>
                <name>Limiter</name>
                <limiter>True</limiter>
-               <size>1</size>
+               <upper_credit_limit>3</upper_credit_limit>
                <CourseInTrackSet>
                     <course>BMI 590</course>
                </CourseInTrackSet>
@@ -223,7 +223,7 @@
                </CourseInTrackSet>
             </TrackCourseSet>
             <TrackCourseSet>
-               <size>0</size>
+               <upper_credit_limit>0</upper_credit_limit>
                <limiter>True</limiter>
                <CourseInTrackSet>
                     <course>BMI 598</course>
@@ -231,14 +231,14 @@
             </TrackCourseSet>
             <TrackCourseSet>
                <limiter>True</limiter>
-               <size>4</size>
+               <upper_credit_limit>12</upper_credit_limit>
                <CourseInTrackSet>
                     <course>BMI 599</course>
                </CourseInTrackSet>
             </TrackCourseSet>
             <TrackCourseSet>
                <limiter>True</limiter>
-               <size>2</size>
+               <upper_credit_limit>6</upper_credit_limit>
                <CourseInTrackSet>
                     <course>BMI 596</course>
                </CourseInTrackSet>
@@ -249,7 +249,7 @@
             <TrackCourseSet>
                <name>Limiter</name>
                <limiter>True</limiter>
-               <size>1</size>
+               <upper_credit_limit>3</upper_credit_limit>
                <CourseInTrackSet>
                     <course>BMI 590</course>
                </CourseInTrackSet>
@@ -290,7 +290,7 @@
                      <course>BMI 501</course>
                 </CourseInTrackSet>
                 <TrackCourseSet>
-                    <number_required>1</number_required>
+                    <upper_credit_limit>3</upper_credit_limit>
                     <limiter>True</limiter>
                     <CourseInTrackSet>
                          <course>BMI 502</course>
@@ -357,7 +357,7 @@
                </CourseInTrackSet>
             </TrackCourseSet>
             <TrackCourseSet>
-               <size>0</size>
+               <upper_credit_limit>0</upper_credit_limit>
                <limiter>True</limiter>
                <CourseInTrackSet>
                     <course>BMI 598</course>
@@ -365,14 +365,14 @@
             </TrackCourseSet>
             <TrackCourseSet>
                <limiter>True</limiter>
-               <size>4</size>
+               <upper_credit_limit>12</upper_credit_limit>
                <CourseInTrackSet>
                     <course>BMI 599</course>
                </CourseInTrackSet>
             </TrackCourseSet>
             <TrackCourseSet>
                <limiter>True</limiter>
-               <size>2</size>
+               <upper_credit_limit>6</upper_credit_limit>
                <CourseInTrackSet>
                     <course>BMI 596</course>
                </CourseInTrackSet>
@@ -383,7 +383,7 @@
             <TrackCourseSet>
                <name>Limiter</name>
                <limiter>True</limiter>
-               <size>1</size>
+               <upper_credit_limit>3</upper_credit_limit>
                <CourseInTrackSet>
                     <course>BMI 590</course>
                </CourseInTrackSet>
@@ -491,7 +491,7 @@
                </CourseInTrackSet>
             </TrackCourseSet>
             <TrackCourseSet>
-               <size>0</size>
+               <upper_credit_limit>0</upper_credit_limit>
                <limiter>True</limiter>
                <CourseInTrackSet>
                     <course>BMI 599</course>
@@ -499,14 +499,14 @@
             </TrackCourseSet>
             <TrackCourseSet>
                <limiter>True</limiter>
-               <size>2</size>
+               <upper_credit_limit>6</upper_credit_limit>
                <CourseInTrackSet>
                     <course>BMI 598</course>
                </CourseInTrackSet>
             </TrackCourseSet>
             <TrackCourseSet>
                <limiter>True</limiter>
-               <size>2</size>
+               <upper_credit_limit>6</upper_credit_limit>
                <CourseInTrackSet>
                     <course>BMI 596</course>
                </CourseInTrackSet>
@@ -517,7 +517,7 @@
             <TrackCourseSet>
                <name>Limiter</name>
                <limiter>True</limiter>
-               <size>1</size>
+               <upper_credit_limit>3</upper_credit_limit>
                <CourseInTrackSet>
                     <course>BMI 590</course>
                </CourseInTrackSet>
@@ -630,7 +630,7 @@
                </CourseInTrackSet>
             </TrackCourseSet>
             <TrackCourseSet>
-               <size>0</size>
+               <upper_credit_limit>0</upper_credit_limit>
                <limiter>True</limiter>
                <CourseInTrackSet>
                     <course>BMI 599</course>
@@ -638,14 +638,14 @@
             </TrackCourseSet>
             <TrackCourseSet>
                <limiter>True</limiter>
-               <size>2</size>
+               <upper_credit_limit>6</upper_credit_limit>
                <CourseInTrackSet>
                     <course>BMI 598</course>
                </CourseInTrackSet>
             </TrackCourseSet>
             <TrackCourseSet>
                <limiter>True</limiter>
-               <size>2</size>
+               <upper_credit_limit>6</upper_credit_limit>
                <CourseInTrackSet>
                     <course>BMI 596</course>
                </CourseInTrackSet>
@@ -656,7 +656,7 @@
             <TrackCourseSet>
                <name>Limiter</name>
                <limiter>True</limiter>
-               <size>1</size>
+               <upper_credit_limit>3</upper_credit_limit>
                <CourseInTrackSet>
                     <course>BMI 590</course>
                </CourseInTrackSet>
@@ -763,7 +763,7 @@
                </CourseInTrackSet>
             </TrackCourseSet>
             <TrackCourseSet>
-               <size>0</size>
+               <upper_credit_limit>0</upper_credit_limit>
                <limiter>True</limiter>
                <CourseInTrackSet>
                     <course>BMI 599</course>
@@ -771,14 +771,14 @@
             </TrackCourseSet>
             <TrackCourseSet>
                <limiter>True</limiter>
-               <size>2</size>
+               <upper_credit_limit>6</upper_credit_limit>
                <CourseInTrackSet>
                     <course>BMI 598</course>
                </CourseInTrackSet>
             </TrackCourseSet>
             <TrackCourseSet>
                <limiter>True</limiter>
-               <size>2</size>
+               <upper_credit_limit>6</upper_credit_limit>
                <CourseInTrackSet>
                     <course>BMI 596</course>
                </CourseInTrackSet>
@@ -789,7 +789,7 @@
             <TrackCourseSet>
                <name>Limiter</name>
                <limiter>True</limiter>
-               <size>1</size>
+               <upper_credit_limit>3</upper_credit_limit>
                <CourseInTrackSet>
                     <course>BMI 590</course>
                </CourseInTrackSet>

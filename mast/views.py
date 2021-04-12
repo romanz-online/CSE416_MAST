@@ -233,23 +233,23 @@ def student_degree_reqs_loop(taken_courses, course_set, layer, info):
                 taken_course_lookup = sum([i.credits_taken for i in taken_courses if i.course.course == course.course])
                 if taken_course_lookup:
                     number_taken += taken_course_lookup
-            if number_taken >= course_set.size*3:
+            if number_taken >= course_set.size:
                 if course_set.lower_credit_limit != 0:
-                    info += str(course_set.lower_credit_limit) + "-" + str(course_set.size*3) + " [" + str(course_set.size*3) + " applied] credit(s) from " + course_set.name + ' [CAPPED]:\n'
+                    info += str(course_set.lower_credit_limit) + "-" + str(course_set.size) + " [" + str(course_set.size) + " current] applied] credit(s) from " + course_set.name + ' [CAPPED]:\n'
                 else:
-                    info += 'At most (' + str(course_set.size*3) + "/" + str(course_set.size*3) + ') credit(s) from ' + course_set.name + ' [CAPPED]:\n'
+                    info += 'At most (' + str(course_set.size) + "/" + str(course_set.size) + ') credit(s) from ' + course_set.name + ' [CAPPED]:\n'
             else:
                 if course_set.lower_credit_limit != 0:
-                    info += str(course_set.lower_credit_limit) + "-" + str(course_set.size*3) + " [" + str(number_taken) + " applied credit(s) from " + course_set.name + ':\n'
+                    info += str(course_set.lower_credit_limit) + "-" + str(course_set.size) + " [" + str(number_taken) + " current] applied credit(s) from " + course_set.name + ':\n'
                 else:
-                    info += 'At most (' + str(number_taken) + "/" + str(course_set.size*3) + ') credit(s) from ' + course_set.name + ':\n'
+                    info += 'At most (' + str(number_taken) + "/" + str(course_set.size) + ') credit(s) from ' + course_set.name + ':\n'
         else:
             for course in CourseInTrackSet.objects.filter(course_set=course_set):
                 taken_course_lookup = len([i for i in taken_courses if i.course.course == course.course])
                 if taken_course_lookup:
                     number_taken += taken_course_lookup
             if "Elective" in course_set.name:
-                info += str(course_set.size * 3) + " credit(s) from " + course_set.name + ".\n"
+                info += str(course_set.size) + " credit(s) from " + course_set.name + ".\n"
             else:
                 if number_taken >= course_set.size:
                     info += "(" + str(course_set.size) + "/"+ str(course_set.size) + ') required course(s) from ' + course_set.name + ' [COMPLETED]:\n'
@@ -311,7 +311,7 @@ def stringify_student_degree_reqs(student):
             taken_course_lookup = sum([i.credits_taken for i in taken_courses if i.course.course == course.course if i.status == 'Passed'])
             if taken_course_lookup:
                 if course_set.size * 3 <= taken_course_lookup and course_set.limiter is True:
-                    student_credits -= taken_course_lookup - (course_set.size * 3)
+                    student_credits -= taken_course_lookup - (course_set.size)
     total_credits = student_credits + transfer_credits
 
     info = 'All of the following areas must be fulfilled or adhered to, for a total of (' + str(

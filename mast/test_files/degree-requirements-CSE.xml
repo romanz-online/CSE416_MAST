@@ -15,7 +15,7 @@
         <TrackCourseSet>
             <name>No Credit Courses - Parent Set</name>
             <limiter>True</limiter>
-            <size>0</size>
+            <upper_credit_limit>0</upper_credit_limit>
             <CourseInTrackSet>
                 <course>CSE 500</course>
             </CourseInTrackSet>
@@ -31,7 +31,7 @@
             <TrackCourseSet>
                 <name>No Credit Courses, 580-589</name>
                 <limiter>True</limiter>
-                <size>0</size>
+                <upper_credit_limit>0</upper_credit_limit>
                 <department_limit>CSE</department_limit>
                 <lower_limit>580</lower_limit>
                 <upper_limit>589</upper_limit>
@@ -42,7 +42,7 @@
             <TrackCourseSet>
                 <name>No Credit Courses, 596-598</name>
                 <limiter>True</limiter>
-                <size>0</size>
+                <upper_credit_limit>0</upper_credit_limit>
                 <department_limit>CSE</department_limit>
                 <lower_limit>596</lower_limit>
                 <upper_limit>598</upper_limit>
@@ -146,8 +146,8 @@
         </TrackCourseSet>
         <TrackCourseSet>
             <name>Thesis Course</name>
-            <size>3</size>
             <limiter>True</limiter>
+            <upper_credit_limit>9</upper_credit_limit>
             <lower_credit_limit>6</lower_credit_limit>
             <CourseInTrackSet>
                 <course>CSE 599</course>
@@ -157,7 +157,7 @@
         <TrackCourseSet>
             <name>CSE 698</name>
             <limiter>True</limiter>
-            <size>1</size>
+            <upper_credit_limit>3</upper_credit_limit>
             <CourseInTrackSet>
                 <course>CSE 698</course>
             </CourseInTrackSet>
@@ -181,7 +181,7 @@
         </TrackCourseSet>
         <TrackCourseSet>
             <name>No Credit Courses - Parent Set</name>
-            <size>0</size>
+            <upper_credit_limit>0</upper_credit_limit>
             <limiter>True</limiter>
             <CourseInTrackSet>
                 <course>CSE 500</course>
@@ -192,7 +192,7 @@
             <TrackCourseSet>
                 <name>No Credit Courses, 580-589</name>
                 <limiter>True</limiter>
-                <size>0</size>
+                <upper_credit_limit>0</upper_credit_limit>
                 <department_limit>CSE</department_limit>
                 <lower_limit>580</lower_limit>
                 <upper_limit>589</upper_limit>
@@ -203,7 +203,7 @@
             <TrackCourseSet>
                 <name>No Credit Courses, 596-599</name>
                 <limiter>True</limiter>
-                <size>0</size>
+                <upper_credit_limit>0</upper_credit_limit>
                 <department_limit>CSE</department_limit>
                 <lower_limit>596</lower_limit>
                 <upper_limit>599</upper_limit>
@@ -229,7 +229,7 @@
         </TrackCourseSet>
         <TrackCourseSet>
             <name>Cannot take these</name>
-            <size>0</size>
+            <upper_credit_limit>0</upper_credit_limit>
             <limiter>True</limiter>
             <CourseInTrackSet>
                 <course>CSE 599</course>
@@ -316,7 +316,7 @@
         <TrackCourseSet>
             <name>CSE 698</name>
             <limiter>True</limiter>
-            <size>1</size>
+            <upper_credit_limit>3</upper_credit_limit>
             <CourseInTrackSet>
                 <course>CSE 698</course>
             </CourseInTrackSet>
@@ -338,14 +338,14 @@
         <TrackCourseSet>
             <name>At Most</name>
             <limiter>True</limiter>
-            <size>2</size>
+            <upper_credit_limit>6</upper_credit_limit>
             <department_limit>CSE</department_limit>
             <lower_limit>590</lower_limit>
             <upper_limit>699</upper_limit>
         </TrackCourseSet>
         <TrackCourseSet>
             <name>Cannot take these</name>
-            <size>0</size>
+            <upper_credit_limit>0</upper_credit_limit>
             <limiter>True</limiter>
             <CourseInTrackSet>
                 <course>CSE 523</course>
@@ -359,7 +359,7 @@
         </TrackCourseSet>
         <TrackCourseSet>
             <name>No Credit Courses - Parent Set</name>
-            <size>0</size>
+            <upper_credit_limit>0</upper_credit_limit>
             <limiter>True</limiter>
             <CourseInTrackSet>
                 <course>CSE 500</course>
@@ -373,7 +373,7 @@
             <TrackCourseSet>
                 <name>No Credit Courses, 580-589</name>
                 <limiter>True</limiter>
-                <size>0</size>
+                <upper_credit_limit>0</upper_credit_limit>
                 <department_limit>CSE</department_limit>
                 <lower_limit>580</lower_limit>
                 <upper_limit>589</upper_limit>
@@ -384,7 +384,7 @@
             <TrackCourseSet>
                 <name>No Credit Courses, 596-599</name>
                 <limiter>True</limiter>
-                <size>0</size>
+                <upper_credit_limit>0</upper_credit_limit>
                 <department_limit>CSE</department_limit>
                 <lower_limit>596</lower_limit>
                 <upper_limit>599</upper_limit>
@@ -489,7 +489,7 @@
         <TrackCourseSet>
             <name>CSE 698</name>
             <limiter>True</limiter>
-            <size>1</size>
+            <upper_credit_limit>3</upper_credit_limit>
             <CourseInTrackSet>
                 <course>CSE 698</course>
             </CourseInTrackSet>
