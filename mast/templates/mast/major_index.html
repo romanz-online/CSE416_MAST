@@ -28,13 +28,13 @@
 
 <div id="major_list">
     {% for major in major_list %}
-        <h2>{{ major }}</h2>
+        <h2>{{ major }} - {{ major.requirement_semester }}</h2>
         <br>
         {% for track in track_list %}
             {% if track.major == major %}
                 <div id="{{ major.id }}_{{ track.id }}_button" onclick="overlay('{{ major.id }}_{{ track.id }}')"
                      class="btn">
-                    {{ track }} - {{ major.requirement_semester }}
+                    {{ track }}
                 </div>
                 <br>
             {% endif %}

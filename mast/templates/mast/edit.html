@@ -1,6 +1,26 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+    <script>
+        window.onload = function () {
+            if ("{{ student.track.id }}" != null) {
+                let u = document.getElementById("{{ track_list_id }}");
+                u.style.visibility = "visible";
+            }
+        };
+
+        function show_requirement_semesters(select) {
+            let all = document.getElementsByTagName("*");
+            let track = select[select.selectedIndex].value;
+            for (let i = 0, max = all.length; i < max; i++)
+                if (all[i].className === 'req_sem')
+                    all[i].style.visibility = "hidden";
+
+            let u = document.getElementById(track);
+            u.style.visibility = "visible";
+        }
+    </script>
+
     <style>
         h1 {
             padding: 20px;
@@ -41,15 +61,12 @@
             padding: 10px 10px;
             text-align: center;
             text-decoration: none;
-            display: inline-block;
             font-size: 15px;
             cursor: pointer;
-
         }
 
         div {
             background-color: white;
-            width: 100%;
             float: left;
             padding: 10px 10px 10px 10px;
             margin-left: 10px;
@@ -57,9 +74,18 @@
             border: solid;
         }
 
+        .req_sem {
+            position: absolute;
+            visibility: hidden;
+            border: none;
+            width: 500px;
+            padding: 6px 2px 2px;
+            margin-left: 0;
+            z-index: 999;
+        }
+
         form {
             margin-bottom: 10px;
-
         }
     </style>
 </head>
@@ -71,11 +97,26 @@
 
 <div>
     <form action="{% url 'mast:commit_edit' student.sbu_id %}" method="get">
-        First Name: <input name="first_name" type="text" autocomplete="on" value={{ student.first_name }}> <br>
+        First Name: <input name="first_name" type="text" autocomplete="on" value={{ student.first_name }}>
         <br>
-        Last Name: <input name="last_name" type="text" autocomplete="on" value={{ student.last_name }}> <br>
         <br>
-        Email: <input name="email" type="text" autocomplete="on" value={{ student.email }}> <br>
+        Last Name: <input name="last_name" type="text" autocomplete="on" value={{ student.last_name }}>
+        <br>
+        <br>
+        Email: <input name="email" type="text" autocomplete="on" value={{ student.email }}>
+        <br>
+        <br>
+        Enrollment Semester:
+        <select name="entry_semester">
+            {% for s in semesters %}
+                {% if s == student.entry_semester %}
+                    <option selected value={{ s.id }}>{{ s }}</option>
+                {% else %}
+                    <option value={{ s.id }}>{{ s }}</option>
+                {% endif %}
+            {% endfor %}
+        </select>
+        <br>
         <br>
         Graduated:
         <select name="graduated">
@@ -91,7 +132,11 @@
         Graduation Semester:
         <select name="graduation_semester">
             {% for s in semesters %}
-                <option value={{ s.id }}>{{ s }}</option>
+                {% if s == student.graduation_semester %}
+                    <option selected value={{ s.id }}>{{ s }}</option>
+                {% else %}
+                    <option value={{ s.id }}>{{ s }}</option>
+                {% endif %}
             {% endfor %}
         </select>
         <br>
@@ -108,32 +153,31 @@
         </select>
         <br>
         <br>
-        Enrollment Semester:
-        <select name="entry_semester">
-            {% for s in semesters %}
-                <option value={{ s.id }}>{{ s }}</option>
-            {% endfor %}
-        </select>
-        <br>
-        Requirement Version Semester:
-        <select name="requirement_semester">
-            {% for s in semesters %}
-                <option value={{ s.id }}>{{ s }}</option>
-            {% endfor %}
-        </select>
-        <br>
-        <br>
         Major/Track:
-        <select name="major_track">
-            {% for major_track in major_track_list %}
-                {% if student.track and major_track.id == student.track.id %}
-                    <option selected value= {{ major_track.id }}>{{ major_track.major }}
-                        - {{ major_track.track }}</option>
+        <select name="major_track" onchange="show_requirement_semesters(this);">
+            {% for track in track_list %}
+                {% if student.track and track.name == student.track.name %}
+                    <option selected value="{{ track.id }}">{{ track.major }} - {{ track.name }}</option>
                 {% else %}
-                    <option value= {{ major_track.id }}>{{ major_track.major }} - {{ major_track.track }}</option>
+                    <option value="{{ track.id }}">{{ track.major }} - {{ track.name }}</option>
                 {% endif %}
             {% endfor %}
         </select>
+        <br>
+        {% for track in requirement_semesters %}
+            <div id="{{ track.track.id }}" class="req_sem">
+                Requirement Version Semester:
+                <select name="{{ track.track.id }}_requirement_semester">
+                    {% for s in track.semesters %}
+                        {% if s == student.requirement_semester %}
+                            <option selected value={{ s.id }}>{{ s }}</option>
+                        {% else %}
+                            <option value={{ s.id }}>{{ s }}</option>
+                        {% endif %}
+                    {% endfor %}
+                </select>
+            </div>
+        {% endfor %}
         <br>
         <br>
         Courses taken:
@@ -155,7 +199,7 @@
                         {% if grade == record.grade %}
                             <option selected value={{ grade }}>{{ grade }}</option>
                         {% else %}
-                            <option value= {{ grade }}>{{ grade }}</option>
+                            <option value={{ grade }}>{{ grade }}</option>
                         {% endif %}
                     {% endfor %}
                 </select>

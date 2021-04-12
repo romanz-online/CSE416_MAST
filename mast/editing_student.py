@@ -22,23 +22,43 @@ def edit(request, sbu_id):
     course_status_list = [i[0] for i in CourseStatus.choices]
     # Render view with student information
 
-    class MajorTrack:
-        def __init__(self, major, track, id):
-            self.major = major
-            self.track = track
-            self.id = id
-
     if not Major.objects.filter(department='N/A'):
         semester = Semester.objects.all()[0]
         none_major = Major(department='N/A',
                            name='(None)',
                            requirement_semester=semester)
         none_major.save()
-    major_track_list = []
-    for m in Major.objects.all():
-        for t in Track.objects.all():
-            if t.major == m:
-                major_track_list.append(MajorTrack(m.name, t.name, t.id))
+
+    track_list = []
+    found = False
+    for i in Track.objects.all():
+        for j in track_list:
+            if i.name == j.name and i.major.name == j.major.name:
+                found = True
+        if not found:
+            track_list.append(i)
+        found = False
+
+    class RequirementSemesters:
+        def __init__(self, track):
+            self.track = track
+            self.semesters = []
+
+        def add_semester(self, semester):
+            self.semesters.append(semester)
+
+    requirement_semesters = []
+    for i in track_list:
+        new_set = RequirementSemesters(i)
+        for j in Track.objects.all():
+            if i.name == j.name and i.major.name == j.major.name:
+                new_set.add_semester(j.major.requirement_semester)
+        requirement_semesters.append(new_set)
+
+    track_list_id = 0
+    for i in track_list:
+        if student.track and i.name == student.track.name:
+            track_list_id = i.id
 
     class TempCourseInstance:
         def __init__(self, name):
@@ -52,17 +72,16 @@ def edit(request, sbu_id):
     transfer_course_list = [i for i in CourseInstance.objects.all()]
     transfer_course_list.insert(0, TempCourseInstance('None'))
 
-    for i in CoursesTakenByStudent.objects.filter(student=student, status=CourseStatus.TRANSFER):
-        print(i)
-
     return render(request, 'mast/edit.html', {'student': student,
                                               'course_list': CourseInstance.objects.all(),
                                               'classes_taken': CoursesTakenByStudent.objects.filter(student=student),
                                               'grade_list': grade_list,
                                               'course_status_list': course_status_list,
                                               'semesters': Semester.objects.order_by('year'),
-                                              'major_track_list': major_track_list,
-                                              'transfer_course_list': transfer_course_list
+                                              'track_list': track_list,
+                                              'transfer_course_list': transfer_course_list,
+                                              'requirement_semesters': requirement_semesters,
+                                              'track_list_id': track_list_id
                                               })
 
 
@@ -76,7 +95,7 @@ def delete_record(request, sbu_id):
 
         Returns:
             render (HttpResponse): Returns the respective view based on the flow of events upon attemping deletion.
-    """   
+    """
     # Retrieve student object 
     student = get_object_or_404(Student, pk=sbu_id)
     try:
@@ -111,21 +130,32 @@ def commit_edit(request, sbu_id):
         Returns:
             render (HttpResponse): Returns an error message if the edits could not be committed successfully. 
             HttpResponseRedirect: Redirects back to the student view if the edit was successful.
-    """    
+    """
     # Retrieve student object 
     student = get_object_or_404(Student, pk=sbu_id)
+    error_message = 'Something went wrong.'
     try:
         # Attempt to make changes to their data
         first_name = request.GET['first_name']
         last_name = request.GET['last_name']
         email = request.GET['email']
-        track = request.GET['major_track']
-        track = Track.objects.get(id=track)
-        major = track.major
+
+        dummy_track = request.GET['major_track']
+        dummy_track = Track.objects.get(id=dummy_track)
+
         graduated = True if request.GET['graduated'] == 'yes' else False
         withdrew = True if request.GET['withdrew'] == 'yes' else False
+
         entry_semester = request.GET['entry_semester']
-        requirement_semester = request.GET['requirement_semester']
+        entry_semester = Semester.objects.get(id=int(entry_semester))
+
+        rsid = str(dummy_track.id) + '_requirement_semester'
+        requirement_semester = request.GET[rsid]
+        requirement_semester = Semester.objects.get(id=int(requirement_semester))
+
+        dummy_major = dummy_track.major
+        major = Major.objects.filter(name=dummy_major.name, requirement_semester=requirement_semester)[0]
+        track = Track.objects.filter(name=dummy_track.name, major=major)[0]
 
         student.first_name = first_name
         student.last_name = last_name
@@ -134,8 +164,8 @@ def commit_edit(request, sbu_id):
         student.track = track
         student.graduated = graduated
         student.withdrew = withdrew
-        student.entry_semester = Semester.objects.get(id=int(entry_semester))
-        student.requirement_semester = Semester.objects.get(id=int(requirement_semester))
+        student.entry_semester = entry_semester
+        student.requirement_semester = requirement_semester
         if student.graduated:
             graduation_semester = request.GET['graduation_semester']
             student.graduation_semester = Semester.objects.get(id=int(graduation_semester))
@@ -160,13 +190,66 @@ def commit_edit(request, sbu_id):
         student = get_object_or_404(Student, pk=sbu_id)
         grade_list = [i[0] for i in Grade.choices]
         course_status_list = [i[0] for i in CourseStatus.choices]
+
+        if not Major.objects.filter(department='N/A'):
+            semester = Semester.objects.all()[0]
+            none_major = Major(department='N/A',
+                               name='(None)',
+                               requirement_semester=semester)
+            none_major.save()
+
+        track_list = []
+        found = False
+        for i in Track.objects.all():
+            for j in track_list:
+                if i.name == j.name and i.major.name == j.major.name:
+                    found = True
+            if not found:
+                track_list.append(i)
+            found = False
+
+        class RequirementSemesters:
+            def __init__(self, track):
+                self.track = track
+                self.semesters = []
+
+            def add_semester(self, semester):
+                self.semesters.append(semester)
+
+            def __str__(self):
+                string_list = [str(i) for i in self.semesters]
+                return self.track.name + ' [' + ','.join(string_list) + ']'
+
+        requirement_semesters = []
+        for i in track_list:
+            new_set = RequirementSemesters(i)
+            for j in Track.objects.all():
+                if i.name == j.name and i.major.name == j.major.name:
+                    new_set.add_semester(j.major.requirement_semester)
+            requirement_semesters.append(new_set)
+
+        class TempCourseInstance:
+            def __init__(self, name):
+                self.name = name
+                self.section = 1
+                self.id = 99999
+
+            def __str__(self):
+                return 'None'
+
+        transfer_course_list = [i for i in CourseInstance.objects.all()]
+        transfer_course_list.insert(0, TempCourseInstance('None'))
+
         return render(request, 'mast/edit.html', {'student': student,
-                                                  'major_list': Major.objects.order_by('name'),
                                                   'course_list': CourseInstance.objects.all(),
-                                                  'classes_taken': CoursesTakenByStudent.objects.all(),
+                                                  'classes_taken': CoursesTakenByStudent.objects.filter(
+                                                      student=student),
                                                   'grade_list': grade_list,
                                                   'course_status_list': course_status_list,
                                                   'semesters': Semester.objects.order_by('year'),
+                                                  'track_list': track_list,
+                                                  'transfer_course_list': transfer_course_list,
+                                                  'requirement_semesters': requirement_semesters,
                                                   'error_message': "Something went wrong."
                                                   })
     return HttpResponseRedirect(reverse('mast:detail', args=(sbu_id,)))
@@ -197,7 +280,7 @@ def get_grade_number(grade):
             dict[grade] (int): The numerical grade converted from the letter grade.
     """
     d = {'A': 4.0, 'A-': 3.7, 'B+': 3.3, 'B': 3.0, 'B-': 2.7, 'C+': 2.3, 'C': 2.0, 'C-': 1.7, 'D+': 1.3, 'D': 1.0,
-            'D-': 0.7, 'F': 0.0, 'S': 4.0}
+         'D-': 0.7, 'F': 0.0, 'S': 4.0}
     return d[grade]
 
 
@@ -237,7 +320,8 @@ def add_transfer_course(request, sbu_id):
             c = CoursesTakenByStudent(student=student, grade=grade, credits_taken=credits, status=CourseStatus.TRANSFER)
             c.save()
         else:
-            c = CoursesTakenByStudent(student=student, course=CourseInstance.objects.get(id=course), grade=grade, credits_taken=credits, status=CourseStatus.TRANSFER)
+            c = CoursesTakenByStudent(student=student, course=CourseInstance.objects.get(id=course), grade=grade,
+                                      credits_taken=credits, status=CourseStatus.TRANSFER)
             c.save()
     except:
         return HttpResponseRedirect(reverse('mast:edit', args=(sbu_id,)))
