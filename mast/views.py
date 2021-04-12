@@ -254,7 +254,7 @@ def student_degree_reqs_loop(taken_courses, course_set, layer, info):
                 if number_taken >= course_set.size:
                     info += "(" + str(course_set.size) + "/"+ str(course_set.size) + ') required course(s) from ' + course_set.name + ' [COMPLETED]:\n'
                 else:
-                    info += "(" + str(course_set.size) + "/"+ str(course_set.size) + ') required course(s) from ' + course_set.name + ':\n'
+                    info += "(" + str(number_taken) + "/"+ str(course_set.size) + ') required course(s) from ' + course_set.name + ':\n'
     # all this section does is create the sentences before each set of courses
 
     # this is where courses get listed out, along with their properties

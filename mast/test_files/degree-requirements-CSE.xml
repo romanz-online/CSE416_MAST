@@ -14,6 +14,7 @@
         <total_requirements>6</total_requirements>
         <TrackCourseSet>
             <name>No Credit Courses - Parent Set</name>
+            <limiter>True</limiter>
             <size>0</size>
             <CourseInTrackSet>
                 <course>CSE 500</course>
@@ -181,6 +182,7 @@
         <TrackCourseSet>
             <name>No Credit Courses - Parent Set</name>
             <size>0</size>
+            <limiter>True</limiter>
             <CourseInTrackSet>
                 <course>CSE 500</course>
             </CourseInTrackSet>
@@ -228,6 +230,7 @@
         <TrackCourseSet>
             <name>Cannot take these</name>
             <size>0</size>
+            <limiter>True</limiter>
             <CourseInTrackSet>
                 <course>CSE 599</course>
             </CourseInTrackSet>
@@ -343,6 +346,7 @@
         <TrackCourseSet>
             <name>Cannot take these</name>
             <size>0</size>
+            <limiter>True</limiter>
             <CourseInTrackSet>
                 <course>CSE 523</course>
             </CourseInTrackSet>
@@ -356,6 +360,7 @@
         <TrackCourseSet>
             <name>No Credit Courses - Parent Set</name>
             <size>0</size>
+            <limiter>True</limiter>
             <CourseInTrackSet>
                 <course>CSE 500</course>
             </CourseInTrackSet>

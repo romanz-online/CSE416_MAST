@@ -117,6 +117,7 @@
             <name>Three additional lecture based courses</name>
             <size>3</size>
             <TrackCourseSet>
+                <limiter>True</limiter>
                 <size>0</size>
                 <CourseInTrackSet>
                     <course>ESE 597</course>
@@ -255,6 +256,7 @@
             <name>Three additional lecture based courses</name>
             <size>3</size>
             <TrackCourseSet>
+                <limiter>True</limiter>
                 <size>0</size>
                 <CourseInTrackSet>
                     <course>ESE 597</course>
