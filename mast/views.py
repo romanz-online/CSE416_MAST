@@ -8,7 +8,7 @@ from django.urls import reverse
 from .datatables import StudentDatatable
 from .models import Student, Major, Season, CoursesTakenByStudent, Comment, StudentCourseSchedule, Semester, Track, \
     TrackCourseSet, CourseInTrackSet, CourseToCourseRelation, Course, CoursePrerequisiteSet, Prerequisite, \
-    CourseInstance
+    CourseInstance, CourseStatus
 
 
 def setup():
@@ -246,7 +246,7 @@ def student_degree_reqs_loop(taken_courses, course_set, layer, info):
             info += '  '
         if course_set.limiter:
             for course in CourseInTrackSet.objects.filter(course_set=course_set):
-                taken_course_lookup = sum([i.credits_taken for i in taken_courses if i.course.course == course.course])
+                taken_course_lookup = sum([i.credits_taken for i in taken_courses if i.course.course == course.course and i.status == CourseStatus.PASSED])
                 if taken_course_lookup:
                     number_taken += taken_course_lookup
             for track in TrackCourseSet.objects.filter(parent_course_set=course_set):
