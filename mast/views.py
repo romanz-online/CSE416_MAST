@@ -69,10 +69,13 @@ def display_set_info(course_set, layer, info):
     elif course_set.size:
         for i in range(layer - 1):
             info += '  '
-        if course_set.limiter:
-            info += 'At most ' + str(course_set.size) + ' course(s) from ' + course_set.name + ':\n'
+        if "Elective" in course_set.name:
+                info += str(course_set.size*3) + " credit(s) from " + course_set.name + ".\n"
         else:
-            info += str(course_set.size) + ' course(s) from ' + course_set.name + ':\n'
+            if course_set.limiter:
+                info += 'At most ' + str(course_set.size) + ' credit(s) from ' + course_set.name + ':\n'
+            else:
+                info += str(course_set.size) + ' course(s) from ' + course_set.name + ':\n'
     # all this section does is create the sentences before each set of courses
 
     # this is where courses get listed out, along with their properties
@@ -249,7 +252,7 @@ def student_degree_reqs_loop(taken_courses, course_set, layer, info):
                 if taken_course_lookup:
                     number_taken += taken_course_lookup
             if "Elective" in course_set.name:
-                info += str(course_set.size) + " credit(s) from " + course_set.name + ".\n"
+                info += str(course_set.size*3) + " credit(s) from " + course_set.name + ".\n"
             else:
                 if number_taken >= course_set.size:
                     info += "(" + str(course_set.size) + "/"+ str(course_set.size) + ') required course(s) from ' + course_set.name + ' [COMPLETED]:\n'
