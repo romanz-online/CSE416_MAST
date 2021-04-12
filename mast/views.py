@@ -224,12 +224,24 @@ def student_degree_reqs_loop(taken_courses, course_set, layer, info):
     elif not course_set.parent_course_set and not course_set.size:
         return info
     elif course_set.size:
+        # this is where courses get listed out, along with their properties
+        number_taken = 0 
+        for course in CourseInTrackSet.objects.filter(course_set=course_set):
+            taken_course_lookup = len([i for i in taken_courses if i.course.course == course.course])
+            if taken_course_lookup:
+                number_taken += taken_course_lookup
         for i in range(layer - 1):
             info += '  '
         if course_set.limiter:
-            info += 'At most ' + str(course_set.size) + ' course(s) from ' + course_set.name + ':\n'
+            if number_taken >= course_set.size:
+                info += 'At most (' + str(number_taken) + "/" + str(course_set.size) + ') course(s) from ' + course_set.name + ' [CAPPED]:\n'
+            else:
+                info += 'At most (' + str(number_taken) + "/" + str(course_set.size) + ') course(s) from ' + course_set.name + ':\n'
         else:
-            info += str(course_set.size) + ' course(s) from ' + course_set.name + ':\n'
+            if number_taken >= course_set.size:
+                info += "(" + str(number_taken) + "/"+ str(course_set.size) + ') course(s) from ' + course_set.name + ' [COMPLETED]:\n'
+            else:
+                info += "(" + str(number_taken) + "/"+ str(course_set.size) + ') course(s) from ' + course_set.name + ':\n'
     # all this section does is create the sentences before each set of courses
 
     # this is where courses get listed out, along with their properties
