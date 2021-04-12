@@ -116,25 +116,21 @@
         <TrackCourseSet>
             <name>Three additional lecture based courses</name>
             <size>3</size>
-            <TrackCourseSet>
-                <limiter>True</limiter>
-                <upper_credit_limit>0</upper_credit_limit>
-                <CourseInTrackSet>
-                    <course>ESE 597</course>
-                </CourseInTrackSet>
-                <CourseInTrackSet>
-                    <course>ESE 599</course>
-                </CourseInTrackSet>
-                <CourseInTrackSet>
-                    <course>ESE 697</course>
-                </CourseInTrackSet>
-                <CourseInTrackSet>
-                    <course>ESE 698</course>
-                </CourseInTrackSet>
-                <CourseInTrackSet>
-                    <course>ESE 699</course>
-                </CourseInTrackSet>
-            </TrackCourseSet>
+            <CourseInTrackSet>
+                <course>ESE 597</course>
+            </CourseInTrackSet>
+            <CourseInTrackSet>
+                <course>ESE 599</course>
+            </CourseInTrackSet>
+            <CourseInTrackSet>
+                <course>ESE 697</course>
+            </CourseInTrackSet>
+            <CourseInTrackSet>
+                <course>ESE 698</course>
+            </CourseInTrackSet>
+            <CourseInTrackSet>
+                <course>ESE 699</course>
+            </CourseInTrackSet>
         </TrackCourseSet>
         <TrackCourseSet>
             <name>ESE 597</name>
@@ -255,25 +251,21 @@
         <TrackCourseSet>
             <name>Three additional lecture based courses</name>
             <size>3</size>
-            <TrackCourseSet>
-                <limiter>True</limiter>
-                <upper_credit_limit>0</upper_credit_limit>
-                <CourseInTrackSet>
-                    <course>ESE 597</course>
-                </CourseInTrackSet>
-                <CourseInTrackSet>
-                    <course>ESE 599</course>
-                </CourseInTrackSet>
-                <CourseInTrackSet>
-                    <course>ESE 697</course>
-                </CourseInTrackSet>
-                <CourseInTrackSet>
-                    <course>ESE 698</course>
-                </CourseInTrackSet>
-                <CourseInTrackSet>
-                    <course>ESE 699</course>
-                </CourseInTrackSet>
-            </TrackCourseSet>
+            <CourseInTrackSet>
+                <course>ESE 597</course>
+            </CourseInTrackSet>
+            <CourseInTrackSet>
+                <course>ESE 599</course>
+            </CourseInTrackSet>
+            <CourseInTrackSet>
+                <course>ESE 697</course>
+            </CourseInTrackSet>
+            <CourseInTrackSet>
+                <course>ESE 698</course>
+            </CourseInTrackSet>
+            <CourseInTrackSet>
+                <course>ESE 699</course>
+            </CourseInTrackSet>
         </TrackCourseSet>
         <TrackCourseSet>
             <name>ESE 597</name>

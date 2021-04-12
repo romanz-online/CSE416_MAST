@@ -70,7 +70,7 @@ def display_set_info(course_set, layer, info):
         for i in range(layer - 1):
             info += '  '
         if "Elective" in course_set.name:
-                info += str(course_set.size*3) + " credit(s) from " + course_set.name + ".\n"
+            info += str(course_set.size * 3) + " credit(s) from " + course_set.name + ".\n"
         else:
             if course_set.limiter:
                 info += 'At most ' + str(course_set.size) + ' credit(s) from ' + course_set.name + ':\n'
@@ -95,7 +95,7 @@ def display_set_info(course_set, layer, info):
         for i in range(layer - 1):
             info += '  '
         info += course_set.department_limit + str(course_set.lower_limit) + '-' + course_set.department_limit + str(
-            course_set.upper_limit)
+            course_set.upper_limit) + '\n'
     # this prints out course ranges (CSE500-CSE560)
 
     # this is the recursion call
@@ -161,15 +161,28 @@ def commit_new_student(request):
     first_name = request.GET['first_name']
     last_name = request.GET['last_name']
     email = request.GET['email']
-    track = request.GET['major_track']
-    track = Track.objects.get(id=track)
-    major = track.major
     entry_semester = request.GET['entry_semester']
     entry_semester = Semester.objects.get(id=int(entry_semester))
-    requirement_semester = request.GET['requirement_semester']
-    requirement_semester = Semester.objects.get(id=int(requirement_semester))
-    semesters_enrolled = 1
 
+    dummy_track = request.GET['major_track']
+    dummy_track = Track.objects.get(id=dummy_track)
+    latest_track = Track.objects.filter(name=dummy_track.name)[0]
+    for i in Track.objects.filter(name=dummy_track.name):
+        if i.major.requirement_semester.year > latest_track.major.requirement_semester.year:
+            latest_track = i
+        if i.major.requirement_semester.season == Season.WINTER:
+            latest_track = i
+        elif i.major.requirement_semester.season == Season.FALL and (
+                latest_track.major.requirement_semester.season == Season.SPRING or latest_track.major.requirement_semester.season == Season.SUMMER):
+            latest_track = i
+        elif i.major.requirement_semester.season == Season.SUMMER and latest_track.major.requirement_semester.season == Season.SPRING:
+            latest_track = i
+
+    track = latest_track
+    major = track.major
+    requirement_semester = major.requirement_semester
+
+    semesters_enrolled = 1
     if Semester.objects.filter(is_current_semester=True):
         current_semester = Semester.objects.filter(is_current_semester=True)[0]
         if entry_semester.year < current_semester.year:
@@ -228,7 +241,7 @@ def student_degree_reqs_loop(taken_courses, course_set, layer, info):
         return info
     elif course_set.size:
         # this is where courses get listed out, along with their properties
-        number_taken = 0 
+        number_taken = 0
         for i in range(layer - 1):
             info += '  '
         if course_set.limiter:
@@ -238,26 +251,32 @@ def student_degree_reqs_loop(taken_courses, course_set, layer, info):
                     number_taken += taken_course_lookup
             if number_taken >= course_set.size:
                 if course_set.lower_credit_limit != 0:
-                    info += str(course_set.lower_credit_limit) + "-" + str(course_set.size) + " [" + str(course_set.size) + " current] applied] credit(s) from " + course_set.name + ' [CAPPED]:\n'
+                    info += str(course_set.lower_credit_limit) + "-" + str(course_set.size) + " [" + str(
+                        course_set.size) + " current] applied] credit(s) from " + course_set.name + ' [CAPPED]:\n'
                 else:
-                    info += 'At most (' + str(course_set.size) + "/" + str(course_set.size) + ') credit(s) from ' + course_set.name + ' [CAPPED]:\n'
+                    info += 'At most (' + str(course_set.size) + "/" + str(
+                        course_set.size) + ') credit(s) from ' + course_set.name + ' [CAPPED]:\n'
             else:
                 if course_set.lower_credit_limit != 0:
-                    info += str(course_set.lower_credit_limit) + "-" + str(course_set.size) + " [" + str(number_taken) + " current] applied credit(s) from " + course_set.name + ':\n'
+                    info += str(course_set.lower_credit_limit) + "-" + str(course_set.size) + " [" + str(
+                        number_taken) + " current] applied credit(s) from " + course_set.name + ':\n'
                 else:
-                    info += 'At most (' + str(number_taken) + "/" + str(course_set.size) + ') credit(s) from ' + course_set.name + ':\n'
+                    info += 'At most (' + str(number_taken) + "/" + str(
+                        course_set.size) + ') credit(s) from ' + course_set.name + ':\n'
         else:
             for course in CourseInTrackSet.objects.filter(course_set=course_set):
                 taken_course_lookup = len([i for i in taken_courses if i.course.course == course.course])
                 if taken_course_lookup:
                     number_taken += taken_course_lookup
             if "Elective" in course_set.name:
-                info += str(course_set.size*3) + " credit(s) from " + course_set.name + ".\n"
+                info += str(course_set.size * 3) + " credit(s) from " + course_set.name + ".\n"
             else:
                 if number_taken >= course_set.size:
-                    info += "(" + str(course_set.size) + "/"+ str(course_set.size) + ') required course(s) from ' + course_set.name + ' [COMPLETED]:\n'
+                    info += "(" + str(course_set.size) + "/" + str(
+                        course_set.size) + ') required course(s) from ' + course_set.name + ' [COMPLETED]:\n'
                 else:
-                    info += "(" + str(number_taken) + "/"+ str(course_set.size) + ') required course(s) from ' + course_set.name + ':\n'
+                    info += "(" + str(number_taken) + "/" + str(
+                        course_set.size) + ') required course(s) from ' + course_set.name + ':\n'
     # all this section does is create the sentences before each set of courses
 
     # this is where courses get listed out, along with their properties
@@ -268,7 +287,8 @@ def student_degree_reqs_loop(taken_courses, course_set, layer, info):
             info += '  '
         if course.how_many_semesters > 1:
             if taken_course_lookup != 0:
-                info += str(course) + ', taken at least ' + str(course.how_many_semesters) + ' times. [TAKEN ' + str(taken_course_lookup) + ' TIME(S)] \n'
+                info += str(course) + ', taken at least ' + str(course.how_many_semesters) + ' times. [TAKEN ' + str(
+                    taken_course_lookup) + ' TIME(S)] \n'
             else:
                 info += str(course) + ', taken at least ' + str(course.how_many_semesters) + ' times.\n'
         elif course.each_semester:
@@ -278,7 +298,7 @@ def student_degree_reqs_loop(taken_courses, course_set, layer, info):
                 info += str(course) + ' [required each semester]\n'
         else:
             if course_set.limiter and taken_course_lookup != 0:
-                info += str(course) + ' [TAKEN ' + str(taken_course_lookup) + ' TIME(S)]\n' 
+                info += str(course) + ' [TAKEN ' + str(taken_course_lookup) + ' TIME(S)]\n'
             else:
                 info += str(course) + ' ' + taken + '\n'
     # this is where courses get listed out, along with their properties
@@ -311,14 +331,16 @@ def stringify_student_degree_reqs(student):
         transfer_credits = 12
     for course_set in TrackCourseSet.objects.filter(track=student.track, parent_course_set=None):
         for course in CourseInTrackSet.objects.filter(course_set=course_set):
-            taken_course_lookup = sum([i.credits_taken for i in taken_courses if i.course.course == course.course if i.status == 'Passed'])
+            taken_course_lookup = sum(
+                [i.credits_taken for i in taken_courses if i.course.course == course.course if i.status == 'Passed'])
             if taken_course_lookup:
                 if course_set.size <= taken_course_lookup and course_set.limiter is True:
                     student_credits -= taken_course_lookup - (course_set.size)
     total_credits = student_credits + transfer_credits
 
     info = 'All of the following areas must be fulfilled or adhered to, for a total of (' + str(
-        total_credits) + '/' + str(student.track.minimum_credits_required) + ') credits and a GPA of at least ' + str(student.track.required_gpa) + ':\n\n'
+        total_credits) + '/' + str(student.track.minimum_credits_required) + ') credits and a GPA of at least ' + str(
+        student.track.required_gpa) + ':\n\n'
 
     for course_set in TrackCourseSet.objects.filter(track=student.track, parent_course_set=None):
         info = student_degree_reqs_loop(taken_courses, course_set, 0, info)

@@ -104,8 +104,8 @@ def import_degree_requirements(request):
                         tcs_upper_credit_limit = tcs.find("upper_credit_limit")
                         if tcs_upper_credit_limit:
                             tcs_size = tcs.find("upper_credit_limit").get_text()
-                        else: 
-                            tcs_size = 3 
+                        else:
+                            tcs_size = 3
                     else:
                         tcs_limiter = False
                 else:
@@ -144,7 +144,8 @@ def import_degree_requirements(request):
                     tcs_lower_credit_limit = 0
                 tcs_save = TrackCourseSet(track=t, name=tcs_name, size=tcs_size,
                                           limiter=tcs_limiter, upper_limit=tcs_upper_limit, lower_limit=tcs_lower_limit,
-                                          lower_credit_limit = tcs_lower_credit_limit, department_limit=tcs_department_limit)
+                                          lower_credit_limit=tcs_lower_credit_limit,
+                                          department_limit=tcs_department_limit)
                 tcs_save.save()
 
                 # Add children of TCS 
@@ -167,8 +168,8 @@ def import_degree_requirements(request):
                                 tcs_upper_credit_limit = tcs.find("upper_credit_limit")
                                 if tcs_upper_credit_limit:
                                     tcs_size = tcs.find("upper_credit_limit").get_text()
-                                else: 
-                                    tcs_size = 3 
+                                else:
+                                    tcs_size = 3
                             else:
                                 tcs_limiter = False
                             tcs_upper_limit = child.find("upper_limit")
@@ -305,12 +306,26 @@ def import_student(request):
                 student.last_name = line[2]
             if line[3]:
                 student.email = line[3]
-            if line[4] and Major.objects.filter(department=line[4]):
-                student.major = Major.objects.filter(department=line[4])[0]
+            if line[4] and Major.objects.filter(department=line[4]) and line[8] and line[9]:
+                requirement_semester = Semester.objects.get(season=line[8], year=line[9])
+                if Major.objects.filter(department=line[4], requirement_semester=requirement_semester):
+                    student.major = Major.objects.filter(department=line[4], requirement_semester=requirement_semester)[0]
+                else:
+                    latest_major = Major.objects.filter(department=line[4])[0]
+                    for i in Major.objects.filter(department=line[4]):
+                        if i.requirement_semester.year > latest_major.requirement_semester.year:
+                            latest_major = i
+                        if i.requirement_semester.season == Season.WINTER:
+                            latest_major = i
+                        elif i.requirement_semester.season == Season.FALL and (
+                                latest_major.requirement_semester.season == Season.SPRING or latest_major.requirement_semester.season == Season.SUMMER):
+                            latest_major = i
+                        elif i.requirement_semester.season == Season.SUMMER and latest_major.requirement_semester.season == Season.SPRING:
+                            latest_major = i
+                    student.major = latest_major
             if line[4] and line[5] \
-                    and Major.objects.filter(department=line[4]) and Track.objects.filter(name=line[5]):
-                student.track = Track.objects.get(name=line[5],
-                                                  major=Major.objects.filter(department=line[4])[0])
+                    and Major.objects.filter(department=line[4]) and Track.objects.filter(major=student.major, name=line[5]):
+                student.track = Track.objects.get(name=line[5], major=student.major)
             if line[6] and line[7]:
                 student.entry_semester = Semester.objects.get(season=line[6], year=line[7])
                 e = Semester.objects.get(season=line[6], year=line[7])
@@ -338,6 +353,7 @@ def import_student(request):
             student.save()
 
     course_file = request.FILES['course_file']
+
     # Import new students' courses
     return import_grades(request, course_file)
 

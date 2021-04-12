@@ -228,6 +228,11 @@ def commit_edit(request, sbu_id):
                     new_set.add_semester(j.major.requirement_semester)
             requirement_semesters.append(new_set)
 
+        track_list_id = 0
+        for i in track_list:
+            if student.track and i.name == student.track.name:
+                track_list_id = i.id
+
         class TempCourseInstance:
             def __init__(self, name):
                 self.name = name
@@ -250,6 +255,7 @@ def commit_edit(request, sbu_id):
                                                   'track_list': track_list,
                                                   'transfer_course_list': transfer_course_list,
                                                   'requirement_semesters': requirement_semesters,
+                                                  'track_list_id': track_list_id,
                                                   'error_message': "Something went wrong."
                                                   })
     return HttpResponseRedirect(reverse('mast:detail', args=(sbu_id,)))

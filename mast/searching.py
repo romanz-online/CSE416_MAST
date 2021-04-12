@@ -3,28 +3,28 @@ from .models import Student, Major, Semester, Track
 
 
 def student_index(request):
-    class MajorTrack:
-        def __init__(self, major, track, id):
-            self.major = major
-            self.track = track
-            self.id = id
-
     if not Major.objects.filter(department='N/A'):
         semester = Semester.objects.all()[0]
         none_major = Major(department='N/A',
                            name='(None)',
                            requirement_semester=semester)
         none_major.save()
-    major_track_list = []
-    for m in Major.objects.all():
-        for t in Track.objects.all():
-            if t.major == m:
-                major_track_list.append(MajorTrack(m.name, t.name, t.id))
+
+    track_list = []
+    found = False
+    for i in Track.objects.all():
+        for j in track_list:
+            if i.name == j.name and i.major.name == j.major.name:
+                found = True
+        if not found:
+            track_list.append(i)
+        found = False
+
     context = {'student_list': Student.objects.order_by('sbu_id'),
                'major_list': Major.objects.order_by('name'),
                'semesters': Semester.objects.all(),
                'requirement_semesters': Semester.objects.all(),
-               'major_track_list': major_track_list}
+               'track_list': track_list}
     return render(request, 'mast/student_index.html', context)
 
 
