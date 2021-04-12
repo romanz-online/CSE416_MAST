@@ -310,7 +310,7 @@ def stringify_student_degree_reqs(student):
         for course in CourseInTrackSet.objects.filter(course_set=course_set):
             taken_course_lookup = sum([i.credits_taken for i in taken_courses if i.course.course == course.course if i.status == 'Passed'])
             if taken_course_lookup:
-                if course_set.size * 3 <= taken_course_lookup and course_set.limiter is True:
+                if course_set.size <= taken_course_lookup and course_set.limiter is True:
                     student_credits -= taken_course_lookup - (course_set.size)
     total_credits = student_credits + transfer_credits
 
