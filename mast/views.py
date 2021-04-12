@@ -226,18 +226,22 @@ def student_degree_reqs_loop(taken_courses, course_set, layer, info):
     elif course_set.size:
         # this is where courses get listed out, along with their properties
         number_taken = 0 
-        for course in CourseInTrackSet.objects.filter(course_set=course_set):
-            taken_course_lookup = len([i for i in taken_courses if i.course.course == course.course])
-            if taken_course_lookup:
-                number_taken += taken_course_lookup
         for i in range(layer - 1):
             info += '  '
         if course_set.limiter:
-            if number_taken >= course_set.size:
-                info += 'At most (' + str(number_taken) + "/" + str(course_set.size) + ') course(s) from ' + course_set.name + ' [CAPPED]:\n'
+            for course in CourseInTrackSet.objects.filter(course_set=course_set):
+                taken_course_lookup = sum([i.credits_taken for i in taken_courses if i.course.course == course.course])
+                if taken_course_lookup:
+                    number_taken += taken_course_lookup
+            if number_taken >= course_set.size*3:
+                info += 'At most (' + str(number_taken) + "/" + str(course_set.size*3) + ') credit(s) from ' + course_set.name + ' [CAPPED]:\n'
             else:
-                info += 'At most (' + str(number_taken) + "/" + str(course_set.size) + ') course(s) from ' + course_set.name + ':\n'
+                info += 'At most (' + str(number_taken) + "/" + str(course_set.size*3) + ') credit(s) from ' + course_set.name + ':\n'
         else:
+            for course in CourseInTrackSet.objects.filter(course_set=course_set):
+                taken_course_lookup = len([i for i in taken_courses if i.course.course == course.course])
+                if taken_course_lookup:
+                    number_taken += taken_course_lookup
             if number_taken >= course_set.size:
                 info += "(" + str(number_taken) + "/"+ str(course_set.size) + ') course(s) from ' + course_set.name + ' [COMPLETED]:\n'
             else:
