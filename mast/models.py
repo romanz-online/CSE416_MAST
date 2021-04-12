@@ -121,6 +121,8 @@ class TrackCourseSet(models.Model):
     limiter = models.BooleanField(default=False)
     upper_limit = models.IntegerField(default=100)
     lower_limit = models.IntegerField(default=999)
+    lower_credit_limiit = models.IntegerField(default=3)
+    upper_credit_limit = models.IntegerField(default=3)
     department_limit = models.CharField(max_length=4, default='N/A')
 
     def __str__(self):
