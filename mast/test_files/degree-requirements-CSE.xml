@@ -147,9 +147,6 @@
             <name>Thesis Course</name>
             <size>3</size>
             <limiter>True</limiter>
-            <credit_limiter>True</credit_limiter>
-            <lower_credit_limit>6</lower_credit_limit>
-            <upper_credit_limit>9</upper_credit_limit>
             <CourseInTrackSet>
                 <course>CSE 599</course>
                 <how_many_semesters>2</how_many_semesters>
@@ -158,9 +155,6 @@
         <TrackCourseSet>
             <name>CSE 698</name>
             <limiter>True</limiter>
-            <credit_limiter>True</credit_limiter>
-            <lower_credit_limit>0</lower_credit_limit>
-            <upper_credit_limit>3</upper_credit_limit>
             <size>1</size>
             <CourseInTrackSet>
                 <course>CSE 698</course>
@@ -318,9 +312,6 @@
         <TrackCourseSet>
             <name>CSE 698</name>
             <limiter>True</limiter>
-            <credit_limiter>True</credit_limiter>
-            <lower_credit_limit>0</lower_credit_limit>
-            <upper_credit_limit>3</upper_credit_limit>
             <size>1</size>
             <CourseInTrackSet>
                 <course>CSE 698</course>
@@ -492,9 +483,6 @@
         <TrackCourseSet>
             <name>CSE 698</name>
             <limiter>True</limiter>
-            <credit_limiter>True</credit_limiter>
-            <lower_credit_limit>0</lower_credit_limit>
-            <upper_credit_limit>3</upper_credit_limit>
             <size>1</size>
             <CourseInTrackSet>
                 <course>CSE 698</course>
