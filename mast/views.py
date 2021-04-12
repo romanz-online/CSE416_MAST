@@ -234,9 +234,15 @@ def student_degree_reqs_loop(taken_courses, course_set, layer, info):
                 if taken_course_lookup:
                     number_taken += taken_course_lookup
             if number_taken >= course_set.size*3:
-                info += 'At most (' + str(number_taken) + "/" + str(course_set.size*3) + ') credit(s) from ' + course_set.name + ' [CAPPED]:\n'
+                if course_set.lower_credit_limit != 0:
+                    info += str(course_set.lower_credit_limit) + "-" + str(course_set.size*3) + " [" + str(number_taken) + " taken so far] credit(s) from " + course_set.name + ' [CAPPED]:\n'
+                else:
+                    info += 'At most (' + str(number_taken) + "/" + str(course_set.size*3) + ') credit(s) from ' + course_set.name + ' [CAPPED]:\n'
             else:
-                info += 'At most (' + str(number_taken) + "/" + str(course_set.size*3) + ') credit(s) from ' + course_set.name + ':\n'
+                if course_set.lower_credit_limit != 0:
+                    info += str(course_set.lower_credit_limit) + "-" + str(course_set.size*3) + " [" + str(number_taken) + " taken so far] credit(s) from " + course_set.name + ':\n'
+                else:
+                    info += 'At most (' + str(number_taken) + "/" + str(course_set.size*3) + ') credit(s) from ' + course_set.name + ':\n'
         else:
             for course in CourseInTrackSet.objects.filter(course_set=course_set):
                 taken_course_lookup = len([i for i in taken_courses if i.course.course == course.course])

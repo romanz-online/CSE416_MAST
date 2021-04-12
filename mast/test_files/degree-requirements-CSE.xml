@@ -147,6 +147,7 @@
             <name>Thesis Course</name>
             <size>3</size>
             <limiter>True</limiter>
+            <lower_credit_limit>6</lower_credit_limit>
             <CourseInTrackSet>
                 <course>CSE 599</course>
                 <how_many_semesters>2</how_many_semesters>
