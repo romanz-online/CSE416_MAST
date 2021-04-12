@@ -361,12 +361,27 @@ def stringify_student_degree_reqs(student):
                     temp_num += taken_course_lookup 
             if temp_num >= track.size:
                 student_credits -= ((temp_num - track.size) * 3)
-
     total_credits = student_credits + transfer_credits
 
-    info = 'All of the following areas must be fulfilled or adhered to, for a total of (' + str(
-        total_credits) + '/' + str(student.track.minimum_credits_required) + ') credits and a GPA of at least ' + str(
-        student.track.required_gpa) + ':\n\n'
+    info = ""
+    info += "Satisfied Requirements: " + str(student.satisfied_courses) + "\n" 
+    info += "Pending Requirements: " + str(student.pending_courses) + "\n" 
+    info += "Unsatisfied Requirements: " + str(student.unsatisfied_courses) + "\n" 
+
+    info += "\n"
+
+    if total_credits >= student.track.minimum_credits_required:
+        info += 'All of the following areas must be fulfilled or adhered to, for a total of (' + str(
+        total_credits) + '/' + str(student.track.minimum_credits_required) + ') [COMPLETED]'
+    else:
+        info += 'All of the following areas must be fulfilled or adhered to, for a total of (' + str(
+        total_credits) + '/' + str(student.track.minimum_credits_required) + ')'
+    if student.gpa >= student.track.required_gpa:
+        info += ' credits and a GPA of at least ' + str(
+                    student.track.required_gpa) + ' [current GPA: ' + str(student.gpa) + '] [COMPLETED]:\n\n'
+    else:
+        info  +=' credits and a GPA of at least ' + str(
+            student.track.required_gpa) + ' [current GPA: ' + str(student.gpa) + ']:\n\n'
 
     for course_set in TrackCourseSet.objects.filter(track=student.track, parent_course_set=None):
         info = student_degree_reqs_loop(taken_courses, course_set, 0, info)
