@@ -113,6 +113,7 @@ class Track(models.Model):
 # department_limit simply tells you which department the upper and lower limits are for
 #
 # the parent_course_set attribute allows this structure to be tree-like
+# credit_limiter = true means you're dealing with credits not classes 
 class TrackCourseSet(models.Model):
     track = models.ForeignKey(Track, on_delete=models.CASCADE)
     parent_course_set = models.ForeignKey(to='TrackCourseSet', on_delete=models.CASCADE, null=True)
@@ -123,6 +124,7 @@ class TrackCourseSet(models.Model):
     lower_limit = models.IntegerField(default=999)
     lower_credit_limiit = models.IntegerField(default=3)
     upper_credit_limit = models.IntegerField(default=3)
+    credit_limiter = models.BooleanField(default=False)
     department_limit = models.CharField(max_length=4, default='N/A')
 
     def __str__(self):
