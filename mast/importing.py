@@ -650,7 +650,12 @@ def scrape_courses(request):
                         prereq.save()
 
                     else:
-                        match_courseInstance = CourseInstance.objects.filter(course=match_course[0])[0]
+                        match_courseInstance = CourseInstance.objects.filter(course=match_course[0])
+                        if(len(match_courseInstance) !=0):
+                            match_courseInstance = match_courseInstance[0]
+                        else:
+                            match_courseInstance = CourseInstance(course = match_course[0])
+                            match_courseInstance.save()
                         prereq = Prerequisite(course=match_courseInstance, course_set=prerequisite_set)
                         prereq.save()
                 else:
@@ -667,8 +672,12 @@ def scrape_courses(request):
                             prereq.save()
 
                         else:
-                            match_courseInstance = CourseInstance.objects.filter(course=match_course[0])[0]
-                            match_courseInstance.save()
+                            match_courseInstance = CourseInstance.objects.filter(course=match_course[0])
+                            if(len(match_courseInstance) !=0):
+                                match_courseInstance = match_courseInstance[0]
+                            else:
+                                match_courseInstance = CourseInstance(course = match_course[0])
+                                match_courseInstance.save()
                             prereq = Prerequisite(course=match_courseInstance, course_set=prerequisite_set)
                             prereq.save()
                     # if relation is or
@@ -684,7 +693,12 @@ def scrape_courses(request):
                         new_set = CoursePrerequisiteSet(parent_set=prerequisite_set)
                         new_set.save()
                         if len(match_course1) != 0:
-                            match_courseInstance = CourseInstance.objects.filter(course=match_course1[0])[0]
+                            match_courseInstance = CourseInstance.objects.filter(course=match_course1[0])
+                            if(len(match_courseInstance) !=0):
+                                match_courseInstance = match_courseInstance[0]
+                            else:
+                                match_courseInstance = CourseInstance(course = match_course1[0])
+                                match_courseInstance.save()
                             prereq = Prerequisite(course=match_courseInstance, course_set=new_set)
                             prereq.save()
                         else:
@@ -695,7 +709,12 @@ def scrape_courses(request):
                             match_courseInstance.save()
                             prereq = Prerequisite(course=match_courseInstance, course_set=new_set)
                         if len(match_course2) != 0:
-                            match_courseInstance = CourseInstance.objects.filter(course=match_course2[0])[0]
+                            match_courseInstance = CourseInstance.objects.filter(course=match_course2[0])
+                            if(len(match_courseInstance) !=0):
+                                match_courseInstance = match_courseInstance[0]
+                            else:
+                                match_courseInstance = CourseInstance(course = match_course2[0])
+                                match_courseInstance.save()
                             prereq = Prerequisite(course=match_courseInstance, course_set=new_set)
                             prereq.save()
                         else:
