@@ -119,6 +119,7 @@ class TrackCourseSet(models.Model):
     name = models.CharField(max_length=200, default='Default')
     size = models.IntegerField(default=1)
     limiter = models.BooleanField(default=False)
+    leeway = models.IntegerField(default=0)
     lower_credit_limit = models.IntegerField(default=0)
     upper_limit = models.IntegerField(default=100)
     lower_limit = models.IntegerField(default=999)
