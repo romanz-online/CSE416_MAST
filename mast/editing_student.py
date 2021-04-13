@@ -465,13 +465,12 @@ def sync_course_data(student):
     #     unsatisfied_requirements -= 1
 
     # accounting for GPA
-    # if not student.graduated and not student.withdrew:
+    # if not student.graduated:
     #     pending_requirements += 1
     #     unsatisfied_requirements -= 1
-    # else:
-    #     if student.gpa >= track.required_gpa:
-    #         satisfied_requirements += 1
-    #         unsatisfied_requirements -= 1
+    # elif student.gpa >= track.required_gpa:
+    #     satisfied_requirements += 1
+    #     unsatisfied_requirements -= 1
     # this breaks everything for some reason. no idea why
 
     # all other requirements go below this point

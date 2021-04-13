@@ -93,7 +93,7 @@ def add_scheduled_semester(request, sbu_id):
         empty_schedule_course.save()
     return render(request, 'mast/edit_schedule.html', {'student': student,
                                                        'grade_list': grade_list,
-                                                       'course_list': Course.objects.order_by('department'),
+                                                       'course_list': CourseInstance.objects.all(),
                                                        'classes_taken': CoursesTakenByStudent.objects.all(),
                                                        'semester_list': semester_list,
                                                        'schedule': StudentCourseSchedule.objects.filter(
