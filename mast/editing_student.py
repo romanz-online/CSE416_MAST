@@ -424,66 +424,61 @@ def sync_course_data(student):
     track = student.track
 
     satisfied_requirements = 0
-    pending_requirements = 0
-    unsatisfied_requirements = student.track.total_requirements
+    pending_requirements = 2
+    unsatisfied_requirements = student.track.total_requirements - 2
 
     # calculating the student's current credits
-    # student_credits = 0
-    # for course_set in TrackCourseSet.objects.filter(track=student.track, parent_course_set=None):
-    #     if course_set.lower_limit != 100 and course_set.upper_limit != 999:
-    #         taken_course_lookup = sum([i.credits_taken for i in taken_courses if
-    #                                    course_set.lower_limit <= i.course.course.number <= course_set.upper_limit if
-    #                                    i.status == 'Passed'])
-    #         if taken_course_lookup:
-    #             if taken_course_lookup >= track.size + track.leeway and track.limiter is True:
-    #                 student_credits -= (taken_course_lookup - (track.size + track.leeway))
-    #     for course in CourseInTrackSet.objects.filter(course_set=course_set):
-    #         taken_course_lookup = sum(
-    #             [i.credits_taken for i in taken_courses if i.course.course == course.course if i.status == 'Passed'])
-    #         if taken_course_lookup:
-    #             if course_set.size <= taken_course_lookup and course_set.limiter is True:
-    #                 student_credits -= taken_course_lookup - (course_set.size)
-    #     for track in TrackCourseSet.objects.filter(parent_course_set=course_set):
-    #         temp_num = 0
-    #         if track.lower_limit != 100 and track.upper_limit != 999:
-    #             taken_course_lookup = sum([i.credits_taken for i in taken_courses if
-    #                                        track.lower_limit <= i.course.course.number <= track.upper_limit if
-    #                                        i.status == 'Passed'])
-    #             if taken_course_lookup:
-    #                 if taken_course_lookup >= track.size + track.leeway and track.limiter is True:
-    #                     student_credits -= (taken_course_lookup - (track.size + track.leeway))
-    #         for course in CourseInTrackSet.objects.filter(course_set=track):
-    #             taken_course_lookup = len(
-    #                 [i for i in taken_courses if i.course.course == course.course if i.status == 'Passed'])
-    #             if taken_course_lookup:
-    #                 temp_num += taken_course_lookup
-    #         if temp_num >= track.size:
-    #             student_credits -= ((temp_num - track.size) * 3)
+    student_credits = 0
+    for course_set in TrackCourseSet.objects.filter(track=student.track, parent_course_set=None):
+        if course_set.lower_limit != 100 and course_set.upper_limit != 999:
+            taken_course_lookup = sum([i.credits_taken for i in taken_courses if
+                                       course_set.lower_limit <= i.course.course.number <= course_set.upper_limit if
+                                       i.status == CourseStatus.PASSED])
+            if taken_course_lookup:
+                if taken_course_lookup >= track.size + track.leeway and track.limiter is True:
+                    student_credits -= (taken_course_lookup - (track.size + track.leeway))
+        for course in CourseInTrackSet.objects.filter(course_set=course_set):
+            taken_course_lookup = sum(
+                [i.credits_taken for i in taken_courses if i.course.course == course.course if i.status == CourseStatus.PASSED])
+            if taken_course_lookup:
+                if course_set.size <= taken_course_lookup and course_set.limiter is True:
+                    student_credits -= taken_course_lookup - (course_set.size)
+        for track in TrackCourseSet.objects.filter(parent_course_set=course_set):
+            temp_num = 0
+            if track.lower_limit != 100 and track.upper_limit != 999:
+                taken_course_lookup = sum([i.credits_taken for i in taken_courses if
+                                           track.lower_limit <= i.course.course.number <= track.upper_limit if
+                                           i.status == CourseStatus.PASSED])
+                if taken_course_lookup:
+                    if taken_course_lookup >= track.size + track.leeway and track.limiter is True:
+                        student_credits -= (taken_course_lookup - (track.size + track.leeway))
+            for course in CourseInTrackSet.objects.filter(course_set=track):
+                taken_course_lookup = len(
+                    [i for i in taken_courses if i.course.course == course.course if i.status == CourseStatus.PASSED])
+                if taken_course_lookup:
+                    temp_num += taken_course_lookup
+            if temp_num >= track.size:
+                student_credits -= ((temp_num - track.size) * 3)
 
-    # if student_credits >= track.minimum_credits_required:
-    #     satisfied_requirements += 1
-    #     unsatisfied_requirements -= 1
+    if student_credits >= track.minimum_credits_required:
+        satisfied_requirements += 1
+        unsatisfied_requirements -= 1
 
     # accounting for GPA
-    # if not student.graduated:
-    #     pending_requirements += 1
-    #     unsatisfied_requirements -= 1
-    # elif student.gpa >= track.required_gpa:
-    #     satisfied_requirements += 1
-    #     unsatisfied_requirements -= 1
-    # this breaks everything for some reason. no idea why
-
-    # all other requirements go below this point
-
-    # find satisfied and pending requirements
-    parent_course_sets = TrackCourseSet.objects.filter(track=track, parent_course_set=None)
-    for i in parent_course_sets:
-        if find_requirements(taken_courses, i, False):
-            satisfied_requirements += 1
-            unsatisfied_requirements -= 1
-        if find_requirements(scheduled_courses, i, True):
-            pending_requirements += 1
-            unsatisfied_requirements -= 1
+    if student.graduated:
+        satisfied_requirements = student.track.total_requirements
+        pending_requirements = 0
+        unsatisfied_requirements = 0
+    else:
+        # find satisfied and pending requirements
+        parent_course_sets = TrackCourseSet.objects.filter(track=track, parent_course_set=None)
+        for i in parent_course_sets:
+            if find_requirements(taken_courses, i, False):
+                satisfied_requirements += 1
+                unsatisfied_requirements -= 1
+            if find_requirements(scheduled_courses, i, True):
+                pending_requirements += 1
+                unsatisfied_requirements -= 1
 
     student.satisfied_courses = satisfied_requirements
     student.pending_courses = pending_requirements

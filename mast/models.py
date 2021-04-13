@@ -73,7 +73,7 @@ class CourseInstance(models.Model):
     section = models.IntegerField(default=1)
 
     def __str__(self):
-        return self.course.department + str(self.course.number) + ':' + str(self.section)
+        return self.course.department + str(self.course.number) + ':' + str(self.section) + ' - ' + str(self.semester)
 
 
 class Major(models.Model):
