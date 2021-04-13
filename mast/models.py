@@ -234,6 +234,7 @@ class CoursesTakenByStudent(models.Model):
 class StudentCourseSchedule(models.Model):
     student = models.ForeignKey(Student, on_delete=models.CASCADE)
     course = models.ForeignKey(CourseInstance, null=True, on_delete=models.SET_NULL)
+    status = models.CharField(max_length=15, choices=CourseStatus.choices, default=CourseStatus.PENDING)
 
     def __str__(self):
         return str(self.student) + ' - ' + str(self.course) + ' ' + str(self.course.semester)
