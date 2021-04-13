@@ -356,7 +356,6 @@ def import_student(request):
                 student.requirement_semester = Semester.objects.get(season=line[8], year=line[9])
             if line[10] and line[11]:
                 student.graduation_semester = Semester.objects.get(season=line[10], year=line[11])
-                student.graduated = True
             if line[12]:
                 student.password = line[12]
 

@@ -2,8 +2,7 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="433e10ab-7bf6-49f7-ab54-8658f67b786e" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/mast/editing_student.py" beforeDir="false" afterPath="$PROJECT_DIR$/mast/editing_student.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/mast/modifying_schedule.py" beforeDir="false" afterPath="$PROJECT_DIR$/mast/modifying_schedule.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/mast/importing.py" beforeDir="false" afterPath="$PROJECT_DIR$/mast/importing.py" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -30,11 +29,11 @@
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file pinned="false" current-in-tab="true">
+      <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/mast/editing_student.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="285">
-              <caret line="467" selection-start-line="467" selection-end-line="472" selection-end-column="39" />
+            <state relative-caret-position="404">
+              <caret line="468" column="35" lean-forward="true" selection-start-line="468" selection-start-column="35" selection-end-line="468" selection-end-column="35" />
               <folding>
                 <element signature="e#0#54#0" expanded="true" />
                 <element signature="e#317#3252#0" />
@@ -50,34 +49,18 @@
           </provider>
         </entry>
       </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/mast/modifying_schedule.py">
+      <file pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/mast/importing.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="556">
-              <caret line="95" column="99" selection-start-line="95" selection-start-column="99" selection-end-line="95" selection-end-column="99" />
+            <state relative-caret-position="491">
+              <caret line="357" column="98" selection-start-line="357" selection-start-column="98" selection-end-line="357" selection-end-column="98" />
               <folding>
-                <element signature="e#1#16#0" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/mast/templates/mast/edit_schedule.html">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="284">
-              <caret line="88" column="34" selection-start-line="88" selection-start-column="34" selection-end-line="88" selection-end-column="34" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/mast/models.py">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="369">
-              <caret line="203" column="14" lean-forward="true" selection-start-line="203" selection-start-column="14" selection-end-line="203" selection-end-column="14" />
-              <folding>
-                <element signature="e#0#28#0" expanded="true" />
+                <element signature="e#0#9#0" expanded="true" />
+                <element signature="e#19626#19715#0" />
+                <element signature="e#19763#23693#0" />
+                <element signature="e#23718#24164#0" />
+                <element signature="e#24200#28031#0" />
+                <element signature="e#28067#39161#0" />
               </folding>
             </state>
           </provider>
@@ -96,8 +79,6 @@
   </component>
   <component name="FindInProjectRecents">
     <findStrings>
-      <find>request, 'mast/student_index.html', context</find>
-      <find>major</find>
       <find>courses</find>
       <find>Course.objec</find>
       <find>Course.obje</find>
@@ -126,6 +107,8 @@
       <find>id=</find>
       <find>required</find>
       <find>if course_set.lower_limit != 100 and course_set.upper_limit != 999</find>
+      <find>542</find>
+      <find>Operat</find>
     </findStrings>
   </component>
   <component name="Git.Settings">
@@ -180,11 +163,11 @@
         <option value="$PROJECT_DIR$/mast/templates/mast/new_student.html" />
         <option value="$PROJECT_DIR$/mast/test_files/degree-requirements-ESE.xml" />
         <option value="$PROJECT_DIR$/mast/test_files/degree-requirements-BMI.xml" />
-        <option value="$PROJECT_DIR$/mast/importing.py" />
         <option value="$PROJECT_DIR$/mast/models.py" />
         <option value="$PROJECT_DIR$/mast/views.py" />
         <option value="$PROJECT_DIR$/mast/modifying_schedule.py" />
         <option value="$PROJECT_DIR$/mast/editing_student.py" />
+        <option value="$PROJECT_DIR$/mast/importing.py" />
       </list>
     </option>
   </component>
@@ -427,7 +410,7 @@
     </history-entry>
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="298089000" />
+    <option name="totallyTimeSpent" value="298890000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="-1608" y="-8" width="1616" height="876" extended-state="6" />
@@ -787,43 +770,12 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/mast/importing.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="403">
-          <caret line="428" column="21" lean-forward="true" selection-start-line="428" selection-start-column="21" selection-end-line="428" selection-end-column="21" />
-          <folding>
-            <element signature="e#0#9#0" expanded="true" />
-            <element signature="e#732#14031#0" />
-            <element signature="e#14067#19237#0" />
-            <element signature="e#23786#27617#0" />
-            <element signature="e#27653#36487#0" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/mast/test_files/degree-requirements-AMS.xml">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="290">
-          <caret line="111" column="34" lean-forward="true" selection-start-line="111" selection-start-column="34" selection-end-line="111" selection-end-column="34" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/mast/views.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="255">
           <caret line="24" column="39" lean-forward="true" selection-start-line="24" selection-start-column="39" selection-end-line="24" selection-end-column="39" />
           <folding>
             <element signature="e#0#29#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/mast/models.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="369">
-          <caret line="203" column="14" lean-forward="true" selection-start-line="203" selection-start-column="14" selection-end-line="203" selection-end-column="14" />
-          <folding>
-            <element signature="e#0#28#0" expanded="true" />
           </folding>
         </state>
       </provider>
@@ -845,10 +797,27 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/mast/models.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="135">
+          <caret line="138" column="22" lean-forward="true" selection-start-line="138" selection-start-column="22" selection-end-line="138" selection-end-column="22" />
+          <folding>
+            <element signature="e#0#28#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/mast/test_files/degree-requirements-AMS.xml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="451">
+          <caret line="138" column="39" lean-forward="true" selection-start-line="138" selection-start-column="39" selection-end-line="138" selection-end-column="39" />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/mast/editing_student.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="285">
-          <caret line="467" selection-start-line="467" selection-end-line="472" selection-end-column="39" />
+        <state relative-caret-position="404">
+          <caret line="468" column="35" lean-forward="true" selection-start-line="468" selection-start-column="35" selection-end-line="468" selection-end-column="35" />
           <folding>
             <element signature="e#0#54#0" expanded="true" />
             <element signature="e#317#3252#0" />
@@ -859,6 +828,21 @@
             <element signature="e#12171#13030#0" />
             <element signature="e#13079#13966#0" />
             <element signature="e#14029#15456#0" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/mast/importing.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="491">
+          <caret line="357" column="98" selection-start-line="357" selection-start-column="98" selection-end-line="357" selection-end-column="98" />
+          <folding>
+            <element signature="e#0#9#0" expanded="true" />
+            <element signature="e#19626#19715#0" />
+            <element signature="e#19763#23693#0" />
+            <element signature="e#23718#24164#0" />
+            <element signature="e#24200#28031#0" />
+            <element signature="e#28067#39161#0" />
           </folding>
         </state>
       </provider>
