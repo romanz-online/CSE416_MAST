@@ -250,8 +250,6 @@ def student_degree_reqs_loop(taken_courses, course_set, layer, info):
                 if taken_course_lookup:
                     number_taken += taken_course_lookup
                     if course_set.leeway:
-                        print(course_set.leeway)
-                        print(course_set.lower_limit)
                         number_taken -= course_set.leeway//3 
             for course in CourseInTrackSet.objects.filter(course_set=course_set):
                 taken_course_lookup = sum([i.credits_taken for i in taken_courses if i.course.course == course.course and i.status == CourseStatus.PASSED])
@@ -292,7 +290,6 @@ def student_degree_reqs_loop(taken_courses, course_set, layer, info):
                 if taken_course_lookup:
                     number_taken += taken_course_lookup
                     if course_set.leeway:
-                        print(course_set.leeway)
                         number_taken -= course_set.leeway//3 
             for course in CourseInTrackSet.objects.filter(course_set=course_set):
                 taken_course_lookup = len([i for i in taken_courses if i.course.course == course.course])
@@ -388,8 +385,8 @@ def stringify_student_degree_reqs(student):
         if course_set.lower_limit != 100 and course_set.upper_limit != 999:
             taken_course_lookup = sum([i.credits_taken for i in taken_courses if course_set.lower_limit <= i.course.course.number <= course_set.upper_limit if i.status == 'Passed'])
             if taken_course_lookup:
-                if course_set.size <= taken_course_lookup and course_set.limiter is True:
-                    student_credits -= taken_course_lookup - (course_set.size)
+                if taken_course_lookup >= track.size + track.leeway and track.limiter is True:
+                    student_credits -= (taken_course_lookup - (track.size + track.leeway))
         for course in CourseInTrackSet.objects.filter(course_set=course_set):
             taken_course_lookup = sum([i.credits_taken for i in taken_courses if i.course.course == course.course if i.status == 'Passed'])
             if taken_course_lookup:
@@ -400,9 +397,8 @@ def stringify_student_degree_reqs(student):
             if track.lower_limit != 100 and track.upper_limit != 999:
                 taken_course_lookup = sum([i.credits_taken for i in taken_courses if track.lower_limit <= i.course.course.number <= track.upper_limit if i.status == 'Passed'])
                 if taken_course_lookup:
-                    print(taken_course_lookup)
-                    if taken_course_lookup >= track.size and track.limiter is True:
-                        student_credits -= (taken_course_lookup - track.size)
+                    if taken_course_lookup >= track.size + track.leeway and track.limiter is True:
+                        student_credits -= (taken_course_lookup - (track.size + track.leeway))
             for course in CourseInTrackSet.objects.filter(course_set=track):
                 taken_course_lookup = len([i for i in taken_courses if i.course.course == course.course if i.status == 'Passed'])
                 if taken_course_lookup:
