@@ -97,13 +97,13 @@
 
 <div>
     <form action="{% url 'mast:commit_edit' student.sbu_id %}" method="get">
-        First Name: <input name="first_name" type="text" autocomplete="on" value={{ student.first_name }}>
+        First Name: <input name="first_name" type="text" autocomplete="on" value="{{ student.first_name }}">
         <br>
         <br>
-        Last Name: <input name="last_name" type="text" autocomplete="on" value={{ student.last_name }}>
+        Last Name: <input name="last_name" type="text" autocomplete="on" value="{{ student.last_name }}">
         <br>
         <br>
-        Email: <input name="email" type="text" autocomplete="on" value={{ student.email }}>
+        Email: <input name="email" type="text" autocomplete="on" value="{{ student.email }}">
         <br>
         <br>
         Enrollment Semester:
