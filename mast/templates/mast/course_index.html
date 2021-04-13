@@ -27,6 +27,7 @@
     <thead>
     <tr>
         <th>Name</th>
+        <th>Semester</th>
         <th>Start Time</th>
         <th>End Time</th>
     </tr>
@@ -35,6 +36,7 @@
         {% if course_list %}
             {% for course in course_list %}
                 <td><a href="/mast/{{ course.course.department }}/{{ course.course.number }}/{{ course.section }}">{{ course }}</a></td>
+                <td>{{ course.semester }}</td>
                 <td>{{ course.time_start }}</td>
                 <td>{{ course.time_end }}</td>
                 </tr>
