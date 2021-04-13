@@ -188,6 +188,7 @@ class Student(models.Model):
     first_name = models.CharField(default='unknown', max_length=100)
     last_name = models.CharField(default='unknown', max_length=100)
     gpa = models.FloatField(default=4.0)
+    credits_taken = models.IntegerField(default=0)
     email = models.CharField(max_length=100)
     major = models.ForeignKey(Major, null=True, on_delete=models.SET_NULL)
     track = models.ForeignKey(Track, null=True, on_delete=models.SET_NULL)

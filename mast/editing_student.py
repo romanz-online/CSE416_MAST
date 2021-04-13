@@ -129,19 +129,20 @@ def commit_edit(request, sbu_id):
     student = get_object_or_404(Student, pk=sbu_id)
     error_message = 'Something went wrong.'
     try:
+        changed = False
         # Attempt to make changes to their data
         first_name = request.GET['first_name']
         last_name = request.GET['last_name']
         email = request.GET['email']
-
-        dummy_track = request.GET['major_track']
-        dummy_track = Track.objects.get(id=dummy_track)
 
         graduated = True if request.GET['graduated'] == 'yes' else False
         withdrew = True if request.GET['withdrew'] == 'yes' else False
 
         entry_semester = request.GET['entry_semester']
         entry_semester = Semester.objects.get(id=int(entry_semester))
+
+        dummy_track = request.GET['major_track']
+        dummy_track = Track.objects.get(id=dummy_track)
 
         rsid = str(dummy_track.id) + '_requirement_semester'
         requirement_semester = request.GET[rsid]
@@ -151,18 +152,39 @@ def commit_edit(request, sbu_id):
         major = Major.objects.filter(name=dummy_major.name, requirement_semester=requirement_semester)[0]
         track = Track.objects.filter(name=dummy_track.name, major=major)[0]
 
-        student.first_name = first_name
-        student.last_name = last_name
-        student.email = email
-        student.major = major
-        student.track = track
-        student.graduated = graduated
-        student.withdrew = withdrew
-        student.entry_semester = entry_semester
-        student.requirement_semester = requirement_semester
+        if student.first_name != first_name:
+            student.first_name = first_name
+            changed = True
+        if student.last_name != last_name:
+            student.last_name = last_name
+            changed = True
+        if student.email != email:
+            student.email = email
+            changed = True
+        if student.major != major:
+            student.major = major
+            changed = True
+        if student.track != track:
+            student.track = track
+            changed = True
+        if student.graduated != graduated:
+            student.graduated = graduated
+            changed = True
+        if student.withdrew != withdrew:
+            student.withdrew = withdrew
+            changed = True
+        if student.entry_semester != entry_semester:
+            student.entry_semester = entry_semester
+            changed = True
+        if student.requirement_semester != requirement_semester:
+            student.requirement_semester = requirement_semester
+            changed = True
         if student.graduated:
             graduation_semester = request.GET['graduation_semester']
-            student.graduation_semester = Semester.objects.get(id=int(graduation_semester))
+            graduation_semester = Semester.objects.get(id=int(graduation_semester))
+            if student.graduation_semester != graduation_semester:
+                student.graduation_semester = graduation_semester
+                changed = True
 
         for course in CoursesTakenByStudent.objects.filter(student=student):
             if course.status != 'Pending':
@@ -170,17 +192,23 @@ def commit_edit(request, sbu_id):
                 new_grade = request.GET[str(course.id)]
                 if course.grade != new_grade:
                     course.grade = new_grade
+                    changed = True
                 if course.status != new_status:
                     course.status = new_status
+                    changed = True
                     if new_status == 'Pending':
                         course.grade = 'N/A'
                 course.save()
 
-        student.gpa = get_gpa(student)
+        gpa = get_gpa(student)
+        if student.gpa != gpa:
+            student.gpa = gpa
+            changed = True
 
         student.save()
 
-        sync_course_data(student)
+        if changed:
+            sync_course_data(student)
     except:
         # Return an error message if their data could not be saved
         student = get_object_or_404(Student, pk=sbu_id)
@@ -317,14 +345,24 @@ def add_transfer_course(request, sbu_id):
         # Attempt to add transfer course
         course = request.GET['transfer_course']
         grade = request.GET['transfer_course_grade']
-        credits = request.GET['transfer_course_credits']
+        credits_taken = request.GET['transfer_course_credits']
         if course == '99999':
-            c = CoursesTakenByStudent(student=student, grade=grade, credits_taken=credits, status=CourseStatus.TRANSFER)
+            c = CoursesTakenByStudent(student=student, grade=grade, credits_taken=credits_taken,
+                                      status=CourseStatus.TRANSFER)
             c.save()
         else:
             c = CoursesTakenByStudent(student=student, course=CourseInstance.objects.get(id=course), grade=grade,
-                                      credits_taken=credits, status=CourseStatus.TRANSFER)
+                                      credits_taken=credits_taken, status=CourseStatus.TRANSFER)
             c.save()
+
+        transfer_credits = 0
+        for i in CoursesTakenByStudent.objects.filter(student=student):
+            if i.status == CourseStatus.TRANSFER:
+                transfer_credits += i.credits_taken
+        if 12 - transfer_credits < credits_taken:
+            credits_taken = (credits_taken + transfer_credits) - 12
+        student.credits_taken += credits_taken
+        student.save()
         sync_course_data(student)
     except:
         return HttpResponseRedirect(reverse('mast:edit', args=(sbu_id,)))
@@ -350,22 +388,24 @@ def modify_course_in_progress(request, sbu_id, record):
         r = CoursesTakenByStudent.objects.get(id=record)
         if request.GET['action'] == 'pass':
             r.status = CourseStatus.PASSED
-            r.grade = 'A'
+            r.grade = Grade.A
             r.save()
             student.gpa = get_gpa(student)
+            student.credits_taken += r.credits_taken
             student.save()
+            sync_course_data(student)
         elif request.GET['action'] == 'fail':
             r.status = CourseStatus.FAILED
-            r.grade = 'F'
+            r.grade = Grade.F
             r.save()
             student.gpa = get_gpa(student)
             student.save()
+            sync_course_data(student)
         elif request.GET['action'] == 'drop':
             r.delete()
             student.save()
         else:
             raise Exception()
-        sync_course_data(student)
     except:
         return HttpResponseRedirect(reverse('mast:edit', args=(sbu_id,)))
     return HttpResponseRedirect(reverse('mast:edit', args=(sbu_id,)))
@@ -418,6 +458,56 @@ def find_requirements(taken_courses, course_set, for_pending):
     return False
 
 
+def adjust_credits_recurse(course_set, credits_taken, taken_course_instances, taken_courses):
+    if course_set.limiter:
+        credits_accumulated_in_set = 0
+
+        # adding up credits from normal courses
+        for course in CourseInTrackSet.objects.filter(course_set=course_set):
+            if course.course in taken_courses:
+                course_instance = None
+                for instance in taken_course_instances:
+                    if instance.course == course.course:
+                        course_instance = instance
+                credits_accumulated_in_set += course_instance.credits_taken
+
+        # adding up credits from ranges
+        if course_set.department_limit:
+            for course in taken_courses:
+                if course.department == course_set.department_limit and course_set.lower_limit <= course.number <= course_set.upper_limit:
+                    course_instance = None
+                    for instance in taken_course_instances:
+                        if instance.course == course:
+                            course_instance = instance
+                    credits_accumulated_in_set += course_instance.credits_taken
+
+        # subtracting credits
+        if credits_accumulated_in_set > course_set.size:
+            credits_taken -= (credits_accumulated_in_set - course_set.size)
+
+    # recursive call for nested sets
+    for nested_set in TrackCourseSet.objects.filter(parent_course_set=course_set):
+        credits_taken = adjust_credits_recurse(nested_set, credits_taken, taken_course_instances, taken_courses)
+
+    return credits_taken
+
+
+def adjust_credits(student, taken_courses):
+    # setting up variables
+    track = student.track
+    credits_taken = student.credits_taken
+    taken_course_instances = [i for i in taken_courses if
+                              i.status == CourseStatus.PASSED or i.status == CourseStatus.TRANSFER]
+    taken_courses = [i.course.course for i in taken_course_instances]
+
+    # call to recursive function
+    for course_set in TrackCourseSet.objects.filter(track=track, parent_course_set=None):
+        credits_taken = adjust_credits_recurse(course_set, credits_taken, taken_course_instances, taken_courses)
+
+    student.credits_taken = credits_taken
+    student.save()
+
+
 def sync_course_data(student):
     taken_courses = CoursesTakenByStudent.objects.filter(student=student)
     scheduled_courses = StudentCourseSchedule.objects.filter(student=student)
@@ -427,40 +517,9 @@ def sync_course_data(student):
     pending_requirements = 2
     unsatisfied_requirements = student.track.total_requirements - 2
 
-    # calculating the student's current credits
-    student_credits = 0
-    for course_set in TrackCourseSet.objects.filter(track=student.track, parent_course_set=None):
-        if course_set.lower_limit != 100 and course_set.upper_limit != 999:
-            taken_course_lookup = sum([i.credits_taken for i in taken_courses if
-                                       course_set.lower_limit <= i.course.course.number <= course_set.upper_limit if
-                                       i.status == CourseStatus.PASSED])
-            if taken_course_lookup:
-                if taken_course_lookup >= track.size + track.leeway and track.limiter is True:
-                    student_credits -= (taken_course_lookup - (track.size + track.leeway))
-        for course in CourseInTrackSet.objects.filter(course_set=course_set):
-            taken_course_lookup = sum(
-                [i.credits_taken for i in taken_courses if i.course.course == course.course if i.status == CourseStatus.PASSED])
-            if taken_course_lookup:
-                if course_set.size <= taken_course_lookup and course_set.limiter is True:
-                    student_credits -= taken_course_lookup - (course_set.size)
-        for track in TrackCourseSet.objects.filter(parent_course_set=course_set):
-            temp_num = 0
-            if track.lower_limit != 100 and track.upper_limit != 999:
-                taken_course_lookup = sum([i.credits_taken for i in taken_courses if
-                                           track.lower_limit <= i.course.course.number <= track.upper_limit if
-                                           i.status == CourseStatus.PASSED])
-                if taken_course_lookup:
-                    if taken_course_lookup >= track.size + track.leeway and track.limiter is True:
-                        student_credits -= (taken_course_lookup - (track.size + track.leeway))
-            for course in CourseInTrackSet.objects.filter(course_set=track):
-                taken_course_lookup = len(
-                    [i for i in taken_courses if i.course.course == course.course if i.status == CourseStatus.PASSED])
-                if taken_course_lookup:
-                    temp_num += taken_course_lookup
-            if temp_num >= track.size:
-                student_credits -= ((temp_num - track.size) * 3)
+    adjust_credits(student, taken_courses)
 
-    if student_credits >= track.minimum_credits_required:
+    if student.credits_taken >= track.minimum_credits_required:
         satisfied_requirements += 1
         unsatisfied_requirements -= 1
 

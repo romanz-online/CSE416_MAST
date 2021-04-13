@@ -405,11 +405,13 @@ def import_grades(request, course_file):
             line[line.index('\r')] = ''
         if line != ['']:
             new_class = CoursesTakenByStudent()
+            student = None
             if line[0] and not Student.objects.get(sbu_id=line[0]):
                 messages.error(request, bytes('No student with ID', line[0]))
                 continue
             if line[0]:
                 new_class.student = Student.objects.get(sbu_id=line[0])
+                student = new_class.student
             if line[1] and Major.objects.filter(department=line[1]) and line[2]:
                 department = line[1]
                 semester = Semester.objects.filter(season=line[4], year=line[5])[0]
@@ -426,7 +428,7 @@ def import_grades(request, course_file):
                     error_string = 'Class ' + line[1] + line[2] + ' section ' + line[3] + ' could not be found.'
                     messages.error(request, error_string)
                     continue
-            if CoursesTakenByStudent.objects.filter(student=new_class.student, course=new_class.course):
+            if CoursesTakenByStudent.objects.filter(student=student, course=new_class.course):
                 error_string = 'Class ' + str(new_class.course) + ' already taken by student ' + str(new_class.student)
                 messages.error(request, error_string)
                 continue
@@ -444,7 +446,10 @@ def import_grades(request, course_file):
                 new_class.status = CourseStatus.PENDING
             new_class.save()
 
-            editing_student.sync_course_data(new_class.student)
+            student.credits_taken += new_class.credits_taken
+            student.save()
+
+            editing_student.sync_course_data(student)
 
     return HttpResponseRedirect(reverse('mast:student_index', args=()))
 
