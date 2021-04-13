@@ -35,6 +35,8 @@ def setup():
                             new_semester.is_current_semester = True
                         elif doy in fall and season[0] == Season.FALL:
                             new_semester.is_current_semester = True
+                        elif doy not in spring and doy not in summer and doy not in fall and season[0] == Season.WINTER:
+                            new_semester.is_current_semester = True
                         else:
                             new_semester.is_current_semester = False
                     
