@@ -482,8 +482,8 @@ def sync_course_data(student):
         if find_requirements(taken_courses, i, False):
             satisfied_requirements += 1
             unsatisfied_requirements -= 1
-        if find_requirements(taken_courses, i, True):
-            satisfied_requirements += 1
+        if find_requirements(scheduled_courses, i, True):
+            pending_requirements += 1
             unsatisfied_requirements -= 1
 
     student.satisfied_courses = satisfied_requirements

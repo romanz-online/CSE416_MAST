@@ -1,10 +1,11 @@
-from datetime import datetime
 import operator
 
 from django.shortcuts import get_object_or_404, render
 from django.http import HttpResponseRedirect
 from django.urls import reverse
 from .models import Student, Course, CourseInstance, CoursesTakenByStudent, Grade, StudentCourseSchedule, Semester
+
+from . import editing_student
 
 
 def edit_schedule(request, sbu_id):
@@ -58,7 +59,7 @@ def add_scheduled_semester(request, sbu_id):
         if i > len(full_semester_list):
             return render(request, 'mast/edit_schedule.html', {'student': student,
                                                                'grade_list': grade_list,
-                                                               'course_list': Course.objects.order_by('department'),
+                                                               'course_list': CourseInstance.objects.all(),
                                                                'classes_taken': CoursesTakenByStudent.objects.all(),
                                                                'semester_list': semester_list,
                                                                'schedule': StudentCourseSchedule.objects.filter(
@@ -117,6 +118,7 @@ def add_scheduled_course(request, sbu_id):
         new_course = CourseInstance.objects.get(id=new_course)
         c = StudentCourseSchedule(student=student, course=new_course)
         c.save()
+        editing_student.sync_course_data(student)
     except:
         return HttpResponseRedirect(reverse('mast:edit_schedule', args=(sbu_id,)))
     return HttpResponseRedirect(reverse('mast:edit_schedule', args=(sbu_id,)))
@@ -134,10 +136,11 @@ def remove_scheduled_course(request, sbu_id, course):
             render (HttpResponse): Returns the respective view containing the respective information of the student schedule retrieved.     
     """
     student = get_object_or_404(Student, pk=sbu_id)
-    course_record = get_object_or_404(Course, pk=course)
+    course_record = get_object_or_404(CourseInstance, pk=course)
     try:
         c = StudentCourseSchedule.objects.get(student=student, course=course_record)
         c.delete()
+        editing_student.sync_course_data(student)
     except:
         return HttpResponseRedirect(reverse('mast:edit_schedule', args=(sbu_id,)))
     return HttpResponseRedirect(reverse('mast:edit_schedule', args=(sbu_id,)))
