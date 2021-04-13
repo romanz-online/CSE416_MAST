@@ -36,8 +36,10 @@ def setup():
                         elif doy in fall and season[0] == Season.FALL:
                             new_semester.is_current_semester = True
                         else:
-                            new_semester.is_current_semester = True
-                    new_semester.save()
+                            new_semester.is_current_semester = False
+                    
+                    if new_semester not in Semester.objects.all():
+                        new_semester.save()
 
 
 def home(request):
