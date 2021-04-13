@@ -134,6 +134,7 @@
             <upper_limit>556</upper_limit>
             <TrackCourseSet>
                 <upper_credit_limit>3</upper_credit_limit>
+                <leeway>3</leeway>
                 <limiter>True</limiter>
                 <department_limit>AMS</department_limit>
                 <lower_limit>570</lower_limit>

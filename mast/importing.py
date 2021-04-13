@@ -139,10 +139,18 @@ def import_degree_requirements(request):
                         tcs_lower_credit_limit = 0
                 else:
                     tcs_lower_credit_limit = 0
+                tcs_leeway = tcs.find("leeway")
+                if tcs_leeway:
+                    if tcs_leeway.parent.parent.name == "Track":
+                        tcs_leeway = tcs_leeway.get_text()
+                    else:
+                        tcs_leeway = 0 
+                else:
+                    tcs_leeway = 0
                 tcs_save = TrackCourseSet(track=t, name=tcs_name, size=tcs_size,
                                           limiter=tcs_limiter, upper_limit=tcs_upper_limit, lower_limit=tcs_lower_limit,
                                           lower_credit_limit=tcs_lower_credit_limit,
-                                          department_limit=tcs_department_limit)
+                                          department_limit=tcs_department_limit, leeway=tcs_leeway)
                 tcs_save.save()
 
                 # Add children of TCS 
@@ -186,16 +194,21 @@ def import_degree_requirements(request):
                                 tcs_department_limit = 'N/A'
                             tcs_lower_credit_limit = child.find("lower_credit_limit")
                             if tcs_lower_credit_limit:
-                                print(tcs_lower_credit_limit.get_text())
                                 tcs_lower_credit_limit = tcs_lower_credit_limit.get_text()
                             else:
                                 tcs_lower_credit_limit = 0
+                            tcs_leeway = child.find("leeway")
+                            if tcs_leeway:
+                                tcs_leeway = tcs_leeway.get_text()
+                            else:
+                                tcs_leeway = 0 
                             tcs_child_save = TrackCourseSet(track=t, parent_course_set=tcs_save, name=tcs_name,
                                                             size=tcs_size,
                                                             limiter=tcs_limiter, upper_limit=tcs_upper_limit,
                                                             lower_limit=tcs_lower_limit,
                                                             lower_credit_limit=tcs_lower_credit_limit,
-                                                            department_limit=tcs_department_limit)
+                                                            department_limit=tcs_department_limit, 
+                                                            leeway = tcs_leeway)
                             tcs_child_save.save()
                             # do one more loop to find courseintracksets and attach them here. 
                             for child_second_loop in child.children:
