@@ -610,10 +610,33 @@ def scrape_courses(request):
             course.save()
         else:
             course = Course.objects.filter(department=major, number=number)[0]
+            course.description = description
+            credits = re.search(r'(\d+-)?\d+ credit', description)
+            if credits:
+                credits = credits.group(0)
+                credits = credits.replace(' credit', '')
+                if '-' in credits:
+                    credit_list = credits.split('-')
+                    course.upper_credit_limit = int(credit_list[1])
+                    course.lower_credit_limit = int(credit_list[0])
+                else:
+                    course.upper_credit_limit = int(credits)
+            else:
+                credits = "3"
+                course.upper_credit_limit = int(credits)
+            course.save()
+
 
         CourseInstance.objects.filter(course=course, semester=semester).delete()
-        courseInstance = CourseInstance(course=course, semester=semester)
-        courseInstance.save()
+        null_semester = CourseInstance.objects.filter(course=course, semester=None)
+        courseInstance = None
+        if(len(null_semester) ==0):
+            courseInstance = CourseInstance(course=course, semester=semester)
+            courseInstance.save()
+        else:
+            courseInstance = null_semester[0]
+            courseInstance.semester = semester
+            courseInstance.save()
         # prerequisite part
         prerequisite_prefix = re.search(r"Prerequisite.*:", description)
         if prerequisite_prefix:
