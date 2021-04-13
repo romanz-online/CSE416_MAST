@@ -610,6 +610,7 @@ def scrape_courses(request):
             course.save()
         else:
             course = Course.objects.filter(department=major, number=number)[0]
+            course.name = name[9:len(name)]
             course.description = description
             credits = re.search(r'(\d+-)?\d+ credit', description)
             if credits:
