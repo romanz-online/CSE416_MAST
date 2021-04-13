@@ -344,17 +344,22 @@ def student_degree_reqs_loop(taken_courses, course_set, layer, info):
             else:
                 info += str(course) + ' ' + taken + '\n'
     # this is where courses get listed out, along with their properties
-
+    number_taken = 0
     if course_set.lower_limit != 100 and course_set.upper_limit != 999:
         taken_course_lookup = len([i for i in taken_courses if course_set.lower_limit <= i.course.course.number <= course_set.upper_limit])
         if taken_course_lookup:
             number_taken += taken_course_lookup
+            if course_set.limiter == True:
+                number_taken -= course_set.leeway//3 
     for track in TrackCourseSet.objects.filter(parent_course_set=course_set):
-                    if track.lower_limit != 100 and track.upper_limit != 999:
-                        taken_course_lookup = len([i for i in taken_courses if track.lower_limit <= i.course.course.number <= track.upper_limit])
-                        if taken_course_lookup:
-                            number_taken += taken_course_lookup
-    taken = '[TAKEN]' if taken_course_lookup else ''
+        if track.lower_limit != 100 and track.upper_limit != 999:
+            taken_course_lookup = len([i for i in taken_courses if track.lower_limit <= i.course.course.number <= track.upper_limit])
+            if taken_course_lookup:
+                number_taken += taken_course_lookup
+                if track.limiter == True:
+                    number_taken -= track.leeway//3
+                print(number_taken)
+    taken = '[TAKEN]' if number_taken else ''
     # this prints out course ranges (CSE500-CSE560)
     if course_set.lower_limit != 100 and course_set.upper_limit != 999 and course_set.department_limit != 'N/A':
         for i in range(layer - 1):
