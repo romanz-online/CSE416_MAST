@@ -12,9 +12,9 @@
     <li class="dropdown">
         <a href="javascript:void(0)" class="dropbtn">Import</a>
         <div class="dropdown-content">
-            <a class="dropdown_link" href="{% url 'mast:import_courses' %}">Courses</a>
+            <a class="dropdown_link" href="{% url 'mast:import_courses' %}">Courses(.csv)</a>
             <a class="dropdown_link" href="{% url 'mast:import_degree_requirements' %}">Requirements</a>
-            <a class="dropdown_link" href="{% url 'mast:scrape_courses' %}">PDF</a>
+            <a class="dropdown_link" href="{% url 'mast:scrape_courses' %}">Courses(.txt)</a>
         </div>
     </li>
     <li class="navbar_item_logout right"><a class="navbar_link" href="{% url 'mast:home' %}">Logout</a></li>
