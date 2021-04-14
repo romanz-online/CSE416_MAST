@@ -1,4 +1,4 @@
-   <!--Finished, needs revision-->
+   <!--Finished-->
     <major>
         <name>Biomedical Informatics</name>
         <department>BMI</department>
@@ -50,40 +50,6 @@
                </CourseInTrackSet>
             </TrackCourseSet>
             <TrackCourseSet>
-               <name>All Electives</name>
-               <size>1</size>
-               <CourseInTrackSet>
-                    <course>BMI 517</course>
-               </CourseInTrackSet>
-               <CourseInTrackSet>
-                    <course>BMI 590</course>
-               </CourseInTrackSet>
-               <CourseInTrackSet>
-                    <course>BMI 591</course>
-               </CourseInTrackSet>
-               <CourseInTrackSet>
-                    <course>BMI 595</course>
-               </CourseInTrackSet>
-               <CourseInTrackSet>
-                    <course>BMI 596</course>
-               </CourseInTrackSet>
-               <CourseInTrackSet>
-                    <course>BMI 625</course>
-               </CourseInTrackSet>
-               <CourseInTrackSet>
-                    <course>BMI 690</course>
-               </CourseInTrackSet>
-               <CourseInTrackSet>
-                    <course>BMI 691</course>
-               </CourseInTrackSet>
-               <CourseInTrackSet>
-                    <course>BMI 695</course>
-               </CourseInTrackSet>
-               <CourseInTrackSet>
-                    <course>BMI 696</course>
-               </CourseInTrackSet>
-            </TrackCourseSet>
-            <TrackCourseSet>
                <upper_credit_limit>0</upper_credit_limit>
                <limiter>True</limiter>
                <CourseInTrackSet>
@@ -108,7 +74,6 @@
                </CourseInTrackSet>
             </TrackCourseSet>
             <TrackCourseSet>
-               <name>Limiter</name>
                <limiter>True</limiter>
                <upper_credit_limit>3</upper_credit_limit>
                <CourseInTrackSet>
@@ -180,49 +145,6 @@
                 </CourseInTrackSet>
             </TrackCourseSet>
             <TrackCourseSet>
-               <name>All Electives</name>
-               <size>1</size>
-               <CourseInTrackSet>
-                    <course>BMI 517</course>
-               </CourseInTrackSet>
-               <CourseInTrackSet>
-                    <course>BMI 520</course>
-               </CourseInTrackSet>
-               <CourseInTrackSet>
-                    <course>BMI 530</course>
-               </CourseInTrackSet>
-               <CourseInTrackSet>
-                    <course>BMI 552</course>
-               </CourseInTrackSet>
-               <CourseInTrackSet>
-                    <course>BMI 590</course>
-               </CourseInTrackSet>
-               <CourseInTrackSet>
-                    <course>BMI 591</course>
-               </CourseInTrackSet>
-               <CourseInTrackSet>
-                    <course>BMI 595</course>
-               </CourseInTrackSet>
-               <CourseInTrackSet>
-                    <course>BMI 596</course>
-               </CourseInTrackSet>
-               <CourseInTrackSet>
-                    <course>BMI 622</course>
-               </CourseInTrackSet>
-               <CourseInTrackSet>
-                    <course>BMI 690</course>
-               </CourseInTrackSet>
-               <CourseInTrackSet>
-                    <course>BMI 691</course>
-               </CourseInTrackSet>
-               <CourseInTrackSet>
-                    <course>BMI 695</course>
-               </CourseInTrackSet>
-               <CourseInTrackSet>
-                    <course>BMI 696</course>
-               </CourseInTrackSet>
-            </TrackCourseSet>
-            <TrackCourseSet>
                <upper_credit_limit>0</upper_credit_limit>
                <limiter>True</limiter>
                <CourseInTrackSet>
@@ -247,7 +169,6 @@
                </CourseInTrackSet>
             </TrackCourseSet>
             <TrackCourseSet>
-               <name>Limiter</name>
                <limiter>True</limiter>
                <upper_credit_limit>3</upper_credit_limit>
                <CourseInTrackSet>
@@ -320,43 +241,6 @@
                 </CourseInTrackSet>
             </TrackCourseSet>
             <TrackCourseSet>
-               <name>All Electives</name>
-               <size>1</size>
-               <CourseInTrackSet>
-                    <course>BMI 517</course>
-               </CourseInTrackSet>
-               <CourseInTrackSet>
-                    <course>BMI 560</course>
-               </CourseInTrackSet>
-               <CourseInTrackSet>
-                    <course>BMI 590</course>
-               </CourseInTrackSet>
-               <CourseInTrackSet>
-                    <course>BMI 591</course>
-               </CourseInTrackSet>
-               <CourseInTrackSet>
-                    <course>BMI 595</course>
-               </CourseInTrackSet>
-               <CourseInTrackSet>
-                    <course>BMI 596</course>
-               </CourseInTrackSet>
-               <CourseInTrackSet>
-                    <course>BMI 622</course>
-               </CourseInTrackSet>
-               <CourseInTrackSet>
-                    <course>BMI 690</course>
-               </CourseInTrackSet>
-               <CourseInTrackSet>
-                    <course>BMI 691</course>
-               </CourseInTrackSet>
-               <CourseInTrackSet>
-                    <course>BMI 695</course>
-               </CourseInTrackSet>
-               <CourseInTrackSet>
-                    <course>BMI 696</course>
-               </CourseInTrackSet>
-            </TrackCourseSet>
-            <TrackCourseSet>
                <upper_credit_limit>0</upper_credit_limit>
                <limiter>True</limiter>
                <CourseInTrackSet>
@@ -381,7 +265,6 @@
                </CourseInTrackSet>
             </TrackCourseSet>
             <TrackCourseSet>
-               <name>Limiter</name>
                <limiter>True</limiter>
                <upper_credit_limit>3</upper_credit_limit>
                <CourseInTrackSet>
@@ -457,40 +340,6 @@
                 </CourseInTrackSet>
             </TrackCourseSet>
             <TrackCourseSet>
-               <name>All Electives</name>
-               <size>1</size>
-               <CourseInTrackSet>
-                    <course>BMI 517</course>
-               </CourseInTrackSet>
-               <CourseInTrackSet>
-                    <course>BMI 590</course>
-               </CourseInTrackSet>
-               <CourseInTrackSet>
-                    <course>BMI 591</course>
-               </CourseInTrackSet>
-               <CourseInTrackSet>
-                    <course>BMI 595</course>
-               </CourseInTrackSet>
-               <CourseInTrackSet>
-                    <course>BMI 596</course>
-               </CourseInTrackSet>
-               <CourseInTrackSet>
-                    <course>BMI 625</course>
-               </CourseInTrackSet>
-               <CourseInTrackSet>
-                    <course>BMI 690</course>
-               </CourseInTrackSet>
-               <CourseInTrackSet>
-                    <course>BMI 691</course>
-               </CourseInTrackSet>
-               <CourseInTrackSet>
-                    <course>BMI 695</course>
-               </CourseInTrackSet>
-               <CourseInTrackSet>
-                    <course>BMI 696</course>
-               </CourseInTrackSet>
-            </TrackCourseSet>
-            <TrackCourseSet>
                <upper_credit_limit>0</upper_credit_limit>
                <limiter>True</limiter>
                <CourseInTrackSet>
@@ -515,7 +364,6 @@
                </CourseInTrackSet>
             </TrackCourseSet>
             <TrackCourseSet>
-               <name>Limiter</name>
                <limiter>True</limiter>
                <upper_credit_limit>3</upper_credit_limit>
                <CourseInTrackSet>
@@ -587,49 +435,6 @@
                 </CourseInTrackSet>
             </TrackCourseSet>
             <TrackCourseSet>
-               <name>All Electives</name>
-               <size>1</size>
-               <CourseInTrackSet>
-                    <course>BMI 517</course>
-               </CourseInTrackSet>
-               <CourseInTrackSet>
-                    <course>BMI 520</course>
-               </CourseInTrackSet>
-               <CourseInTrackSet>
-                    <course>BMI 530</course>
-               </CourseInTrackSet>
-               <CourseInTrackSet>
-                    <course>BMI 552</course>
-               </CourseInTrackSet>
-               <CourseInTrackSet>
-                    <course>BMI 590</course>
-               </CourseInTrackSet>
-               <CourseInTrackSet>
-                    <course>BMI 591</course>
-               </CourseInTrackSet>
-               <CourseInTrackSet>
-                    <course>BMI 595</course>
-               </CourseInTrackSet>
-               <CourseInTrackSet>
-                    <course>BMI 596</course>
-               </CourseInTrackSet>
-               <CourseInTrackSet>
-                    <course>BMI 622</course>
-               </CourseInTrackSet>
-               <CourseInTrackSet>
-                    <course>BMI 690</course>
-               </CourseInTrackSet>
-               <CourseInTrackSet>
-                    <course>BMI 691</course>
-               </CourseInTrackSet>
-               <CourseInTrackSet>
-                    <course>BMI 695</course>
-               </CourseInTrackSet>
-               <CourseInTrackSet>
-                    <course>BMI 696</course>
-               </CourseInTrackSet>
-            </TrackCourseSet>
-            <TrackCourseSet>
                <upper_credit_limit>0</upper_credit_limit>
                <limiter>True</limiter>
                <CourseInTrackSet>
@@ -654,7 +459,6 @@
                </CourseInTrackSet>
             </TrackCourseSet>
             <TrackCourseSet>
-               <name>Limiter</name>
                <limiter>True</limiter>
                <upper_credit_limit>3</upper_credit_limit>
                <CourseInTrackSet>
@@ -724,43 +528,6 @@
                 <CourseInTrackSet>
                      <course>BMI 598</course>
                 </CourseInTrackSet>
-            </TrackCourseSet>
-            <TrackCourseSet>
-               <name>All Electives</name>
-               <size>1</size>
-               <CourseInTrackSet>
-                    <course>BMI 517</course>
-               </CourseInTrackSet>
-               <CourseInTrackSet>
-                    <course>BMI 560</course>
-               </CourseInTrackSet>
-               <CourseInTrackSet>
-                    <course>BMI 590</course>
-               </CourseInTrackSet>
-               <CourseInTrackSet>
-                    <course>BMI 591</course>
-               </CourseInTrackSet>
-               <CourseInTrackSet>
-                    <course>BMI 595</course>
-               </CourseInTrackSet>
-               <CourseInTrackSet>
-                    <course>BMI 596</course>
-               </CourseInTrackSet>
-               <CourseInTrackSet>
-                    <course>BMI 622</course>
-               </CourseInTrackSet>
-               <CourseInTrackSet>
-                    <course>BMI 690</course>
-               </CourseInTrackSet>
-               <CourseInTrackSet>
-                    <course>BMI 691</course>
-               </CourseInTrackSet>
-               <CourseInTrackSet>
-                    <course>BMI 695</course>
-               </CourseInTrackSet>
-               <CourseInTrackSet>
-                    <course>BMI 696</course>
-               </CourseInTrackSet>
             </TrackCourseSet>
             <TrackCourseSet>
                <upper_credit_limit>0</upper_credit_limit>
