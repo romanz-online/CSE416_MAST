@@ -170,9 +170,9 @@ def import_degree_requirements(request):
                             tcs_limiter = child.find("limiter")
                             if tcs_limiter:
                                 tcs_limiter = True
-                                tcs_upper_credit_limit = tcs.find("upper_credit_limit")
+                                tcs_upper_credit_limit = child.find("upper_credit_limit")
                                 if tcs_upper_credit_limit:
-                                    tcs_size = tcs.find("upper_credit_limit").get_text()
+                                    tcs_size = child.find("upper_credit_limit").get_text()
                                 else:
                                     tcs_size = 3
                             else:

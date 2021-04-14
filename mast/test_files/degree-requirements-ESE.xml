@@ -118,8 +118,8 @@
             <size>3</size>
             <TrackCourseSet>
                 <name>Non-Regular Courses</name>
-                <limiter>True</limiter>
                 <upper_credit_limit>0</upper_credit_limit>
+                <limiter>True</limiter>
                 <CourseInTrackSet>
                     <course>ESE 597</course>
                 </CourseInTrackSet>
@@ -138,8 +138,8 @@
             </TrackCourseSet>
             <TrackCourseSet>
                 <name>Topics Course</name>
-                <limiter>True</limiter>
                 <upper_credit_limit>3</upper_credit_limit>
+                <limiter>True</limiter>
                 <CourseInTrackSet>
                     <course>ESE 670</course>
                 </CourseInTrackSet>
@@ -271,8 +271,8 @@
             <name>Elective - One additional lecture based course</name>
             <size>1</size>
             <TrackCourseSet>
-                <limiter>True</limiter>
                 <upper_credit_limit>0</upper_credit_limit>
+                <limiter>True</limiter>
                 <name>Non-Regular Courses</name>
                 <CourseInTrackSet>
                     <course>ESE 597</course>
@@ -288,6 +288,14 @@
                 </CourseInTrackSet>
                 <CourseInTrackSet>
                     <course>ESE 699</course>
+                </CourseInTrackSet>
+            </TrackCourseSet>
+            <TrackCourseSet>
+                <name>Topics Course</name>
+                <upper_credit_limit>3</upper_credit_limit>
+                <limiter>True</limiter>
+                <CourseInTrackSet>
+                    <course>ESE 670</course>
                 </CourseInTrackSet>
             </TrackCourseSet>
         </TrackCourseSet>
