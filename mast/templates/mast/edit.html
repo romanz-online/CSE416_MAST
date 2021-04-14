@@ -156,7 +156,7 @@
         Major/Track:
         <select name="major_track" onchange="show_requirement_semesters(this);">
             {% for track in track_list %}
-                {% if student.track and track.name == student.track.name %}
+                {% if student.track and track.name == student.track.name and track.major == student.major %}
                     <option selected value="{{ track.id }}">{{ track.major }} - {{ track.name }}</option>
                 {% else %}
                     <option value="{{ track.id }}">{{ track.major }} - {{ track.name }}</option>

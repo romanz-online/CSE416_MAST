@@ -146,10 +146,16 @@ def commit_edit(request, sbu_id):
 
         rsid = str(dummy_track.id) + '_requirement_semester'
         requirement_semester = request.GET[rsid]
-        requirement_semester = Semester.objects.get(id=int(requirement_semester))
+        if requirement_semester:
+            requirement_semester = Semester.objects.get(id=int(requirement_semester))
+        else:
+            requirement_semester = None
 
         dummy_major = dummy_track.major
-        major = Major.objects.filter(name=dummy_major.name, requirement_semester=requirement_semester)[0]
+        if requirement_semester:
+            major = Major.objects.filter(name=dummy_major.name, requirement_semester=requirement_semester)[0]
+        else:
+            major = Major.objects.filter(name=dummy_major.name)[0]
         track = Track.objects.filter(name=dummy_track.name, major=major)[0]
 
         if student.first_name != first_name:
