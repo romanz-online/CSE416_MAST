@@ -1,4 +1,4 @@
-<!--ESE: Finished, Revised-->
+<!--ESE: Finished-->
 <major>
     <name>Computer Engineering</name>
     <department>ESE</department>
@@ -142,6 +142,27 @@
                 <limiter>True</limiter>
                 <CourseInTrackSet>
                     <course>ESE 670</course>
+                </CourseInTrackSet>
+            </TrackCourseSet>
+        </TrackCourseSet>
+        <TrackCourseSet>
+            <limiter>True</limiter>
+            <upper_credit_limit>6</upper_credit_limit>
+            <CourseInTrackSet>
+                 <course>ESE 599</course>
+            </CourseInTrackSet>
+            <TrackCourseSet>
+                <limiter>True</limiter>
+                <upper_credit_limit>3</upper_credit_limit>
+                <CourseInTrackSet>
+                    <course>ESE 698</course>
+                </CourseInTrackSet>
+            </TrackCourseSet>
+            <TrackCourseSet>
+                <limiter>True</limiter>
+                <upper_credit_limit>3</upper_credit_limit>
+                <CourseInTrackSet>
+                    <course>ESE 597</course>
                 </CourseInTrackSet>
             </TrackCourseSet>
         </TrackCourseSet>
@@ -296,6 +317,27 @@
                 <limiter>True</limiter>
                 <CourseInTrackSet>
                     <course>ESE 670</course>
+                </CourseInTrackSet>
+            </TrackCourseSet>
+        </TrackCourseSet>
+        <TrackCourseSet>
+            <limiter>True</limiter>
+            <upper_credit_limit>6</upper_credit_limit>
+            <CourseInTrackSet>
+                 <course>ESE 599</course>
+            </CourseInTrackSet>
+            <TrackCourseSet>
+                <limiter>True</limiter>
+                <upper_credit_limit>3</upper_credit_limit>
+                <CourseInTrackSet>
+                    <course>ESE 698</course>
+                </CourseInTrackSet>
+            </TrackCourseSet>
+            <TrackCourseSet>
+                <limiter>True</limiter>
+                <upper_credit_limit>3</upper_credit_limit>
+                <CourseInTrackSet>
+                    <course>ESE 597</course>
                 </CourseInTrackSet>
             </TrackCourseSet>
         </TrackCourseSet>
