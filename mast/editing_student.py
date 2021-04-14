@@ -182,7 +182,7 @@ def commit_edit(request, sbu_id):
         if student.entry_semester != entry_semester:
             student.entry_semester = entry_semester
             changed = True
-        if student.requirement_semester != requirement_semester:
+        if student.requirement_semester != requirement_semester and requirement_semester:
             student.requirement_semester = requirement_semester
             changed = True
         if student.graduated:
