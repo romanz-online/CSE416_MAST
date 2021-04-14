@@ -151,6 +151,12 @@
             <CourseInTrackSet>
                 <course>ESE 597</course>
             </CourseInTrackSet>
+            <CourseInTrackSet>
+                <course>ESE 599</course>
+            </CourseInTrackSet>
+            <CourseInTrackSet>
+                <course>ESE 698</course>
+            </CourseInTrackSet>
         </TrackCourseSet>
     </Track>
 
@@ -290,6 +296,12 @@
             <size>1</size>
             <CourseInTrackSet>
                 <course>ESE 597</course>
+            </CourseInTrackSet>
+            <CourseInTrackSet>
+                <course>ESE 599</course>
+            </CourseInTrackSet>
+            <CourseInTrackSet>
+                <course>ESE 698</course>
             </CourseInTrackSet>
         </TrackCourseSet>
     </Track>
