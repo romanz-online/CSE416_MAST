@@ -12,12 +12,6 @@ from .models import Student, Major, Season, CoursesTakenByStudent, Comment, Stud
 
 
 def setup():
-    if not Major.objects.filter(department='N/A'):
-        semester = Semester.objects.all()[0]
-        none_major = Major(department='N/A',
-                           name='(None)',
-                           requirement_semester=semester)
-        none_major.save()
     spring = range(80, 172)
     summer = range(172, 264)
     fall = range(264, 355)
@@ -42,6 +36,12 @@ def setup():
                     
                     if new_semester not in Semester.objects.all():
                         new_semester.save()
+    if not Major.objects.filter(department='N/A'):
+        semester = Semester.objects.all()[0]
+        none_major = Major(department='N/A',
+                           name='(None)',
+                           requirement_semester=semester)
+        none_major.save()
 
 
 def home(request):

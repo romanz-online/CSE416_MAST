@@ -83,10 +83,10 @@ DATABASES = {
         # 'ENGINE': 'django.db.backends.sqlite3',
         # 'NAME': BASE_DIR / 'db.sqlite3',
         'ENGINE': 'django.db.backends.mysql',
-        'NAME': 'rzinoviev',
-        'USER': 'rzinoviev',
-        'PASSWORD': '111595936',
-        'HOST': 'mysql4.cs.stonybrook.edu',
+        'NAME': 'kgabayan',
+        'USER': 'kgabayan',
+        'PASSWORD': '111504873',
+        'HOST': 'mysql3.cs.stonybrook.edu',
         'PORT': '3306',
     }
 }
