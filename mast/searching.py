@@ -1,14 +1,13 @@
 from django.shortcuts import render
+from django.contrib.auth.decorators import login_required
+from django.contrib.auth.models import User, Group
 from .models import Student, Major, Semester, Track
 
 
+@login_required
 def student_index(request):
-    if not Major.objects.filter(department='N/A'):
-        semester = Semester.objects.all()[0]
-        none_major = Major(department='N/A',
-                           name='(None)',
-                           requirement_semester=semester)
-        none_major.save()
+    if request.user.groups.filter(name='Student'):
+        return render(request, 'mast/home.html', {None: None})
 
     track_list = []
     found = False
@@ -28,9 +27,17 @@ def student_index(request):
     return render(request, 'mast/student_index.html', context)
 
 
+@login_required
 def delete_all_students(request):
+    if request.user.groups.filter(name='Student'):
+        return render(request, 'mast/home.html', {None: None})
+
     for student in Student.objects.all():
         student.delete()
+
+    student_group = Group.objects.filter(name='Student')[0]
+    for student_user in User.objects.filter(groups=student_group):
+        student_user.delete()
 
     context = {'student_list': Student.objects.order_by('sbu_id'),
                'major_list': Major.objects.order_by('name'),
@@ -39,7 +46,11 @@ def delete_all_students(request):
     return render(request, 'mast/student_index.html', context)
 
 
+@login_required
 def search(request):
+    if request.user.groups.filter(name='Student'):
+        return render(request, 'mast/home.html', {None: None})
+
     name_search = request.GET['name']
     sbu_id_search = request.GET['sbu_id']
     major_search = request.GET['major']

@@ -87,10 +87,12 @@
         }
 
         h1 {
+            {#margin: -10px -10px;#}
+            {#padding-top: 30px;#}
+            padding-bottom: 10px;
+            text-align: center;
             background-color: #490000;
             color: white;
-            text-align: center;
-            padding-bottom: 10px;
         }
 
         ul.navbar_container {
@@ -119,6 +121,11 @@
     </style>
 </head>
 <body onresize="resize_requirements()">
+
+{#<h1>{{ student.first_name }} {{ student.last_name }}</h1>#}
+
+{#{% include "mast/navbar.html" %}#}
+
 <div class="uk-flex">
     <div class='uk-width-1-2'>
         <div class=info>

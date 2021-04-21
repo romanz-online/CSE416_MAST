@@ -3,6 +3,8 @@ import operator
 
 from django.shortcuts import get_object_or_404, render
 from django.core.mail import EmailMessage
+from django.contrib.auth.models import User, Group
+from django.contrib.auth.decorators import login_required
 from django.http import HttpResponseRedirect
 from django.urls import reverse
 from .datatables import StudentDatatable
@@ -12,6 +14,27 @@ from .models import Student, Major, Season, CoursesTakenByStudent, Comment, Stud
 
 
 def setup():
+    if not Group.objects.filter(name='Director'):
+        director_group = Group(name='Director')
+        director_group.save()
+
+        AMS_director = User.objects.create_user('AMSDirector', 'mast.stonybrook@gmail.com', 'amspassword')
+        AMS_director.save()
+        AMS_director.groups.add(director_group)
+        CSE_director = User.objects.create_user('CSEDirector', 'mast.stonybrook@gmail.com', 'csepassword')
+        CSE_director.save()
+        CSE_director.groups.add(director_group)
+        BMI_director = User.objects.create_user('BMIDirector', 'mast.stonybrook@gmail.com', 'bmipassword')
+        BMI_director.save()
+        BMI_director.groups.add(director_group)
+        ECE_director = User.objects.create_user('ECEDirector', 'mast.stonybrook@gmail.com', 'ecepassword')
+        ECE_director.save()
+        ECE_director.groups.add(director_group)
+
+    if not Group.objects.filter(name='Student'):
+        student_group = Group(name='Student')
+        student_group.save()
+
     spring = range(80, 172)
     summer = range(172, 264)
     fall = range(264, 355)
@@ -47,6 +70,11 @@ def setup():
 def home(request):
     setup()
     return render(request, 'mast/home.html', {})
+
+
+@login_required
+def login(request):
+    return detail(request, request.user.username)
 
 
 def course_index(request):
@@ -158,12 +186,18 @@ def major_index(request):
     return render(request, 'mast/major_index.html', context)
 
 
+@login_required
 def commit_new_student(request):
+    if request.user.groups.filter(name='Student'):
+        return render(request, 'mast/home.html', {None: None})
+
     id_list = [i.sbu_id for i in Student.objects.all()]
     id_taken = False
     sbu_id = request.GET['sbu_id']
     first_name = request.GET['first_name']
     last_name = request.GET['last_name']
+    password = request.GET['password']
+    password.replace('\r','')
     email = request.GET['email']
     entry_semester = request.GET['entry_semester']
     entry_semester = Semester.objects.get(id=int(entry_semester))
@@ -211,6 +245,7 @@ def commit_new_student(request):
                           first_name=first_name,
                           last_name=last_name,
                           email=email,
+                          password=password,
                           major=major,
                           track=track,
                           unsatisfied_courses=track.total_requirements,
@@ -219,6 +254,10 @@ def commit_new_student(request):
                           semesters_enrolled=semesters_enrolled
                           )
         student.save()
+
+        student_user = User.objects.create_user(student.sbu_id, student.email, student.password)
+        student_user.save()
+        student_user.groups.add(Group.objects.filter(name='Student')[0])
     except:
         if id_taken:
             return render(request, 'mast/student_index.html', {
@@ -455,48 +494,7 @@ def student_degree_reqs_loop(taken_courses, course_set, layer, info):
 
 
 def stringify_student_degree_reqs(student):
-    # student_credits = 0
-    # transfer_credits = 0
     taken_courses = CoursesTakenByStudent.objects.filter(student=student)
-    # for i in taken_courses:
-    #     if i.status == 'Passed':
-    #         student_credits += i.credits_taken
-    #     elif i.status == 'Transfer':
-    #         transfer_credits += i.credits_taken
-    # if transfer_credits > 12:
-    #     transfer_credits = 12
-    # for course_set in TrackCourseSet.objects.filter(track=student.track, parent_course_set=None):
-    #     if course_set.lower_limit != 100 and course_set.upper_limit != 999:
-    #         taken_course_lookup = sum([i.credits_taken for i in taken_courses if
-    #                                    course_set.lower_limit <= i.course.course.number <= course_set.upper_limit if
-    #                                    i.status == 'Passed'])
-    #         if taken_course_lookup:
-    #             if taken_course_lookup >= course_set.size + course_set.leeway and course_set.limiter is True:
-    #                 student_credits -= (taken_course_lookup - (course_set.size + course_set.leeway))
-    #     for course in CourseInTrackSet.objects.filter(course_set=course_set):
-    #         taken_course_lookup = sum(
-    #             [i.credits_taken for i in taken_courses if i.course.course == course.course if i.status == 'Passed' if i.course.course.department == course_set.department_limit])
-    #         if taken_course_lookup:
-    #             if course_set.size <= taken_course_lookup and course_set.limiter is True:
-    #                 student_credits -= taken_course_lookup - course_set.size
-    #     for track in TrackCourseSet.objects.filter(parent_course_set=course_set):
-    #         temp_num = 0
-    #         if track.lower_limit != 100 and track.upper_limit != 999:
-    #             taken_course_lookup = sum([i.credits_taken for i in taken_courses if
-    #                                        track.lower_limit <= i.course.course.number <= track.upper_limit if
-    #                                        i.status == 'Passed' if i.course.course.department == track.department_limit])
-    #             if taken_course_lookup:
-    #                 if taken_course_lookup >= track.size + track.leeway and track.limiter is True:
-    #                     student_credits -= (taken_course_lookup - (track.size + track.leeway))
-    #         for course in CourseInTrackSet.objects.filter(course_set=track):
-    #             taken_course_lookup = len(
-    #                 [i for i in taken_courses if i.course.course == course.course if i.status == 'Passed'])
-    #             if taken_course_lookup:
-    #                 temp_num += taken_course_lookup
-    #         if temp_num >= track.size:
-    #             student_credits -= ((temp_num - track.size) * 3)
-    #
-    # total_credits = student_credits + transfer_credits
     total_credits = student.credits_taken
 
     info = ""
@@ -525,6 +523,7 @@ def stringify_student_degree_reqs(student):
     return info
 
 
+@login_required
 def detail(request, sbu_id):
     student = get_object_or_404(Student, pk=sbu_id)
     comment_list = Comment.objects.filter(student=sbu_id)
@@ -544,6 +543,7 @@ def detail(request, sbu_id):
                                                 })
 
 
+@login_required
 def course_detail(request, course_department, course_number, section):
     course = Course.objects.get(department=course_department, number=course_number)
     course_instance = CourseInstance.objects.get(course=course, section=section)
@@ -577,6 +577,7 @@ def course_detail(request, course_department, course_number, section):
                                                        })
 
 
+@login_required
 def add_comment(request, sbu_id):
     student = get_object_or_404(Student, pk=sbu_id)
     try:
@@ -594,6 +595,10 @@ def add_comment(request, sbu_id):
     return HttpResponseRedirect(reverse('mast:detail', args=(sbu_id,)))
 
 
+@login_required
 def student_datatable(request):
+    if request.user.groups.filter(name='Student'):
+        return render(request, 'mast/home.html', {None: None})
+
     student = StudentDatatable()
     return render(request, 'mast/student_index.html', {'student': student})

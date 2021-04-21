@@ -1,6 +1,7 @@
 import operator
 
 from django.shortcuts import get_object_or_404, render
+from django.contrib.auth.decorators import login_required
 from django.http import HttpResponseRedirect
 from django.urls import reverse
 from .models import Student, Course, CourseInstance, CoursesTakenByStudent, Grade, StudentCourseSchedule, Semester
@@ -8,6 +9,7 @@ from .models import Student, Course, CourseInstance, CoursesTakenByStudent, Grad
 from . import editing_student
 
 
+@login_required
 def edit_schedule(request, sbu_id):
     """
     Retrieves and renders a specific student's schedule to be edited on their respective page.
@@ -33,6 +35,7 @@ def edit_schedule(request, sbu_id):
                                                        })
 
 
+@login_required
 def add_scheduled_semester(request, sbu_id):
     """
     Adds a scheduled semester to the student list.
@@ -101,6 +104,7 @@ def add_scheduled_semester(request, sbu_id):
                                                        })
 
 
+@login_required
 def add_scheduled_course(request, sbu_id):
     """
     Adds a scheduled course to the student schedule.
@@ -124,6 +128,7 @@ def add_scheduled_course(request, sbu_id):
     return HttpResponseRedirect(reverse('mast:edit_schedule', args=(sbu_id,)))
 
 
+@login_required
 def remove_scheduled_course(request, sbu_id, course):
     """
     Removes a scheduled course from the student schedule.

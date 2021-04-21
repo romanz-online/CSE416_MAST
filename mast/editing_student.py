@@ -1,10 +1,22 @@
 from django.shortcuts import get_object_or_404, render
 from django.http import HttpResponseRedirect
+from django.contrib.auth.decorators import login_required
 from django.urls import reverse
 from .models import Student, Major, CourseInstance, CoursesTakenByStudent, Grade, CourseStatus, Semester, Track, \
     TrackCourseSet, CourseInTrackSet, StudentCourseSchedule
 
 
+@login_required
+def student_edit(request, sbu_id):
+    student = get_object_or_404(Student, pk=sbu_id)
+    return render(request, 'mast/edit.html', {'student': student,
+                                              'is_student': True,
+                                              'classes_taken': CoursesTakenByStudent.objects.filter(student=student),
+                                              'semesters': Semester.objects.order_by('year'),
+                                              })
+
+
+@login_required
 def edit(request, sbu_id):
     """
     Retrieves and renders a specific student to be edited on the edit screen page
@@ -67,6 +79,7 @@ def edit(request, sbu_id):
     transfer_course_list.insert(0, TempCourseInstance('None'))
 
     return render(request, 'mast/edit.html', {'student': student,
+                                              'is_student': False,
                                               'course_list': CourseInstance.objects.all(),
                                               'classes_taken': CoursesTakenByStudent.objects.filter(student=student),
                                               'grade_list': grade_list,
@@ -79,6 +92,7 @@ def edit(request, sbu_id):
                                               })
 
 
+@login_required
 def delete_record(request, sbu_id):
     """
     Deletes a specific student record from the database.
@@ -113,6 +127,7 @@ def delete_record(request, sbu_id):
     return render(request, 'mast/student_index.html', context)
 
 
+@login_required
 def commit_edit(request, sbu_id):
     """
     Commits an edit for a specific student.
@@ -320,6 +335,7 @@ def get_grade_number(grade):
     return d[grade]
 
 
+@login_required
 def add_taken_course(request, sbu_id):
     """
     Adds a taken course to the student database.
@@ -344,6 +360,7 @@ def add_taken_course(request, sbu_id):
     return HttpResponseRedirect(reverse('mast:edit', args=(sbu_id,)))
 
 
+@login_required
 def add_transfer_course(request, sbu_id):
     # Retrieve student object
     student = get_object_or_404(Student, pk=sbu_id)
@@ -375,6 +392,7 @@ def add_transfer_course(request, sbu_id):
     return HttpResponseRedirect(reverse('mast:edit', args=(sbu_id,)))
 
 
+@login_required
 def modify_course_in_progress(request, sbu_id, record):
     """
     Modifies a current course in progress to their current state.
@@ -515,6 +533,8 @@ def adjust_credits(student, taken_courses):
 
 
 def sync_course_data(student):
+    if not student.track:
+        return
     taken_courses = CoursesTakenByStudent.objects.filter(student=student)
     scheduled_courses = StudentCourseSchedule.objects.filter(student=student)
     track = student.track

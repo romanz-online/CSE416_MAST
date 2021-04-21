@@ -4,6 +4,10 @@ from . import views, modifying_schedule, searching, editing_student, importing
 app_name = 'mast'
 urlpatterns = [
     path('', views.home, name='home'),
+    path('login/', views.login, name='login'),
+
+    path('edit/<int:sbu_id>/', editing_student.student_edit, name='student_edit'),
+
     path('commit_new_student/', views.commit_new_student, name='commit_new_student'),
     path('majors/', views.major_index, name='major_index'),
     path('courses/', views.course_index, name='course_index'),

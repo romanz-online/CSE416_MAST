@@ -3,6 +3,8 @@ from bs4 import BeautifulSoup
 
 from django.shortcuts import render
 from django.contrib import messages
+from django.contrib.auth.models import User, Group
+from django.contrib.auth.decorators import login_required
 from django.http import HttpResponseRedirect
 from django.urls import reverse
 from .models import Student, Major, Course, CourseInstance, CoursesTakenByStudent, Semester, Track, \
@@ -11,7 +13,11 @@ from .models import Student, Major, Course, CourseInstance, CoursesTakenByStuden
 from . import editing_student
 
 
+@login_required
 def import_degree_requirements(request):
+    if request.user.groups.filter(name='Student'):
+        return render(request, 'mast/home.html', {None: None})
+
     # If get request, render page
     if request.method == "GET":
         return render(request, 'mast/import_degree_reqs.html', {'': None})
@@ -144,7 +150,7 @@ def import_degree_requirements(request):
                     if tcs_leeway.parent.parent.name == "Track":
                         tcs_leeway = tcs_leeway.get_text()
                     else:
-                        tcs_leeway = 0 
+                        tcs_leeway = 0
                 else:
                     tcs_leeway = 0
                 tcs_save = TrackCourseSet(track=t, name=tcs_name, size=tcs_size,
@@ -201,14 +207,14 @@ def import_degree_requirements(request):
                             if tcs_leeway:
                                 tcs_leeway = tcs_leeway.get_text()
                             else:
-                                tcs_leeway = 0 
+                                tcs_leeway = 0
                             tcs_child_save = TrackCourseSet(track=t, parent_course_set=tcs_save, name=tcs_name,
                                                             size=tcs_size,
                                                             limiter=tcs_limiter, upper_limit=tcs_upper_limit,
                                                             lower_limit=tcs_lower_limit,
                                                             lower_credit_limit=tcs_lower_credit_limit,
-                                                            department_limit=tcs_department_limit, 
-                                                            leeway = tcs_leeway)
+                                                            department_limit=tcs_department_limit,
+                                                            leeway=tcs_leeway)
                             tcs_child_save.save()
                             # do one more loop to find courseintracksets and attach them here. 
                             for child_second_loop in child.children:
@@ -267,6 +273,7 @@ def import_degree_requirements(request):
     return render(request, 'mast/import_degree_reqs.html', {'': None})
 
 
+@login_required
 def import_student(request):
     """
     Imports a student profile through reading a .csv file  
@@ -277,6 +284,9 @@ def import_student(request):
         Returns:
             render (HttpResponse): Returns the respective view containing the respective information of the student schedule retrieved.     
     """
+
+    if request.user.groups.filter(name='Student'):
+        return render(request, 'mast/home.html', {None: None})
 
     pro_file = request.FILES['pro_file']
 
@@ -319,7 +329,8 @@ def import_student(request):
             if line[4] and Major.objects.filter(department=line[4]) and line[8] and line[9]:
                 requirement_semester = Semester.objects.get(season=line[8], year=line[9])
                 if Major.objects.filter(department=line[4], requirement_semester=requirement_semester):
-                    student.major = Major.objects.filter(department=line[4], requirement_semester=requirement_semester)[0]
+                    student.major = Major.objects.filter(department=line[4], requirement_semester=requirement_semester)[
+                        0]
                 else:
                     latest_major = Major.objects.filter(department=line[4])[0]
                     for i in Major.objects.filter(department=line[4]):
@@ -334,7 +345,8 @@ def import_student(request):
                             latest_major = i
                     student.major = latest_major
             if line[4] and line[5] \
-                    and Major.objects.filter(department=line[4]) and Track.objects.filter(major=student.major, name=line[5]):
+                    and Major.objects.filter(department=line[4]) and Track.objects.filter(major=student.major,
+                                                                                          name=line[5]):
                 student.track = Track.objects.get(name=line[5], major=student.major)
             if line[6] and line[7]:
                 student.entry_semester = Semester.objects.get(season=line[6], year=line[7])
@@ -357,9 +369,13 @@ def import_student(request):
             if line[10] and line[11]:
                 student.graduation_semester = Semester.objects.get(season=line[10], year=line[11])
             if line[12]:
-                student.password = line[12]
+                student.password = line[12].replace('\r', '')
 
             student.save()
+
+            student_user = User.objects.create_user(student.sbu_id, student.email, student.password)
+            student_user.save()
+            student_user.groups.add(Group.objects.filter(name='Student')[0])
 
     course_file = request.FILES['course_file']
 
@@ -367,11 +383,16 @@ def import_student(request):
     return import_grades(request, course_file)
 
 
+@login_required
 def import_grades_stub(request):
+    if request.user.groups.filter(name='Student'):
+        return render(request, 'mast/home.html', {None: None})
+
     course_file = request.FILES['course_file']
     return import_grades(request, course_file)
 
 
+@login_required
 def import_grades(request, course_file):
     """
     Imports a student's grades and coursework through reading a .csv file
@@ -382,6 +403,9 @@ def import_grades(request, course_file):
         Returns:
             render (HttpResponse): Returns the view of the student index.
     """
+
+    if request.user.groups.filter(name='Student'):
+        return render(request, 'mast/home.html', {None: None})
 
     # User gave a non-csv file
     if not course_file.name.endswith('.csv') and not course_file.name.endswith('.csv\r'):
@@ -464,6 +488,7 @@ def get_grade(g):
     return d[g] if g in d else Grade.NOT_APPLICABLE
 
 
+@login_required
 def import_courses(request):
     """
     Imports course offerings for the semester.
@@ -474,6 +499,10 @@ def import_courses(request):
         Returns:
             render (HttpResponse): Returns the respective view containing the respective information of the student schedule retrieved.     
     """
+
+    if request.user.groups.filter(name='Student'):
+        return render(request, 'mast/home.html', {None: None})
+
     prompt = {'order': 'Order of CSV should be department, course_num, section, semester, year, timeslot'}
 
     # If get request, render page
@@ -565,7 +594,11 @@ def import_courses(request):
     return render(request, 'mast/course_index.html', context)
 
 
+@login_required
 def scrape_courses(request):
+    if request.user.groups.filter(name='Student'):
+        return render(request, 'mast/home.html', {None: None})
+
     if request.method == "GET":
         return render(request, 'mast/scrape_courses.html', {'semester_list': Semester.objects.all()})
 
@@ -644,11 +677,10 @@ def scrape_courses(request):
                 course.upper_credit_limit = int(credits)
             course.save()
 
-
         CourseInstance.objects.filter(course=course, semester=semester).delete()
         null_semester = CourseInstance.objects.filter(course=course, semester=None)
         courseInstance = None
-        if(len(null_semester) ==0):
+        if (len(null_semester) == 0):
             courseInstance = CourseInstance(course=course, semester=semester)
             courseInstance.save()
         else:
@@ -692,10 +724,10 @@ def scrape_courses(request):
 
                     else:
                         match_courseInstance = CourseInstance.objects.filter(course=match_course[0])
-                        if(len(match_courseInstance) !=0):
+                        if (len(match_courseInstance) != 0):
                             match_courseInstance = match_courseInstance[0]
                         else:
-                            match_courseInstance = CourseInstance(course = match_course[0])
+                            match_courseInstance = CourseInstance(course=match_course[0])
                             match_courseInstance.save()
                         prereq = Prerequisite(course=match_courseInstance, course_set=prerequisite_set)
                         prereq.save()
@@ -714,10 +746,10 @@ def scrape_courses(request):
 
                         else:
                             match_courseInstance = CourseInstance.objects.filter(course=match_course[0])
-                            if(len(match_courseInstance) !=0):
+                            if (len(match_courseInstance) != 0):
                                 match_courseInstance = match_courseInstance[0]
                             else:
-                                match_courseInstance = CourseInstance(course = match_course[0])
+                                match_courseInstance = CourseInstance(course=match_course[0])
                                 match_courseInstance.save()
                             prereq = Prerequisite(course=match_courseInstance, course_set=prerequisite_set)
                             prereq.save()
@@ -735,10 +767,10 @@ def scrape_courses(request):
                         new_set.save()
                         if len(match_course1) != 0:
                             match_courseInstance = CourseInstance.objects.filter(course=match_course1[0])
-                            if(len(match_courseInstance) !=0):
+                            if (len(match_courseInstance) != 0):
                                 match_courseInstance = match_courseInstance[0]
                             else:
-                                match_courseInstance = CourseInstance(course = match_course1[0])
+                                match_courseInstance = CourseInstance(course=match_course1[0])
                                 match_courseInstance.save()
                             prereq = Prerequisite(course=match_courseInstance, course_set=new_set)
                             prereq.save()
@@ -751,10 +783,10 @@ def scrape_courses(request):
                             prereq = Prerequisite(course=match_courseInstance, course_set=new_set)
                         if len(match_course2) != 0:
                             match_courseInstance = CourseInstance.objects.filter(course=match_course2[0])
-                            if(len(match_courseInstance) !=0):
+                            if (len(match_courseInstance) != 0):
                                 match_courseInstance = match_courseInstance[0]
                             else:
-                                match_courseInstance = CourseInstance(course = match_course2[0])
+                                match_courseInstance = CourseInstance(course=match_course2[0])
                                 match_courseInstance.save()
                             prereq = Prerequisite(course=match_courseInstance, course_set=new_set)
                             prereq.save()
