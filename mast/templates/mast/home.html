@@ -30,6 +30,10 @@
             margin-left: auto;
             margin-right: auto;
         }
+
+        a:hover {
+            background-color: dimgray;
+        }
     </style>
 </head>
 
@@ -39,7 +43,7 @@
 
 <h1>Welcome to MAST!</h1>
 
-<a href="{% url 'mast:student_index' %}" class="button">Login</a>
+<a href="{% url 'login' %}" class="button">Login</a>
 
 </body>
 </html>

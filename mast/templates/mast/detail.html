@@ -87,8 +87,6 @@
         }
 
         h1 {
-            {#margin: -10px -10px;#}
-            {#padding-top: 30px;#}
             padding-bottom: 10px;
             text-align: center;
             background-color: #490000;
@@ -120,11 +118,8 @@
         }
     </style>
 </head>
+
 <body onresize="resize_requirements()">
-
-{#<h1>{{ student.first_name }} {{ student.last_name }}</h1>#}
-
-{#{% include "mast/navbar.html" %}#}
 
 <div class="uk-flex">
     <div class='uk-width-1-2'>
@@ -316,12 +311,21 @@
     </div>
     <br>
 
-    <div class=back>
-        <form action="{% url 'mast:student_index' %}" method="post">
-            {% csrf_token %}
-            <input type="submit" value="Back">
-        </form>
-    </div>
+    {% if not is_student %}
+        <div class=back>
+            <form action="{% url 'mast:student_index' %}" method="post">
+                {% csrf_token %}
+                <input type="submit" value="Back">
+            </form>
+        </div>
+    {% else %}
+        <div class=back>
+            <form action="{% url 'logout' %}" method="post">
+                {% csrf_token %}
+                <input type="submit" value="Logout">
+            </form>
+        </div>
+    {% endif %}
 </div>
 </body>
 </html>

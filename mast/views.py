@@ -525,6 +525,10 @@ def stringify_student_degree_reqs(student):
 
 @login_required
 def detail(request, sbu_id):
+    is_student = False
+    if request.user.groups.filter(name='Student'):
+        is_student = True
+
     student = get_object_or_404(Student, pk=sbu_id)
     comment_list = Comment.objects.filter(student=sbu_id)
     semester_list = {i.course.semester: 1 for i in StudentCourseSchedule.objects.filter(student=sbu_id)}.keys()
@@ -538,6 +542,7 @@ def detail(request, sbu_id):
                                                 'classes_taken': CoursesTakenByStudent.objects.filter(student=student),
                                                 'comment_list': comment_list.order_by('post_date'),
                                                 'semester_list': semester_list,
+                                                'is_student': is_student,
                                                 'schedule': StudentCourseSchedule.objects.filter(student=sbu_id),
                                                 'requirements': degree_requirements_string
                                                 })

@@ -1,5 +1,6 @@
 from django.shortcuts import get_object_or_404, render
 from django.http import HttpResponseRedirect
+from django.contrib.auth.models import User
 from django.contrib.auth.decorators import login_required
 from django.urls import reverse
 from .models import Student, Major, CourseInstance, CoursesTakenByStudent, Grade, CourseStatus, Semester, Track, \
@@ -8,16 +9,56 @@ from .models import Student, Major, CourseInstance, CoursesTakenByStudent, Grade
 
 @login_required
 def student_edit(request, sbu_id):
+    if request.user.groups.filter(name='Director'):
+        return edit(request, sbu_id)
+
     student = get_object_or_404(Student, pk=sbu_id)
+
+    track_list = []
+    found = False
+    for i in Track.objects.all():
+        for j in track_list:
+            if i.name == j.name and i.major.name == j.major.name:
+                found = True
+        if not found:
+            track_list.append(i)
+        found = False
+
+    class RequirementSemesters:
+        def __init__(self, track):
+            self.track = track
+            self.semesters = []
+
+        def add_semester(self, semester):
+            self.semesters.append(semester)
+
+    requirement_semesters = []
+    for i in track_list:
+        new_set = RequirementSemesters(i)
+        for j in Track.objects.all():
+            if i.name == j.name and i.major.name == j.major.name:
+                new_set.add_semester(j.major.requirement_semester)
+        requirement_semesters.append(new_set)
+
+    track_list_id = 0
+    for i in track_list:
+        if student.track and i.name == student.track.name:
+            track_list_id = i.id
+
     return render(request, 'mast/edit.html', {'student': student,
                                               'is_student': True,
                                               'classes_taken': CoursesTakenByStudent.objects.filter(student=student),
                                               'semesters': Semester.objects.order_by('year'),
+                                              'track_list': track_list,
+                                              'requirement_semesters': requirement_semesters,
+                                              'track_list_id': track_list_id
                                               })
 
 
 @login_required
 def edit(request, sbu_id):
+    if request.user.groups.filter(name='Student'):
+        return student_edit(request, sbu_id)
     """
     Retrieves and renders a specific student to be edited on the edit screen page
 
@@ -125,6 +166,87 @@ def delete_record(request, sbu_id):
     # If the deletion was successful, return to the home page
     context = {'student_list': Student.objects.order_by('sbu_id'), 'major_list': Major.objects.order_by('name')}
     return render(request, 'mast/student_index.html', context)
+
+
+@login_required
+def student_commit_edit(request, sbu_id):
+
+    student = get_object_or_404(Student, pk=sbu_id)
+    try:
+        changed = False
+
+        first_name = request.GET['first_name']
+        last_name = request.GET['last_name']
+        email = request.GET['email']
+
+        dummy_track = request.GET['major_track']
+        dummy_track = Track.objects.get(id=dummy_track)
+
+        rsid = str(dummy_track.id) + '_requirement_semester'
+        requirement_semester = request.GET[rsid]
+        if requirement_semester:
+            requirement_semester = Semester.objects.get(id=int(requirement_semester))
+        else:
+            requirement_semester = None
+
+        dummy_major = dummy_track.major
+        if requirement_semester:
+            major = Major.objects.filter(name=dummy_major.name, requirement_semester=requirement_semester)[0]
+        else:
+            major = Major.objects.filter(name=dummy_major.name)[0]
+        track = Track.objects.filter(name=dummy_track.name, major=major)[0]
+
+        if student.first_name != first_name:
+            student.first_name = first_name
+            changed = True
+        if student.last_name != last_name:
+            student.last_name = last_name
+            changed = True
+        if student.email != email:
+            student.email = email
+            changed = True
+        if student.major != major:
+            student.major = major
+            changed = True
+        if student.track != track:
+            student.track = track
+            changed = True
+        if student.requirement_semester != requirement_semester and requirement_semester:
+            student.requirement_semester = requirement_semester
+            changed = True
+        if student.graduated:
+            graduation_semester = request.GET['graduation_semester']
+            graduation_semester = Semester.objects.get(id=int(graduation_semester))
+            if student.graduation_semester != graduation_semester:
+                student.graduation_semester = graduation_semester
+                changed = True
+
+        for course in CoursesTakenByStudent.objects.filter(student=student):
+            if course.status != 'Pending':
+                new_status = request.GET[str(course.id) + 'status']
+                new_grade = request.GET[str(course.id)]
+                if course.grade != new_grade:
+                    course.grade = new_grade
+                    changed = True
+                if course.status != new_status:
+                    course.status = new_status
+                    changed = True
+                    if new_status == 'Pending':
+                        course.grade = 'N/A'
+                course.save()
+
+        gpa = get_gpa(student)
+        if student.gpa != gpa:
+            student.gpa = gpa
+            changed = True
+
+        student.save()
+
+        if changed:
+            sync_course_data(student)
+    except:
+        return student_edit(request, sbu_id)
+    return HttpResponseRedirect(reverse('mast:detail', args=(sbu_id,)))
 
 
 @login_required

@@ -7,6 +7,7 @@ urlpatterns = [
     path('login/', views.login, name='login'),
 
     path('edit/<int:sbu_id>/', editing_student.student_edit, name='student_edit'),
+    path('edit/<int:sbu_id>/commit_edit', editing_student.student_commit_edit, name='student_commit_edit'),
 
     path('commit_new_student/', views.commit_new_student, name='commit_new_student'),
     path('majors/', views.major_index, name='major_index'),
