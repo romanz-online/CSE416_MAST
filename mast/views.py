@@ -12,6 +12,8 @@ from .models import Student, Major, Season, CoursesTakenByStudent, Comment, Stud
     TrackCourseSet, CourseInTrackSet, CourseToCourseRelation, Course, CoursePrerequisiteSet, Prerequisite, \
     CourseInstance, CourseStatus
 
+from . import searching
+
 
 def setup():
     if not Group.objects.filter(name='Director'):
@@ -74,7 +76,10 @@ def home(request):
 
 @login_required
 def login(request):
-    return detail(request, request.user.username)
+    if request.user.groups.filter(name='Student'):
+        return detail(request, request.user.username)
+    else:
+        return searching.student_index(request)
 
 
 def course_index(request):
