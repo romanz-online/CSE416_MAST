@@ -93,7 +93,16 @@
             color: white;
         }
 
-        ul.navbar_container {
+        #student_header {
+            padding-bottom: 10px;
+            text-align: center;
+            background-color: #490000;
+            color: white;
+            margin: -10px -10px;
+            padding-top: 30px;
+        }
+
+        ul.nb_container {
             list-style-type: none;
             margin: 0;
             padding-bottom: 0;
@@ -101,7 +110,7 @@
             background-color: #490000;
         }
 
-        .navbar_item {
+        .nb_item {
             float: left;
             display: block;
             color: white;
@@ -112,7 +121,7 @@
             text-decoration: none;
         }
 
-        .navbar_item:hover {
+        .nb_item:hover {
             background-color: dimgray;
             cursor: pointer;
         }
@@ -121,10 +130,18 @@
 
 <body onresize="resize_requirements()">
 
+{% if is_student %}
+    <h1 id="student_header">{{ student.first_name }} {{ student.last_name }}</h1>
+
+    {% include "mast/student_navbar.html" %}
+{% endif %}
+
 <div class="uk-flex">
     <div class='uk-width-1-2'>
         <div class=info>
-            <h1>{{ student.first_name }} {{ student.last_name }}</h1>
+            {% if not is_student %}
+                <h1>{{ student.first_name }} {{ student.last_name }}</h1>
+            {% endif %}
 
             {% if error_message %}<p><strong>{{ error_message }}</strong></p>{% endif %}
             <table class="uk-table uk-table-divider">
@@ -192,11 +209,11 @@
 
 
     <div class="info" id="infobox">
-        <ul class="navbar_container">
-            <li class="navbar_item" onclick="showElement('schedule')">Schedule</li>
-            <li class="navbar_item" onclick="showElement('history')">Course History</li>
-            <li class="navbar_item" onclick="showElement('requirements')">Degree Requirements</li>
-            <li class="navbar_item" onclick="showElement('comments')">Comments</li>
+        <ul class="nb_container">
+            <li class="nb_item" onclick="showElement('schedule')">Schedule</li>
+            <li class="nb_item" onclick="showElement('history')">Course History</li>
+            <li class="nb_item" onclick="showElement('requirements')">Degree Requirements</li>
+            <li class="nb_item" onclick="showElement('comments')">Comments</li>
         </ul>
 
         <div id="history" style="visibility: hidden;" class="page">
@@ -316,13 +333,6 @@
             <form action="{% url 'mast:student_index' %}" method="post">
                 {% csrf_token %}
                 <input type="submit" value="Back">
-            </form>
-        </div>
-    {% else %}
-        <div class=back>
-            <form action="{% url 'logout' %}" method="post">
-                {% csrf_token %}
-                <input type="submit" value="Logout">
             </form>
         </div>
     {% endif %}

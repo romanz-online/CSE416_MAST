@@ -1,0 +1,15 @@
+<!DOCTYPE html>
+<html lang="en">
+
+{% load static %}
+<link rel="stylesheet" type="text/css" href="{% static 'mast/navbar.css' %}"/>
+
+<body>
+<ul class="navbar_container">
+    <li class="navbar_item"><a class="navbar_link" href="{% url 'mast:detail' student.sbu_id %}">Profile</a></li>
+    <li class="navbar_item"><a class="navbar_link" href="{% url 'mast:major_index' %}">Programs</a></li>
+    <li class="navbar_item"><a class="navbar_link" href="{% url 'mast:course_index' %}">Courses</a></li>
+    <li class="navbar_item_logout right"><a class="navbar_link" href="{% url 'logout' %}">Logout</a></li>
+</ul>
+</body>
+</html>

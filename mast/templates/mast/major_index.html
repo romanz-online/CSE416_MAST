@@ -24,7 +24,11 @@
 
 <h1>Majors</h1>
 
-{% include "mast/navbar.html" %}
+{% if is_student %}
+    {% include "mast/student_navbar.html" %}
+{% else %}
+    {% include "mast/navbar.html" %}
+{% endif %}
 
 <div id="major_list">
     {% for major in major_list %}

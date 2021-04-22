@@ -18,7 +18,11 @@
 <body>
 <h1>Courses</h1>
 
-{% include "mast/navbar.html" %}
+{% if is_student %}
+    {% include "mast/student_navbar.html" %}
+{% else %}
+    {% include "mast/navbar.html" %}
+{% endif %}
 
 <h2>Current Classes</h2>
 <br>

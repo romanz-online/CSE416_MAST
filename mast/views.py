@@ -83,8 +83,20 @@ def login(request):
 
 
 def course_index(request):
+    is_student = False
+    student = None
+    if request.user.groups.filter(name='Student'):
+        is_student = True
+        sbu_id = request.user.username
+        student = get_object_or_404(Student, pk=sbu_id)
+
     course_list = {i for i in CourseInstance.objects.all() if i.section != 999}
-    return render(request, 'mast/course_index.html', {'course_list': course_list})
+    context = {
+        'course_list': course_list,
+        'is_student': is_student,
+        'student': student,
+    }
+    return render(request, 'mast/course_index.html', context)
 
 
 def display_set_info(course_set, layer, info):
@@ -170,6 +182,13 @@ def wrap_text(text, limit):
 
 
 def major_index(request):
+    is_student = False
+    student = None
+    if request.user.groups.filter(name='Student'):
+        is_student = True
+        sbu_id = request.user.username
+        student = get_object_or_404(Student, pk=sbu_id)
+
     class TrackInfo:
         def __init__(self, name, key, value):
             self.name = name
@@ -187,7 +206,10 @@ def major_index(request):
                'courses_in_sets': CourseInTrackSet.objects.all(),
                'course_relations': CourseToCourseRelation.objects.all(),
                'course_list': Course.objects.all(),
-               'track_info_list': track_info}
+               'track_info_list': track_info,
+               'is_student': is_student,
+               'student': student,
+               }
     return render(request, 'mast/major_index.html', context)
 
 
@@ -202,7 +224,7 @@ def commit_new_student(request):
     first_name = request.GET['first_name']
     last_name = request.GET['last_name']
     password = request.GET['password']
-    password.replace('\r','')
+    password.replace('\r', '')
     email = request.GET['email']
     entry_semester = request.GET['entry_semester']
     entry_semester = Semester.objects.get(id=int(entry_semester))
