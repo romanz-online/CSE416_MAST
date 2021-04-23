@@ -5,7 +5,7 @@
 <link rel="stylesheet" type="text/css" href="{% static 'mast/home.css' %}"/>
 
 <head>
-    <title>MAST Login</title>
+    <title>MAST Logout</title>
     <style>
         h1 {
             padding: 30px;
@@ -66,31 +66,30 @@
 
 <body style="overflow-x: hidden;">
 
-<h1>Login</h1>
+<h1>Logout</h1>
 
 <center>
     {% if form.errors %}
         <p>Your username and password didn't match. Please try again.</p>
     {% endif %}
 
+    {% if next %}
+        {% if user.is_authenticated %}
+            <p>Your account doesn't have access to this page. To proceed,
+                please login with an account that has access.</p>
+        {% else %}
+            <p>Please login to see this page.</p>
+        {% endif %}
+    {% endif %}
+
     <div id="container">
+        <br>
+        <strong style="font-size: 20px;">You've been logged out.</strong>
         <form method="post">
             {% csrf_token %}
-            <table>
-                <tr>
-                    <td style="padding-bottom: 16px;">{{ form.username.label_tag }}</td>
-                    <td style="padding-bottom: 16px;">{{ form.username }}</td>
-                </tr>
-                <tr>
-                    <td>{{ form.password.label_tag }}</td>
-                    <td>{{ form.password }}</td>
-                </tr>
-            </table>
-            <input type="submit" value="Log in"/>
+            <input type="submit" value="Log back in"/>
             <input type="hidden" name="next" value="{% url 'mast:login' %}"/>
         </form>
-
-        <a href="{% url 'password_reset' %}">Lost password?</a>
     </div>
 </center>
 
