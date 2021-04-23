@@ -1,5 +1,5 @@
 from django.urls import path
-from . import views, modifying_schedule, searching, editing_student, importing
+from . import views, modifying_schedule, searching, editing_student, importing, schedule_generation
 
 app_name = 'mast'
 urlpatterns = [
@@ -29,6 +29,8 @@ urlpatterns = [
          name='remove_scheduled_course'),
     path('edit_schedule/<int:sbu_id>/add_scheduled_semester/', modifying_schedule.add_scheduled_semester,
          name='add_scheduled_semester'),
+
+    path('schedule_gen/<int:sbu_id>/', schedule_generation.schedule_generation, name='schedule_gen'),
 
     path('edit/<int:sbu_id>/', editing_student.edit, name='edit'),
     path('edit/<int:sbu_id>/delete_record', editing_student.delete_record, name='delete_record'),

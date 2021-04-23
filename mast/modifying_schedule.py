@@ -4,7 +4,8 @@ from django.shortcuts import get_object_or_404, render
 from django.contrib.auth.decorators import login_required
 from django.http import HttpResponseRedirect
 from django.urls import reverse
-from .models import Student, Course, CourseInstance, CoursesTakenByStudent, Grade, StudentCourseSchedule, Semester
+from .models import Student, Course, CourseInstance, CoursesTakenByStudent, Grade, StudentCourseSchedule, Semester, \
+    Season
 
 from . import editing_student
 
@@ -24,7 +25,7 @@ def edit_schedule(request, sbu_id):
     student = get_object_or_404(Student, pk=sbu_id)
     grade_list = [i[0] for i in Grade.choices]
     semester_list = {i.course.semester: 1 for i in StudentCourseSchedule.objects.filter(student=sbu_id)}.keys()
-    semester_list = sorted(semester_list, key=operator.attrgetter('year'))
+    semester_list = sort_semester_list(semester_list)
     return render(request, 'mast/edit_schedule.html', {'student': student,
                                                        'grade_list': grade_list,
                                                        'course_list': CourseInstance.objects.all(),
@@ -51,11 +52,10 @@ def add_scheduled_semester(request, sbu_id):
     grade_list = [i[0] for i in Grade.choices]
     current_semester = Semester.objects.get(is_current_semester=True)
     semester_list = {i.course.semester: 1 for i in StudentCourseSchedule.objects.filter(student=sbu_id)}.keys()
-    semester_list = sorted(semester_list, key=operator.attrgetter('year'))
+    semester_list = sort_semester_list(semester_list)
     if semester_list:
         full_semester_list = [i for i in Semester.objects.all()]
-        full_semester_list = sorted(full_semester_list, reverse=True, key=operator.attrgetter('season'))
-        full_semester_list = sorted(full_semester_list, key=operator.attrgetter('year'))
+        full_semester_list = sort_semester_list(full_semester_list)
         i = full_semester_list.index(semester_list[0])
         while full_semester_list[i] in semester_list:
             i += 1
@@ -102,6 +102,37 @@ def add_scheduled_semester(request, sbu_id):
                                                        'schedule': StudentCourseSchedule.objects.filter(
                                                            student=sbu_id)
                                                        })
+
+
+def sort_semester_list(semester_list):
+    new_list = []
+    index = 0
+    placed = False
+    enum = {Season.WINTER: 0, Season.SPRING: 1, Season.SUMMER: 2, Season.FALL: 3}
+
+    for semester in semester_list:
+        if not new_list:
+            new_list.append(semester)
+        else:
+            for i in new_list:
+                if not placed:
+                    if i.year > semester.year:
+                        new_list.insert(index - 1, semester)
+                        placed = True
+                    index += 1
+            if not placed:
+                new_list.append(semester)
+        index = 0
+
+    restart = True
+    while restart:
+        restart = False
+        for i in range(len(new_list)-1):
+            if enum[new_list[i].season] > enum[new_list[i+1].season] and new_list[i].year == new_list[i+1].year:
+                new_list[i], new_list[i+1] = new_list[i+1], new_list[i]
+                restart = True
+
+    return sorted(new_list, key=operator.attrgetter('year'))
 
 
 @login_required
