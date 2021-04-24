@@ -634,3 +634,7 @@ def student_datatable(request):
 
     student = StudentDatatable()
     return render(request, 'mast/student_index.html', {'student': student})
+
+@login_required 
+def enrollment_trends(request):
+    return render(request, 'mast/enrollment_trends.html')
