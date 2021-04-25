@@ -688,17 +688,26 @@ def enrollment_trends_specify(request):
 
     all_courses_taken = CoursesTakenByStudent.objects.order_by('course')
 
+    # spring 0 # summer 1 # fall 2 # winter 3 
+    season_dict = {"Spring": 0, "Summer": 1, "Fall": 2, "Winter": 3}
+
     X = []
     Y = []
     for course in all_courses_taken:
+        current_year = course.course.semester.year
+        current_season = course.course.semester.season 
         if course.student.major == major_object or major_object.department == "N/A":
-            course_string = str(course.course.course.department) + " " + str(course.course.course.number) 
-            if course_string in X:
-                Y_index = [X.index(course_string)]
-                Y[Y_index] += 1
-            else:
-                X += [course_string]
-                Y += [1]
+            if s1_object.year <= current_year <= s2_object.year: 
+                if (s1_object.year == current_year and season_dict[s1_object.season] > season_dict[current_season]) or \
+                    (s2_object.year == current_year) and season_dict[s2_object.season] < season_dict[current_season]: 
+                    continue 
+                course_string = str(course.course.course.department) + " " + str(course.course.course.number) 
+                if course_string in X:
+                    Y_index = [X.index(course_string)]
+                    Y[Y_index] += 1
+                else:
+                    X += [course_string]
+                    Y += [1]
 
     fig = plt.figure()
     plt.bar(X, Y)
