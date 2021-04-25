@@ -1,76 +1,15 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <style>
-        h1 {
-            padding: 20px;
-            margin: -10px -10px 40px;
-            text-align: center;
-            background-color: #490000;
-            color: white;
-        }
 
-        .delete {
-            position: fixed;
-            bottom: 2%;
-            right: 2%;
-        }
-
-        body {
-            background-color: #f2f2f2;
-        }
-
-        button[type=submit] {
-            color: #490000;
-            border: none;
-            background-color: #f2f2f2;
-            padding: 3px 3px;
-            text-align: center;
-
-            display: inline-block;
-            font-size: 12px;
-            cursor: pointer;
-        }
-
-
-        input[type=submit] {
-            display: inline-block;
-            background-color: #490000;
-            border: none;
-            color: rgb(255, 255, 255);
-            padding: 10px 10px;
-            text-align: center;
-            text-decoration: none;
-            font-size: 15px;
-            cursor: pointer;
-        }
-
-        div {
-            background-color: white;
-            float: left;
-            padding: 10px 10px 10px 10px;
-            margin-left: 10px;
-            width: 47%;
-            border: solid;
-        }
-
-        .req_sem {
-            position: absolute;
-            visibility: hidden;
-            border: none;
-            width: 500px;
-            padding: 6px 2px 2px;
-            margin-left: 0;
-            z-index: 999;
-        }
-
-        form {
-            margin-bottom: 10px;
-        }
-    </style>
-</head>
+{% load static %}
+<link rel="stylesheet" type="text/css" href="{% static 'mast/import_courses.css' %}"/>
 
 <body>
-<a>TBA</a>
+<h1>Enrollment Trends</h1>
+{% include "mast/navbar.html" %}
+
+<a>
+(◕‿◕✿) Dear Weebs in the chat, you are sugoi. Whatever is going on in your kokoro right now, please know that you are kawaii and your story is not a filler. You are loved (◕‿◕✿)"
+</a>
 </body>
 </html>
