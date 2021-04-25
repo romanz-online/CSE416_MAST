@@ -14,6 +14,11 @@ from .models import Student, Major, Season, CoursesTakenByStudent, Comment, Stud
 
 from . import searching
 
+import matplotlib 
+matplotlib.use('Agg')
+import matplotlib.pyplot as plt 
+import io 
+import urllib, base64
 
 def setup():
     if not Group.objects.filter(name='Director'):
@@ -637,4 +642,85 @@ def student_datatable(request):
 
 @login_required 
 def enrollment_trends(request):
-    return render(request, 'mast/enrollment_trends.html')
+    semesters = Semester.objects.order_by('year')
+    major_list = Major.objects.order_by('name')
+
+    all_courses_taken = CoursesTakenByStudent.objects.order_by('course')
+
+    X = []
+    Y = []
+    for course in all_courses_taken:
+        course_string = str(course.course.course.department) + " " + str(course.course.course.number) 
+        if course_string in X:
+            Y_index = [X.index(course_string)]
+            Y[Y_index] += 1
+        else:
+            X += [course_string]
+            Y += [1]
+
+    fig = plt.figure()
+    plt.bar(X, Y)
+    plt.title("Enrollment Trends for all departments from " + str(semesters[0].season) + " " + str(semesters[0].year) + " to " 
+        + str(semesters[len(semesters)-1].season) + " " + str(semesters[len(semesters)-1].year), fontsize=10)
+    plt.xlabel("Courses Taken")
+    plt.ylabel("Enrollment Count")
+    buf = io.BytesIO()
+    fig.savefig(buf, format='png')
+    buf.seek(0)
+    string = base64.b64encode(buf.read())
+    uri = urllib.parse.quote(string)
+
+    return render(request, 'mast/enrollment_trends.html', {'semesters': semesters, 'major_list': major_list, 'graph': uri})
+
+@login_required 
+def enrollment_trends_specify(request):
+
+    s1 = request.GET['s1']
+    s2 = request.GET['s2']
+    major = request.GET['major']
+
+    s1_object = Semester.objects.filter(id=s1)[0]
+    s2_object = Semester.objects.filter(id=s2)[0]
+    major_object = Major.objects.filter(id=major)[0]
+
+    semesters = Semester.objects.order_by('year')
+    major_list = Major.objects.order_by('name')
+
+    all_courses_taken = CoursesTakenByStudent.objects.order_by('course')
+
+    X = []
+    Y = []
+    for course in all_courses_taken:
+        if course.student.major == major_object or major_object.department == "N/A":
+            course_string = str(course.course.course.department) + " " + str(course.course.course.number) 
+            if course_string in X:
+                Y_index = [X.index(course_string)]
+                Y[Y_index] += 1
+            else:
+                X += [course_string]
+                Y += [1]
+
+    fig = plt.figure()
+    plt.bar(X, Y)
+
+    title_string = "Enrollment Trends for "
+    if major_object.department == "N/A":
+        title_string += "all departments from "
+    else:
+        title_string += major_object.department + " "
+    if s1_object != s2_object:
+        title_string += "from " + str(s1_object.season) + " " + str(s1_object.year) + " to " + str(s2_object.season) \
+            + " " + str(s2_object.year)
+    else: 
+        title_string += "in " + str(s1_object.season) + " " + str(s1_object.year)
+
+    plt.title(title_string, fontsize=10)
+    plt.xlabel("Courses Taken")
+    plt.ylabel("Enrollment Count")
+    buf = io.BytesIO()
+    fig.savefig(buf, format='png')
+    buf.seek(0)
+    string = base64.b64encode(buf.read())
+    uri = urllib.parse.quote(string)
+
+    return render(request, 'mast/enrollment_trends.html', {'semesters': semesters, 'major_list': major_list, 'graph': uri, 's1': int(s1), 's2': int(s2), 'major_trend': int(major)})

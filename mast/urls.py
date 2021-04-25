@@ -46,5 +46,6 @@ urlpatterns = [
 
     path('<str:course_department>/<int:course_number>/<int:section>', views.course_detail, name='course_detail'),
     
-    path('enrollment_trends', views.enrollment_trends, name='enrollment_trends')
+    path('enrollment_trends', views.enrollment_trends, name='enrollment_trends'),
+    path('enrollment_trends/specify', views.enrollment_trends_specify, name='specify')
 ]

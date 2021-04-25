@@ -3,7 +3,6 @@
 
 {% load static %}
 <link rel="stylesheet" type="text/css" href="{% static 'mast/import_courses.css' %}"/>
-
 <body>
 <h1>Enrollment Trends</h1>
 {% include "mast/navbar.html" %}
@@ -11,5 +10,40 @@
 <a>
 (◕‿◕✿) Dear Weebs in the chat, you are sugoi. Whatever is going on in your kokoro right now, please know that you are kawaii and your story is not a filler. You are loved (◕‿◕✿)"
 </a>
+
+<form action="{% url 'mast:specify' %}" method="get">
+    Interval 1:
+    <select name="s1">
+        {% for semester in semesters %}
+            {% if semester.id == s1 %} 
+                <option selected value={{ semester.id }}>{{ semester }}</option>
+            {% else %}
+                <option value={{ semester.id }}>{{ semester }}</option>
+            {% endif %}
+        {% endfor %}
+    </select>
+    Interval 2:
+    <select name="s2">
+        {% for semester in semesters.reverse %}
+            {% if semester.id == s2 %} 
+                <option selected value={{ semester.id }}>{{ semester }}</option>
+            {% else %}
+                <option value={{ semester.id }}>{{ semester }}</option>
+            {% endif %}
+        {% endfor %}
+    </select>
+    Major:
+    <select name="major">
+        {% for major in major_list %}
+            {% if major.id == major_trend %}
+                <option selected value= {{ major.id }}>{{ major }}</option>
+            {% else %}
+                <option value= {{ major.id }}>{{ major }}</option>
+            {% endif %}
+        {% endfor %}
+    </select>
+    <button type="submit">Submit</button>
+</form>
+<img src="data:image/png;base64, {{graph}}" alt="">
 </body>
 </html>
