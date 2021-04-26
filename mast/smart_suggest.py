@@ -40,20 +40,20 @@ def calculate_similarity(student, graduate_set):
         graduated_semesters = map_semester_numbers(g_s)
         graduated_dict = coures_semester_map(graduated_schedule, graduated_semesters)
         #keep track of all matching classes
-        same_class_in_same_semester = 0
-        same_class_in_different_semester = 0
-        same_class_in_different_semester = 0 
+        same_class_same_semester = 0
+        same_class_dif_semester = 0
+        class_not_taken = 0 
         #find relation to current student course
         for course in student_dict:
             if course in graduated_dict:
                 if graduated_dict.get(course) == student_dict.get(course):
-                    same_class_in_same_semester += 1
+                    same_class_same_semester += 1
                 else:
-                    same_class_in_different_semester += 1
+                    same_class_dif_semester += 1
             else:
                 class_not_taken += 1
 
-        similarity = (same_class_in_same_semester + (0.5*same_class_in_different_semester) ) / len(student_courses)
+        similarity = (same_class_same_semester + (0.5*same_class_dif_semester) ) / len(student_courses)
         #if similarity is less than 80%, remove graduated student from list
         if similarity < .8:
             graduate_set.remove(g_s)
