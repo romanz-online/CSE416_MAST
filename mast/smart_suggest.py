@@ -17,10 +17,14 @@ def smart_suggest(student):
         similar_schedules = calculate_similarity(student, graduate_set)
     #if no similar_schedules
     if len(similar_schedules) == 0:
-        #will need to be updated to a proper render request once UI is in
+        # TODO will need to be updated to a proper render request once UI is in
         return "Not enough data for Smart Suggest"
     #else continue and get course counts
     course_counts = course_counts(student, graduate_set)
+    #get next semester number for student
+    student_semesters = coures_semester_map_map(sudent)
+    current_semester = max(student_semesters.iteritems(), key=operator.itemgetter(1))[0] + 1
+
 
 #~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~HELPER FUNCTIONS~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~#
 
@@ -73,6 +77,7 @@ def map_semester_numbers(student):
     for i in range(len(semesters)):
         semester_map[semesters[i]] = i
 
+
 #get dictionary that maps all classes a student has taken to its semester number
 def coures_semester_map(student_courses, student_semesters):
     student_dict = {}
@@ -96,12 +101,26 @@ def course_counts(student, graduate_set):
         graduated_map = coures_semester_map(graduated_courses, graduated_semesters)
         for course in graduated_map:
             #get count for all classes not yet taken by current student
-            if course.course.name not in taken_course_list
-                course_semester_key = course.course.name + ", " + str(graduated_map.get_value(course))
-                if course_semester_key in course_counts:
-                    course_counts[course_semester_key] += 1
+            #if class not taken, and not yet in course_counts
+            if course.course.name not in taken_course_list and course.course.name not in course_counts:
+                course_counts[course.course.name] = {graduated_semesters.get(course.course.semester):1}
+            #else if its not been taken, and already in course_counts
+            elif course.course.name not in taken_course_list:
+                #semester value already present for course
+                if graduated_semesters.get(course.course.semester) in course_counts.keys():
+                    course_counts[course][graduated_semesters.get(course.course.semester)] += 1
+                #new semester value for course
                 else:
-                    course_counts[course_semester_key] = 1
+                    course_counts[course][graduated_semesters.get(course.course.semester)] = 1
+
 
     return course_counts
      
+
+#return boolean indicating if the students's schedule meets all degree reqs
+def requirements_met(student):
+    if student.unsatisfied_courses == 0:
+        return True
+    else:
+        return False
+

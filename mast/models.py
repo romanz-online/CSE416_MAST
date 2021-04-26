@@ -43,6 +43,13 @@ class Grade(models.TextChoices):
     NOT_APPLICABLE = 'N/A'
 
 
+
+class ScheduleType(models.TextChoices):
+    SMART = "Smart"
+    CLASSIC = "Classic"
+    DEFAULT = "None"
+
+
 class Semester(models.Model):
     season = models.CharField(max_length=6, choices=Season.choices, default=Season.FALL)
     year = models.IntegerField(default=datetime.now().year)
@@ -236,7 +243,8 @@ class StudentCourseSchedule(models.Model):
     student = models.ForeignKey(Student, on_delete=models.CASCADE)
     course = models.ForeignKey(CourseInstance, null=True, on_delete=models.SET_NULL)
     status = models.CharField(max_length=15, choices=CourseStatus.choices, default=CourseStatus.PENDING)
-
+    schedule_id = models.IntegerField(default=0)
+    schedule_type = models.CharField(max_length=10, choices=ScheduleType.choices, default=ScheduleType.DEFAULT)
     def __str__(self):
         return str(self.student) + ' - ' + str(self.course) + ' ' + str(self.course.semester)
 
