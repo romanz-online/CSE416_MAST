@@ -22,10 +22,13 @@ def edit_schedule(request, sbu_id):
         Returns:
             render (HttpResponse): Returns the respective view containing the respective information of the student schedule retrieved.     
     """
+
+    #retrieve requested student, their grades, and the semesters they have taken clases in
     student = get_object_or_404(Student, pk=sbu_id)
     grade_list = [i[0] for i in Grade.choices]
     semester_list = {i.course.semester: 1 for i in StudentCourseSchedule.objects.filter(student=sbu_id)}.keys()
     semester_list = sort_semester_list(semester_list)
+    #render classes and grades in order of semester taken
     return render(request, 'mast/edit_schedule.html', {'student': student,
                                                        'grade_list': grade_list,
                                                        'course_list': CourseInstance.objects.all(),
@@ -48,18 +51,21 @@ def add_scheduled_semester(request, sbu_id):
         Returns:
             render (HttpResponse): Returns the respective view containing the respective information of the student schedule retrieved.     
     """
+    #retrieve requested student, their grades, the current semester, and the semesters they have taken clases in
     student = get_object_or_404(Student, pk=sbu_id)
     grade_list = [i[0] for i in Grade.choices]
     current_semester = Semester.objects.get(is_current_semester=True)
     semester_list = {i.course.semester: 1 for i in StudentCourseSchedule.objects.filter(student=sbu_id)}.keys()
     semester_list = sort_semester_list(semester_list)
+    #if the semester list is not empty, find the next chronological semester after the latest currently in schedule
     if semester_list:
         full_semester_list = [i for i in Semester.objects.all()]
         full_semester_list = sort_semester_list(full_semester_list)
-        i = full_semester_list.index(semester_list[0])
-        while full_semester_list[i] in semester_list:
-            i += 1
-        if i > len(full_semester_list):
+       
+        #retrieve index of latest semester currently in student's schedule
+        i = full_semester_list.index(semester_list[len(semester_list) - 1])
+        #if next semester to be added is not in fulle semester list
+        if i+1 >= len(full_semester_list):
             return render(request, 'mast/edit_schedule.html', {'student': student,
                                                                'grade_list': grade_list,
                                                                'course_list': CourseInstance.objects.all(),
@@ -68,32 +74,29 @@ def add_scheduled_semester(request, sbu_id):
                                                                'schedule': StudentCourseSchedule.objects.filter(
                                                                    student=sbu_id)
                                                                })
-        s = full_semester_list[i]
+        #retrieve and append next chronological semester to student schedule
+        s = full_semester_list[i+1]
         semester_list.append(s)
-        if not Course.objects.filter(name='', department='', number=0):
-            c = Course(name='', department='', number=0)
-            c.save()
-        c = Course.objects.filter(name='', department='', number=0)[0]
-        if not CourseInstance.objects.filter(course=c, section=999, semester=s):
-            i = CourseInstance(course=c, section=999, semester=s)
-            i.save()
-        empty_course = CourseInstance.objects.get(semester=s, section=999)
-        empty_course.save()
-        empty_schedule_course = StudentCourseSchedule(student=student, course=empty_course)
-        empty_schedule_course.save()
+    #else append current semester as the first semester
     else:
         semester_list.append(current_semester)
-        if not Course.objects.filter(name='', department='', number=0):
-            c = Course(name='', department='', number=0)
-            c.save()
-        c = Course.objects.filter(name='', department='', number=0)[0]
-        if not CourseInstance.objects.filter(course=c, section=999, semester=current_semester):
-            i = CourseInstance(course=c, section=999, semester=current_semester)
-            i.save()
-        empty_course = CourseInstance.objects.get(semester=current_semester, section=999)
-        empty_course.save()
-        empty_schedule_course = StudentCourseSchedule(student=student, course=empty_course)
-        empty_schedule_course.save()
+        s = current_semester
+
+
+    #if there is no empty course instance in the database yet, create one, so that only one instance of an exmpty course exists
+    if not Course.objects.filter(name='', department='', number=0):
+        c = Course(name='', department='', number=0)
+        c.save()
+    c = Course.objects.filter(name='', department='', number=0)[0]
+    if not CourseInstance.objects.filter(course=c, section=999, semester=s):
+       i = CourseInstance(course=c, section=999, semester=s)
+       i.save()
+
+    #add an empty corurse instance to schdeuled semester, to save semester in student schedule in database
+    empty_course = CourseInstance.objects.filter(semester=s, section=999)[0]
+    empty_course.save()
+    empty_schedule_course = StudentCourseSchedule(student=student, course=empty_course)
+    empty_schedule_course.save()
     return render(request, 'mast/edit_schedule.html', {'student': student,
                                                        'grade_list': grade_list,
                                                        'course_list': CourseInstance.objects.all(),
@@ -104,15 +107,27 @@ def add_scheduled_semester(request, sbu_id):
                                                        })
 
 
+
 def sort_semester_list(semester_list):
+    """
+    Sorts a list of semesters into chronological order
+    
+        Parameters: 
+            semester_list [Semester]: A list of unsorted semester objects.
+
+        Returns:
+            sorted_semester_list [Semester]: The sorted list of semester objects.
+    """
     new_list = []
     index = 0
     placed = False
     enum = {Season.WINTER: 0, Season.SPRING: 1, Season.SUMMER: 2, Season.FALL: 3}
 
     for semester in semester_list:
+        #if the new_list is still empty, simply place the semester
         if not new_list:
             new_list.append(semester)
+        #otherwise append to correct orderted index
         else:
             for i in new_list:
                 if not placed:
@@ -148,6 +163,7 @@ def add_scheduled_course(request, sbu_id):
             render (HttpResponse): Returns the respective view containing the respective information of the student schedule retrieved.     
     """
     student = get_object_or_404(Student, pk=sbu_id)
+    #retrieve selected course and add to student's schedule in database
     try:
         new_course = request.GET['course']
         new_course = CourseInstance.objects.get(id=new_course)
@@ -171,6 +187,7 @@ def remove_scheduled_course(request, sbu_id, course):
         Returns:
             render (HttpResponse): Returns the respective view containing the respective information of the student schedule retrieved.     
     """
+    #retrieve selected course and remove it from student's schedule in database
     student = get_object_or_404(Student, pk=sbu_id)
     course_record = get_object_or_404(CourseInstance, pk=course)
     try:
