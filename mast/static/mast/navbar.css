@@ -2,6 +2,7 @@ ul.navbar_container {
     list-style-type: none;
     margin: -10px -10px 30px;
     padding-bottom: 0;
+    padding-top: 30px;
     overflow: hidden;
     background-color: #490000;
 }

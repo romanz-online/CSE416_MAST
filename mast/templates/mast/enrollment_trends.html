@@ -3,9 +3,19 @@
 
 {% load static %}
 <link rel="stylesheet" type="text/css" href="{% static 'mast/import_courses.css' %}"/>
+
+<head>
+    <title>Enrollment Trends</title>
+</head>
+
 <body>
 <h1>Enrollment Trends</h1>
-{% include "mast/navbar.html" %}
+
+{% if is_student %}
+    {% include "mast/student_navbar.html" %}
+{% else %}
+    {% include "mast/navbar.html" %}
+{% endif %}
 
 <a>
 (◕‿◕✿) Dear Weebs in the chat, you are sugoi. Whatever is going on in your kokoro right now, please know that you are kawaii and your story is not a filler. You are loved (◕‿◕✿)"

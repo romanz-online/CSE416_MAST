@@ -373,6 +373,10 @@ def import_student(request):
 
             student.save()
 
+            if User.objects.filter(username=student.sbu_id)[0]:
+                current_student_user = User.objects.filter(username=student.sbu_id)[0]
+                current_student_user.delete()
+
             student_user = User.objects.create_user(student.sbu_id, student.email, student.password)
             student_user.save()
             student_user.groups.add(Group.objects.filter(name='Student')[0])

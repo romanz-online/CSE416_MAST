@@ -1,5 +1,6 @@
 from django.urls import path
-from . import views, modifying_schedule, searching, editing_student, importing, schedule_generation
+from . import views, modifying_schedule, searching, editing_student, importing, schedule_generation, enrollment_trends, \
+    rollover_semester, major_index, student_detail
 
 app_name = 'mast'
 urlpatterns = [
@@ -10,10 +11,12 @@ urlpatterns = [
     path('edit/<int:sbu_id>/commit_edit', editing_student.student_commit_edit, name='student_commit_edit'),
 
     path('commit_new_student/', views.commit_new_student, name='commit_new_student'),
-    path('majors/', views.major_index, name='major_index'),
+
+    path('majors/', major_index.major_index, name='major_index'),
     path('courses/', views.course_index, name='course_index'),
-    path('<int:sbu_id>/', views.detail, name='detail'),
-    path('<int:sbu_id>/add_comment', views.add_comment, name='add_comment'),
+
+    path('<int:sbu_id>/', student_detail.detail, name='detail'),
+    path('<int:sbu_id>/add_comment', student_detail.add_comment, name='add_comment'),
 
     path('student_index/import_student/', importing.import_student, name='import_student'),
     path('student_index/import_grades/', importing.import_grades, name='import_grades'),
@@ -45,7 +48,10 @@ urlpatterns = [
     path('student_index/#', searching.delete_all_students, name='delete_all_students'),
 
     path('<str:course_department>/<int:course_number>/<int:section>', views.course_detail, name='course_detail'),
-    
-    path('enrollment_trends', views.enrollment_trends, name='enrollment_trends'),
-    path('enrollment_trends/specify', views.enrollment_trends_specify, name='specify')
+
+    path('enrollment_trends', enrollment_trends.enrollment_trends, name='enrollment_trends'),
+    path('enrollment_trends/specify', enrollment_trends.enrollment_trends_specify, name='specify'),
+
+    path('rollover_semester', rollover_semester.rollover_semester_page, name='rollover_semester_page'),
+    path('rollover_semester/#', rollover_semester.rollover_semester, name='rollover_semester'),
 ]

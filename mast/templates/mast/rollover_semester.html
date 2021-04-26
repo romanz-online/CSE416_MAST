@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+
+{% load static %}
+<link rel="stylesheet" type="text/css" href="{% static 'mast/import_courses.css' %}"/>
+
+<head>
+    <title>Rollover Semester</title>
+
+    <style>
+        input[type=submit]:hover {
+            background-color: dimgray;
+        }
+    </style>
+</head>
+
+<body>
+<h1>Rollover Semester</h1>
+
+{% if is_student %}
+    {% include "mast/student_navbar.html" %}
+{% else %}
+    {% include "mast/navbar.html" %}
+{% endif %}
+
+<div style="font-size: 52px; font-weight: bold; text-align: center; padding-top: 30px;">
+    {{ current_semester }} &#129046; {{ next_semester }}
+</div>
+
+
+<form style="text-align: center; padding-top: 70px;">
+    <input type="submit" value="Rollover">
+</form>
+
+
+</body>
+</html>
