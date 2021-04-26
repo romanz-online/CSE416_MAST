@@ -44,4 +44,4 @@ def rollover_semester(request):
 
     next_semester = Semester.objects.filter(season=next_season, year=next_year)[0]
 
-    return
+    return rollover_semester_page(request)
