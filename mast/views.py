@@ -1,5 +1,9 @@
 from datetime import datetime
 import operator
+import matplotlib
+import matplotlib.pyplot as plt
+import io
+import urllib, base64
 
 from django.shortcuts import get_object_or_404, render
 from django.core.mail import EmailMessage
@@ -14,11 +18,7 @@ from .models import Student, Major, Season, CoursesTakenByStudent, Comment, Stud
 
 from . import searching
 
-import matplotlib 
 matplotlib.use('Agg')
-import matplotlib.pyplot as plt 
-import io 
-import urllib, base64
 
 def setup():
     if not Group.objects.filter(name='Director'):
@@ -640,7 +640,8 @@ def student_datatable(request):
     student = StudentDatatable()
     return render(request, 'mast/student_index.html', {'student': student})
 
-@login_required 
+
+@login_required
 def enrollment_trends(request):
     semesters = Semester.objects.order_by('year')
     major_list = Major.objects.order_by('name')
@@ -650,7 +651,7 @@ def enrollment_trends(request):
     X = []
     Y = []
     for course in all_courses_taken:
-        course_string = str(course.course.course.department) + " " + str(course.course.course.number) 
+        course_string = str(course.course.course.department) + " " + str(course.course.course.number)
         if course_string in X:
             Y_index = [X.index(course_string)]
             Y[Y_index] += 1
@@ -660,8 +661,9 @@ def enrollment_trends(request):
 
     fig = plt.figure()
     plt.bar(X, Y)
-    plt.title("Enrollment Trends for all departments from " + str(semesters[0].season) + " " + str(semesters[0].year) + " to " 
-        + str(semesters[len(semesters)-1].season) + " " + str(semesters[len(semesters)-1].year), fontsize=10)
+    plt.title(
+        "Enrollment Trends for all departments from " + str(semesters[0].season) + " " + str(semesters[0].year) + " to "
+        + str(semesters[len(semesters) - 1].season) + " " + str(semesters[len(semesters) - 1].year), fontsize=10)
     plt.xlabel("Courses Taken")
     plt.ylabel("Enrollment Count")
     buf = io.BytesIO()
@@ -670,11 +672,12 @@ def enrollment_trends(request):
     string = base64.b64encode(buf.read())
     uri = urllib.parse.quote(string)
 
-    return render(request, 'mast/enrollment_trends.html', {'semesters': semesters, 'major_list': major_list, 'graph': uri})
+    return render(request, 'mast/enrollment_trends.html',
+                  {'semesters': semesters, 'major_list': major_list, 'graph': uri})
 
-@login_required 
+
+@login_required
 def enrollment_trends_specify(request):
-
     s1 = request.GET['s1']
     s2 = request.GET['s2']
     major = request.GET['major']
@@ -695,13 +698,14 @@ def enrollment_trends_specify(request):
     Y = []
     for course in all_courses_taken:
         current_year = course.course.semester.year
-        current_season = course.course.semester.season 
+        current_season = course.course.semester.season
         if course.student.major == major_object or major_object.department == "N/A":
-            if s1_object.year <= current_year <= s2_object.year: 
+            if s1_object.year <= current_year <= s2_object.year:
                 if (s1_object.year == current_year and season_dict[s1_object.season] > season_dict[current_season]) or \
-                    (s2_object.year == current_year) and season_dict[s2_object.season] < season_dict[current_season]: 
-                    continue 
-                course_string = str(course.course.course.department) + " " + str(course.course.course.number) 
+                        (s2_object.year == current_year) and season_dict[s2_object.season] < season_dict[
+                    current_season]:
+                    continue
+                course_string = str(course.course.course.department) + " " + str(course.course.course.number)
                 if course_string in X:
                     Y_index = [X.index(course_string)]
                     Y[Y_index] += 1
@@ -719,8 +723,8 @@ def enrollment_trends_specify(request):
         title_string += major_object.department + " "
     if s1_object != s2_object:
         title_string += "from " + str(s1_object.season) + " " + str(s1_object.year) + " to " + str(s2_object.season) \
-            + " " + str(s2_object.year)
-    else: 
+                        + " " + str(s2_object.year)
+    else:
         title_string += "in " + str(s1_object.season) + " " + str(s1_object.year)
 
     plt.title(title_string, fontsize=10)
@@ -732,4 +736,6 @@ def enrollment_trends_specify(request):
     string = base64.b64encode(buf.read())
     uri = urllib.parse.quote(string)
 
-    return render(request, 'mast/enrollment_trends.html', {'semesters': semesters, 'major_list': major_list, 'graph': uri, 's1': int(s1), 's2': int(s2), 'major_trend': int(major)})
+    return render(request, 'mast/enrollment_trends.html',
+                  {'semesters': semesters, 'major_list': major_list, 'graph': uri, 's1': int(s1), 's2': int(s2),
+                   'major_trend': int(major)})
