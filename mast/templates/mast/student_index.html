@@ -64,7 +64,7 @@
 
 <div>
     <center>
-        <a href='#' onclick='overlayAdd()' class="button">Add Student</a>
+        <a href='#' onclick='overlayAdd()' class="button">Modify</a>
         <a href='{% url 'mast:delete_all_students' %}'
            onclick="return confirm('This will irreversibly erase all student records. Are you sure about this?')"
            class="button">Delete All Students</a>
@@ -230,7 +230,7 @@
         </div>
 
         <div id=add class=add>
-            <a href='#' onclick='overlayManual()' class='button'>Manual</a>
+            <a href='#' onclick='overlayManual()' class='button'>Add Student (Manual)</a>
             <a href="#" onclick='overlayUpload()' class='button'>Upload File</a>
             <a href='#' onclick='overlayAdd()' class="exit">&#10799;</a>
         </div>

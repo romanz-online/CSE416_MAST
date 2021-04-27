@@ -43,7 +43,6 @@ class Grade(models.TextChoices):
     NOT_APPLICABLE = 'N/A'
 
 
-
 class ScheduleType(models.TextChoices):
     SMART = "Smart"
     CLASSIC = "Classic"
@@ -245,6 +244,7 @@ class StudentCourseSchedule(models.Model):
     status = models.CharField(max_length=15, choices=CourseStatus.choices, default=CourseStatus.PENDING)
     schedule_id = models.IntegerField(default=0)
     schedule_type = models.CharField(max_length=10, choices=ScheduleType.choices, default=ScheduleType.DEFAULT)
+
     def __str__(self):
         return str(self.student) + ' - ' + str(self.course) + ' ' + str(self.course.semester)
 

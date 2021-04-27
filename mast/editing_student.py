@@ -1,6 +1,5 @@
 from django.shortcuts import get_object_or_404, render
 from django.http import HttpResponseRedirect
-from django.contrib.auth.models import User
 from django.contrib.auth.decorators import login_required
 from django.urls import reverse
 from .models import Student, Major, CourseInstance, CoursesTakenByStudent, Grade, CourseStatus, Semester, Track, \
@@ -330,7 +329,7 @@ def commit_edit(request, sbu_id):
                 changed = True
 
         for course in CoursesTakenByStudent.objects.filter(student=student):
-            if course.status != 'Pending':
+            if course.status != CourseStatus.PENDING:
                 new_status = request.GET[str(course.id) + 'status']
                 new_grade = request.GET[str(course.id)]
                 if course.grade != new_grade:
@@ -339,8 +338,10 @@ def commit_edit(request, sbu_id):
                 if course.status != new_status:
                     course.status = new_status
                     changed = True
-                    if new_status == 'Pending':
+                    if new_status == CourseStatus.PENDING:
                         course.grade = 'N/A'
+                    if new_status == CourseStatus.FAILED:
+                        student.credits_taken -= course.credits_taken
                 course.save()
 
         gpa = get_gpa(student)

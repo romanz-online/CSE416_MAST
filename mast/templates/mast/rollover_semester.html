@@ -29,7 +29,18 @@
 
 
 <form action="{% url 'mast:rollover_semester' %}" style="text-align: center; padding-top: 70px;">
-    <input type="submit" value="Rollover">
+    <input
+            onclick="return confirm('This will change the semester from {{ current_semester }} to {{ next_semester }}, modifying all current student schedules and course records. Are you sure?')"
+            type="submit" value="Rollover">
+    <br>
+    <br>
+    <center>
+        <div style="max-width: 400px">
+            The default grade given to rolled-over courses taken by students is a passing A. To change students' grades,
+            edit their course records manually from their profile, or go to <i>Students&#129046;Modify&#129046;Upload
+            File&#129046;Upload Course Data Only</i>
+        </div>
+    </center>
 </form>
 
 

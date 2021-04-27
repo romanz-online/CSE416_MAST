@@ -1,6 +1,6 @@
 from django.shortcuts import render
 from django.contrib.auth.decorators import login_required
-from .models import Semester, Season
+from .models import Semester, Season, StudentCourseSchedule, CoursesTakenByStudent
 
 
 @login_required
@@ -43,5 +43,8 @@ def rollover_semester(request):
         next_year += 1
 
     next_semester = Semester.objects.filter(season=next_season, year=next_year)[0]
+
+    courses_to_update = [i for i in CoursesTakenByStudent.objects.all() if i.course.semester == current_semester]
+    schedules_to_update = [i for i in StudentCourseSchedule.objects.all() if i.course.semester == current_semester]
 
     return rollover_semester_page(request)
