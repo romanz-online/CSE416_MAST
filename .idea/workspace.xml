@@ -3,6 +3,7 @@
   <component name="ChangeListManager">
     <list default="true" id="433e10ab-7bf6-49f7-ab54-8658f67b786e" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/mast/importing.py" beforeDir="false" afterPath="$PROJECT_DIR$/mast/importing.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/mast/student_detail.py" beforeDir="false" afterPath="$PROJECT_DIR$/mast/student_detail.py" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
@@ -33,8 +34,8 @@
       <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/mast/student_detail.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="403">
-              <caret line="301" column="74" selection-start-line="301" selection-start-column="74" selection-end-line="301" selection-end-column="74" />
+            <state relative-caret-position="148">
+              <caret line="106" column="17" lean-forward="true" selection-start-line="106" selection-start-column="17" selection-end-line="106" selection-end-column="17" />
               <folding>
                 <element signature="e#0#15#0" expanded="true" />
                 <element signature="e#1888#2547#0" />
@@ -44,13 +45,10 @@
         </entry>
       </file>
       <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/mast/editing_student.py">
+        <entry file="file://$PROJECT_DIR$/mast/test_files/degree-requirements-AMS.xml">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="187">
-              <caret line="396" lean-forward="true" selection-start-line="396" selection-end-line="396" />
-              <folding>
-                <element signature="e#0#54#0" expanded="true" />
-              </folding>
+            <state relative-caret-position="171">
+              <caret line="125" column="30" lean-forward="true" selection-start-line="125" selection-start-column="30" selection-end-line="125" selection-end-column="30" />
             </state>
           </provider>
         </entry>
@@ -68,7 +66,6 @@
   </component>
   <component name="FindInProjectRecents">
     <findStrings>
-      <find>departm</find>
       <find>department</find>
       <find>course_in_tra</find>
       <find>len(match</find>
@@ -98,6 +95,7 @@
       <find>parse</find>
       <find>user</find>
       <find>major_inde</find>
+      <find>range</find>
     </findStrings>
   </component>
   <component name="Git.Settings">
@@ -147,7 +145,6 @@
         <option value="$PROJECT_DIR$/mast/rollover_semester.html" />
         <option value="$PROJECT_DIR$/mast/templates/mast/navbar.html" />
         <option value="$PROJECT_DIR$/mast/enrollment_trends.py" />
-        <option value="$PROJECT_DIR$/mast/importing.py" />
         <option value="$PROJECT_DIR$/mast/static/mast/major_index.css" />
         <option value="$PROJECT_DIR$/mast/static/mast/navbar.css" />
         <option value="$PROJECT_DIR$/mast/major_index.py" />
@@ -156,6 +153,7 @@
         <option value="$PROJECT_DIR$/mast/templates/mast/rollover_semester.html" />
         <option value="$PROJECT_DIR$/mast/rollover_semester.py" />
         <option value="$PROJECT_DIR$/mast/editing_student.py" />
+        <option value="$PROJECT_DIR$/mast/importing.py" />
         <option value="$PROJECT_DIR$/mast/student_detail.py" />
       </list>
     </option>
@@ -178,6 +176,7 @@
       <foldersAlwaysOnTop value="true" />
     </navigator>
     <panes>
+      <pane id="Scope" />
       <pane id="ProjectPane">
         <subPane>
           <expand>
@@ -190,11 +189,16 @@
               <item name="CSE416_MAST" type="462c0819:PsiDirectoryNode" />
               <item name="mast" type="462c0819:PsiDirectoryNode" />
             </path>
+            <path>
+              <item name="CSE416_MAST" type="b2602c69:ProjectViewProjectNode" />
+              <item name="CSE416_MAST" type="462c0819:PsiDirectoryNode" />
+              <item name="mast" type="462c0819:PsiDirectoryNode" />
+              <item name="test_files" type="462c0819:PsiDirectoryNode" />
+            </path>
           </expand>
           <select />
         </subPane>
       </pane>
-      <pane id="Scope" />
     </panes>
   </component>
   <component name="PropertiesComponent">
@@ -380,7 +384,8 @@
       <workItem from="1619050251736" duration="4972000" />
       <workItem from="1619132453414" duration="7820000" />
       <workItem from="1619405617652" duration="4807000" />
-      <workItem from="1619459284100" duration="6772000" />
+      <workItem from="1619459284100" duration="6990000" />
+      <workItem from="1619477961973" duration="8295000" />
     </task>
     <servers />
   </component>
@@ -390,16 +395,15 @@
     </history-entry>
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="342666000" />
+    <option name="totallyTimeSpent" value="351179000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="-1608" y="-8" width="1616" height="876" extended-state="6" />
     <editor active="true" />
     <layout>
-      <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.27249357" />
+      <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.27570695" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
       <window_info id="Favorites" order="2" side_tool="true" />
-      <window_info anchor="bottom" id="Messages" />
       <window_info anchor="bottom" id="Message" order="0" />
       <window_info anchor="bottom" id="Find" order="1" weight="0.32974428" />
       <window_info anchor="bottom" id="Run" order="2" weight="0.32974428" />
@@ -413,6 +417,7 @@
       <window_info anchor="bottom" id="Event Log" order="10" side_tool="true" weight="0.32974428" />
       <window_info anchor="bottom" id="Terminal" order="11" />
       <window_info anchor="bottom" id="Python Console" order="12" weight="0.32974428" />
+      <window_info anchor="bottom" id="Messages" order="13" />
       <window_info anchor="right" x="0" y="0" width="354" height="676" id="Documentation" order="0" side_tool="true" weight="0.32969153" />
       <window_info anchor="right" id="Commander" internal_type="SLIDING" order="1" type="SLIDING" weight="0.4" />
       <window_info anchor="right" id="Ant Build" order="2" weight="0.25" />
@@ -449,13 +454,6 @@
     <option name="version" value="1" />
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/mast/templates/mast/scrape_courses.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="148">
-          <caret line="28" column="19" selection-start-line="28" selection-start-column="19" selection-end-line="28" selection-end-column="19" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/mast/templates/mast/course_detail.html">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="119">
@@ -467,20 +465,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="136">
           <caret line="8" lean-forward="true" selection-start-line="8" selection-end-line="8" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/mast/test_files/degree-requirements-BMI.xml">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="51">
-          <caret line="3" column="22" selection-start-line="3" selection-start-column="22" selection-end-line="3" selection-end-column="22" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/mast/test_files/degree-requirements-AMS.xml">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="2168">
-          <caret line="137" column="39" lean-forward="true" selection-start-line="137" selection-start-column="39" selection-end-line="137" selection-end-column="39" />
         </state>
       </provider>
     </entry>
@@ -524,6 +508,11 @@
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/mast/test_files/cse416_student_profile_file_test_data.csv">
+      <provider editor-type-id="text-editor">
+        <state relative-caret-position="51">
+          <caret line="3" column="98" lean-forward="true" selection-start-line="3" selection-start-column="98" selection-end-line="3" selection-end-column="98" />
+        </state>
+      </provider>
       <provider editor-type-id="csv-text-editor">
         <state relative-caret-position="51">
           <caret line="3" column="107" selection-start-line="3" selection-start-column="107" selection-end-line="3" selection-end-column="107" />
@@ -544,11 +533,6 @@
           <column index="10" width="100" />
           <column index="11" width="100" />
           <column index="12" width="100" />
-        </state>
-      </provider>
-      <provider editor-type-id="text-editor">
-        <state relative-caret-position="51">
-          <caret line="3" column="98" lean-forward="true" selection-start-line="3" selection-start-column="98" selection-end-line="3" selection-end-column="98" />
         </state>
       </provider>
     </entry>
@@ -817,16 +801,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/mast/importing.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="272">
-          <caret line="16" column="24" selection-start-line="16" selection-start-column="24" selection-end-line="16" selection-end-column="24" />
-          <folding>
-            <element signature="e#0#9#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/mast/searching.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="188">
@@ -867,10 +841,39 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/mast/importing.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-1632">
+          <caret line="81" column="60" lean-forward="true" selection-start-line="81" selection-start-column="60" selection-end-line="81" selection-end-column="60" />
+          <folding>
+            <element signature="e#0#9#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/mast/test_files/degree-requirements-BMI.xml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-1632">
+          <caret line="3" column="22" selection-start-line="3" selection-start-column="22" selection-end-line="3" selection-end-column="22" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/mast/test_files/degree-requirements-CSE.xml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-2295" />
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/mast/test_files/degree-requirements-AMS.xml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="171">
+          <caret line="125" column="30" lean-forward="true" selection-start-line="125" selection-start-column="30" selection-end-line="125" selection-end-column="30" />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/mast/student_detail.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="403">
-          <caret line="301" column="74" selection-start-line="301" selection-start-column="74" selection-end-line="301" selection-end-column="74" />
+        <state relative-caret-position="148">
+          <caret line="106" column="17" lean-forward="true" selection-start-line="106" selection-start-column="17" selection-end-line="106" selection-end-column="17" />
           <folding>
             <element signature="e#0#15#0" expanded="true" />
             <element signature="e#1888#2547#0" />

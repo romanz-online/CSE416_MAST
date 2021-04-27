@@ -84,7 +84,7 @@ def import_degree_requirements(request):
             # Add TCS parents
             if tcs.parent.name == 'Track':
                 tcs_save = add_tcs(tcs, t, track_name, "Core Set - ", None, False)
-                tcs_save.save() 
+                tcs_save.save()
                 # Add children of TCS 
                 for child in tcs.children:
                     if child.parent.parent.name == "Track":
@@ -102,8 +102,8 @@ def import_degree_requirements(request):
 
     return render(request, 'mast/import_degree_reqs.html', {'': None})
 
+
 def add_tcs(tcs, t, track_name, temp_str, parent_course_set, child):
-    
     tcs_size = tcs.find("size")
     if tcs_size:
         if tcs_size.parent.parent.name == "Track" or child:
@@ -174,12 +174,13 @@ def add_tcs(tcs, t, track_name, temp_str, parent_course_set, child):
     else:
         tcs_leeway = 0
     return TrackCourseSet(track=t, parent_course_set=parent_course_set, name=tcs_name,
-                                                            size=tcs_size,
-                                                            limiter=tcs_limiter, upper_limit=tcs_upper_limit,
-                                                            lower_limit=tcs_lower_limit,
-                                                            lower_credit_limit=tcs_lower_credit_limit,
-                                                            department_limit=tcs_department_limit,
-                                                            leeway=tcs_leeway)
+                          size=tcs_size,
+                          limiter=tcs_limiter, upper_limit=tcs_upper_limit,
+                          lower_limit=tcs_lower_limit,
+                          lower_credit_limit=tcs_lower_credit_limit,
+                          department_limit=tcs_department_limit,
+                          leeway=tcs_leeway)
+
 
 def add_cits(child, tcs_save):
     child_course = child.find("course").get_text()
@@ -188,7 +189,7 @@ def add_cits(child, tcs_save):
         child_course = Course.objects.get(department=child_course[0], number=child_course[1])
     else:
         child_course = Course(name=child_course[0], department=child_course[0],
-                                number=child_course[1])
+                              number=child_course[1])
     child_course.save()
     course_each_semester = child.find("each_semester")
     if course_each_semester:
@@ -201,8 +202,9 @@ def add_cits(child, tcs_save):
     else:
         how_many_semesters = 1
     return CourseInTrackSet(course_set=tcs_save, course=child_course,
-                                                each_semester=course_each_semester,
-                                                how_many_semesters=how_many_semesters)
+                            each_semester=course_each_semester,
+                            how_many_semesters=how_many_semesters)
+
 
 @login_required
 def import_student(request):
