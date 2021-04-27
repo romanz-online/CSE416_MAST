@@ -30,7 +30,7 @@
 
 <form action="{% url 'mast:rollover_semester' %}" style="text-align: center; padding-top: 70px;">
     <input
-            onclick="return confirm('This will change the semester from {{ current_semester }} to {{ next_semester }}, modifying all current student schedules and course records. Are you sure?')"
+            onclick="return confirm('This will change the semester from {{ current_semester }} to {{ next_semester }}, modifying all current student course records. Are you sure?')"
             type="submit" value="Rollover">
     <br>
     <br>

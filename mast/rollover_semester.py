@@ -1,6 +1,8 @@
 from django.shortcuts import render
 from django.contrib.auth.decorators import login_required
-from .models import Semester, Season, StudentCourseSchedule, CoursesTakenByStudent
+from .models import Semester, Season, CoursesTakenByStudent, CourseStatus, Grade
+
+from . import editing_student
 
 
 @login_required
@@ -44,7 +46,23 @@ def rollover_semester(request):
 
     next_semester = Semester.objects.filter(season=next_season, year=next_year)[0]
 
-    courses_to_update = [i for i in CoursesTakenByStudent.objects.all() if i.course.semester == current_semester]
-    schedules_to_update = [i for i in StudentCourseSchedule.objects.all() if i.course.semester == current_semester]
+    courses_to_update = [i for i in CoursesTakenByStudent.objects.all() if i.course
+                         and i.course.semester == current_semester
+                         and i.status == CourseStatus.PENDING]
+
+    for i in courses_to_update:
+        i.status = CourseStatus.PASSED
+        i.grade = Grade.A
+        student = i.student
+        student.credits_taken += i.credits_taken
+        student.save()
+        i.save()
+        editing_student.sync_course_data(student)
+
+    current_semester.is_current_semester = False
+    current_semester.save()
+
+    next_semester.is_current_semester = True
+    next_semester.save()
 
     return rollover_semester_page(request)
