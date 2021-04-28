@@ -92,7 +92,7 @@ def add_scheduled_semester(request, sbu_id):
     empty_course.save()
     empty_schedule_course = StudentCourseSchedule(student=student, course=empty_course)
     empty_schedule_course.save()
-    return edit_schedule()
+    return edit_schedule(request, sbu_id)
 
 
 def sort_semester_list(semester_list):

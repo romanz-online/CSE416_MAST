@@ -5,6 +5,8 @@ from django.urls import reverse
 from .models import Student, Major, CourseInstance, CoursesTakenByStudent, Grade, CourseStatus, Semester, Track, \
     TrackCourseSet, CourseInTrackSet, StudentCourseSchedule
 
+from . import searching
+
 
 @login_required
 def student_edit(request, sbu_id):
@@ -150,21 +152,8 @@ def delete_record(request, sbu_id):
         # Attempt to delete student
         student.delete()
     except:
-        # Return an error message if the student could not be deleted.
-        grade_list = [i[0] for i in Grade.choices]
-        course_status_list = [i[0] for i in CourseStatus.choices]
-        return render(request, 'mast/edit.html', {'student': student,
-                                                  'major_list': Major.objects.order_by('name'),
-                                                  'course_list': CourseInstance.objects.all(),
-                                                  'classes_taken': CoursesTakenByStudent.objects.all(),
-                                                  'grade_list': grade_list,
-                                                  'course_status_list': course_status_list,
-                                                  'semesters': Semester.objects.order_by('year'),
-                                                  'error_message': "Something went wrong."
-                                                  })
-    # If the deletion was successful, return to the home page
-    context = {'student_list': Student.objects.order_by('sbu_id'), 'major_list': Major.objects.order_by('name')}
-    return render(request, 'mast/student_index.html', context)
+        return edit(request, sbu_id)
+    return searching.student_index(request)
 
 
 @login_required

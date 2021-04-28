@@ -111,8 +111,7 @@ def student_degree_reqs_loop(taken_courses, course_set, layer, info):
             else:
                 for course in CourseInTrackSet.objects.filter(course_set=track):
                     taken_course_lookup = len([i for i in taken_courses if i.course.course == course.course
-                                               and (
-                                                       i.status == CourseStatus.PASSED or i.status == CourseStatus.TRANSFER)])
+                                               and (i.status == CourseStatus.PASSED or i.status == CourseStatus.TRANSFER)])
                     if course_set.limiter and taken_course_lookup >= track.size:
                         number_taken += track.size
                     else:
