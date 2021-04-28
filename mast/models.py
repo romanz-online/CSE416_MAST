@@ -120,10 +120,13 @@ class Track(models.Model):
 # whereas if limiter is False, the size denotes how many courses a student HAS TO take
 #
 # upper_limit and lower_limit are used to denote a range of classes possible to take,
-# instead of having 99 entries of CourseInTrackSet
+# instead of having 99 entries of CourseInTrackSet 
 # department_limit simply tells you which department the upper and lower limits are for
 #
-# the parent_course_set attribute allows this structure to be tree-like
+# the parent_course_set attribute allows this structure to be tree-like, allowing for nested
+# attributes in a set (for example, course substitutions)
+# provides nested TCS's for attribute setting of classes
+# the leeway variable ensures that courses aren't counted twice if they fulfill multiple requirements 
 class TrackCourseSet(models.Model):
     track = models.ForeignKey(Track, on_delete=models.CASCADE)
     parent_course_set = models.ForeignKey(to='TrackCourseSet', on_delete=models.CASCADE, null=True)
