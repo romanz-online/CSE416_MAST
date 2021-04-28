@@ -82,12 +82,13 @@ def student_degree_reqs_loop(taken_courses, course_set, layer, info):
     elif not course_set.parent_course_set and not course_set.size:
         return info
     elif course_set.size:
-        # this is where courses get listed out, along with their properties
         for i in range(layer):
             info += '  '
 
+        # counting up all the courses to later see if the requirement has been fulfilled
         number_taken = 0
 
+        # counting ranges
         if course_set.lower_limit != 100 and course_set.upper_limit != 999:
             taken_course_lookup = len([i for i in taken_courses if
                                        course_set.lower_limit <= i.course.course.number <= course_set.upper_limit if
@@ -98,7 +99,9 @@ def student_degree_reqs_loop(taken_courses, course_set, layer, info):
                 if course_set.leeway:
                     number_taken -= course_set.leeway // 3
 
+        # counting in nested sets
         for track in TrackCourseSet.objects.filter(parent_course_set=course_set):
+            # counts nested ranges
             if track.lower_limit != 100 and track.upper_limit != 999:
                 taken_course_lookup = len(
                     [i for i in taken_courses if track.lower_limit <= i.course.course.number <= track.upper_limit
@@ -108,6 +111,7 @@ def student_degree_reqs_loop(taken_courses, course_set, layer, info):
                 if course_set.limiter and taken_course_lookup:
                     if course_set.leeway:
                         number_taken -= course_set.leeway // 3
+            # counts nested courses
             else:
                 for course in CourseInTrackSet.objects.filter(course_set=track):
                     taken_course_lookup = len([i for i in taken_courses if i.course.course == course.course
@@ -117,7 +121,9 @@ def student_degree_reqs_loop(taken_courses, course_set, layer, info):
                     else:
                         number_taken += taken_course_lookup
 
+        # prints the labels
         if course_set.limiter:
+            # counts singular courses
             for course in CourseInTrackSet.objects.filter(course_set=course_set):
                 taken_course_lookup = sum([i.credits_taken for i in taken_courses if
                                            i.course.course == course.course
@@ -136,6 +142,7 @@ def student_degree_reqs_loop(taken_courses, course_set, layer, info):
 
             info += ':\n'
         else:
+            # counts singular courses
             for course in CourseInTrackSet.objects.filter(course_set=course_set):
                 taken_course_lookup = len(
                     [i for i in taken_courses if i.course.course == course.course and (
@@ -194,6 +201,7 @@ def student_degree_reqs_loop(taken_courses, course_set, layer, info):
 
         info += '\n'
 
+    # this is where ranges get listed out, along with their properties
     number_taken = 0
     pending_count = 0
     taken_count = 0
