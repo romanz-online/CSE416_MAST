@@ -343,78 +343,7 @@ def commit_edit(request, sbu_id):
         if changed:
             sync_course_data(student)
     except:
-        # Return an error message if their data could not be saved
-        student = get_object_or_404(Student, pk=sbu_id)
-        grade_list = [i[0] for i in Grade.choices]
-        course_status_list = [i[0] for i in CourseStatus.choices]
-
-        if not Major.objects.filter(department='N/A'):
-            semester = Semester.objects.all()[0]
-            none_major = Major(department='N/A',
-                               name='(None)',
-                               requirement_semester=semester)
-            none_major.save()
-
-        track_list = []
-        found = False
-        for i in Track.objects.all():
-            for j in track_list:
-                if i.name == j.name and i.major.name == j.major.name:
-                    found = True
-            if not found:
-                track_list.append(i)
-            found = False
-
-        class RequirementSemesters:
-            def __init__(self, track):
-                self.track = track
-                self.semesters = []
-
-            def add_semester(self, semester):
-                self.semesters.append(semester)
-
-            def __str__(self):
-                string_list = [str(i) for i in self.semesters]
-                return self.track.name + ' [' + ','.join(string_list) + ']'
-
-        requirement_semesters = []
-        for i in track_list:
-            new_set = RequirementSemesters(i)
-            for j in Track.objects.all():
-                if i.name == j.name and i.major.name == j.major.name:
-                    new_set.add_semester(j.major.requirement_semester)
-            requirement_semesters.append(new_set)
-
-        track_list_id = 0
-        for i in track_list:
-            if student.track and i.name == student.track.name:
-                track_list_id = i.id
-
-        class TempCourseInstance:
-            def __init__(self, name):
-                self.name = name
-                self.section = 1
-                self.id = 99999
-
-            def __str__(self):
-                return 'None'
-
-        transfer_course_list = [i for i in CourseInstance.objects.all()]
-        transfer_course_list.insert(0, TempCourseInstance('None'))
-
-        return render(request, 'mast/edit.html', {'student': student,
-                                                  'course_list': CourseInstance.objects.all(),
-                                                  'classes_taken': CoursesTakenByStudent.objects.filter(
-                                                      student=student),
-                                                  'grade_list': grade_list,
-                                                  'course_status_list': course_status_list,
-                                                  'semesters': Semester.objects.order_by('year'),
-                                                  'track_list': track_list,
-                                                  'transfer_course_list': transfer_course_list,
-                                                  'requirement_semesters': requirement_semesters,
-                                                  'track_list_id': track_list_id,
-                                                  'error_message': "Something went wrong."
-                                                  })
+        return edit(request, sbu_id)
     return HttpResponseRedirect(reverse('mast:detail', args=(sbu_id,)))
 
 

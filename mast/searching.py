@@ -39,11 +39,7 @@ def delete_all_students(request):
     for student_user in User.objects.filter(groups=student_group):
         student_user.delete()
 
-    context = {'student_list': Student.objects.order_by('sbu_id'),
-               'major_list': Major.objects.order_by('name'),
-               'semesters': Semester.objects.all(),
-               'requirement_semesters': Semester.objects.all()}
-    return render(request, 'mast/student_index.html', context)
+    return student_index(request)
 
 
 @login_required
