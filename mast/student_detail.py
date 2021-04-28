@@ -7,7 +7,7 @@ from django.core.mail import EmailMessage
 from django.http import HttpResponseRedirect
 from django.urls import reverse
 from .models import Student, Major, CoursesTakenByStudent, Comment, StudentCourseSchedule, TrackCourseSet, \
-    CourseInTrackSet, CourseStatus
+    CourseInTrackSet, CourseStatus, ScheduleStatus
 
 
 @login_required
@@ -24,13 +24,17 @@ def detail(request, sbu_id):
         degree_requirements_string = wrap_text(stringify_student_degree_reqs(student), 60)
     else:
         degree_requirements_string = "No track."
+    pending_scheduled_courses = len([i for i in StudentCourseSchedule.objects.filter(student=sbu_id, schedule_id=0) if
+                                     i.status == ScheduleStatus.PENDING and i.course and i.course.section != 999])
     return render(request, 'mast/detail.html', {'student': student,
                                                 'major_list': Major.objects.order_by('name'),
                                                 'classes_taken': CoursesTakenByStudent.objects.filter(student=student),
                                                 'comment_list': comment_list.order_by('post_date'),
                                                 'semester_list': semester_list,
                                                 'is_student': is_student,
-                                                'schedule': StudentCourseSchedule.objects.filter(student=sbu_id),
+                                                'schedule': StudentCourseSchedule.objects.filter(student=sbu_id,
+                                                                                                 schedule_id=0),
+                                                'pending_scheduled_courses': pending_scheduled_courses,
                                                 'requirements': degree_requirements_string
                                                 })
 
@@ -108,7 +112,7 @@ def student_degree_reqs_loop(taken_courses, course_set, layer, info):
                 for course in CourseInTrackSet.objects.filter(course_set=track):
                     taken_course_lookup = len([i for i in taken_courses if i.course.course == course.course
                                                and (
-                                                           i.status == CourseStatus.PASSED or i.status == CourseStatus.TRANSFER)])
+                                                       i.status == CourseStatus.PASSED or i.status == CourseStatus.TRANSFER)])
                     if course_set.limiter and taken_course_lookup >= track.size:
                         number_taken += track.size
                     else:

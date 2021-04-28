@@ -44,9 +44,14 @@ class Grade(models.TextChoices):
 
 
 class ScheduleType(models.TextChoices):
-    SMART = "Smart"
-    CLASSIC = "Classic"
-    DEFAULT = "None"
+    SMART = 'Smart'
+    CLASSIC = 'Classic'
+    DEFAULT = 'None'
+
+
+class ScheduleStatus(models.TextChoices):
+    APPROVED = 'Approved'
+    PENDING = 'Pending'
 
 
 class Semester(models.Model):
@@ -241,7 +246,7 @@ class CoursesTakenByStudent(models.Model):
 class StudentCourseSchedule(models.Model):
     student = models.ForeignKey(Student, on_delete=models.CASCADE)
     course = models.ForeignKey(CourseInstance, null=True, on_delete=models.SET_NULL)
-    status = models.CharField(max_length=15, choices=CourseStatus.choices, default=CourseStatus.PENDING)
+    status = models.CharField(max_length=15, choices=ScheduleStatus.choices, default=ScheduleStatus.PENDING)
     schedule_id = models.IntegerField(default=0)
     schedule_type = models.CharField(max_length=10, choices=ScheduleType.choices, default=ScheduleType.DEFAULT)
 

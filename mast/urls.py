@@ -28,10 +28,11 @@ urlpatterns = [
     path('edit_schedule/<int:sbu_id>/', modifying_schedule.edit_schedule, name='edit_schedule'),
     path('edit_schedule/<int:sbu_id>/add_scheduled_course/', modifying_schedule.add_scheduled_course,
          name='add_scheduled_course'),
-    path('edit_schedule/<int:sbu_id>/remove_scheduled_course/<int:course>', modifying_schedule.remove_scheduled_course,
-         name='remove_scheduled_course'),
+    path('edit_schedule/<int:sbu_id>/modify_scheduled_course/<int:course>', modifying_schedule.modify_scheduled_course,
+         name='modify_scheduled_course'),
     path('edit_schedule/<int:sbu_id>/add_scheduled_semester/', modifying_schedule.add_scheduled_semester,
          name='add_scheduled_semester'),
+    path('edit_schedule/<int:sbu_id>/approve_all', modifying_schedule.approve_all, name='approve_all'),
 
     path('schedule_gen/<int:sbu_id>/', schedule_generation.schedule_generation, name='schedule_gen'),
 

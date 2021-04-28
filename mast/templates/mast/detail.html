@@ -10,8 +10,20 @@
     <script src="https://cdn.jsdelivr.net/npm/uikit@3.6.17/dist/js/uikit-icons.min.js"></script>
 
     <script>
+        function resize() {
+            resize_requirements();
+            resize_schedule();
+        }
+
         function resize_requirements() {
             let u = document.getElementById("reqs");
+            let v = document.getElementById("infobox");
+            u.style.height = (String(v.offsetHeight / 1.5)).concat("px");
+            u.style.width = (String(v.offsetWidth / 1.1)).concat("px");
+        }
+
+        function resize_schedule() {
+            let u = document.getElementById("sched");
             let v = document.getElementById("infobox");
             u.style.height = (String(v.offsetHeight / 1.4)).concat("px");
             u.style.width = (String(v.offsetWidth / 1.1)).concat("px");
@@ -26,6 +38,9 @@
 
             if (element_id === "requirements")
                 resize_requirements();
+
+            if (element_id === "schedule")
+                resize_schedule();
 
             let u = document.getElementById(element_id);
             u.style.visibility = "visible";
@@ -128,7 +143,7 @@
     </style>
 </head>
 
-<body onresize="resize_requirements()">
+<body onresize="resize()">
 
 {% if is_student %}
     <h1 id="student_header">{{ student.first_name }} {{ student.last_name }}</h1>
@@ -260,25 +275,32 @@
 
         <div id="schedule" style="visibility: hidden;" class="page">
             <font color=#4900000>
-                Schedule:
+                Schedule ({{ pending_scheduled_courses }} Pending Approval):
             </font>
             <br><br>
-            {% for semester in semester_list %}
-                <div class=semester>
-                    <font color=#4900000>
-                        <u>{{ semester }}</u>
-                    </font>
-                    <br>
-                    {% for record in schedule %}
-                        {% if record.course.semester == semester and record.course.section != 999 %}
-                            <font color=black>
-                                {{ record.course }}<br>
-                            </font>
-                        {% endif %}
-                    {% endfor %}
-                    <br>
-                </div>
-            {% endfor %}
+
+            <div id="sched" style="overflow-y: scroll; overflow-x: hidden;">
+                {% for semester in semester_list %}
+                    <div class=semester>
+                        <font color=#4900000>
+                            <u>{{ semester }}</u>
+                        </font>
+                        <br>
+                        {% for record in schedule %}
+                            {% if record.course.semester == semester and record.course.section != 999 %}
+                                <font color=black>
+                                    {{ record.course }}
+                                    {% if record.status == "Pending" %}
+                                        (Pending)
+                                    {% endif %}
+                                    <br>
+                                </font>
+                            {% endif %}
+                        {% endfor %}
+                        <br>
+                    </div>
+                {% endfor %}
+            </div>
             <br>
             <form action="{% url 'mast:edit_schedule' student.sbu_id %}" method="post">
                 {% csrf_token %}
@@ -321,8 +343,7 @@
                 <strong>{{ student.major }}</strong><br>{{ student.track }} Requirements:
             </font>
             <br>
-            <pre id="reqs"
-                 style="color: black; overflow-y: scroll; overflow-x: hidden;">{{ requirements }}</pre>
+            <pre id="reqs" style="color: black; overflow-y: scroll; overflow-x: hidden;">{{ requirements }}</pre>
         </div>
 
     </div>
