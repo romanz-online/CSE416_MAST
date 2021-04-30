@@ -577,7 +577,7 @@ def sync_course_data(student):
     if not student.track:
         return
     taken_courses = CoursesTakenByStudent.objects.filter(student=student)
-    scheduled_courses = StudentCourseSchedule.objects.filter(student=student)
+    scheduled_courses = StudentCourseSchedule.objects.filter(student=student, schedule_id=0)
     track = student.track
 
     satisfied_requirements = 0
@@ -588,9 +588,8 @@ def sync_course_data(student):
 
     if student.credits_taken >= track.minimum_credits_required:
         satisfied_requirements += 1
-        unsatisfied_requirements -= 1
+        pending_requirements -= 1
 
-    # accounting for GPA
     if student.graduated:
         satisfied_requirements = student.track.total_requirements
         pending_requirements = 0
