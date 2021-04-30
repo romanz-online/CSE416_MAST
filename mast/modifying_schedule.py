@@ -163,7 +163,7 @@ def add_scheduled_course(request, sbu_id):
     try:
         new_course = request.GET['course']
         new_course = CourseInstance.objects.get(id=new_course)
-        c = StudentCourseSchedule(student=student, course=new_course)
+        c = StudentCourseSchedule(student=student, course=new_course, status=ScheduleStatus.APPROVED)
         c.save()
         editing_student.sync_course_data(student)
     except:

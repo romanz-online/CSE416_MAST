@@ -8,7 +8,8 @@ from django.contrib.auth.decorators import login_required
 from django.http import HttpResponseRedirect
 from django.urls import reverse
 from .models import Student, Major, Course, CourseInstance, CoursesTakenByStudent, Semester, Track, \
-    TrackCourseSet, CourseInTrackSet, CourseStatus, Grade, Season, CoursePrerequisiteSet, Prerequisite
+    TrackCourseSet, CourseInTrackSet, CourseStatus, Grade, Season, CoursePrerequisiteSet, Prerequisite, \
+    StudentCourseSchedule, ScheduleStatus
 
 from . import editing_student
 
@@ -306,7 +307,7 @@ def import_student(request):
 
             student.save()
 
-            if User.objects.filter(username=student.sbu_id)[0]:
+            if User.objects.filter(username=student.sbu_id):
                 current_student_user = User.objects.filter(username=student.sbu_id)[0]
                 current_student_user.delete()
 
@@ -352,6 +353,9 @@ def import_grades(request, course_file):
     # Read file in
     course_data = course_file.read().decode("utf-8")
 
+    current_semester = Semester.objects.filter(is_current_semester=True)[0]
+    semester = current_semester
+
     # Import new students' courses
     course_plans = course_data.split('\n')
     if course_plans[0] != 'sbu_id,department,course_num,section,semester,year,grade' \
@@ -383,8 +387,9 @@ def import_grades(request, course_file):
                     continue
                 course = Course.objects.filter(department=department, number=int(line[2]))[0]
                 if CourseInstance.objects.filter(course=course, semester=semester, section=section):
-                    new_class.course = CourseInstance.objects.filter(course=course, semester=semester, section=section)[
-                        0]
+                    new_class.course = CourseInstance.objects.filter(course=course,
+                                                                     semester=semester,
+                                                                     section=section)[0]
                 else:
                     error_string = 'Class ' + line[1] + line[2] + ' section ' + line[3] + ' could not be found.'
                     messages.error(request, error_string)
@@ -405,6 +410,21 @@ def import_grades(request, course_file):
                     new_class.status = CourseStatus.PENDING
             else:
                 new_class.status = CourseStatus.PENDING
+
+            # if the course's credit limit doesn't allow for 3 credits, set the credits_taken to the lower bound
+            if new_class.course.course.upper_credit_limit < 3:
+                new_class.credits_taken = new_class.course.course.lower_credit_limit
+
+            # if the semester given for the class hasn't passed yet,
+            # the course should be Pending and added to the schedule
+            enum = {Season.WINTER: 0, Season.SPRING: 1, Season.SUMMER: 2, Season.FALL: 3}
+            if semester.year > current_semester.year or \
+                    (semester.year == current_semester.year and enum[semester.season] > enum[current_semester.season]):
+                new_class.status = CourseStatus.PENDING
+                new_scheduled_class = StudentCourseSchedule(student=student, course=new_class.course,
+                                                            status=ScheduleStatus.APPROVED)
+                new_scheduled_class.save()
+
             new_class.save()
 
             student.credits_taken += new_class.credits_taken
@@ -530,6 +550,7 @@ def import_courses(request):
     context = {'course_list': CourseInstance.objects.all()}
     return render(request, 'mast/course_index.html', context)
 
+
 def create_prerequisite(prerequisite_set, match_course, require_major, require_number):
     if len(match_course) == 0:
         match_course = Course(name="Supplementary", department=require_major, number=require_number)
@@ -548,6 +569,7 @@ def create_prerequisite(prerequisite_set, match_course, require_major, require_n
             match_courseInstance.save()
         prereq = Prerequisite(course=match_courseInstance, course_set=prerequisite_set)
         prereq.save()
+
 
 @login_required
 def scrape_courses(request):

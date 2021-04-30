@@ -9,6 +9,7 @@ ul.navbar_container {
 
 .navbar_item {
     float: left;
+    z-index: 9999;
 }
 
 .navbar_item .navbar_link {
@@ -56,6 +57,7 @@ ul.navbar_container li:hover a:not(.active) a:not(.navbar_item_logout) {
 .dropdown_link {
     background-color: #490000;
     text-align: left;
+    z-index: 9999;
 }
 
 .dropdown_link:hover {

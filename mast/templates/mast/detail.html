@@ -235,12 +235,14 @@
             <table>
                 <thead>
                 <font color=#490000>
+                    See Schedule for pending courses.
+                    <br>
                     Courses Taken:
                 </font>
                 </thead>
                 <tbody>
                 {% for record in classes_taken %}
-                    {% if record.status != 'Transfer' %}
+                    {% if record.status != 'Transfer' and record.status != 'Pending' %}
                         <tr>
                             <td>{{ record.course }}</td>
                             <td>{{ record.grade }}</td>
