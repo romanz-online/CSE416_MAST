@@ -34,6 +34,30 @@
             font-size: 12px;
             cursor: pointer;
         }
+
+        .generate {
+            background-color: #490000;
+            border: none;
+            width: 150px;
+            color: white;
+            padding: 10px 10px;
+            text-align: center;
+            text-decoration: none;
+            display: inline-block;
+            font-size: 15px;
+            cursor: pointer;
+        }
+
+        .generate:hover {
+            color: #490000;
+            background-color: #e0e0e0;
+        }
+
+        .offering:hover {
+            color: #e0e0e0;
+            background-color: #490000;
+            cursor: pointer;
+        }
     </style>
 
     <script>
@@ -45,6 +69,7 @@
             let new_text = '';
             for (let i = 0; i < preferences.length - 1; i++) {
                 let rank = document.getElementById('rank' + String(i)).value;
+                new_text += '<div style="padding-bottom:6px;">';
                 if (rank === '0') {
                     new_text += '<select id=rank' + i + '><option selected value=0>None</option><option value=1>1 (Highest)</option><option value=2>2</option><option value=3>3 (Lowest)</option><option value=4>Don\'t offer section</option><option value=5>Don\'t offer course</option></select>';
                 } else if (rank === '1') {
@@ -58,17 +83,17 @@
                 } else if (rank === '5') {
                     new_text += '<select id=rank' + i + '><option value=0>None</option><option value=1>1 (Highest)</option><option value=2>2</option><option value=3>3 (Lowest)</option><option value=4>Don\'t offer section</option><option selected value=5>Don\'t offer course</option></select>';
                 }
-                new_text += ' ' + preferences[i] + '<br>';
+                new_text += ' ' + preferences[i] + '<br></div>';
             }
-
+            new_text += '<div style="padding-bottom:6px;">';
             new_text += '<select id=rank' + String(preferences.length - 1) + '><option value=0>None</option><option value=1>1 (Highest)</option><option value=2>2</option><option value=3>3 (Lowest)</option><option value=4>Don\'t offer section</option><option value=5>Don\'t offer course</option></select>';
-            new_text += ' ' + preferences[preferences.length - 1] + '<br>';
+            new_text += ' ' + preferences[preferences.length - 1] + '<br></div>';
 
             div.innerHTML = new_text
         }
 
         $(document).ready(function () {
-            $('#submit_button').click(function () {
+            $('#generate_button').click(function () {
                 let URL = "{% url 'mast:generate' student.sbu_id %}";
                 let data = {'csrfmiddlewaretoken': '{{ csrf_token }}'};
                 for (let i = 0; i < preferences.length; i++) {
@@ -87,11 +112,18 @@
 
 <div style="background-color: white; padding: 16px;">
     <h2>Preferences:</h2>
-    <div style="float:right">
-        <a id="submit_button">Generate</a> or <a id="submit_button1">Smart Suggest</a>
+    <div style="float:right; padding-bottom: 12px;">
+        <a id="generate_button" class="generate">Generate</a>
+        <br>
+        <center><strong>or</strong></center>
+        <a href="{% url 'mast:offered_schedules' student.sbu_id %}" class="generate">Smart Suggest</a>
     </div>
-    <br>
-    <div id="preferences"></div>
+    <div style="padding-bottom: 6px;">
+        Only choose <input id="courses_per_semester" type="number"> courses per semester.
+        Only offer courses between <input id="start_time" type="time"> and <input id="send_time" type="time">
+    </div>
+    <h4>Course Preferences:</h4>
+    <span id="preferences"></span>
     <br>
     <br>
     <table id="course_datatable">
@@ -109,7 +141,7 @@
             {% for course in course_list %}
                 <tr>
                     <td onclick="add_preference('{{ course }}')">
-                        {{ course.course }}
+                        <div class="offering" style="padding: 3px;">{{ course.course }}</div>
                     </td>
                     <td>{{ course.semester }}</td>
                     <td>{{ course.section }}</td>

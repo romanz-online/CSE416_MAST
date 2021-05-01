@@ -55,7 +55,19 @@ def generate_schedule(request, sbu_id):
 
     # do stuff with the "preferences" dictionary here
 
-    return schedule_generation(request, sbu_id)
+    student = get_object_or_404(Student, pk=sbu_id)
+    context = {
+        'student': student
+    }
+    return render(request, 'mast/offered_schedules.html', context)
+
+
+def offered_schedules(request, sbu_id):
+    student = get_object_or_404(Student, pk=sbu_id)
+    context = {
+        'student': student
+    }
+    return render(request, 'mast/offered_schedules.html', context)
 
 
 # returns boolean indicating if all class prereqs have been met in a given schedule or not
