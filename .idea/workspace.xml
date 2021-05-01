@@ -2,7 +2,11 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="433e10ab-7bf6-49f7-ab54-8658f67b786e" name="Default Changelist" comment="">
+      <change afterPath="$PROJECT_DIR$/mast/templates/mast/display_schedule.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/mast/models.py" beforeDir="false" afterPath="$PROJECT_DIR$/mast/models.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/mast/schedule_generation.py" beforeDir="false" afterPath="$PROJECT_DIR$/mast/schedule_generation.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/mast/templates/mast/offered_schedules.html" beforeDir="false" afterPath="$PROJECT_DIR$/mast/templates/mast/offered_schedules.html" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/mast/templates/mast/schedule_generation.html" beforeDir="false" afterPath="$PROJECT_DIR$/mast/templates/mast/schedule_generation.html" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/mast/urls.py" beforeDir="false" afterPath="$PROJECT_DIR$/mast/urls.py" afterDir="false" />
     </list>
@@ -34,8 +38,8 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/mast/schedule_generation.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="340">
-              <caret line="65" column="44" selection-start-line="65" selection-start-column="44" selection-end-line="65" selection-end-column="44" />
+            <state relative-caret-position="403">
+              <caret line="111" column="54" selection-start-line="111" selection-start-column="54" selection-end-line="111" selection-end-column="54" />
               <folding>
                 <element signature="e#0#54#0" expanded="true" />
               </folding>
@@ -43,11 +47,35 @@
           </provider>
         </entry>
       </file>
-      <file pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/mast/templates/mast/schedule_generation.html">
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/mast/templates/mast/display_schedule.html">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="374">
-              <caret line="118" column="43" selection-start-line="118" selection-start-column="43" selection-end-line="118" selection-end-column="43" />
+            <state relative-caret-position="442">
+              <caret line="26" column="17" selection-start-line="26" selection-start-column="17" selection-end-line="26" selection-end-column="17" />
+              <folding>
+                <element signature="n#style#0;n#div#0;n#body#0;n#html#0;n#!!top" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/mast/templates/mast/offered_schedules.html">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="284">
+              <caret line="36" lean-forward="true" selection-start-line="36" selection-end-line="36" />
+              <folding>
+                <element signature="n#style#0;n#div#0;n#body#0;n#html#0;n#!!top" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/mast/templates/mast/edit_schedule.html">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="386">
+              <caret line="97" column="37" selection-start-line="97" selection-start-column="37" selection-end-line="97" selection-end-column="37" />
             </state>
           </provider>
         </entry>
@@ -55,20 +83,11 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/mast/urls.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="165">
-              <caret line="32" column="64" lean-forward="true" selection-start-line="32" selection-start-column="64" selection-end-line="32" selection-end-column="64" />
+            <state relative-caret-position="102">
+              <caret line="29" column="38" lean-forward="true" selection-start-line="29" selection-start-column="38" selection-end-line="29" selection-end-column="38" />
               <folding>
                 <element signature="e#0#28#0" expanded="true" />
               </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/mast/templates/mast/offered_schedules.html">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="102">
-              <caret line="6" column="6" selection-start-line="6" selection-start-column="6" selection-end-line="6" selection-end-column="6" />
             </state>
           </provider>
         </entry>
@@ -86,7 +105,6 @@
   </component>
   <component name="FindInProjectRecents">
     <findStrings>
-      <find>Coursein</find>
       <find>each</find>
       <find>eac</find>
       <find>&quot;size&quot;</find>
@@ -116,6 +134,7 @@
       <find>User.obje</find>
       <find>dropdown</find>
       <find>schedule</find>
+      <find>https</find>
     </findStrings>
   </component>
   <component name="Git.Settings">
@@ -124,9 +143,6 @@
   <component name="IdeDocumentHistory">
     <option name="CHANGED_PATHS">
       <list>
-        <option value="$PROJECT_DIR$/mast/templates/mast/course_detail.html" />
-        <option value="$PROJECT_DIR$/mast/test_files/degree-requirements-CSE-2022.xml" />
-        <option value="$PROJECT_DIR$/mast/templates/mast/new_student.html" />
         <option value="$PROJECT_DIR$/mast/test_files/degree-requirements-ESE.xml" />
         <option value="$PROJECT_DIR$/mast/test_files/degree-requirements-BMI.xml" />
         <option value="$PROJECT_DIR$/mast/templates/mast/import_degree_reqs.html" />
@@ -157,7 +173,6 @@
         <option value="$PROJECT_DIR$/mast/templates/mast/student_index.html" />
         <option value="$PROJECT_DIR$/mast/rollover_semester.py" />
         <option value="$PROJECT_DIR$/mast/templates/mast/rollover_semester.html" />
-        <option value="$PROJECT_DIR$/mast/models.py" />
         <option value="$PROJECT_DIR$/mast/searching.py" />
         <option value="$PROJECT_DIR$/mast/student_detail.py" />
         <option value="$PROJECT_DIR$/mast/editing_student.py" />
@@ -171,10 +186,14 @@
         <option value="$PROJECT_DIR$/mast/templates/mast/course_index.html" />
         <option value="$PROJECT_DIR$/mast/smart_suggest.py" />
         <option value="$PROJECT_DIR$/mast/templates/offered_schedules.html" />
-        <option value="$PROJECT_DIR$/mast/templates/mast/offered_schedules.html" />
-        <option value="$PROJECT_DIR$/mast/schedule_generation.py" />
-        <option value="$PROJECT_DIR$/mast/urls.py" />
+        <option value="$PROJECT_DIR$/mast/models.py" />
         <option value="$PROJECT_DIR$/mast/templates/mast/schedule_generation.html" />
+        <option value="$PROJECT_DIR$/mast/urls.py" />
+        <option value="$PROJECT_DIR$/mast/templates/display_html.html" />
+        <option value="$PROJECT_DIR$/mast/templates/mast/display_html.html" />
+        <option value="$PROJECT_DIR$/mast/templates/mast/display_schedule.html" />
+        <option value="$PROJECT_DIR$/mast/schedule_generation.py" />
+        <option value="$PROJECT_DIR$/mast/templates/mast/offered_schedules.html" />
       </list>
     </option>
   </component>
@@ -185,8 +204,8 @@
     <auto-save>true</auto-save>
   </component>
   <component name="ProjectFrameBounds" extendedState="6">
-    <option name="x" value="-1608" />
-    <option name="y" value="-8" />
+    <option name="x" value="92" />
+    <option name="y" value="-9" />
     <option name="width" value="1616" />
     <option name="height" value="876" />
   </component>
@@ -240,19 +259,19 @@
     <property name="settings.editor.selected.configurable" value="com.jetbrains.python.configuration.PyActiveSdkModuleConfigurable" />
   </component>
   <component name="RecentsManager">
-    <key name="MoveFile.RECENT_KEYS">
-      <recent name="C:\Users\dread\Documents\GitHub\CSE416_MAST\mast\templates\mast" />
-      <recent name="C:\Users\dread\Documents\GitHub\CSE416_MAST\mast\templates\registration" />
-      <recent name="C:\Users\dread\Documents\GitHub\CSE416_MAST\mast\static\mast\images" />
-      <recent name="C:\Users\dread\Documents\cse416_MAST\mast\static\mast\images" />
-      <recent name="C:\Users\dread\Documents\cse416_MAST\mast\templates\mast\img" />
-    </key>
     <key name="CopyFile.RECENT_KEYS">
       <recent name="C:\Users\dread\Documents\GitHub\CSE416_MAST\mast\test_files" />
       <recent name="C:\Users\dread\Documents\cse416_MAST\mast\static\mast\images" />
       <recent name="C:\Users\dread\Documents\cse416_MAST\mast\templates\mast" />
       <recent name="C:\Users\dread\Documents\cse416_MAST\mast" />
       <recent name="C:\Users\dread\Documents\cse416_MAST\cse416_MAST\templates\admin" />
+    </key>
+    <key name="MoveFile.RECENT_KEYS">
+      <recent name="C:\Users\dread\Documents\GitHub\CSE416_MAST\mast\templates\mast" />
+      <recent name="C:\Users\dread\Documents\GitHub\CSE416_MAST\mast\templates\registration" />
+      <recent name="C:\Users\dread\Documents\GitHub\CSE416_MAST\mast\static\mast\images" />
+      <recent name="C:\Users\dread\Documents\cse416_MAST\mast\static\mast\images" />
+      <recent name="C:\Users\dread\Documents\cse416_MAST\mast\templates\mast\img" />
     </key>
   </component>
   <component name="RunDashboard">
@@ -416,7 +435,8 @@
       <workItem from="1619564469395" duration="4763000" />
       <workItem from="1619626317736" duration="5212000" />
       <workItem from="1619749822556" duration="6041000" />
-      <workItem from="1619826490262" duration="9584000" />
+      <workItem from="1619826490262" duration="9614000" />
+      <workItem from="1619841689264" duration="5409000" />
     </task>
     <servers />
   </component>
@@ -426,13 +446,13 @@
     </history-entry>
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="380099000" />
+    <option name="totallyTimeSpent" value="385538000" />
   </component>
   <component name="ToolWindowManager">
-    <frame x="-1608" y="-8" width="1616" height="876" extended-state="6" />
+    <frame x="-8" y="-8" width="1616" height="876" extended-state="6" />
     <editor active="true" />
     <layout>
-      <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.26028278" />
+      <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.26349613" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
       <window_info id="Favorites" order="2" side_tool="true" />
       <window_info anchor="bottom" id="Message" order="0" />
@@ -485,35 +505,6 @@
     <option name="version" value="1" />
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/mast/test_files/cse416_student_profile_file_test_data.csv">
-      <provider editor-type-id="text-editor">
-        <state relative-caret-position="51">
-          <caret line="3" column="98" lean-forward="true" selection-start-line="3" selection-start-column="98" selection-end-line="3" selection-end-column="98" />
-        </state>
-      </provider>
-      <provider selected="true" editor-type-id="csv-table-editor">
-        <state showInfoPanel="true" fixedHeaders="false" rowLines="3">
-          <column index="0" width="100" />
-          <column index="1" width="100" />
-          <column index="2" width="100" />
-          <column index="3" width="100" />
-          <column index="4" width="100" />
-          <column index="5" width="100" />
-          <column index="6" width="100" />
-          <column index="7" width="100" />
-          <column index="8" width="100" />
-          <column index="9" width="100" />
-          <column index="10" width="100" />
-          <column index="11" width="100" />
-          <column index="12" width="100" />
-        </state>
-      </provider>
-      <provider editor-type-id="csv-text-editor">
-        <state relative-caret-position="51">
-          <caret line="3" column="107" selection-start-line="3" selection-start-column="107" selection-end-line="3" selection-end-column="107" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/mast/templates/mast/new_student.html">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="391">
@@ -781,16 +772,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/mast/views.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="704">
-          <caret line="89" lean-forward="true" selection-start-line="89" selection-end-line="89" />
-          <folding>
-            <element signature="e#0#29#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/mast/smart_suggest.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="272">
@@ -811,27 +792,10 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/mast/templates/mast/edit_schedule.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="148">
-          <caret line="83" column="39" lean-forward="true" selection-start-line="83" selection-start-column="39" selection-end-line="83" selection-end-column="39" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/mast/templates/mast/edit.html">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="-877">
           <caret line="240" column="12" lean-forward="true" selection-start-line="240" selection-start-column="12" selection-end-line="240" selection-end-column="12" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/mast/models.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="322">
-          <caret line="75" lean-forward="true" selection-start-line="75" selection-end-line="75" />
-          <folding>
-            <element signature="e#0#28#0" expanded="true" />
-          </folding>
         </state>
       </provider>
     </entry>
@@ -866,17 +830,27 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/mast/templates/mast/offered_schedules.html">
+    <entry file="file://$PROJECT_DIR$/mast/models.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="102">
-          <caret line="6" column="6" selection-start-line="6" selection-start-column="6" selection-end-line="6" selection-end-column="6" />
+        <state relative-caret-position="454">
+          <caret line="256" column="59" selection-start-line="256" selection-start-column="59" selection-end-line="256" selection-end-column="59" />
+          <folding>
+            <element signature="e#0#28#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/mast/views.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="51">
+          <caret line="3" column="39" selection-start-line="3" selection-start-column="39" selection-end-line="3" selection-end-column="39" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/mast/urls.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="165">
-          <caret line="32" column="64" lean-forward="true" selection-start-line="32" selection-start-column="64" selection-end-line="32" selection-end-column="64" />
+        <state relative-caret-position="102">
+          <caret line="29" column="38" lean-forward="true" selection-start-line="29" selection-start-column="38" selection-end-line="29" selection-end-column="38" />
           <folding>
             <element signature="e#0#28#0" expanded="true" />
           </folding>
@@ -885,8 +859,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/mast/schedule_generation.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="340">
-          <caret line="65" column="44" selection-start-line="65" selection-start-column="44" selection-end-line="65" selection-end-column="44" />
+        <state relative-caret-position="403">
+          <caret line="111" column="54" selection-start-line="111" selection-start-column="54" selection-end-line="111" selection-end-column="54" />
           <folding>
             <element signature="e#0#54#0" expanded="true" />
           </folding>
@@ -895,8 +869,35 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/mast/templates/mast/schedule_generation.html">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="374">
-          <caret line="118" column="43" selection-start-line="118" selection-start-column="43" selection-end-line="118" selection-end-column="43" />
+        <state relative-caret-position="136">
+          <caret line="110" lean-forward="true" selection-start-line="110" selection-end-line="110" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/mast/templates/mast/display_schedule.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="442">
+          <caret line="26" column="17" selection-start-line="26" selection-start-column="17" selection-end-line="26" selection-end-column="17" />
+          <folding>
+            <element signature="n#style#0;n#div#0;n#body#0;n#html#0;n#!!top" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/mast/templates/mast/edit_schedule.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="386">
+          <caret line="97" column="37" selection-start-line="97" selection-start-column="37" selection-end-line="97" selection-end-column="37" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/mast/templates/mast/offered_schedules.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="284">
+          <caret line="36" lean-forward="true" selection-start-line="36" selection-end-line="36" />
+          <folding>
+            <element signature="n#style#0;n#div#0;n#body#0;n#html#0;n#!!top" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>

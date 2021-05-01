@@ -254,7 +254,7 @@ class StudentCourseSchedule(models.Model):
     schedule_type = models.CharField(max_length=10, choices=ScheduleType.choices, default=ScheduleType.DEFAULT)
 
     def __str__(self):
-        return str(self.student) + ' - ' + str(self.course) + ' ' + str(self.course.semester)
+        return str(self.student) + ' - ' + str(self.course)
 
 
 class Comment(models.Model):

@@ -101,7 +101,11 @@
                     let key = 'preference' + String(i);
                     data[key] = preferences[i] + rank
                 }
+                data['start_time'] = document.getElementById('start_time').value;
+                data['end_time'] = document.getElementById('end_time').value;
+                data['courses_per_semester'] = document.getElementById('courses_per_semester').value;
                 $.post(URL, data);
+                window.location.href = "{% url 'mast:offered_schedules' student.sbu_id %}"
             })
         });
 
@@ -119,8 +123,8 @@
         <a href="{% url 'mast:smart_suggest' student.sbu_id %}" class="generate">Smart Suggest</a>
     </div>
     <div style="padding-bottom: 6px;">
-        Only choose <input id="courses_per_semester" type="number"> courses per semester.
-        Only offer courses between <input id="start_time" type="time"> and <input id="send_time" type="time">
+        Only choose <input id="courses_per_semester" type="number" min="1" max="6"> courses per semester.
+        Only offer courses between <input id="start_time" type="time"> and <input id="end_time" type="time">
     </div>
     <h4>Course Preferences:</h4>
     <span id="preferences"></span>

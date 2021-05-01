@@ -15,12 +15,41 @@
             background-color: #490000;
             color: white;
         }
+
+        .schedule_button {
+            width: 128px;
+            height: 64px;
+            color: white;
+            background-color: #490000;
+            text-align: center;
+            border-radius: 5px;
+            border: none;
+            margin: 4px;
+        }
+
+        .schedule_button:hover {
+            background-color: lightgray;
+            color: #490000;
+            cursor: pointer;
+        }
     </style>
 </head>
 
 <body>
 
 <h1>Generated Schedules</h1>
+
+<div style="background-color: white; padding: 16px; min-height: 450px; border-radius: 12px;">
+    {% for schedule in schedules %}
+        <form action="{% url 'mast:display_schedule' student.sbu_id schedule.schedule_id %}" method="get">
+            <button type="submit" class="schedule_button">
+                Schedule {{ schedule.schedule_id }}
+                <br>
+                [{{ schedule.schedule_type }}]
+            </button>
+        </form>
+    {% endfor %}
+</div>
 
 </body>
 </html>

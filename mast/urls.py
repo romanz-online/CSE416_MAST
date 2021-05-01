@@ -38,6 +38,8 @@ urlpatterns = [
     path('schedule_gen/<int:sbu_id>/generate', schedule_generation.generate_schedule, name='generate'),
     path('schedule_gen/<int:sbu_id>/smart_suggest', schedule_generation.smart_suggest, name='smart_suggest'),
     path('offered_schedules/<int:sbu_id>/', schedule_generation.offered_schedules, name='offered_schedules'),
+    path('offered_schedules/<int:sbu_id>/<int:schedule_id>', schedule_generation.schedule_display,
+         name='display_schedule'),
 
     path('edit/<int:sbu_id>/', editing_student.edit, name='edit'),
     path('edit/<int:sbu_id>/delete_record', editing_student.delete_record, name='delete_record'),

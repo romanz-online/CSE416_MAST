@@ -1,7 +1,7 @@
 from django.shortcuts import get_object_or_404, render
 
 from .models import Student, Course, CourseInstance, CoursePrerequisiteSet, Prerequisite, StudentCourseSchedule, \
-    Semester
+    Semester, ScheduleType
 
 
 def schedule_generation(request, sbu_id):
@@ -15,10 +15,16 @@ def schedule_generation(request, sbu_id):
 
 
 def generate_schedule(request, sbu_id):
-    preference = request.POST['preference0']
+    preference = 1
     count = 0
     preferences = {}
     while preference:
+        key = 'preference' + str(count)
+        try:
+            preference = request.POST[key]
+        except:
+            break
+
         course = preference[:-1]
         course_preference = preference[len(preference) - 1:len(preference)]
 
@@ -39,11 +45,21 @@ def generate_schedule(request, sbu_id):
 
         preferences[course_instance] = course_preference
         count += 1
-        key = 'preference' + str(count)
-        try:
-            preference = request.POST[key]
-        except:
-            preference = None
+
+    try:
+        start_time = request.POST['start_time']
+    except:
+        start_time = None
+
+    try:
+        end_time = request.POST['end_time']
+    except:
+        end_time = None
+
+    try:
+        courses_per_semester = request.POST['courses_per_semester']
+    except:
+        courses_per_semester = 6
 
     # values and their meanings:
     # 0 - no preference. ignore it
@@ -53,13 +69,9 @@ def generate_schedule(request, sbu_id):
     # 4 - don't offer this specific section (AKA don't offer this CourseInstance)
     # 5 - don't offer this course at all (AKA don't offer the corresponding Course)
 
-    # do stuff with the "preferences" dictionary here
+    # do stuff with the "preferences" dictionary, start_time, end_time, and courses_per_semester here
 
-    student = get_object_or_404(Student, pk=sbu_id)
-    context = {
-        'student': student
-    }
-    return render(request, 'mast/offered_schedules.html', context)
+    return offered_schedules(request, sbu_id)
 
 
 def smart_suggest(request, sbu_id):
@@ -68,10 +80,36 @@ def smart_suggest(request, sbu_id):
 
 def offered_schedules(request, sbu_id):
     student = get_object_or_404(Student, pk=sbu_id)
+
+    class Pair:
+        def __init__(self, schedule_id, schedule_type):
+            self.schedule_id = schedule_id
+            self.schedule_type = schedule_type
+
+        def __str__(self):
+            return 'Schedule ' + str(self.schedule_id) + ' [' + self.schedule_type + ']'
+
+    schedules = [i for i in StudentCourseSchedule.objects.filter(student=student) if i.schedule_id > 0]
+    schedule_ids = sorted({i.schedule_id for i in schedules})
+    pairs = [Pair(i, StudentCourseSchedule.objects.filter(schedule_id=i)[0].schedule_type) for i in schedule_ids if
+             StudentCourseSchedule.objects.filter(schedule_id=i)[0].schedule_type != ScheduleType.DEFAULT]
     context = {
-        'student': student
+        'student': student,
+        'schedules': pairs
     }
+
     return render(request, 'mast/offered_schedules.html', context)
+
+
+def schedule_display(request, sbu_id, schedule_id):
+    student = get_object_or_404(Student, pk=sbu_id)
+    schedule = StudentCourseSchedule.objects.filter(student=student, schedule_id=schedule_id)
+    context = {
+        'student': student,
+        'schedule': schedule,
+        'schedule_id': schedule_id
+    }
+    return render(request, 'mast/display_schedule.html', context)
 
 
 # returns boolean indicating if all class prereqs have been met in a given schedule or not

@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <title>Schedule {{ schedule_id }}</title>
+    <style>
+        body {
+            background-color: #490000;
+        }
+
+        h1 {
+            padding: 30px 30px 12px;
+            margin: -10px -10px 40px;
+            text-align: center;
+            background-color: #490000;
+            color: white;
+        }
+    </style>
+</head>
+
+<body>
+
+<h1>Schedule {{ schedule_id }}</h1>
+
+<div style="background-color: white; padding: 16px; min-height: 450px;">
+    {% for record in schedule %}
+        {{ record }}
+    {% endfor %}
+</div>
+
+</body>
+</html>
