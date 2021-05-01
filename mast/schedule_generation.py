@@ -62,6 +62,10 @@ def generate_schedule(request, sbu_id):
     return render(request, 'mast/offered_schedules.html', context)
 
 
+def smart_suggest(request, sbu_id):
+    return offered_schedules(request, sbu_id)
+
+
 def offered_schedules(request, sbu_id):
     student = get_object_or_404(Student, pk=sbu_id)
     context = {
