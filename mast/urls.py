@@ -35,6 +35,7 @@ urlpatterns = [
     path('edit_schedule/<int:sbu_id>/approve_all', modifying_schedule.approve_all, name='approve_all'),
 
     path('schedule_gen/<int:sbu_id>/', schedule_generation.schedule_generation, name='schedule_gen'),
+    path('schedule_gen/<int:sbu_id>/generate', schedule_generation.generate_schedule, name='generate'),
 
     path('edit/<int:sbu_id>/', editing_student.edit, name='edit'),
     path('edit/<int:sbu_id>/delete_record', editing_student.delete_record, name='delete_record'),

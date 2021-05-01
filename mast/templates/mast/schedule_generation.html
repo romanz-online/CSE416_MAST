@@ -41,22 +41,56 @@
 
         function add_preference(course) {
             preferences.push(course);
-            refresh_list();
+            let div = document.getElementById('preferences');
+            let new_text = '';
+            for (let i = 0; i < preferences.length - 1; i++) {
+                let rank = document.getElementById('rank' + String(i)).value;
+                if (rank === '0') {
+                    new_text += '<select id=rank' + i + '><option selected value=0>None</option><option value=1>1 (Highest)</option><option value=2>2</option><option value=3>3 (Lowest)</option><option value=4>Don\'t offer section</option><option value=5>Don\'t offer course</option></select>';
+                } else if (rank === '1') {
+                    new_text += '<select id=rank' + i + '><option value=0>None</option><option selected value=1>1 (Highest)</option><option value=2>2</option><option value=3>3 (Lowest)</option><option value=4>Don\'t offer section</option><option value=5>Don\'t offer course</option></select>';
+                } else if (rank === '2') {
+                    new_text += '<select id=rank' + i + '><option value=0>None</option><option value=1>1 (Highest)</option><option selected value=2>2</option><option value=3>3 (Lowest)</option><option value=4>Don\'t offer section</option><option value=5>Don\'t offer course</option></select>';
+                } else if (rank === '3') {
+                    new_text += '<select id=rank' + i + '><option value=0>None</option><option value=1>1 (Highest)</option><option value=2>2</option><option selected value=3>3 (Lowest)</option><option value=4>Don\'t offer section</option><option value=5>Don\'t offer course</option></select>';
+                } else if (rank === '4') {
+                    new_text += '<select id=rank' + i + '><option value=0>None</option><option value=1>1 (Highest)</option><option value=2>2</option><option value=3>3 (Lowest)</option><option selected value=4>Don\'t offer section</option><option value=5>Don\'t offer course</option></select>';
+                } else if (rank === '5') {
+                    new_text += '<select id=rank' + i + '><option value=0>None</option><option value=1>1 (Highest)</option><option value=2>2</option><option value=3>3 (Lowest)</option><option value=4>Don\'t offer section</option><option selected value=5>Don\'t offer course</option></select>';
+                }
+                new_text += ' ' + preferences[i] + '<br>';
+            }
+
+            new_text += '<select id=rank' + String(preferences.length - 1) + '><option value=0>None</option><option value=1>1 (Highest)</option><option value=2>2</option><option value=3>3 (Lowest)</option><option value=4>Don\'t offer section</option><option value=5>Don\'t offer course</option></select>';
+            new_text += ' ' + preferences[preferences.length - 1] + '<br>';
+
+            div.innerHTML = new_text
         }
 
-        function refresh_list() {
-            let div = document.getElementById('preferences');
-            div.innerHTML = '';
-            for(let i=0; i < preferences.length; i++) {
-                div.innerHTML += '<li>' + preferences[i] + '</li>'
-            }
-        }
+        $(document).ready(function () {
+            $('#submit_button').click(function () {
+                let URL = "{% url 'mast:generate' student.sbu_id %}";
+                let data = {'csrfmiddlewaretoken': '{{ csrf_token }}'};
+                for (let i = 0; i < preferences.length; i++) {
+                    let rank = document.getElementById('rank' + String(i)).value;
+                    let key = 'preference' + String(i);
+                    data[key] = preferences[i] + rank
+                }
+                $.post(URL, data);
+            })
+        });
+
     </script>
 </head>
 
 <h1>Schedule Generation</h1>
 
 <div style="background-color: white; padding: 16px;">
+    <h2>Preferences:</h2>
+    <div style="float:right">
+        <a id="submit_button">Generate</a> or <a id="submit_button1">Smart Suggest</a>
+    </div>
+    <br>
     <div id="preferences"></div>
     <br>
     <br>
