@@ -27,7 +27,7 @@ PROJECT_ROOT = os.path.abspath(os.path.dirname(__file__))
 SECRET_KEY = 'id*!z4gc7%595vq#6udnilyferw)0na-aakcsc+xtq9(k8&t@j'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = False 
+DEBUG = True 
 ALLOWED_HOSTS = ['*']
 
 # HTTPS Security settings 
@@ -144,8 +144,8 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/3.1/howto/static-files/
 
-STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
 STATIC_URL = '/static/'
-STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
+STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
+STATICFILES_STORAGE = 'whitenoise.storage.CompressedStaticFilesStorage'
 
 django_heroku.settings(locals())
