@@ -1,1 +1,1 @@
-web: gunicorn cse416-mast.wsgi
+web: gunicorn cse416_MAST.wsgi
