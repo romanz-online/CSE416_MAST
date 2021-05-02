@@ -1,0 +1,115 @@
+h1 {
+    margin: -10px -10px;
+    padding-top: 30px;
+    text-align: center;
+    background-color: #490000;
+    color: white;
+}
+
+h2 {
+    color: #490000;
+    margin-bottom: 5px;
+}
+
+h3 {
+    color: #490000;
+    text-align: center;
+}
+
+.sideBox {
+    float: right;
+    width: 30%;
+    padding: 10px;
+    margin-right: 10px;
+    border-style: solid;
+    outline: black;
+}
+
+.form {
+    float: left;
+    width: 60%;
+    padding: 10px;
+}
+
+button[type=submit] {
+    color: #490000;
+    border: none;
+    background-color: rgb(255, 255, 255);
+    padding: 3px 3px;
+    text-align: center;
+    display: inline-block;
+    font-size: 12px;
+    cursor: pointer;
+}
+
+input[type=submit] {
+    background-color: #490000;
+    border: none;
+    color: rgb(255, 255, 255);
+    padding: 10px 10px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 15px;
+    cursor: pointer;
+}
+
+div#pdf_example_image {
+    visibility: hidden;
+}
+
+div#courses_example_image {
+    background-image: url(images/course_offerings_csv_example.png);
+    background-repeat: no-repeat;
+    width: 700px;
+    height: 250px;
+    z-index: 999;
+    padding: 10px;
+    visibility: hidden;
+    top:30%;
+    left: 20%;
+    position: fixed;
+}
+
+div#requirements_example_image {
+    background-image: url(images/degree_requirements_xml_example.png);
+    background-repeat: no-repeat;
+    width: 527px;
+    height: 544px;
+    z-index: 999;
+    padding: 20px;
+    visibility: hidden;
+    top: 10%;
+    left: 20%;
+    position: fixed;
+}
+
+div#overlay_dimmer {
+    height: 100%;
+    width: 100%;
+    margin: 0;
+    padding: 0;
+    z-index: 99;
+    position: fixed;
+    top: 0;
+    left: 0;
+    opacity: 0.3;
+    background: black;
+    visibility: hidden;
+}
+
+a.exit {
+    background-color: #f3f3f3;
+    color: #490000;
+    text-decoration: none;
+    padding: 0 4px 0;
+    font-size: 24px;
+    position: absolute;
+    right: 5px;
+    cursor: pointer;
+}
+
+
+a.exit:hover {
+    color: #838383;
+}

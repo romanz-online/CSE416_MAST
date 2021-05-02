@@ -27,10 +27,8 @@ PROJECT_ROOT = os.path.abspath(os.path.dirname(__file__))
 SECRET_KEY = 'id*!z4gc7%595vq#6udnilyferw)0na-aakcsc+xtq9(k8&t@j'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True 
-
-ALLOWED_HOSTS = ["*"]
-
+DEBUG = False 
+ALLOWED_HOSTS = ['*']
 
 # HTTPS Security settings 
 SECURE_SSL_REDIRECT = False  
@@ -51,14 +49,14 @@ INSTALLED_APPS = [
 ]
 
 MIDDLEWARE = [
-    'django.middleware.security.SecurityMiddleware',
+    # 'django.middleware.security.SecurityMiddleware',
+    'whitenoise.middleware.WhiteNoiseMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
-    'django.middleware.clickjacking.XFrameOptionsMiddleware',
-    'whitenoise.middleware.WhiteNoiseMiddleware',
+    'django.middleware.clickjacking.XFrameOptionsMiddleware'
 ]
 
 ROOT_URLCONF = 'cse416_MAST.urls'
