@@ -26,7 +26,7 @@ def enrollment_trends(request):
         if course.course and course.course.course:
             course_string = str(course.course.course)
             if course_string in X:
-                Y_index = [X.index(course_string)]
+                Y_index = X.index(course_string)
                 Y[Y_index] += 1
             else:
                 X += [course_string]
