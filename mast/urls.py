@@ -32,7 +32,6 @@ urlpatterns = [
          name='modify_scheduled_course'),
     path('edit_schedule/<int:sbu_id>/add_scheduled_semester/', modifying_schedule.add_scheduled_semester,
          name='add_scheduled_semester'),
-    path('edit_schedule/<int:sbu_id>/approve_all', modifying_schedule.approve_all, name='approve_all'),
 
     path('schedule_gen/<int:sbu_id>/', schedule_generation.schedule_generation, name='schedule_gen'),
     path('schedule_gen/<int:sbu_id>/generate', schedule_generation.generate_schedule, name='generate'),
@@ -40,6 +39,10 @@ urlpatterns = [
     path('offered_schedules/<int:sbu_id>/', schedule_generation.offered_schedules, name='offered_schedules'),
     path('offered_schedules/<int:sbu_id>/<int:schedule_id>', schedule_generation.schedule_display,
          name='display_schedule'),
+    path('offered_schedules/<int:sbu_id>/<int:schedule_id>/<int:course_id>',
+         schedule_generation.approve_scheduled_course, name='approve_scheduled_course'),
+    path('offered_schedules/<int:sbu_id>/<int:schedule_id>/approve_all', schedule_generation.approve_all,
+         name='approve_all'),
 
     path('edit/<int:sbu_id>/', editing_student.edit, name='edit'),
     path('edit/<int:sbu_id>/delete_record', editing_student.delete_record, name='delete_record'),

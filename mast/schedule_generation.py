@@ -1,9 +1,12 @@
 from django.shortcuts import get_object_or_404, render
 
+from .modifying_schedule import sort_semester_list
+from django.contrib.auth.decorators import login_required
 from .models import Student, Course, CourseInstance, CoursePrerequisiteSet, Prerequisite, StudentCourseSchedule, \
-    Semester, ScheduleType
+    Semester, ScheduleType, ScheduleStatus
 
 
+@login_required
 def schedule_generation(request, sbu_id):
     student = get_object_or_404(Student, pk=sbu_id)
     course_list = {i for i in CourseInstance.objects.all() if i.section != 999}
@@ -14,6 +17,7 @@ def schedule_generation(request, sbu_id):
     return render(request, 'mast/schedule_generation.html', context)
 
 
+@login_required
 def generate_schedule(request, sbu_id):
     preference = 1
     count = 0
@@ -74,10 +78,12 @@ def generate_schedule(request, sbu_id):
     return offered_schedules(request, sbu_id)
 
 
+@login_required
 def smart_suggest(request, sbu_id):
     return offered_schedules(request, sbu_id)
 
 
+@login_required
 def offered_schedules(request, sbu_id):
     student = get_object_or_404(Student, pk=sbu_id)
 
@@ -101,15 +107,47 @@ def offered_schedules(request, sbu_id):
     return render(request, 'mast/offered_schedules.html', context)
 
 
+@login_required
 def schedule_display(request, sbu_id, schedule_id):
     student = get_object_or_404(Student, pk=sbu_id)
     schedule = StudentCourseSchedule.objects.filter(student=student, schedule_id=schedule_id)
+    semesters = {i.course.semester for i in schedule}
+    semesters = sort_semester_list(semesters)
     context = {
         'student': student,
         'schedule': schedule,
-        'schedule_id': schedule_id
+        'schedule_id': schedule_id,
+        'semesters': semesters
     }
     return render(request, 'mast/display_schedule.html', context)
+
+
+@login_required
+def approve_all(request, sbu_id, schedule_id):
+    student = get_object_or_404(Student, pk=sbu_id)
+    schedule = StudentCourseSchedule.objects.filter(student=student, schedule_id=schedule_id)
+
+    for i in schedule:
+        if i.status != ScheduleStatus.APPROVED:
+            i.status = ScheduleStatus.APPROVED
+            i.save()
+            new_record = StudentCourseSchedule(student=student, course=i.course, schedule_id=0, status=ScheduleStatus.APPROVED)
+            new_record.save()
+
+    return schedule_display(request, sbu_id, schedule_id)
+
+
+@login_required
+def approve_scheduled_course(request, sbu_id, schedule_id, course_id):
+    student = get_object_or_404(Student, pk=sbu_id)
+    course_record = get_object_or_404(CourseInstance, pk=course_id)
+    c = StudentCourseSchedule.objects.get(student=student, course=course_record, schedule_id=schedule_id)
+    c.status = ScheduleStatus.APPROVED
+    c.save()
+    new_record = StudentCourseSchedule(student=student, course=course_record, schedule_id=0, status=ScheduleStatus.APPROVED)
+    new_record.save()
+
+    return schedule_display(request, sbu_id, schedule_id)
 
 
 # returns boolean indicating if all class prereqs have been met in a given schedule or not

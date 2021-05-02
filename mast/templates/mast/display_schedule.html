@@ -15,6 +15,47 @@
             background-color: #490000;
             color: white;
         }
+
+        .semester {
+            background-color: #e0e0e0;
+            padding: 6px;
+            max-width: 20%;
+        }
+
+        a {
+            background-color: #490000;
+            border: none;
+            color: white;
+            padding: 10px 10px;
+            margin-bottom: 12px;
+            margin-right: 6px;
+            text-align: center;
+            text-decoration: none;
+            display: inline-block;
+            font-size: 15px;
+            cursor: pointer;
+        }
+
+        a:hover {
+            background-color: dimgray;
+        }
+
+        button[type=submit] {
+            color: #490000;
+            border: none;
+            background-color: white;
+            padding: 3px 3px;
+            text-align: center;
+            display: inline-block;
+            font-size: 12px;
+            cursor: pointer;
+            border-radius: 2px;
+        }
+
+        button[type=submit]:hover {
+            background-color: dimgray;
+            color: white;
+        }
     </style>
 </head>
 
@@ -23,9 +64,33 @@
 <h1>Schedule {{ schedule_id }}</h1>
 
 <div style="background-color: white; padding: 16px; min-height: 450px;">
-    {% for record in schedule %}
-        {{ record }}
+    <a href="{% url 'mast:approve_all' student.sbu_id schedule_id %}">Approve All</a>
+    {% for semester in semesters %}
+        <div class="semester">
+            <h3 style="color: #490000;">{{ semester }}</h3>
+            {% for record in schedule %}
+                {% if record.course.semester == semester %}
+                    <form action="{% url 'mast:approve_scheduled_course' student.sbu_id schedule_id record.course.id %}"
+                          method="get">
+                        {% if record.status == "Pending" %}
+                            <span style="color: darkred">
+                                [PENDING]
+                            </span>
+                        {% endif %}
+                        {{ record.course.course }} - Section {{ record.course.section }}
+                        {% if record.status == "Pending" %}
+                            <button type="submit" name="approve">Approve</button>
+                        {% endif %}
+                    </form>
+                {% endif %}
+                <br>
+            {% endfor %}
+        </div>
+        <div style="padding:12px;"></div>
     {% endfor %}
+
+    <a href="{% url 'mast:offered_schedules' student.sbu_id %}" style="position: fixed; top: 128px; right: 12px;">Back</a>
+
 </div>
 
 </body>

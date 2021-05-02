@@ -27,7 +27,6 @@
             cursor: pointer;
         }
 
-
         a {
             background-color: #490000;
             border: none;
@@ -67,9 +66,8 @@
 <h1>{{ student.first_name }} {{ student.last_name }}'s Schedule:</h1>
 
 <a href="{% url 'mast:add_scheduled_semester' student.sbu_id %}" style="margin-left: 10px;">Add Semester</a>
-{#<a href="{% url 'mast:approve_all' student.sbu_id %}">Approve All</a>#}
-<a href="{% url 'mast:schedule_gen' student.sbu_id %}" style="float: right; margin-right: 75px;">Generate Schedule
-    (Wizard)</a>
+<a href="{% url 'mast:schedule_gen' student.sbu_id %}" style="float: right; margin-right: 75px;">Generate Schedule (Wizard)</a>
+<a href="{% url 'mast:offered_schedules' student.sbu_id %}" style="float: right; margin-right: 16px;">Saved Schedules</a>
 
 {% for semester in semester_list %}
     <div class=semester>
@@ -78,13 +76,7 @@
         {% for record in schedule %}
             {% if record.course.semester == semester and record.course.section != 999 %}
                 <form action="{% url 'mast:modify_scheduled_course' student.sbu_id record.course.id %}" method="get">
-{#                    {% if record.status == "Pending" %}#}
-{#                        [PENDING]#}
-{#                    {% endif %}#}
                     {{ record.course }}
-{#                    {% if record.status == "Pending" %}#}
-{#                        <button type="submit" name="action" value="approve">Approve</button>#}
-{#                    {% endif %}#}
                     <button type="submit" name="action" value="remove">Remove</button>
                     <br>
                 </form>
