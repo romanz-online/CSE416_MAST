@@ -7,6 +7,12 @@ from smart_suggest import requirements_met
 """
 this funciton takes student, prefered class, max_number of classes to take, classes to avoid, time
 constraints and graduate semester, and return a dictionary of semester as key and courses as value
+
+time_constaints-> array that index 0 is the start time (no earlier than), index 1 is the end time (no late than)
+graduation_semester -> did not use it LOL
+max classes-> an int that means the max number of courses to take each semester
+avoid classes -> a list of course to avoid 
+preferred classes-> nested array, index 0 is the list of favorite courses, and index 1, index2
 """
 def classic_suggest(student, prefrered_class, max_classes, avoid_classes, time_constraints, graduation_semester):
     track = Track.objects.filter(major = student.major, track = student.track)
@@ -14,34 +20,106 @@ def classic_suggest(student, prefrered_class, max_classes, avoid_classes, time_c
         return "does not have track yet"
     #the list of courses to take
     course_list = []
+    track = track[0]
+
+    track_set = TrackCourseSet.filter(track = track)
+    passed_Instances = CoursesTakenByStudent.filter(student=student, status!= CourseStatus.FAILED)
+    passed_courses = []
+    for instance in passed_Instances:
+        passed_courses.append(instance.course.course)
+    #iterate the tracksets and add unsatisfied course to student course list
+    for t_set in track_set:
+        temp_courses = []
+        set_courses = CourseInTrackSet.objects.filter(course_set=t_set)
+        for set_course in set_courses:
+            temp_courses.append(set_course.course)        
+        if(t_set.limiter ==False):
+            required_number  = t_set.size
+            for passed_course in passed_courses:
+                if (passed_course in temp_courses):
+                    required_number -=1
+            #check the 3 prefred list and put the in the course list if matches
+            if(required_number >0):
+                for course1  in prefrered_class[0]:
+                    if course1 in temp_courses and course1 not in course_list:
+                        course_list.append(course1)
+                        required_number -= 1
+            if(required_number >0):
+                for course2  in prefrered_class[1]:
+                    if course2 in temp_courses and course2 not in course_list:
+                        course_list.append(course2)
+                        required_number -= 1
+                    if required_number <=0:
+                        break
+            if(required_number >0):
+                for course3  in prefrered_class[2]:
+                    if course3 in temp_courses and course3 not in course_list:
+                        course_list.append(course3)
+                        required_number -= 1
+                    if required_number <=0:
+                        break
+            if(required_number > 0):
+                for course in temp_courses:
+                    if (course not in course_list and course not in avoid_classes):
+                        course_list.append(course)
+                        required_number -= 1
+                    if required_number <=0:
+                        break
+        else:
+            max_number = t_set.size()
+            for passed_course in passed_courses:
+                if (passed_course in temp_courses):
+                    max_number -=1
+            #check the 3 prefred list and put the in the course list if matches
+            if(max_number >0):
+                for course1  in prefrered_class[0]:
+                    if course1 in temp_courses and course1 not in course_list:
+                        course_list.append(course1)
+                        max_number -= 1
+            if(max_number >0):
+                for course2  in prefrered_class[1] and course2 not in course_list:
+                    if course2 in temp_courses:
+                        course_list.append(course2)
+                        max_number -= 1
+                    if max_number <=0:
+                        break
+            if(max_number >0):
+                for course3  in prefrered_class[2] and course3 not in course_list:
+                    if course3 in temp_courses:
+                        course_list.append(course3)
+                        max_number -= 1
+                    if max_number <=0:
+                        break
+    credits_required = track.minimum_credits_required
+    current_credits = 0
+    # count the credits passed adn in the course plan
+    for course in course_list:
+        current_credits += course.lower_credit_limit
+    for course in passed_courses:
+        current_credits += course.lower_credit_limit
+    # add new courses to the list if does not have enough credits
+    if current_credits < credits_required:
+        major_courses = Course.objects.filter(department = major, number>500)
+        for course in major_courses:
+            if course not in course_list and course not in passed_courses:
+                current_credits += course.lower_credit_limit
+                course_list.append(course)
+                if current_credits >= credits_required:
+                    break
+    
     # a dictionary of courses and their prerequisite
     course_and_prerequisite = {}
     # a list of plans
-    plans = []
+    
 
     for course in course_list:
         unsatisfied_prerequisite = get_unsatisfied_prerequisite(student, course.department, course.number)
         course_and_prerequisite[course] = unsatisfied_prerequisite
         for prerequisite in unsatisfied_prerequisite:
             course_and_prerequisite[prerequisite] = get_unsatisfied_prerequisite(student, prerequisite.department, prerequisite.number)
+    scheduel_id  = generate_plan(student, course_and_prerequisite, max_classes)
+    return ""
 
-"""
-calculate score for the course plan: 
-plan-> a dictionary of courses, values are course keys are semeseter and years
-prefrered_class -> a nested list of favorite course names
-"""
-def calculate_score(plan, prefrered_class, avoid_classes):
-    score = 0
-    for course in plan.values():
-        if course in prefrered_class[0]:
-            score += 3
-        elif course in prefrered_class[1]:
-            score += 2
-        elif course in prefrered_class[2]:
-            score += 1
-        elif course in avoid_classes:
-            score -= 1
-    return score
 """
 get the unsatisfied prerequisite for the course student want to take
 return  a list of courses student need to take in order to fullfill the prerequisite 
@@ -90,7 +168,7 @@ def passCourse(student, course):
     #return true for undergrad course
     if course.number < 500:
         return True
-    passed_course_instance = CoursesTakenByStudent.filter(status != CourseStatus.FAILED)
+    passed_course_instance = CoursesTakenByStudent.filter(student = student ,status != CourseStatus.FAILED)
     passed = False
     if(len(passed_course_instance) != 0):
         for instance in passed_course_instance:
@@ -104,7 +182,7 @@ if the courseInstance does not have time conflict with course instances in the l
 return False, else return True
 """
 
-def time_conflict(instance_list, instance_to_add):
+def time_conflict(instance_list, instance_to_add, time_constraints):
     if(len(instance_list) ==0):
         return False
     conflict = False
@@ -113,6 +191,8 @@ def time_conflict(instance_list, instance_to_add):
             continue
         elif instance.time_start < instance_to_add.time_end:
             continue
+        elif instance_to_add.time_start > time_constraints[0] or instance_to_add.time_end < time_constraints[1]:
+            continue
         else:
             conflict = True
             break
@@ -120,7 +200,7 @@ def time_conflict(instance_list, instance_to_add):
 """
   This function takes student and a dictionary of courses and their prerequisite and generate a course plan
 """
-def generate_plan(student, course_and_prerequisite, max_classes):
+def generate_plan(student, course_and_prerequisite, max_classes, time_constraints):
     schedule_id = 1
     for course in StudentCourseSchedule.objects.filter(student=student):
         if course.schedule_id >= schedule_id:
@@ -132,13 +212,13 @@ def generate_plan(student, course_and_prerequisite, max_classes):
         if len(course_and_prerequisite[course]) ==0:
             courses_can_take.append(course)
     while(len(course_and_prerequisite) > 0):
-        add_new_semester(schedule_id, next_semester, courses_can_take, course_and_prerequisite, max_classes)
+        add_new_semester(schedule_id, next_semester, courses_can_take, course_and_prerequisite, max_classes, time_constraints)
         courses_can_take = []
         for course in course_and_prerequisite.keys():
             if len(course_and_prerequisite[course]) ==0:
                 courses_can_take.append(course)
         next_semester = get_next_semester(next_semester)
-
+    return schedule_id
 """
 get the next semester given a semester object
 """
@@ -150,23 +230,25 @@ def get_next_semester(current_semester):
     else:
         semester = Season.SPRING
         year +=1
-    return Semester.objects.filter(year = year, season = semester)
+    return Semester.objects.filter(year = year, season = semester).first()
 
 """
 this function create a new semster with classes that can be taken from the course list
+return the number of courses added to that semester
 """
 
-def add_new_semester(schedule_id, semeseter, courses, course_and_prerequisite, max_classes):
+def add_new_semester(schedule_id, semeseter, courses, course_and_prerequisite, max_classes, time_constraints):
     currentInstances = []
     for course in courses:
         # did not exceed max number of courses
         if len(currentInstances) < max_classes:
+            #get course instances and check if they can be taken
             courseInstances = CourseInstance.objects.filter(course = course, semester = semester)
             if(len(courseInstances) ==0):
                 continue
             else:
                 for instance in courseInstances:
-                    if time_conflict(currentInstances, instance):
+                    if time_conflict(currentInstances, instance, time_constraints):
                         continue
                     else:
                         currentInstances.append(instance)
@@ -179,4 +261,4 @@ def add_new_semester(schedule_id, semeseter, courses, course_and_prerequisite, m
                         
         else:
             break
-                    
+    return len(currentInstances)
