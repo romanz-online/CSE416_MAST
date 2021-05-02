@@ -1,6 +1,6 @@
 from django.db import models
 from datetime import datetime
-
+from concurrency.fields import IntegerVersionField
 
 class Season(models.TextChoices):
     WINTER = 'Winter'
@@ -55,6 +55,7 @@ class ScheduleStatus(models.TextChoices):
 
 
 class Semester(models.Model):
+    version = IntegerVersionField(default=0)
     season = models.CharField(max_length=6, choices=Season.choices, default=Season.FALL)
     year = models.IntegerField(default=datetime.now().year)
     is_current_semester = models.BooleanField(default=False)
@@ -64,6 +65,7 @@ class Semester(models.Model):
 
 
 class Course(models.Model):
+    version = IntegerVersionField(default=0)
     name = models.CharField(max_length=100)
     department = models.CharField(max_length=4, default='N/A')
     number = models.IntegerField(default=100)
@@ -76,6 +78,7 @@ class Course(models.Model):
 
 
 class CourseInstance(models.Model):
+    version = IntegerVersionField(default=0)
     course = models.ForeignKey(Course, on_delete=models.CASCADE)
     semester = models.ForeignKey(Semester, null=True, on_delete=models.SET_NULL)
     time_start = models.TimeField(null=True)
@@ -88,6 +91,7 @@ class CourseInstance(models.Model):
 
 
 class Major(models.Model):
+    version = IntegerVersionField(default=0)
     department = models.CharField(max_length=4, default='N/A')
     name = models.CharField(max_length=50)
     requirement_semester = models.ForeignKey(Semester, null=True, on_delete=models.SET_NULL)
@@ -98,6 +102,7 @@ class Major(models.Model):
 
 # number_of_areas is the number of completed TrackCourseSets required to complete the Track
 class Track(models.Model):
+    version = IntegerVersionField(default=0)
     major = models.ForeignKey(Major, on_delete=models.CASCADE)
     name = models.CharField(max_length=100)
     required_gpa = models.FloatField(default=3.0)
@@ -128,6 +133,7 @@ class Track(models.Model):
 # provides nested TCS's for attribute setting of classes
 # the leeway variable ensures that courses aren't counted twice if they fulfill multiple requirements 
 class TrackCourseSet(models.Model):
+    version = IntegerVersionField(default=0)
     track = models.ForeignKey(Track, on_delete=models.CASCADE)
     parent_course_set = models.ForeignKey(to='TrackCourseSet', on_delete=models.CASCADE, null=True)
     name = models.CharField(max_length=200, default='Default')
@@ -144,6 +150,7 @@ class TrackCourseSet(models.Model):
 
 
 class CourseInTrackSet(models.Model):
+    version = IntegerVersionField(default=0)
     course_set = models.ForeignKey(TrackCourseSet, on_delete=models.CASCADE)
     course = models.ForeignKey(Course, on_delete=models.CASCADE)
     each_semester = models.BooleanField(default=False)
@@ -154,6 +161,7 @@ class CourseInTrackSet(models.Model):
 
 
 class CourseToCourseRelation(models.Model):
+    version = IntegerVersionField(default=0)
     track = models.ForeignKey(Track, on_delete=models.CASCADE)
     primary_course = models.ForeignKey(Course, on_delete=models.CASCADE, related_name='primary_course')
     related_course = models.ForeignKey(Course, on_delete=models.CASCADE, related_name='related_course')
@@ -172,6 +180,7 @@ class CourseToCourseRelation(models.Model):
 
 
 class CoursePrerequisiteSet(models.Model):
+    version = IntegerVersionField(default=0)
     parent_course = models.ForeignKey(CourseInstance, on_delete=models.CASCADE, null=True)
     parent_set = models.ForeignKey(to='CoursePrerequisiteSet', on_delete=models.CASCADE, null=True)
     number_required = models.IntegerField(default=1)
@@ -181,6 +190,7 @@ class CoursePrerequisiteSet(models.Model):
 
 
 class Prerequisite(models.Model):
+    version = IntegerVersionField(default=0)
     course_set = models.ForeignKey(CoursePrerequisiteSet, on_delete=models.CASCADE)
     course = models.ForeignKey(CourseInstance, on_delete=models.CASCADE)
 
@@ -189,6 +199,7 @@ class Prerequisite(models.Model):
 
 
 class Director(models.Model):
+    version = IntegerVersionField(default=0)
     name = models.CharField(max_length=100)
     department = models.CharField(max_length=4, default='N/A')
     password = models.CharField(max_length=100)
@@ -198,6 +209,7 @@ class Director(models.Model):
 
 
 class Student(models.Model):
+    version = IntegerVersionField(default=0)
     sbu_id = models.IntegerField(primary_key=True)
     first_name = models.CharField(default='unknown', max_length=100)
     last_name = models.CharField(default='unknown', max_length=100)
@@ -233,6 +245,7 @@ class Student(models.Model):
 #
 # records with no course will only be counted towards the minimum credit requirements
 class CoursesTakenByStudent(models.Model):
+    version = IntegerVersionField(default=0)
     student = models.ForeignKey(Student, on_delete=models.CASCADE)
     course = models.ForeignKey(CourseInstance, null=True, on_delete=models.SET_NULL)
     grade = models.CharField(max_length=3, choices=Grade.choices, default=Grade.NOT_APPLICABLE)
@@ -247,6 +260,7 @@ class CoursesTakenByStudent(models.Model):
 
 
 class StudentCourseSchedule(models.Model):
+    version = IntegerVersionField(default=0)
     student = models.ForeignKey(Student, on_delete=models.CASCADE)
     course = models.ForeignKey(CourseInstance, null=True, on_delete=models.SET_NULL)
     status = models.CharField(max_length=15, choices=ScheduleStatus.choices, default=ScheduleStatus.PENDING)
@@ -258,6 +272,7 @@ class StudentCourseSchedule(models.Model):
 
 
 class Comment(models.Model):
+    version = IntegerVersionField(default=0)
     student = models.ForeignKey(Student, on_delete=models.CASCADE)
     author = models.CharField(max_length=100, default='no auth')
     text = models.CharField(max_length=1000)
