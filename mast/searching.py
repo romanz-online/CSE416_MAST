@@ -21,7 +21,10 @@ def student_index(request):
     current_user = request.user.username
     if current_user != "admin": 
         current_user = current_user[0:3]
-    context = {'student_list': Student.objects.order_by('sbu_id'),
+
+    student_list = [i for i in Student.objects.order_by('sbu_id') if i.major.department == current_user]
+
+    context = {'student_list': student_list,
                'major_list': Major.objects.order_by('name'),
                'semesters': Semester.objects.all(),
                'requirement_semesters': Semester.objects.all(),
@@ -108,6 +111,7 @@ def search(request):
     current_user = request.user.username
     if current_user != "admin": 
         current_user = current_user[0:3]
+
     track_list = []
     found = False
     for i in Track.objects.all():
@@ -116,6 +120,7 @@ def search(request):
                 found = True
         if not found:
             track_list.append(i)
+
     context = {'student_list': student_list,
                'major_list': Major.objects.order_by('name'),
                'name_search': name_search,

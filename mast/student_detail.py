@@ -49,7 +49,7 @@ def add_comment(request, sbu_id):
         email_message = 'A Graduate Program Director has left a comment on your profile:\n"' + new_comment + '"'
         email = EmailMessage('New Comment from MAST', email_message, to=[str(student.email)])
         email.send()
-        c = Comment(student=student, text=str(new_comment), post_date=str(datetime.now()))
+        c = Comment(author=request.user.username, student=student, text=str(new_comment), post_date=str(datetime.now()))
         c.save()
     except:
         return HttpResponseRedirect(reverse('mast:detail', args=(sbu_id,)))

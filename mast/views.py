@@ -26,9 +26,9 @@ def setup():
         BMI_director = User.objects.create_user('BMIDirector', 'mast.stonybrook@gmail.com', 'bmipassword')
         BMI_director.save()
         BMI_director.groups.add(director_group)
-        ECE_director = User.objects.create_user('ECEDirector', 'mast.stonybrook@gmail.com', 'ecepassword')
-        ECE_director.save()
-        ECE_director.groups.add(director_group)
+        ESE_director = User.objects.create_user('ESEDirector', 'mast.stonybrook@gmail.com', 'esepassword')
+        ESE_director.save()
+        ESE_director.groups.add(director_group)
 
     if not Group.objects.filter(name='Student'):
         student_group = Group(name='Student')

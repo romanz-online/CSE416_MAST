@@ -223,7 +223,6 @@
             {% csrf_token %}
             <input type="submit" value="Leave Without Saving">
         </form>
-
     </div>
 
     <div>
@@ -287,14 +286,11 @@
         </form>
     </div>
 
-
     <form action="{% url 'mast:delete_record' student.sbu_id %}" method="post" class="delete">
         {% csrf_token %}
         <input type="submit" value="Delete Record">
     </form>
-
 {% else %}
-
     <div>
         <form action="{% url 'mast:student_commit_edit' student.sbu_id %}" method="get">
             First Name: <input name="first_name" type="text" autocomplete="on" value="{{ student.first_name }}">

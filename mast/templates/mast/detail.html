@@ -215,10 +215,17 @@
                 </tbody>
             </table>
 
-            <form action="{% url 'mast:edit' student.sbu_id %}" method="post">
-                {% csrf_token %}
-                <input type="submit" value="Edit Student">
-            </form>
+            {% if not is_student %}
+                <form action="{% url 'mast:edit' student.sbu_id %}" method="post">
+                    {% csrf_token %}
+                    <input type="submit" value="Edit Student">
+                </form>
+            {% else %}
+                <form action="{% url 'mast:student_edit' student.sbu_id %}" method="post">
+                    {% csrf_token %}
+                    <input type="submit" value="Edit">
+                </form>
+            {% endif %}
         </div>
     </div>
 

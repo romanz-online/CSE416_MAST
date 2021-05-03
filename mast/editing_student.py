@@ -60,6 +60,11 @@ def student_edit(request, sbu_id):
 def edit(request, sbu_id):
     if request.user.groups.filter(name='Student'):
         return student_edit(request, sbu_id)
+
+    is_student = False
+    if request.user.groups.filter(name='Student'):
+        is_student = True
+
     """
     Retrieves and renders a specific student to be edited on the edit screen page
 
@@ -121,7 +126,7 @@ def edit(request, sbu_id):
     transfer_course_list.insert(0, TempCourseInstance('None'))
 
     return render(request, 'mast/edit.html', {'student': student,
-                                              'is_student': False,
+                                              'is_student': is_student,
                                               'course_list': CourseInstance.objects.all(),
                                               'classes_taken': CoursesTakenByStudent.objects.filter(student=student),
                                               'grade_list': grade_list,
