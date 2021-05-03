@@ -103,8 +103,8 @@ def generate_schedule(request, sbu_id):
 
 @login_required
 def smart_suggest(request, sbu_id):
-    #student = Student.objects.filter(sbu_id=sbu_id).first()
-    #smart_suggest_gen(student)
+    student = Student.objects.filter(sbu_id=sbu_id).first()
+    smart_suggest_gen(student)
     return offered_schedules(request, sbu_id)
 
 

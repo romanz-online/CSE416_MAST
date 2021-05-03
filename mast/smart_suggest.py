@@ -26,7 +26,7 @@ def smart_suggest_gen(student):
     student_courses = StudentCourseSchedule.objects.filter(student=student)
     student_semesters = map_semester_numbers(student, student_courses)
     if student_semesters:
-        current_semester = max(student_semesters.items(), key=operator.itemgetter(1))[0] + 1
+        current_semester = student_semesters[max(student_semesters.items(), key=operator.itemgetter(1))[0]] + 1
     else:
         current_semester = 1
     # get an unused shchedule id
@@ -78,7 +78,7 @@ def calculate_similarity(student, graduate_set):
         similarity = (same_class_same_semester + (0.5 * same_class_dif_semester)) / len(student_courses)
         # if similarity is less than 80%, remove graduated student from list
         if similarity < .8:
-            graduate_set.remove(g_s)
+            graduate_set.exclude(sbu_id=g_s.sbu_id)
 
     return graduate_set
 
@@ -104,7 +104,7 @@ def map_semester_numbers(student, student_courses):
 def course_semester_map(student_courses, student_semesters):
     student_dict = {}
     for course in student_courses:
-        student_dict[course.course.name] = student_semesters.get(course.course.semester)
+        student_dict[course.course.course.name] = student_semesters.get(course.course.semester)
     return student_dict
 
 
@@ -115,7 +115,7 @@ def course_counter(student, graduate_set):
     taken_course_list = []
     # get list of names for easy comparison
     for course in student_courses:
-        taken_course_list.append(course.course.name)
+        taken_course_list.append(course.course.course.name)
 
     for g_s in graduate_set:
         graduated_courses = StudentCourseSchedule.objects.filter(student=g_s)
@@ -124,10 +124,10 @@ def course_counter(student, graduate_set):
         for course in graduated_map:
             # get count for all classes not yet taken by current student
             # if class not taken, and not yet in course_counts
-            if course.course.name not in taken_course_list and course.course.name not in course_counts:
-                course_counts[course.course.name] = {graduated_semesters.get(course.course.semester): 1}
+            if course.course.course.name not in taken_course_list and course.course.course.name not in course_counts:
+                course_counts[course.course.course.name] = {graduated_semesters.get(course.course.semester): 1}
             # else if its not been taken, and already in course_counts
-            elif course.course.name not in taken_course_list:
+            elif course.course.course.name not in taken_course_list:
                 # semester value already present for course
                 if graduated_semesters.get(course.course.semester) in course_counts.keys():
                     course_counts[course][graduated_semesters.get(course.course.semester)] += 1
