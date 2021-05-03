@@ -201,6 +201,8 @@ def time_conflict(instance_list, instance_to_add, time_constraints):
         return False
     conflict = False
     for instance in instance_list:
+        if instance.time_start == None or instance.time_end ==None:
+            continue
         if instance.time_end > instance_to_add.time_start:
             continue
         elif instance.time_start < instance_to_add.time_end:
