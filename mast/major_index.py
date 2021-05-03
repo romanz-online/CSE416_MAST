@@ -23,8 +23,7 @@ def major_index(request):
         track in
         Track.objects.all()]
 
-    major_list = [i for i in Major.objects.order_by('name') if i.name != '(None)']
-    context = {'major_list': major_list,
+    context = {'major_list': Major.objects.order_by('name')[1:],
                'track_list': Track.objects.all(),
                'track_course_sets': TrackCourseSet.objects.all(),
                'courses_in_sets': CourseInTrackSet.objects.all(),
