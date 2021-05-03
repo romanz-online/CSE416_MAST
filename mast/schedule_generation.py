@@ -4,10 +4,12 @@ from .modifying_schedule import sort_semester_list
 from django.contrib.auth.decorators import login_required
 from .models import Student, Course, CourseInstance, CoursePrerequisiteSet, Prerequisite, StudentCourseSchedule, \
     Semester, ScheduleType, ScheduleStatus
-
+from .classic_suggest import classic_suggest
 
 @login_required
 def schedule_generation(request, sbu_id):
+    print("classic suggest")
+    print("hello world")
     student = get_object_or_404(Student, pk=sbu_id)
     course_list = {i for i in CourseInstance.objects.all() if i.section != 999}
     context = {
@@ -74,11 +76,22 @@ def generate_schedule(request, sbu_id):
     # 5 - don't offer this course at all (AKA don't offer the corresponding Course)
 
     # do stuff with the "preferences" dictionary, start_time, end_time, and courses_per_semester here
-
+   
+    prefer_courses  = [[], [], []]
+    for courseInstance in preferences.keys():
+        if preferences[courseInstance] in [1, 2, 3]:
+            match_course = courseInstance.course
+            prefer_courses[preferences[courseInstance]-1].append(match_course)
+    time_constraints = [start_time, end_time]
+    graduation_semester = None
+    avoid_courses = []
+    student = Student.objects.filter(sbu_id=sbu_id).first()
+   
+    classic_suggest(student, prefer_courses, courses_per_semester, avoid_courses, time_constraints, graduation_semester)
     return offered_schedules(request, sbu_id)
 
 
-@login_required
+@login_required     
 def smart_suggest(request, sbu_id):
     return offered_schedules(request, sbu_id)
 

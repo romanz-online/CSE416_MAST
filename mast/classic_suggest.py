@@ -2,8 +2,8 @@ from .models import Student, Major, Season, CoursesTakenByStudent, Comment, Stud
     TrackCourseSet, CourseInTrackSet, CourseToCourseRelation, Course, CoursePrerequisiteSet, Prerequisite, \
     CourseInstance, CourseStatus
 
-from modifying_schedule import sort_semester_list
-from smart_suggest import requirements_met
+
+
 """
 this funciton takes student, prefered class, max_number of classes to take, classes to avoid, time
 constraints and graduate semester, and return a dictionary of semester as key and courses as value
@@ -23,7 +23,10 @@ def classic_suggest(student, prefrered_class, max_classes, avoid_classes, time_c
     track = track[0]
 
     track_set = TrackCourseSet.filter(track = track)
-    passed_Instances = CoursesTakenByStudent.filter(student=student, status!= CourseStatus.FAILED)
+    passed_course_instance = CoursesTakenByStudent.filter(student = student, status= CourseStatus.PASSED)
+    Transfer_course_instance =  CoursesTakenByStudent.filter(student = student, status= CourseStatus.TRANSFER)
+    pending_courses_instance =  CoursesTakenByStudent.filter(student = student, status= CourseStatus.PENDING)
+    passed_Instances = passed_course_instance + Transfer_course_instance + pending_courses_instance
     passed_courses = []
     for instance in passed_Instances:
         passed_courses.append(instance.course.course)
@@ -99,7 +102,7 @@ def classic_suggest(student, prefrered_class, max_classes, avoid_classes, time_c
         current_credits += course.lower_credit_limit
     # add new courses to the list if does not have enough credits
     if current_credits < credits_required:
-        major_courses = Course.objects.filter(department = major, number>500)
+        major_courses = Course.objects.filter(department = student.major, number_gte=500)
         for course in major_courses:
             if course not in course_list and course not in passed_courses:
                 current_credits += course.lower_credit_limit
@@ -118,7 +121,7 @@ def classic_suggest(student, prefrered_class, max_classes, avoid_classes, time_c
         for prerequisite in unsatisfied_prerequisite:
             course_and_prerequisite[prerequisite] = get_unsatisfied_prerequisite(student, prerequisite.department, prerequisite.number)
     scheduel_id  = generate_plan(student, course_and_prerequisite, max_classes)
-    return ""
+    return "Finished generation of classic schedule " + str(schedule_id)
 
 """
 get the unsatisfied prerequisite for the course student want to take
@@ -168,7 +171,10 @@ def passCourse(student, course):
     #return true for undergrad course
     if course.number < 500:
         return True
-    passed_course_instance = CoursesTakenByStudent.filter(student = student ,status != CourseStatus.FAILED)
+    passed_course_instance = CoursesTakenByStudent.filter(student = student, status= CourseStatus.PASSED)
+    Transfer_course_instance =  CoursesTakenByStudent.filter(student = student, status= CourseStatus.TRANSFER)
+    pending_courses_instance =  CoursesTakenByStudent.filter(student = student, status= CourseStatus.PENDING)
+    passed_course_instance = passed_course_instance + Transfer_course_instance + pending_courses_instance
     passed = False
     if(len(passed_course_instance) != 0):
         for instance in passed_course_instance:
@@ -190,6 +196,8 @@ def time_conflict(instance_list, instance_to_add, time_constraints):
         if instance.time_end > instance_to_add.time_start:
             continue
         elif instance.time_start < instance_to_add.time_end:
+            continue
+        if time_constraints[0] == None or time_constraints[1] == None:
             continue
         elif instance_to_add.time_start > time_constraints[0] or instance_to_add.time_end < time_constraints[1]:
             continue
