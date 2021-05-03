@@ -2,12 +2,11 @@ import operator
 
 from .modifying_schedule import sort_semester_list
 from . import editing_student
-from .schedule_generation import prereqs_met
 from .models import Student, CoursesTakenByStudent, StudentCourseSchedule, TrackCourseSet
 
 
 # main smart_suggest driver
-def smart_suggest(student):
+def smart_suggest_gen(student):
     # get graduated students who have same track and major
     graduate_set = Student.objects.filter(track=student.track, major=student.major, graduated=True)
     # if student has not taken or signed up for any classes, all students are 100% similar
@@ -19,12 +18,17 @@ def smart_suggest(student):
     # if no similar_schedules
     if len(similar_schedules) == 0:
         # TODO will need to be updated to a proper render request once UI is in
-        return "Not enough data for Smart Suggest"
+        print("Not enough data for Smart Suggest")
+        return
     # else continue and get course counts
-    course_counts = course_counts(student, graduate_set)
+    course_counts = course_counter(student, graduate_set)
     # get next semester number for student
-    student_semesters = course_semester_map(student)
-    current_semester = max(student_semesters.iteritems(), key=operator.itemgetter(1))[0] + 1
+    student_courses = StudentCourseSchedule.objects.filter(student=student)
+    student_semesters = map_semester_numbers(student, student_courses)
+    if student_semesters:
+        current_semester = max(student_semesters.items(), key=operator.itemgetter(1))[0] + 1
+    else:
+        current_semester = 1
     # get an unused shchedule id
     schedule_id = 1
     for course in StudentCourseSchedule.objects.filter(student=student):
@@ -33,28 +37,29 @@ def smart_suggest(student):
     # while schedule is not complete, add semesters
     while not requirements_met(student, schedule_id):
         if create_semester_schedule(student, current_semester, schedule_id, course_counts) == -1:
-            return "Something went wrong"
+            print("Something went wrong")
+            return
         else:
             # update course counts to remove added classes
             course_counts = create_semester_schedule(student, current_semester, schedule_id, course_counts)
         # move on to next semester
         current_semester += 1
 
-    return "Finished generation of smart schedule " + str(schedule_id)
-
+    print("Finished generation of smart schedule " + str(schedule_id))
+    return
 
 # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~HELPER FUNCTIONS~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~#
 
 # calculate similarity between students, and return students with 80% or higher
 def calculate_similarity(student, graduate_set):
     student_courses = StudentCourseSchedule.objects.filter(student=student)
-    student_semesters = map_semester_numbers(student)
+    student_semesters = map_semester_numbers(student, student_courses)
     # get dict of classes mapped to semester number
     student_dict = course_semester_map(student_courses, student_semesters)
     # compare to each graduated student
     for g_s in graduate_set:
         graduated_schedule = StudentCourseSchedule.objects.filter(student=g_s)
-        graduated_semesters = map_semester_numbers(g_s)
+        graduated_semesters = map_semester_numbers(g_s, graduated_schedule)
         graduated_dict = course_semester_map(graduated_schedule, graduated_semesters)
         # keep track of all matching classes
         same_class_same_semester = 0
@@ -79,7 +84,7 @@ def calculate_similarity(student, graduate_set):
 
 
 # get dictionary that maps each semester a student has taken courses in to an ordered number
-def map_semester_numbers(student):
+def map_semester_numbers(student, student_courses):
     semester_map = {}
     # list of all semesters which student has taken classes in
     semesters = []
@@ -93,7 +98,7 @@ def map_semester_numbers(student):
     # dictionary with value as order number
     for i in range(len(semesters)):
         semester_map[semesters[i]] = i
-
+    return semester_map
 
 # get dictionary that maps all classes a student has taken to its semester number
 def course_semester_map(student_courses, student_semesters):
@@ -104,7 +109,7 @@ def course_semester_map(student_courses, student_semesters):
 
 
 # get dictionary of course counts from similar students that the current student has not yet taken
-def course_counts(student, graduate_set):
+def course_counter(student, graduate_set):
     course_counts = {}
     student_courses = StudentCourseSchedule.objects.filter(student=student)
     taken_course_list = []
@@ -114,7 +119,7 @@ def course_counts(student, graduate_set):
 
     for g_s in graduate_set:
         graduated_courses = StudentCourseSchedule.objects.filter(student=g_s)
-        graduated_semesters = map_semester_numbers(g_s)
+        graduated_semesters = map_semester_numbers(g_s, graduated_courses)
         graduated_map = course_semester_map(graduated_courses, graduated_semesters)
         for course in graduated_map:
             # get count for all classes not yet taken by current student
@@ -182,3 +187,22 @@ def create_semester_schedule(student, semester, schedule_id, course_counts):
 
     # return course counts with the taken classes removed
     return course_counts
+
+def prereqs_met(student, course, schedule_id):
+    student_courses = StudentCourseSchedule.objects.filter(student=student,
+                                                           schedule_id=schedule_id) | StudentCourseSchedule.objects.filter(
+        student=student, schedule_id=0)
+    prereq_set = CoursePrerequisiteSet.objects.filter(parent_course=course)
+    for prereq in Prerequisite.objects.filter(course_set=prereq_set):
+        if prereq not in student_courses:
+            return False
+
+    for nested_set in CoursePrerequisiteSet.objects.filter(parent_set=prereq_set):
+        met = False
+        for prereq in Prerequisite.objects.filter(course_set=nested_set):
+            if prereq in student_courses:
+                met = True
+        if not met:
+            return False
+
+    return True

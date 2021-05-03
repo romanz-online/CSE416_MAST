@@ -5,6 +5,7 @@ from django.contrib.auth.decorators import login_required
 from .models import Student, Course, CourseInstance, CoursePrerequisiteSet, Prerequisite, StudentCourseSchedule, \
     Semester, ScheduleType, ScheduleStatus
 from .classic_suggest import classic_suggest
+from .smart_suggest import smart_suggest_gen
 
 
 @login_required
@@ -102,6 +103,8 @@ def generate_schedule(request, sbu_id):
 
 @login_required
 def smart_suggest(request, sbu_id):
+    #student = Student.objects.filter(sbu_id=sbu_id).first()
+    #smart_suggest_gen(student)
     return offered_schedules(request, sbu_id)
 
 
