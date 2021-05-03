@@ -3,7 +3,7 @@ from django.shortcuts import get_object_or_404, render
 from .modifying_schedule import sort_semester_list
 from django.contrib.auth.decorators import login_required
 from .models import Student, Course, CourseInstance, CoursePrerequisiteSet, Prerequisite, StudentCourseSchedule, \
-    Semester, ScheduleType, ScheduleStatus
+    Semester, ScheduleType, ScheduleStatus, Major
 from .classic_suggest import classic_suggest
 from .smart_suggest import smart_suggest_gen
 
@@ -12,6 +12,7 @@ from .smart_suggest import smart_suggest_gen
 def schedule_generation(request, sbu_id):
     student = get_object_or_404(Student, pk=sbu_id)
     course_list = {i for i in CourseInstance.objects.all() if i.section != 999}
+    # generate_random_schedules()
     context = {
         'student': student,
         'course_list': course_list
@@ -21,8 +22,6 @@ def schedule_generation(request, sbu_id):
 
 @login_required
 def generate_schedule(request, sbu_id):
-    print("classic suggest")
-    print("hello world")
     preference = 1
     count = 0
     preferences = {}
@@ -92,25 +91,61 @@ def generate_schedule(request, sbu_id):
         if preferences[courseInstance] in [1, 2, 3]:
             match_course = courseInstance.course
             prefer_courses[preferences[courseInstance] - 1].append(match_course)
+
+    avoid_courses = []
+    for courseInstance in preferences.keys():
+        if preferences[courseInstance] in [4, 5]:
+            match_course = courseInstance.course
+            avoid_courses.append(match_course)
+
+    student = Student.objects.filter(sbu_id=sbu_id).first()
     time_constraints = [start_time, end_time]
     graduation_semester = None
-    avoid_courses = []
-    student = Student.objects.filter(sbu_id=sbu_id).first()
 
     classic_suggest(student, prefer_courses, courses_per_semester, avoid_courses, time_constraints, graduation_semester)
     return offered_schedules(request, sbu_id)
 
 
+def generate_random_schedules():
+    import random
+
+    CSE_major = Major.objects.filter(department='CSE')[0]
+    for student in Student.objects.filter(major=CSE_major, graduated=True):
+        courses = [i for i in Course.objects.filter(department='CSE')]
+        random_numbers = random.sample(range(0, len(courses)), 8)
+        random_courses = []
+        count = 0
+        for i in range(3):
+            inner_list = []
+            for j in range(2):
+                inner_list.append(courses[random_numbers[count]])
+                count += 1
+            random_courses.append(inner_list)
+
+        random_avoid_courses = [courses[random_numbers[6]], courses[random_numbers[7]]]
+
+        courses_per_semester = 6
+
+        classic_suggest(student, random_courses, courses_per_semester, random_avoid_courses, [None, None], None)
+
+
 @login_required
 def smart_suggest(request, sbu_id):
     student = Student.objects.filter(sbu_id=sbu_id).first()
-    smart_suggest_gen(student)
+    # smart_suggest_gen(student)
     return offered_schedules(request, sbu_id)
 
 
 @login_required
 def offered_schedules(request, sbu_id):
     student = get_object_or_404(Student, pk=sbu_id)
+
+    # CSE_major = Major.objects.filter(department='CSE')[0]
+    # for student in Student.objects.filter(major=CSE_major, graduated=True):
+    #     for i in StudentCourseSchedule.objects.filter(student=student):
+    #         i.status = ScheduleStatus.APPROVED
+    #         i.schedule_id = 0
+    #         i.save()
 
     class Pair:
         def __init__(self, schedule_id, schedule_type):

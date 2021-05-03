@@ -40,7 +40,7 @@ def setup():
     doy = datetime.today().timetuple().tm_yday
     if not len(Semester.objects.all()):
         current_year = int(datetime.today().year)
-        for year in range(current_year - 5, current_year + 5):
+        for year in range(current_year - 5, current_year + 20):
             for season in Season.choices:
                 if not season[0] == Season.NOT_APPLICABLE:
                     new_semester = Semester(season=season[0], year=year)

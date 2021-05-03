@@ -70,28 +70,30 @@ def classic_suggest(student, prefrered_class, max_classes, avoid_classes, time_c
         else:
             max_number = t_set.size
             for passed_course in passed_courses:
-                if (passed_course in temp_courses):
+                if passed_course in temp_courses:
                     max_number -= 1
             # check the 3 prefred list and put the in the course list if matches
-            if (max_number > 0):
+            if max_number:
                 for course1 in prefrered_class[0]:
                     if course1 in temp_courses and course1 not in course_list:
                         course_list.append(course1)
                         max_number -= 1
-            if (max_number > 0):
-                for course2 in prefrered_class[1] and course2 not in course_list:
-                    if course2 in temp_courses:
-                        course_list.append(course2)
-                        max_number -= 1
-                    if max_number <= 0:
-                        break
-            if (max_number > 0):
-                for course3 in prefrered_class[2] and course3 not in course_list:
-                    if course3 in temp_courses:
-                        course_list.append(course3)
-                        max_number -= 1
-                    if max_number <= 0:
-                        break
+            if max_number:
+                for course2 in prefrered_class[1]:
+                    if course2 not in course_list:
+                        if course2 in temp_courses:
+                            course_list.append(course2)
+                            max_number -= 1
+                        if max_number <= 0:
+                            break
+            if max_number:
+                for course3 in prefrered_class[2]:
+                    if course3 not in course_list:
+                        if course3 in temp_courses:
+                            course_list.append(course3)
+                            max_number -= 1
+                        if max_number <= 0:
+                            break
     credits_required = track.minimum_credits_required
     current_credits = 0
     # count the credits passed adn in the course plan
@@ -242,7 +244,7 @@ def generate_plan(student, course_and_prerequisite, max_classes, time_constraint
     for course in course_and_prerequisite.keys():
         if not course_and_prerequisite[course]:
             courses_can_take.append(course)
-    while (len(course_and_prerequisite) > 0):
+    while course_and_prerequisite:
         print(next_semester.year)
         print(next_semester.season)
         add_new_semester(student, schedule_id, next_semester, courses_can_take, course_and_prerequisite, max_classes,
@@ -262,13 +264,12 @@ get the next semester given a semester object
 
 def get_next_semester(current_semester):
     year = current_semester.year
-    semester = current_semester.season
-    if (current_semester.season == Season.SPRING or current_semester.season == Season.SUMMER):
-        semester = Season.FALL
+    if current_semester.season == Season.SPRING or current_semester.season == Season.SUMMER:
+        season = Season.FALL
     else:
-        semester = Season.SPRING
+        season = Season.SPRING
         year += 1
-    return Semester.objects.filter(year=year, season=semester).first()
+    return Semester.objects.filter(year=year, season=season).first()
 
 
 """
