@@ -22,10 +22,10 @@ def classic_suggest(student, prefrered_class, max_classes, avoid_classes, time_c
     course_list = []
     track = track[0]
 
-    track_set = TrackCourseSet.filter(track = track)
-    passed_course_instance = CoursesTakenByStudent.filter(student = student, status= CourseStatus.PASSED)
-    Transfer_course_instance =  CoursesTakenByStudent.filter(student = student, status= CourseStatus.TRANSFER)
-    pending_courses_instance =  CoursesTakenByStudent.filter(student = student, status= CourseStatus.PENDING)
+    track_set = TrackCourseSet.objects.filter(track = track)
+    passed_course_instance = CoursesTakenByStudent.objects.filter(student = student, status= CourseStatus.PASSED)
+    Transfer_course_instance =  CoursesTakenByStudent.objects.filter(student = student, status= CourseStatus.TRANSFER)
+    pending_courses_instance =  CoursesTakenByStudent.objects.filter(student = student, status= CourseStatus.PENDING)
     passed_Instances = passed_course_instance + Transfer_course_instance + pending_courses_instance
     passed_courses = []
     for instance in passed_Instances:
@@ -151,7 +151,7 @@ def get_unsatisfied_prerequisite(student, department, number):
         if(len(optional_set) !=0):
             for set in optional_set:
                 satisfy = False
-                optional_course_prerequisites = Prerequisite.filter(couse_set = set)
+                optional_course_prerequisites = Prerequisite.objects.filter(couse_set = set)
                 for course_prerequisite in optional_course_prerequisites:
                     if passCourse(student, course_prerequisite.course.course):
                         satisfy = True
@@ -171,9 +171,9 @@ def passCourse(student, course):
     #return true for undergrad course
     if course.number < 500:
         return True
-    passed_course_instance = CoursesTakenByStudent.filter(student = student, status= CourseStatus.PASSED)
-    Transfer_course_instance =  CoursesTakenByStudent.filter(student = student, status= CourseStatus.TRANSFER)
-    pending_courses_instance =  CoursesTakenByStudent.filter(student = student, status= CourseStatus.PENDING)
+    passed_course_instance = CoursesTakenByStudent.objects.filter(student = student, status= CourseStatus.PASSED)
+    Transfer_course_instance =  CoursesTakenByStudent.objects.filter(student = student, status= CourseStatus.TRANSFER)
+    pending_courses_instance =  CoursesTakenByStudent.objects.filter(student = student, status= CourseStatus.PENDING)
     passed_course_instance = passed_course_instance + Transfer_course_instance + pending_courses_instance
     passed = False
     if(len(passed_course_instance) != 0):
