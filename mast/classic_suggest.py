@@ -1,7 +1,7 @@
 from .models import Student, Major, Season, CoursesTakenByStudent, Comment, StudentCourseSchedule, Semester, Track, \
     TrackCourseSet, CourseInTrackSet, CourseToCourseRelation, Course, CoursePrerequisiteSet, Prerequisite, \
     CourseInstance, CourseStatus
-
+import random
 """
 this funciton takes student, prefered class, max_number of classes to take, classes to avoid, time
 constraints and graduate semester, and return a dictionary of semester as key and courses as value
@@ -103,11 +103,17 @@ def classic_suggest(student, prefrered_class, max_classes, avoid_classes, time_c
         current_credits += course.lower_credit_limit
     # add new courses to the list if does not have enough credits
     if current_credits < credits_required:
-        major_courses = [i for i in Course.objects.filter(department=student.major.department) if i.number >= 510]
-        print("major courses are")
-        print(major_courses)
-        for course in major_courses:
+        lst = prefrered_class[0] + prefrered_class[1] + prefrered_class[2]
+        for course in lst:
             if course not in course_list and course not in passed_courses:
+                course_list.append(course)
+                current_credits += course.lower_credit_limit
+                if current_credits >= credits_required:
+                    break
+        major_courses = [i for i in Course.objects.filter(department=student.major.department) if i.number >= 510]
+        while current_credits < credits_required:
+            course = random.choice(major_courses)
+            if course not in course_list and course not in passed_courses and course not in avoid_classes:
                 current_credits += course.lower_credit_limit
                 course_list.append(course)
                 if current_credits >= credits_required:
