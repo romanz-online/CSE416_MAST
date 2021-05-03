@@ -108,6 +108,14 @@ def search(request):
     current_user = request.user.username
     if current_user != "admin": 
         current_user = current_user[0:3]
+    track_list = []
+    found = False
+    for i in Track.objects.all():
+        for j in track_list:
+            if i.name == j.name and i.major.name == j.major.name:
+                found = True
+        if not found:
+            track_list.append(i)
     context = {'student_list': student_list,
                'major_list': Major.objects.order_by('name'),
                'name_search': name_search,
@@ -117,7 +125,9 @@ def search(request):
                'major_search': int(major_search),
                'plan_complete_search': plan_complete_search,
                'plan_valid_search': plan_valid_search,
-               'current_user': current_user
+               'current_user': current_user,
+               'semesters': Semester.objects.all(),
+               'track_list': track_list
                }
 
     return render(request, 'mast/student_index.html', context)

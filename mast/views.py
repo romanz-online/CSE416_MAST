@@ -176,6 +176,14 @@ def commit_new_student(request):
         current_user = request.user.username
         if current_user != "admin": 
             current_user = current_user[0:3]
+        track_list = []
+        found = False
+        for i in Track.objects.all():
+            for j in track_list:
+                if i.name == j.name and i.major.name == j.major.name:
+                    found = True
+            if not found:
+                track_list.append(i)
         if id_taken:
             return render(request, 'mast/student_index.html', {
                 'major_list': Major.objects.order_by('name'),
@@ -183,7 +191,8 @@ def commit_new_student(request):
                 'requirement_semesters': Semester.objects.order_by('year'),
                 'student_list': Student.objects.order_by('sbu_id'),
                 'error_message': "ID taken.",
-                'current_user': current_user
+                'current_user': current_user,
+                'track_list': track_list 
             })
         else:
             return render(request, 'mast/student_index.html', {
@@ -192,7 +201,8 @@ def commit_new_student(request):
                 'requirement_semesters': Semester.objects.order_by('year'),
                 'error_message': "Invalid or missing value.",
                 'student_list': Student.objects.order_by('sbu_id'),
-                'current_user': current_user
+                'current_user': current_user,
+                'track_list': track_list 
             })
     return HttpResponseRedirect(reverse('mast:detail', args=(sbu_id,)))
 
