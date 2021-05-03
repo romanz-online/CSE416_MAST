@@ -8,8 +8,6 @@ from .classic_suggest import classic_suggest
 
 @login_required
 def schedule_generation(request, sbu_id):
-    print("classic suggest")
-    print("hello world")
     student = get_object_or_404(Student, pk=sbu_id)
     course_list = {i for i in CourseInstance.objects.all() if i.section != 999}
     context = {
@@ -21,6 +19,8 @@ def schedule_generation(request, sbu_id):
 
 @login_required
 def generate_schedule(request, sbu_id):
+    print("classic suggest")
+    print("hello world")
     preference = 1
     count = 0
     preferences = {}
