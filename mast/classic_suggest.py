@@ -15,8 +15,8 @@ avoid classes -> a list of course to avoid
 preferred classes-> nested array, index 0 is the list of favorite courses, and index 1, index2
 """
 def classic_suggest(student, prefrered_class, max_classes, avoid_classes, time_constraints, graduation_semester):
-    track = Track.objects.filter(track = student.track)
-    if(len(track) ==0):
+    track = student.track
+    if(track ==None):
         return "does not have track yet"
     #the list of courses to take
     course_list = []
@@ -120,7 +120,7 @@ def classic_suggest(student, prefrered_class, max_classes, avoid_classes, time_c
         course_and_prerequisite[course] = unsatisfied_prerequisite
         for prerequisite in unsatisfied_prerequisite:
             course_and_prerequisite[prerequisite] = get_unsatisfied_prerequisite(student, prerequisite.department, prerequisite.number)
-    schedule_id  = generate_plan(student, course_and_prerequisite, max_classes)
+    schedule_id  = generate_plan(student, course_and_prerequisite, max_classes, time_constraints)
     return "Finished generation of classic schedule " + str(schedule_id)
 
 """
