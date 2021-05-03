@@ -172,20 +172,22 @@
         <tr>
             {% if student_list %}
                 {% for student in student_list %}
-                    <td><a href="/mast/{{ student.sbu_id }}">{{ student.sbu_id }}</a></td>
-                    <td>{{ student.last_name }}, {{ student.first_name }}</td>
-                    <td>
-                        {% if student.graduated %}
-                            {{ student.graduation_semester }}
-                        {% else %}
-                            N/A
-                        {% endif %}
-                    </td>
-                    <td>{{ student.semesters_enrolled }}</td>
-                    <td> {{ student.satisfied_courses }} - {{ student.pending_courses }}
-                        - {{ student.unsatisfied_courses }}</td>
+                    {% if student.major.department == current_user or student.major is None or current_user == "admin" %}
+                        <td><a href="/mast/{{ student.sbu_id }}">{{ student.sbu_id }}</a></td>
+                        <td>{{ student.last_name }}, {{ student.first_name }}</td>
+                        <td>
+                            {% if student.graduated %}
+                                {{ student.graduation_semester }}
+                            {% else %}
+                                N/A
+                            {% endif %}
+                        </td>
+                        <td>{{ student.semesters_enrolled }}</td>
+                        <td> {{ student.satisfied_courses }} - {{ student.pending_courses }}
+                            - {{ student.unsatisfied_courses }}</td>
 
-                    </tr>
+                        </tr>
+                    {% endif %}
                 {% endfor %}
             {% endif %}
         </tbody>

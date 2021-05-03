@@ -173,13 +173,17 @@ def commit_new_student(request):
         student_user.save()
         student_user.groups.add(Group.objects.filter(name='Student')[0])
     except:
+        current_user = request.user.username
+        if current_user != "admin": 
+            current_user = current_user[0:3]
         if id_taken:
             return render(request, 'mast/student_index.html', {
                 'major_list': Major.objects.order_by('name'),
                 'semesters': Semester.objects.order_by('year'),
                 'requirement_semesters': Semester.objects.order_by('year'),
                 'student_list': Student.objects.order_by('sbu_id'),
-                'error_message': "ID taken."
+                'error_message': "ID taken.",
+                'current_user': current_user
             })
         else:
             return render(request, 'mast/student_index.html', {
@@ -187,7 +191,8 @@ def commit_new_student(request):
                 'semesters': Semester.objects.order_by('year'),
                 'requirement_semesters': Semester.objects.order_by('year'),
                 'error_message': "Invalid or missing value.",
-                'student_list': Student.objects.order_by('sbu_id')
+                'student_list': Student.objects.order_by('sbu_id'),
+                'current_user': current_user
             })
     return HttpResponseRedirect(reverse('mast:detail', args=(sbu_id,)))
 

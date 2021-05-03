@@ -18,12 +18,14 @@ def student_index(request):
         if not found:
             track_list.append(i)
         found = False
-
+    current_user = request.user.username
+    if current_user != "admin": 
+        current_user = current_user[0:3]
     context = {'student_list': Student.objects.order_by('sbu_id'),
                'major_list': Major.objects.order_by('name'),
                'semesters': Semester.objects.all(),
                'requirement_semesters': Semester.objects.all(),
-               'track_list': track_list}
+               'track_list': track_list, 'current_user': current_user}
     return render(request, 'mast/student_index.html', context)
 
 
@@ -102,6 +104,10 @@ def search(request):
 
     name_list = set(first_name_list).union(set(last_name_list))
     student_list = list(set(name_list) & set(sbu_id_list))
+
+    current_user = request.user.username
+    if current_user != "admin": 
+        current_user = current_user[0:3]
     context = {'student_list': student_list,
                'major_list': Major.objects.order_by('name'),
                'name_search': name_search,
@@ -110,7 +116,8 @@ def search(request):
                'withdrew_search': withdrew_search,
                'major_search': int(major_search),
                'plan_complete_search': plan_complete_search,
-               'plan_valid_search': plan_valid_search
+               'plan_valid_search': plan_valid_search,
+               'current_user': current_user
                }
 
     return render(request, 'mast/student_index.html', context)
