@@ -104,8 +104,9 @@
                 data['start_time'] = document.getElementById('start_time').value;
                 data['end_time'] = document.getElementById('end_time').value;
                 data['courses_per_semester'] = document.getElementById('courses_per_semester').value;
-                $.post(URL, data);
-                window.location.href = "{% url 'mast:offered_schedules' student.sbu_id %}"
+                $.post(URL, data, function(){
+                    window.location.href = "{% url 'mast:offered_schedules' student.sbu_id %}"
+                });
             })
         });
 
