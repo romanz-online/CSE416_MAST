@@ -101,14 +101,16 @@ def classic_suggest(student, prefrered_class, max_classes, avoid_classes, time_c
         current_credits += course.lower_credit_limit
     # add new courses to the list if does not have enough credits
     if current_credits < credits_required:
-        major_courses = [i for i in Course.objects.filter(department=student.major) if i.number >= 500]
+        major_courses = [i for i in Course.objects.filter(department=student.major.department) if i.number >= 500]
+        print("major courses are")
+        print(major_courses)
         for course in major_courses:
             if course not in course_list and course not in passed_courses:
                 current_credits += course.lower_credit_limit
                 course_list.append(course)
                 if current_credits >= credits_required:
                     break
-
+    print(course_list)
     # a dictionary of courses and their prerequisite
     course_and_prerequisite = {}
     # a list of plans
@@ -119,7 +121,9 @@ def classic_suggest(student, prefrered_class, max_classes, avoid_classes, time_c
         for prerequisite in unsatisfied_prerequisite:
             course_and_prerequisite[prerequisite] = get_unsatisfied_prerequisite(student, prerequisite.department,
                                                                                  prerequisite.number)
+    print(course_and_prerequisite)
     schedule_id = generate_plan(student, course_and_prerequisite, max_classes, time_constraints)
+
     return "Finished generation of classic schedule " + str(schedule_id)
 
 
@@ -155,15 +159,16 @@ def get_unsatisfied_prerequisite(student, department, number):
         if optional_set:
             for set in optional_set:
                 satisfy = False
-                optional_course_prerequisites = Prerequisite.objects.filter(couse_set=set)
+                optional_course_prerequisites = Prerequisite.objects.filter(course_set=set)
                 for course_prerequisite in optional_course_prerequisites:
                     if passCourse(student, course_prerequisite.course.course):
                         satisfy = True
                         break
                 # does not satisfy, just take the first course in the set
                 if (satisfy == False):
-                    course_prerequisite = optional_course_prerequisites[0]
-                    required_courses.append(course_prerequisite.course.course)
+                    if(len(optional_course_prerequisites) !=0):
+                        course_prerequisite = optional_course_prerequisites[0]
+                        required_courses.append(course_prerequisite.course.course)
         return required_courses
 
 
@@ -179,9 +184,11 @@ def passCourse(student, course):
     passed_course_instance = CoursesTakenByStudent.objects.filter(student=student, status=CourseStatus.PASSED)
     Transfer_course_instance = CoursesTakenByStudent.objects.filter(student=student, status=CourseStatus.TRANSFER)
     pending_courses_instance = CoursesTakenByStudent.objects.filter(student=student, status=CourseStatus.PENDING)
-    passed_course_instance = passed_course_instance + Transfer_course_instance + pending_courses_instance
+    passed_course = [i for i in passed_course_instance] + [i for i in Transfer_course_instance] + \
+                    [i for i in pending_courses_instance]
+
     passed = False
-    if (len(passed_course_instance) != 0):
+    if (len(passed_course) != 0):
         for instance in passed_course_instance:
             if instance.course.course == course:
                 passed = True
@@ -228,12 +235,16 @@ def generate_plan(student, course_and_prerequisite, max_classes, time_constraint
         if course.schedule_id >= schedule_id:
             schedule_id = course.schedule_id + 1
     current_semester = Semester.objects.filter(is_current_semester=True).first()
+    print(current_semester.year)
+    print(current_semester.season)
     next_semester = get_next_semester(current_semester)
     courses_can_take = []
     for course in course_and_prerequisite.keys():
         if not course_and_prerequisite[course]:
             courses_can_take.append(course)
     while (len(course_and_prerequisite) > 0):
+        print(next_semester.year)
+        print(next_semester.season)
         add_new_semester(student, schedule_id, next_semester, courses_can_take, course_and_prerequisite, max_classes,
                          time_constraints)
         courses_can_take = []
@@ -267,10 +278,15 @@ return the number of courses added to that semester
 
 
 def add_new_semester(student, schedule_id, semester, courses, course_and_prerequisite, max_classes, time_constraints):
+    print("adding semester:")
+    print(semester.year)
+    print(semester.season)
+    print(courses)
+    print(course_and_prerequisite)
     currentInstances = []
     for course in courses:
         # did not exceed max number of courses
-        if len(currentInstances) < max_classes:
+        if len(currentInstances) < int(max_classes):
             # get course instances and check if they can be taken
             courseInstances = CourseInstance.objects.filter(course=course, semester=semester)
             if (len(courseInstances) == 0):
