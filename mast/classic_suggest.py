@@ -103,7 +103,7 @@ def classic_suggest(student, prefrered_class, max_classes, avoid_classes, time_c
         current_credits += course.lower_credit_limit
     # add new courses to the list if does not have enough credits
     if current_credits < credits_required:
-        major_courses = [i for i in Course.objects.filter(department=student.major.department) if i.number >= 500]
+        major_courses = [i for i in Course.objects.filter(department=student.major.department) if i.number >= 510]
         print("major courses are")
         print(major_courses)
         for course in major_courses:
@@ -284,6 +284,13 @@ def add_new_semester(student, schedule_id, semester, courses, course_and_prerequ
     print(semester.season)
     print(courses)
     print(course_and_prerequisite)
+    priority = []
+    for course in courses:
+        for key in course_and_prerequisite.keys():
+            if course in course_and_prerequisite[key]:
+                priority.append(course)
+                courses.remove(course)
+    courses = priority + courses
     currentInstances = []
     for course in courses:
         # did not exceed max number of courses

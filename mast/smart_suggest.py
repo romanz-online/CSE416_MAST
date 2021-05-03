@@ -9,21 +9,21 @@ from .models import Student, CoursesTakenByStudent, StudentCourseSchedule, Track
 def smart_suggest_gen(student):
     # get graduated students who have same track and major
     graduate_set = Student.objects.filter(track=student.track, major=student.major, graduated=True)
+    student_courses = StudentCourseSchedule.objects.filter(student=student)
     # if student has not taken or signed up for any classes, all students are 100% similar
-    if student.pending_courses == 0 and student.satisfied_courses == 0:
+    if len(student_courses) == 0:
         similar_schedules = graduate_set
     # else find similar students
     else:
         similar_schedules = calculate_similarity(student, graduate_set)
     # if no similar_schedules
     if len(similar_schedules) == 0:
-        # TODO will need to be updated to a proper render request once UI is in
         print("Not enough data for Smart Suggest")
         return
     # else continue and get course counts
     course_counts = course_counter(student, graduate_set)
+    print(course_counts)
     # get next semester number for student
-    student_courses = StudentCourseSchedule.objects.filter(student=student)
     student_semesters = map_semester_numbers(student, student_courses)
     if student_semesters:
         current_semester = student_semesters[max(student_semesters.items(), key=operator.itemgetter(1))[0]] + 1
@@ -35,9 +35,9 @@ def smart_suggest_gen(student):
         if course.schedule_id >= schedule_id:
             schedule_id = course.schedule_id + 1
     # while schedule is not complete, add semesters
-    while not requirements_met(student, schedule_id):
+    while not requirements_met(student, schedule_id, 'Smart'):
         if create_semester_schedule(student, current_semester, schedule_id, course_counts) == -1:
-            print("Something went wrong")
+            print("Not enough data")
             return
         else:
             # update course counts to remove added classes
@@ -119,6 +119,7 @@ def course_counter(student, graduate_set):
 
     for g_s in graduate_set:
         graduated_courses = StudentCourseSchedule.objects.filter(student=g_s)
+        print(graduated_courses)
         graduated_semesters = map_semester_numbers(g_s, graduated_courses)
         graduated_map = course_semester_map(graduated_courses, graduated_semesters)
         for course in graduated_map:
@@ -139,11 +140,12 @@ def course_counter(student, graduate_set):
 
 
 # return boolean indicating if the students's schedule meets all degree reqs
-def requirements_met(student, schedule_id):
+def requirements_met(student, schedule_id, schedule_type):
+    print("check")
     if not student.track:
         return False
     taken_courses = [i for i in CoursesTakenByStudent.objects.filter(student=student)]
-    scheduled_courses = [i for i in StudentCourseSchedule.objects.filter(student=student, schedule_id=schedule_id)]
+    scheduled_courses = [i for i in StudentCourseSchedule.objects.filter(student=student, schedule_id=schedule_id, schedule_type='Smart')]
     courses_to_check = taken_courses + scheduled_courses
     track = student.track
 
@@ -159,8 +161,8 @@ def requirements_met(student, schedule_id):
             unsatisfied_requirements -= 1
 
     # yes, this is correct
-    # makes no sense, but whatever
-    return unsatisfied_requirements
+    # no, it wasn't
+    return not unsatisfied_requirements
 
 
 # add courses to a semester in student schedule
@@ -180,6 +182,7 @@ def create_semester_schedule(student, semester, schedule_id, course_counts):
         if prereqs_met(student, course, schedule_id):
             c = StudentCourseSchedule(student=student, course=course, schedule_id=schedule_id, schedule_type='Smart')
             c.save()
+            print(course)
             course_counts.pop(course)
         # can't take it this semester, save it for next most popular semester
         else:
@@ -189,6 +192,7 @@ def create_semester_schedule(student, semester, schedule_id, course_counts):
     return course_counts
 
 def prereqs_met(student, course, schedule_id):
+   
     student_courses = StudentCourseSchedule.objects.filter(student=student,
                                                            schedule_id=schedule_id) | StudentCourseSchedule.objects.filter(
         student=student, schedule_id=0)
