@@ -1,101 +1,401 @@
 sbu_id,first_name,last_name,email,department,track,entry_semester,entry_year,requirement_version_semester,requirement_version_year,graduation_semester,graduation_year,password
-620067097,name0,surname0,name0_surname0@stonybrook.edu,CSE,Thesis,Fall,2016,Spring,2021,Spring,2020,test_password_0
-905333393,name1,surname1,name1_surname1@stonybrook.edu,CSE,Special Project,Fall,2016,Spring,2021,Spring,2020,test_password_1
-436121530,name2,surname2,name2_surname2@stonybrook.edu,CSE,Advanced Project,Fall,2016,Spring,2021,Spring,2020,test_password_2
-951303697,name3,surname3,name3_surname3@stonybrook.edu,CSE,Special Project,Fall,2016,Spring,2021,Spring,2020,test_password_3
-506061224,name4,surname4,name4_surname4@stonybrook.edu,CSE,Thesis,Fall,2016,Spring,2021,Spring,2020,test_password_4
-830343100,name5,surname5,name5_surname5@stonybrook.edu,CSE,Thesis,Fall,2016,Spring,2021,Spring,2020,test_password_5
-758743085,name6,surname6,name6_surname6@stonybrook.edu,CSE,Special Project,Fall,2016,Spring,2021,Spring,2020,test_password_6
-767344306,name7,surname7,name7_surname7@stonybrook.edu,CSE,Advanced Project,Fall,2016,Spring,2021,Spring,2020,test_password_7
-784132636,name8,surname8,name8_surname8@stonybrook.edu,CSE,Special Project,Fall,2016,Spring,2021,Spring,2020,test_password_8
-811708262,name9,surname9,name9_surname9@stonybrook.edu,CSE,Advanced Project,Fall,2016,Spring,2021,Spring,2020,test_password_9
-837671360,name10,surname10,name10_surname10@stonybrook.edu,CSE,Thesis,Fall,2016,Spring,2021,Spring,2020,test_password_10
-575345380,name11,surname11,name11_surname11@stonybrook.edu,CSE,Thesis,Fall,2016,Spring,2021,Spring,2020,test_password_11
-859402438,name12,surname12,name12_surname12@stonybrook.edu,CSE,Thesis,Fall,2016,Spring,2021,Spring,2020,test_password_12
-967191495,name13,surname13,name13_surname13@stonybrook.edu,CSE,Special Project,Fall,2016,Spring,2021,Spring,2020,test_password_13
-765894137,name14,surname14,name14_surname14@stonybrook.edu,CSE,Special Project,Fall,2016,Spring,2021,Spring,2020,test_password_14
-766964911,name15,surname15,name15_surname15@stonybrook.edu,CSE,Special Project,Fall,2016,Spring,2021,Spring,2020,test_password_15
-683906154,name16,surname16,name16_surname16@stonybrook.edu,CSE,Special Project,Fall,2016,Spring,2021,Spring,2020,test_password_16
-553805382,name17,surname17,name17_surname17@stonybrook.edu,CSE,Thesis,Fall,2016,Spring,2021,Spring,2020,test_password_17
-632517803,name18,surname18,name18_surname18@stonybrook.edu,CSE,Thesis,Fall,2016,Spring,2021,Spring,2020,test_password_18
-838186339,name19,surname19,name19_surname19@stonybrook.edu,CSE,Thesis,Fall,2016,Spring,2021,Spring,2020,test_password_19
-468088903,name20,surname20,name20_surname20@stonybrook.edu,CSE,Special Project,Fall,2016,Spring,2021,Spring,2020,test_password_20
-973676515,name21,surname21,name21_surname21@stonybrook.edu,CSE,Thesis,Fall,2016,Spring,2021,Spring,2020,test_password_21
-645269625,name22,surname22,name22_surname22@stonybrook.edu,CSE,Thesis,Fall,2016,Spring,2021,Spring,2020,test_password_22
-846845592,name23,surname23,name23_surname23@stonybrook.edu,CSE,Advanced Project,Fall,2016,Spring,2021,Spring,2020,test_password_23
-893020940,name24,surname24,name24_surname24@stonybrook.edu,CSE,Advanced Project,Fall,2016,Spring,2021,Spring,2020,test_password_24
-983886061,name25,surname25,name25_surname25@stonybrook.edu,CSE,Thesis,Fall,2016,Spring,2021,Spring,2020,test_password_25
-925175032,name26,surname26,name26_surname26@stonybrook.edu,CSE,Special Project,Fall,2016,Spring,2021,Spring,2020,test_password_26
-901039610,name27,surname27,name27_surname27@stonybrook.edu,CSE,Advanced Project,Fall,2016,Spring,2021,Spring,2020,test_password_27
-664896787,name28,surname28,name28_surname28@stonybrook.edu,CSE,Special Project,Fall,2016,Spring,2021,Spring,2020,test_password_28
-507129960,name29,surname29,name29_surname29@stonybrook.edu,CSE,Special Project,Fall,2016,Spring,2021,Spring,2020,test_password_29
-511980868,name30,surname30,name30_surname30@stonybrook.edu,CSE,Advanced Project,Fall,2016,Spring,2021,Spring,2020,test_password_30
-463958809,name31,surname31,name31_surname31@stonybrook.edu,CSE,Thesis,Fall,2016,Spring,2021,Spring,2020,test_password_31
-533836850,name32,surname32,name32_surname32@stonybrook.edu,CSE,Thesis,Fall,2016,Spring,2021,Spring,2020,test_password_32
-643620301,name33,surname33,name33_surname33@stonybrook.edu,CSE,Thesis,Fall,2016,Spring,2021,Spring,2020,test_password_33
-991587025,name34,surname34,name34_surname34@stonybrook.edu,CSE,Thesis,Fall,2016,Spring,2021,Spring,2020,test_password_34
-472712104,name35,surname35,name35_surname35@stonybrook.edu,CSE,Advanced Project,Fall,2016,Spring,2021,Spring,2020,test_password_35
-789450159,name36,surname36,name36_surname36@stonybrook.edu,CSE,Thesis,Fall,2016,Spring,2021,Spring,2020,test_password_36
-411233274,name37,surname37,name37_surname37@stonybrook.edu,CSE,Thesis,Fall,2016,Spring,2021,Spring,2020,test_password_37
-667923943,name38,surname38,name38_surname38@stonybrook.edu,CSE,Advanced Project,Fall,2016,Spring,2021,Spring,2020,test_password_38
-658697125,name39,surname39,name39_surname39@stonybrook.edu,CSE,Thesis,Fall,2016,Spring,2021,Spring,2020,test_password_39
-886211921,name40,surname40,name40_surname40@stonybrook.edu,CSE,Thesis,Fall,2016,Spring,2021,Spring,2020,test_password_40
-476365287,name41,surname41,name41_surname41@stonybrook.edu,CSE,Advanced Project,Fall,2016,Spring,2021,Spring,2020,test_password_41
-516764305,name42,surname42,name42_surname42@stonybrook.edu,CSE,Thesis,Fall,2016,Spring,2021,Spring,2020,test_password_42
-522733580,name43,surname43,name43_surname43@stonybrook.edu,CSE,Advanced Project,Fall,2016,Spring,2021,Spring,2020,test_password_43
-812887310,name44,surname44,name44_surname44@stonybrook.edu,CSE,Special Project,Fall,2016,Spring,2021,Spring,2020,test_password_44
-868853783,name45,surname45,name45_surname45@stonybrook.edu,CSE,Advanced Project,Fall,2016,Spring,2021,Spring,2020,test_password_45
-786000770,name46,surname46,name46_surname46@stonybrook.edu,CSE,Thesis,Fall,2016,Spring,2021,Spring,2020,test_password_46
-563793873,name47,surname47,name47_surname47@stonybrook.edu,CSE,Advanced Project,Fall,2016,Spring,2021,Spring,2020,test_password_47
-527569334,name48,surname48,name48_surname48@stonybrook.edu,CSE,Special Project,Fall,2016,Spring,2021,Spring,2020,test_password_48
-710576372,name49,surname49,name49_surname49@stonybrook.edu,CSE,Advanced Project,Fall,2016,Spring,2021,Spring,2020,test_password_49
-598673129,name50,surname50,name50_surname50@stonybrook.edu,CSE,Advanced Project,Fall,2016,Spring,2021,Spring,2020,test_password_50
-429019296,name51,surname51,name51_surname51@stonybrook.edu,CSE,Advanced Project,Fall,2016,Spring,2021,Spring,2020,test_password_51
-998168856,name52,surname52,name52_surname52@stonybrook.edu,CSE,Thesis,Fall,2016,Spring,2021,Spring,2020,test_password_52
-430002111,name53,surname53,name53_surname53@stonybrook.edu,CSE,Special Project,Fall,2016,Spring,2021,Spring,2020,test_password_53
-924578335,name54,surname54,name54_surname54@stonybrook.edu,CSE,Advanced Project,Fall,2016,Spring,2021,Spring,2020,test_password_54
-483079644,name55,surname55,name55_surname55@stonybrook.edu,CSE,Advanced Project,Fall,2016,Spring,2021,Spring,2020,test_password_55
-995814094,name56,surname56,name56_surname56@stonybrook.edu,CSE,Special Project,Fall,2016,Spring,2021,Spring,2020,test_password_56
-938499560,name57,surname57,name57_surname57@stonybrook.edu,CSE,Thesis,Fall,2016,Spring,2021,Spring,2020,test_password_57
-412945496,name58,surname58,name58_surname58@stonybrook.edu,CSE,Thesis,Fall,2016,Spring,2021,Spring,2020,test_password_58
-727672377,name59,surname59,name59_surname59@stonybrook.edu,CSE,Thesis,Fall,2016,Spring,2021,Spring,2020,test_password_59
-609106855,name60,surname60,name60_surname60@stonybrook.edu,CSE,Advanced Project,Fall,2016,Spring,2021,Spring,2020,test_password_60
-400846183,name61,surname61,name61_surname61@stonybrook.edu,CSE,Thesis,Fall,2016,Spring,2021,Spring,2020,test_password_61
-544350465,name62,surname62,name62_surname62@stonybrook.edu,CSE,Thesis,Fall,2016,Spring,2021,Spring,2020,test_password_62
-586368882,name63,surname63,name63_surname63@stonybrook.edu,CSE,Special Project,Fall,2016,Spring,2021,Spring,2020,test_password_63
-812450813,name64,surname64,name64_surname64@stonybrook.edu,CSE,Advanced Project,Fall,2016,Spring,2021,Spring,2020,test_password_64
-860760656,name65,surname65,name65_surname65@stonybrook.edu,CSE,Thesis,Fall,2016,Spring,2021,Spring,2020,test_password_65
-741443692,name66,surname66,name66_surname66@stonybrook.edu,CSE,Thesis,Fall,2016,Spring,2021,Spring,2020,test_password_66
-647723013,name67,surname67,name67_surname67@stonybrook.edu,CSE,Thesis,Fall,2016,Spring,2021,Spring,2020,test_password_67
-783599460,name68,surname68,name68_surname68@stonybrook.edu,CSE,Advanced Project,Fall,2016,Spring,2021,Spring,2020,test_password_68
-592458273,name69,surname69,name69_surname69@stonybrook.edu,CSE,Advanced Project,Fall,2016,Spring,2021,Spring,2020,test_password_69
-434855791,name70,surname70,name70_surname70@stonybrook.edu,CSE,Thesis,Fall,2016,Spring,2021,Spring,2020,test_password_70
-426657450,name71,surname71,name71_surname71@stonybrook.edu,CSE,Advanced Project,Fall,2016,Spring,2021,Spring,2020,test_password_71
-831391011,name72,surname72,name72_surname72@stonybrook.edu,CSE,Advanced Project,Fall,2016,Spring,2021,Spring,2020,test_password_72
-481902014,name73,surname73,name73_surname73@stonybrook.edu,CSE,Special Project,Fall,2016,Spring,2021,Spring,2020,test_password_73
-524507196,name74,surname74,name74_surname74@stonybrook.edu,CSE,Special Project,Fall,2016,Spring,2021,Spring,2020,test_password_74
-774673013,name75,surname75,name75_surname75@stonybrook.edu,CSE,Thesis,Fall,2016,Spring,2021,Spring,2020,test_password_75
-431012229,name76,surname76,name76_surname76@stonybrook.edu,CSE,Special Project,Fall,2016,Spring,2021,Spring,2020,test_password_76
-725315928,name77,surname77,name77_surname77@stonybrook.edu,CSE,Thesis,Fall,2016,Spring,2021,Spring,2020,test_password_77
-591982955,name78,surname78,name78_surname78@stonybrook.edu,CSE,Thesis,Fall,2016,Spring,2021,Spring,2020,test_password_78
-594863897,name79,surname79,name79_surname79@stonybrook.edu,CSE,Thesis,Fall,2016,Spring,2021,Spring,2020,test_password_79
-886136818,name80,surname80,name80_surname80@stonybrook.edu,CSE,Advanced Project,Fall,2016,Spring,2021,Spring,2020,test_password_80
-900284903,name81,surname81,name81_surname81@stonybrook.edu,CSE,Advanced Project,Fall,2016,Spring,2021,Spring,2020,test_password_81
-695184361,name82,surname82,name82_surname82@stonybrook.edu,CSE,Advanced Project,Fall,2016,Spring,2021,Spring,2020,test_password_82
-697368162,name83,surname83,name83_surname83@stonybrook.edu,CSE,Special Project,Fall,2016,Spring,2021,Spring,2020,test_password_83
-648932248,name84,surname84,name84_surname84@stonybrook.edu,CSE,Special Project,Fall,2016,Spring,2021,Spring,2020,test_password_84
-610672279,name85,surname85,name85_surname85@stonybrook.edu,CSE,Thesis,Fall,2016,Spring,2021,Spring,2020,test_password_85
-921745107,name86,surname86,name86_surname86@stonybrook.edu,CSE,Advanced Project,Fall,2016,Spring,2021,Spring,2020,test_password_86
-425468657,name87,surname87,name87_surname87@stonybrook.edu,CSE,Special Project,Fall,2016,Spring,2021,Spring,2020,test_password_87
-625078489,name88,surname88,name88_surname88@stonybrook.edu,CSE,Advanced Project,Fall,2016,Spring,2021,Spring,2020,test_password_88
-919074449,name89,surname89,name89_surname89@stonybrook.edu,CSE,Thesis,Fall,2016,Spring,2021,Spring,2020,test_password_89
-687588054,name90,surname90,name90_surname90@stonybrook.edu,CSE,Special Project,Fall,2016,Spring,2021,Spring,2020,test_password_90
-929385663,name91,surname91,name91_surname91@stonybrook.edu,CSE,Thesis,Fall,2016,Spring,2021,Spring,2020,test_password_91
-597396283,name92,surname92,name92_surname92@stonybrook.edu,CSE,Special Project,Fall,2016,Spring,2021,Spring,2020,test_password_92
-704168432,name93,surname93,name93_surname93@stonybrook.edu,CSE,Thesis,Fall,2016,Spring,2021,Spring,2020,test_password_93
-848249441,name94,surname94,name94_surname94@stonybrook.edu,CSE,Special Project,Fall,2016,Spring,2021,Spring,2020,test_password_94
-982899181,name95,surname95,name95_surname95@stonybrook.edu,CSE,Special Project,Fall,2016,Spring,2021,Spring,2020,test_password_95
-443173886,name96,surname96,name96_surname96@stonybrook.edu,CSE,Advanced Project,Fall,2016,Spring,2021,Spring,2020,test_password_96
-564876762,name97,surname97,name97_surname97@stonybrook.edu,CSE,Special Project,Fall,2016,Spring,2021,Spring,2020,test_password_97
-814135171,name98,surname98,name98_surname98@stonybrook.edu,CSE,Special Project,Fall,2016,Spring,2021,Spring,2020,test_password_98
-939115350,name99,surname99,name99_surname99@stonybrook.edu,CSE,Special Project,Fall,2016,Spring,2021,Spring,2020,test_password_99
+396539218,name0,surname0,name0_surname0@stonybrook.edu,CSE,Special Project,Fall,2016,Spring,2021,Spring,2020,test_password_0
+353386750,name1,surname1,name1_surname1@stonybrook.edu,CSE,Thesis,Fall,2016,Spring,2021,Spring,2020,test_password_1
+365478343,name2,surname2,name2_surname2@stonybrook.edu,CSE,Thesis,Fall,2016,Spring,2021,Spring,2020,test_password_2
+329874590,name3,surname3,name3_surname3@stonybrook.edu,CSE,Special Project,Fall,2016,Spring,2021,Spring,2020,test_password_3
+332410000,name4,surname4,name4_surname4@stonybrook.edu,CSE,Thesis,Fall,2016,Spring,2021,Spring,2020,test_password_4
+348470836,name5,surname5,name5_surname5@stonybrook.edu,CSE,Special Project,Fall,2016,Spring,2021,Spring,2020,test_password_5
+343481639,name6,surname6,name6_surname6@stonybrook.edu,CSE,Special Project,Fall,2016,Spring,2021,Spring,2020,test_password_6
+308284664,name7,surname7,name7_surname7@stonybrook.edu,CSE,Thesis,Fall,2016,Spring,2021,Spring,2020,test_password_7
+355981394,name8,surname8,name8_surname8@stonybrook.edu,CSE,Advanced Project,Fall,2016,Spring,2021,Spring,2020,test_password_8
+349593466,name9,surname9,name9_surname9@stonybrook.edu,CSE,Special Project,Fall,2016,Spring,2021,Spring,2020,test_password_9
+369949900,name10,surname10,name10_surname10@stonybrook.edu,CSE,Advanced Project,Fall,2016,Spring,2021,Spring,2020,test_password_10
+362393168,name11,surname11,name11_surname11@stonybrook.edu,CSE,Advanced Project,Fall,2016,Spring,2021,Spring,2020,test_password_11
+346476103,name12,surname12,name12_surname12@stonybrook.edu,CSE,Special Project,Fall,2016,Spring,2021,Spring,2020,test_password_12
+368530687,name13,surname13,name13_surname13@stonybrook.edu,CSE,Advanced Project,Fall,2016,Spring,2021,Spring,2020,test_password_13
+367151370,name14,surname14,name14_surname14@stonybrook.edu,CSE,Thesis,Fall,2016,Spring,2021,Spring,2020,test_password_14
+381873033,name15,surname15,name15_surname15@stonybrook.edu,CSE,Special Project,Fall,2016,Spring,2021,Spring,2020,test_password_15
+364006040,name16,surname16,name16_surname16@stonybrook.edu,CSE,Special Project,Fall,2016,Spring,2021,Spring,2020,test_password_16
+309251485,name17,surname17,name17_surname17@stonybrook.edu,CSE,Thesis,Fall,2016,Spring,2021,Spring,2020,test_password_17
+310505058,name18,surname18,name18_surname18@stonybrook.edu,CSE,Special Project,Fall,2016,Spring,2021,Spring,2020,test_password_18
+360755392,name19,surname19,name19_surname19@stonybrook.edu,CSE,Advanced Project,Fall,2016,Spring,2021,Spring,2020,test_password_19
+317972883,name20,surname20,name20_surname20@stonybrook.edu,CSE,Special Project,Fall,2016,Spring,2021,Spring,2020,test_password_20
+321127115,name21,surname21,name21_surname21@stonybrook.edu,CSE,Advanced Project,Fall,2016,Spring,2021,Spring,2020,test_password_21
+396471512,name22,surname22,name22_surname22@stonybrook.edu,CSE,Advanced Project,Fall,2016,Spring,2021,Spring,2020,test_password_22
+354929181,name23,surname23,name23_surname23@stonybrook.edu,CSE,Special Project,Fall,2016,Spring,2021,Spring,2020,test_password_23
+312830594,name24,surname24,name24_surname24@stonybrook.edu,CSE,Thesis,Fall,2016,Spring,2021,Spring,2020,test_password_24
+398977022,name25,surname25,name25_surname25@stonybrook.edu,CSE,Thesis,Fall,2016,Spring,2021,Spring,2020,test_password_25
+319028796,name26,surname26,name26_surname26@stonybrook.edu,CSE,Thesis,Fall,2016,Spring,2021,Spring,2020,test_password_26
+371775914,name27,surname27,name27_surname27@stonybrook.edu,CSE,Special Project,Fall,2016,Spring,2021,Spring,2020,test_password_27
+314283294,name28,surname28,name28_surname28@stonybrook.edu,CSE,Thesis,Fall,2016,Spring,2021,Spring,2020,test_password_28
+395396053,name29,surname29,name29_surname29@stonybrook.edu,CSE,Thesis,Fall,2016,Spring,2021,Spring,2020,test_password_29
+347216504,name30,surname30,name30_surname30@stonybrook.edu,CSE,Special Project,Fall,2016,Spring,2021,Spring,2020,test_password_30
+318135825,name31,surname31,name31_surname31@stonybrook.edu,CSE,Advanced Project,Fall,2016,Spring,2021,Spring,2020,test_password_31
+326619687,name32,surname32,name32_surname32@stonybrook.edu,CSE,Thesis,Fall,2016,Spring,2021,Spring,2020,test_password_32
+342006643,name33,surname33,name33_surname33@stonybrook.edu,CSE,Special Project,Fall,2016,Spring,2021,Spring,2020,test_password_33
+345996738,name34,surname34,name34_surname34@stonybrook.edu,CSE,Thesis,Fall,2016,Spring,2021,Spring,2020,test_password_34
+336231527,name35,surname35,name35_surname35@stonybrook.edu,CSE,Special Project,Fall,2016,Spring,2021,Spring,2020,test_password_35
+314355956,name36,surname36,name36_surname36@stonybrook.edu,CSE,Advanced Project,Fall,2016,Spring,2021,Spring,2020,test_password_36
+301879407,name37,surname37,name37_surname37@stonybrook.edu,CSE,Special Project,Fall,2016,Spring,2021,Spring,2020,test_password_37
+354434723,name38,surname38,name38_surname38@stonybrook.edu,CSE,Advanced Project,Fall,2016,Spring,2021,Spring,2020,test_password_38
+379304271,name39,surname39,name39_surname39@stonybrook.edu,CSE,Special Project,Fall,2016,Spring,2021,Spring,2020,test_password_39
+315877787,name40,surname40,name40_surname40@stonybrook.edu,CSE,Advanced Project,Fall,2016,Spring,2021,Spring,2020,test_password_40
+388677182,name41,surname41,name41_surname41@stonybrook.edu,CSE,Advanced Project,Fall,2016,Spring,2021,Spring,2020,test_password_41
+339731421,name42,surname42,name42_surname42@stonybrook.edu,CSE,Advanced Project,Fall,2016,Spring,2021,Spring,2020,test_password_42
+396175308,name43,surname43,name43_surname43@stonybrook.edu,CSE,Thesis,Fall,2016,Spring,2021,Spring,2020,test_password_43
+384691730,name44,surname44,name44_surname44@stonybrook.edu,CSE,Advanced Project,Fall,2016,Spring,2021,Spring,2020,test_password_44
+324070657,name45,surname45,name45_surname45@stonybrook.edu,CSE,Special Project,Fall,2016,Spring,2021,Spring,2020,test_password_45
+333452236,name46,surname46,name46_surname46@stonybrook.edu,CSE,Advanced Project,Fall,2016,Spring,2021,Spring,2020,test_password_46
+357685629,name47,surname47,name47_surname47@stonybrook.edu,CSE,Advanced Project,Fall,2016,Spring,2021,Spring,2020,test_password_47
+303800340,name48,surname48,name48_surname48@stonybrook.edu,CSE,Special Project,Fall,2016,Spring,2021,Spring,2020,test_password_48
+392670690,name49,surname49,name49_surname49@stonybrook.edu,CSE,Advanced Project,Fall,2016,Spring,2021,Spring,2020,test_password_49
+384863878,name50,surname50,name50_surname50@stonybrook.edu,CSE,Thesis,Fall,2016,Spring,2021,Spring,2020,test_password_50
+365270985,name51,surname51,name51_surname51@stonybrook.edu,CSE,Advanced Project,Fall,2016,Spring,2021,Spring,2020,test_password_51
+325090705,name52,surname52,name52_surname52@stonybrook.edu,CSE,Special Project,Fall,2016,Spring,2021,Spring,2020,test_password_52
+307115794,name53,surname53,name53_surname53@stonybrook.edu,CSE,Thesis,Fall,2016,Spring,2021,Spring,2020,test_password_53
+306576362,name54,surname54,name54_surname54@stonybrook.edu,CSE,Special Project,Fall,2016,Spring,2021,Spring,2020,test_password_54
+326558276,name55,surname55,name55_surname55@stonybrook.edu,CSE,Special Project,Fall,2016,Spring,2021,Spring,2020,test_password_55
+340068141,name56,surname56,name56_surname56@stonybrook.edu,CSE,Thesis,Fall,2016,Spring,2021,Spring,2020,test_password_56
+366976024,name57,surname57,name57_surname57@stonybrook.edu,CSE,Special Project,Fall,2016,Spring,2021,Spring,2020,test_password_57
+311030073,name58,surname58,name58_surname58@stonybrook.edu,CSE,Advanced Project,Fall,2016,Spring,2021,Spring,2020,test_password_58
+375075951,name59,surname59,name59_surname59@stonybrook.edu,CSE,Special Project,Fall,2016,Spring,2021,Spring,2020,test_password_59
+338932010,name60,surname60,name60_surname60@stonybrook.edu,CSE,Special Project,Fall,2016,Spring,2021,Spring,2020,test_password_60
+324157771,name61,surname61,name61_surname61@stonybrook.edu,CSE,Thesis,Fall,2016,Spring,2021,Spring,2020,test_password_61
+347801252,name62,surname62,name62_surname62@stonybrook.edu,CSE,Thesis,Fall,2016,Spring,2021,Spring,2020,test_password_62
+378993310,name63,surname63,name63_surname63@stonybrook.edu,CSE,Advanced Project,Fall,2016,Spring,2021,Spring,2020,test_password_63
+340415387,name64,surname64,name64_surname64@stonybrook.edu,CSE,Special Project,Fall,2016,Spring,2021,Spring,2020,test_password_64
+370621081,name65,surname65,name65_surname65@stonybrook.edu,CSE,Thesis,Fall,2016,Spring,2021,Spring,2020,test_password_65
+378993682,name66,surname66,name66_surname66@stonybrook.edu,CSE,Thesis,Fall,2016,Spring,2021,Spring,2020,test_password_66
+325442784,name67,surname67,name67_surname67@stonybrook.edu,CSE,Thesis,Fall,2016,Spring,2021,Spring,2020,test_password_67
+376294478,name68,surname68,name68_surname68@stonybrook.edu,CSE,Thesis,Fall,2016,Spring,2021,Spring,2020,test_password_68
+393837178,name69,surname69,name69_surname69@stonybrook.edu,CSE,Thesis,Fall,2016,Spring,2021,Spring,2020,test_password_69
+307877412,name70,surname70,name70_surname70@stonybrook.edu,CSE,Advanced Project,Fall,2016,Spring,2021,Spring,2020,test_password_70
+335973268,name71,surname71,name71_surname71@stonybrook.edu,CSE,Thesis,Fall,2016,Spring,2021,Spring,2020,test_password_71
+358020924,name72,surname72,name72_surname72@stonybrook.edu,CSE,Advanced Project,Fall,2016,Spring,2021,Spring,2020,test_password_72
+399960924,name73,surname73,name73_surname73@stonybrook.edu,CSE,Special Project,Fall,2016,Spring,2021,Spring,2020,test_password_73
+309498692,name74,surname74,name74_surname74@stonybrook.edu,CSE,Advanced Project,Fall,2016,Spring,2021,Spring,2020,test_password_74
+356216828,name75,surname75,name75_surname75@stonybrook.edu,CSE,Advanced Project,Fall,2016,Spring,2021,Spring,2020,test_password_75
+393052933,name76,surname76,name76_surname76@stonybrook.edu,CSE,Advanced Project,Fall,2016,Spring,2021,Spring,2020,test_password_76
+378157530,name77,surname77,name77_surname77@stonybrook.edu,CSE,Thesis,Fall,2016,Spring,2021,Spring,2020,test_password_77
+318684578,name78,surname78,name78_surname78@stonybrook.edu,CSE,Advanced Project,Fall,2016,Spring,2021,Spring,2020,test_password_78
+382280039,name79,surname79,name79_surname79@stonybrook.edu,CSE,Advanced Project,Fall,2016,Spring,2021,Spring,2020,test_password_79
+339825114,name80,surname80,name80_surname80@stonybrook.edu,CSE,Thesis,Fall,2016,Spring,2021,Spring,2020,test_password_80
+326183416,name81,surname81,name81_surname81@stonybrook.edu,CSE,Thesis,Fall,2016,Spring,2021,Spring,2020,test_password_81
+301299984,name82,surname82,name82_surname82@stonybrook.edu,CSE,Special Project,Fall,2016,Spring,2021,Spring,2020,test_password_82
+351228067,name83,surname83,name83_surname83@stonybrook.edu,CSE,Special Project,Fall,2016,Spring,2021,Spring,2020,test_password_83
+311550108,name84,surname84,name84_surname84@stonybrook.edu,CSE,Advanced Project,Fall,2016,Spring,2021,Spring,2020,test_password_84
+321652688,name85,surname85,name85_surname85@stonybrook.edu,CSE,Advanced Project,Fall,2016,Spring,2021,Spring,2020,test_password_85
+358776757,name86,surname86,name86_surname86@stonybrook.edu,CSE,Special Project,Fall,2016,Spring,2021,Spring,2020,test_password_86
+310928340,name87,surname87,name87_surname87@stonybrook.edu,CSE,Advanced Project,Fall,2016,Spring,2021,Spring,2020,test_password_87
+308157038,name88,surname88,name88_surname88@stonybrook.edu,CSE,Thesis,Fall,2016,Spring,2021,Spring,2020,test_password_88
+326898881,name89,surname89,name89_surname89@stonybrook.edu,CSE,Special Project,Fall,2016,Spring,2021,Spring,2020,test_password_89
+390122851,name90,surname90,name90_surname90@stonybrook.edu,CSE,Thesis,Fall,2016,Spring,2021,Spring,2020,test_password_90
+363763767,name91,surname91,name91_surname91@stonybrook.edu,CSE,Special Project,Fall,2016,Spring,2021,Spring,2020,test_password_91
+355727480,name92,surname92,name92_surname92@stonybrook.edu,CSE,Advanced Project,Fall,2016,Spring,2021,Spring,2020,test_password_92
+329968275,name93,surname93,name93_surname93@stonybrook.edu,CSE,Special Project,Fall,2016,Spring,2021,Spring,2020,test_password_93
+328579744,name94,surname94,name94_surname94@stonybrook.edu,CSE,Advanced Project,Fall,2016,Spring,2021,Spring,2020,test_password_94
+399372061,name95,surname95,name95_surname95@stonybrook.edu,CSE,Special Project,Fall,2016,Spring,2021,Spring,2020,test_password_95
+334684369,name96,surname96,name96_surname96@stonybrook.edu,CSE,Advanced Project,Fall,2016,Spring,2021,Spring,2020,test_password_96
+341066059,name97,surname97,name97_surname97@stonybrook.edu,CSE,Special Project,Fall,2016,Spring,2021,Spring,2020,test_password_97
+370553457,name98,surname98,name98_surname98@stonybrook.edu,CSE,Advanced Project,Fall,2016,Spring,2021,Spring,2020,test_password_98
+311447660,name99,surname99,name99_surname99@stonybrook.edu,CSE,Advanced Project,Fall,2016,Spring,2021,Spring,2020,test_password_99
+479795570,name0,surname0,name0_surname0@stonybrook.edu,AMS,Operations Research,Fall,2016,Spring,2021,Spring,2020,test_password_0
+470484974,name1,surname1,name1_surname1@stonybrook.edu,AMS,Statistics,Fall,2016,Spring,2021,Spring,2020,test_password_1
+429386389,name2,surname2,name2_surname2@stonybrook.edu,AMS,Statistics,Fall,2016,Spring,2021,Spring,2020,test_password_2
+450820662,name3,surname3,name3_surname3@stonybrook.edu,AMS,Operations Research,Fall,2016,Spring,2021,Spring,2020,test_password_3
+407614914,name4,surname4,name4_surname4@stonybrook.edu,AMS,Operations Research,Fall,2016,Spring,2021,Spring,2020,test_password_4
+433708829,name5,surname5,name5_surname5@stonybrook.edu,AMS,Operations Research,Fall,2016,Spring,2021,Spring,2020,test_password_5
+417749756,name6,surname6,name6_surname6@stonybrook.edu,AMS,Operations Research,Fall,2016,Spring,2021,Spring,2020,test_password_6
+430704863,name7,surname7,name7_surname7@stonybrook.edu,AMS,Computational Biology,Fall,2016,Spring,2021,Spring,2020,test_password_7
+456123753,name8,surname8,name8_surname8@stonybrook.edu,AMS,Computational Biology,Fall,2016,Spring,2021,Spring,2020,test_password_8
+457789858,name9,surname9,name9_surname9@stonybrook.edu,AMS,Computational Applied Mathematics,Fall,2016,Spring,2021,Spring,2020,test_password_9
+436962949,name10,surname10,name10_surname10@stonybrook.edu,AMS,Operations Research,Fall,2016,Spring,2021,Spring,2020,test_password_10
+409234525,name11,surname11,name11_surname11@stonybrook.edu,AMS,Computational Applied Mathematics,Fall,2016,Spring,2021,Spring,2020,test_password_11
+486048982,name12,surname12,name12_surname12@stonybrook.edu,AMS,Operations Research,Fall,2016,Spring,2021,Spring,2020,test_password_12
+463713226,name13,surname13,name13_surname13@stonybrook.edu,AMS,Computational Biology,Fall,2016,Spring,2021,Spring,2020,test_password_13
+472300995,name14,surname14,name14_surname14@stonybrook.edu,AMS,Computational Applied Mathematics,Fall,2016,Spring,2021,Spring,2020,test_password_14
+404456447,name15,surname15,name15_surname15@stonybrook.edu,AMS,Operations Research,Fall,2016,Spring,2021,Spring,2020,test_password_15
+470460191,name16,surname16,name16_surname16@stonybrook.edu,AMS,Operations Research,Fall,2016,Spring,2021,Spring,2020,test_password_16
+403534329,name17,surname17,name17_surname17@stonybrook.edu,AMS,Operations Research,Fall,2016,Spring,2021,Spring,2020,test_password_17
+442245990,name18,surname18,name18_surname18@stonybrook.edu,AMS,Statistics,Fall,2016,Spring,2021,Spring,2020,test_password_18
+449724802,name19,surname19,name19_surname19@stonybrook.edu,AMS,Statistics,Fall,2016,Spring,2021,Spring,2020,test_password_19
+450593629,name20,surname20,name20_surname20@stonybrook.edu,AMS,Computational Biology,Fall,2016,Spring,2021,Spring,2020,test_password_20
+420946624,name21,surname21,name21_surname21@stonybrook.edu,AMS,Operations Research,Fall,2016,Spring,2021,Spring,2020,test_password_21
+485301762,name22,surname22,name22_surname22@stonybrook.edu,AMS,Computational Applied Mathematics,Fall,2016,Spring,2021,Spring,2020,test_password_22
+482940997,name23,surname23,name23_surname23@stonybrook.edu,AMS,Computational Biology,Fall,2016,Spring,2021,Spring,2020,test_password_23
+446782323,name24,surname24,name24_surname24@stonybrook.edu,AMS,Computational Applied Mathematics,Fall,2016,Spring,2021,Spring,2020,test_password_24
+430374082,name25,surname25,name25_surname25@stonybrook.edu,AMS,Quantitative Finance,Fall,2016,Spring,2021,Spring,2020,test_password_25
+428899963,name26,surname26,name26_surname26@stonybrook.edu,AMS,Quantitative Finance,Fall,2016,Spring,2021,Spring,2020,test_password_26
+465225905,name27,surname27,name27_surname27@stonybrook.edu,AMS,Computational Applied Mathematics,Fall,2016,Spring,2021,Spring,2020,test_password_27
+476839072,name28,surname28,name28_surname28@stonybrook.edu,AMS,Operations Research,Fall,2016,Spring,2021,Spring,2020,test_password_28
+498668567,name29,surname29,name29_surname29@stonybrook.edu,AMS,Operations Research,Fall,2016,Spring,2021,Spring,2020,test_password_29
+453409073,name30,surname30,name30_surname30@stonybrook.edu,AMS,Statistics,Fall,2016,Spring,2021,Spring,2020,test_password_30
+482102492,name31,surname31,name31_surname31@stonybrook.edu,AMS,Operations Research,Fall,2016,Spring,2021,Spring,2020,test_password_31
+428206071,name32,surname32,name32_surname32@stonybrook.edu,AMS,Computational Biology,Fall,2016,Spring,2021,Spring,2020,test_password_32
+495772623,name33,surname33,name33_surname33@stonybrook.edu,AMS,Operations Research,Fall,2016,Spring,2021,Spring,2020,test_password_33
+465567067,name34,surname34,name34_surname34@stonybrook.edu,AMS,Statistics,Fall,2016,Spring,2021,Spring,2020,test_password_34
+429298558,name35,surname35,name35_surname35@stonybrook.edu,AMS,Statistics,Fall,2016,Spring,2021,Spring,2020,test_password_35
+488792422,name36,surname36,name36_surname36@stonybrook.edu,AMS,Operations Research,Fall,2016,Spring,2021,Spring,2020,test_password_36
+427111463,name37,surname37,name37_surname37@stonybrook.edu,AMS,Operations Research,Fall,2016,Spring,2021,Spring,2020,test_password_37
+498954713,name38,surname38,name38_surname38@stonybrook.edu,AMS,Statistics,Fall,2016,Spring,2021,Spring,2020,test_password_38
+462690183,name39,surname39,name39_surname39@stonybrook.edu,AMS,Statistics,Fall,2016,Spring,2021,Spring,2020,test_password_39
+402538355,name40,surname40,name40_surname40@stonybrook.edu,AMS,Statistics,Fall,2016,Spring,2021,Spring,2020,test_password_40
+494360841,name41,surname41,name41_surname41@stonybrook.edu,AMS,Computational Applied Mathematics,Fall,2016,Spring,2021,Spring,2020,test_password_41
+453852514,name42,surname42,name42_surname42@stonybrook.edu,AMS,Statistics,Fall,2016,Spring,2021,Spring,2020,test_password_42
+462251557,name43,surname43,name43_surname43@stonybrook.edu,AMS,Quantitative Finance,Fall,2016,Spring,2021,Spring,2020,test_password_43
+430421497,name44,surname44,name44_surname44@stonybrook.edu,AMS,Statistics,Fall,2016,Spring,2021,Spring,2020,test_password_44
+497106849,name45,surname45,name45_surname45@stonybrook.edu,AMS,Statistics,Fall,2016,Spring,2021,Spring,2020,test_password_45
+491422392,name46,surname46,name46_surname46@stonybrook.edu,AMS,Computational Biology,Fall,2016,Spring,2021,Spring,2020,test_password_46
+477543233,name47,surname47,name47_surname47@stonybrook.edu,AMS,Computational Biology,Fall,2016,Spring,2021,Spring,2020,test_password_47
+466667362,name48,surname48,name48_surname48@stonybrook.edu,AMS,Computational Applied Mathematics,Fall,2016,Spring,2021,Spring,2020,test_password_48
+412162451,name49,surname49,name49_surname49@stonybrook.edu,AMS,Computational Biology,Fall,2016,Spring,2021,Spring,2020,test_password_49
+406961671,name50,surname50,name50_surname50@stonybrook.edu,AMS,Computational Applied Mathematics,Fall,2016,Spring,2021,Spring,2020,test_password_50
+478645836,name51,surname51,name51_surname51@stonybrook.edu,AMS,Quantitative Finance,Fall,2016,Spring,2021,Spring,2020,test_password_51
+422660664,name52,surname52,name52_surname52@stonybrook.edu,AMS,Statistics,Fall,2016,Spring,2021,Spring,2020,test_password_52
+467747506,name53,surname53,name53_surname53@stonybrook.edu,AMS,Quantitative Finance,Fall,2016,Spring,2021,Spring,2020,test_password_53
+407520290,name54,surname54,name54_surname54@stonybrook.edu,AMS,Operations Research,Fall,2016,Spring,2021,Spring,2020,test_password_54
+430354206,name55,surname55,name55_surname55@stonybrook.edu,AMS,Statistics,Fall,2016,Spring,2021,Spring,2020,test_password_55
+463524959,name56,surname56,name56_surname56@stonybrook.edu,AMS,Computational Applied Mathematics,Fall,2016,Spring,2021,Spring,2020,test_password_56
+424151868,name57,surname57,name57_surname57@stonybrook.edu,AMS,Statistics,Fall,2016,Spring,2021,Spring,2020,test_password_57
+474264719,name58,surname58,name58_surname58@stonybrook.edu,AMS,Statistics,Fall,2016,Spring,2021,Spring,2020,test_password_58
+446774964,name59,surname59,name59_surname59@stonybrook.edu,AMS,Statistics,Fall,2016,Spring,2021,Spring,2020,test_password_59
+401527102,name60,surname60,name60_surname60@stonybrook.edu,AMS,Computational Biology,Fall,2016,Spring,2021,Spring,2020,test_password_60
+474059077,name61,surname61,name61_surname61@stonybrook.edu,AMS,Computational Biology,Fall,2016,Spring,2021,Spring,2020,test_password_61
+462733717,name62,surname62,name62_surname62@stonybrook.edu,AMS,Operations Research,Fall,2016,Spring,2021,Spring,2020,test_password_62
+480847880,name63,surname63,name63_surname63@stonybrook.edu,AMS,Computational Biology,Fall,2016,Spring,2021,Spring,2020,test_password_63
+441135038,name64,surname64,name64_surname64@stonybrook.edu,AMS,Statistics,Fall,2016,Spring,2021,Spring,2020,test_password_64
+408691703,name65,surname65,name65_surname65@stonybrook.edu,AMS,Computational Biology,Fall,2016,Spring,2021,Spring,2020,test_password_65
+439591983,name66,surname66,name66_surname66@stonybrook.edu,AMS,Computational Applied Mathematics,Fall,2016,Spring,2021,Spring,2020,test_password_66
+418059078,name67,surname67,name67_surname67@stonybrook.edu,AMS,Computational Biology,Fall,2016,Spring,2021,Spring,2020,test_password_67
+401711185,name68,surname68,name68_surname68@stonybrook.edu,AMS,Statistics,Fall,2016,Spring,2021,Spring,2020,test_password_68
+412335710,name69,surname69,name69_surname69@stonybrook.edu,AMS,Statistics,Fall,2016,Spring,2021,Spring,2020,test_password_69
+463685542,name70,surname70,name70_surname70@stonybrook.edu,AMS,Computational Biology,Fall,2016,Spring,2021,Spring,2020,test_password_70
+433428404,name71,surname71,name71_surname71@stonybrook.edu,AMS,Computational Biology,Fall,2016,Spring,2021,Spring,2020,test_password_71
+452841955,name72,surname72,name72_surname72@stonybrook.edu,AMS,Computational Biology,Fall,2016,Spring,2021,Spring,2020,test_password_72
+448661384,name73,surname73,name73_surname73@stonybrook.edu,AMS,Statistics,Fall,2016,Spring,2021,Spring,2020,test_password_73
+421247129,name74,surname74,name74_surname74@stonybrook.edu,AMS,Quantitative Finance,Fall,2016,Spring,2021,Spring,2020,test_password_74
+442914709,name75,surname75,name75_surname75@stonybrook.edu,AMS,Quantitative Finance,Fall,2016,Spring,2021,Spring,2020,test_password_75
+428613155,name76,surname76,name76_surname76@stonybrook.edu,AMS,Statistics,Fall,2016,Spring,2021,Spring,2020,test_password_76
+420276680,name77,surname77,name77_surname77@stonybrook.edu,AMS,Statistics,Fall,2016,Spring,2021,Spring,2020,test_password_77
+430166348,name78,surname78,name78_surname78@stonybrook.edu,AMS,Computational Applied Mathematics,Fall,2016,Spring,2021,Spring,2020,test_password_78
+458165358,name79,surname79,name79_surname79@stonybrook.edu,AMS,Statistics,Fall,2016,Spring,2021,Spring,2020,test_password_79
+412596049,name80,surname80,name80_surname80@stonybrook.edu,AMS,Computational Applied Mathematics,Fall,2016,Spring,2021,Spring,2020,test_password_80
+402754596,name81,surname81,name81_surname81@stonybrook.edu,AMS,Computational Biology,Fall,2016,Spring,2021,Spring,2020,test_password_81
+495157273,name82,surname82,name82_surname82@stonybrook.edu,AMS,Computational Applied Mathematics,Fall,2016,Spring,2021,Spring,2020,test_password_82
+475248427,name83,surname83,name83_surname83@stonybrook.edu,AMS,Computational Applied Mathematics,Fall,2016,Spring,2021,Spring,2020,test_password_83
+440738611,name84,surname84,name84_surname84@stonybrook.edu,AMS,Quantitative Finance,Fall,2016,Spring,2021,Spring,2020,test_password_84
+415086398,name85,surname85,name85_surname85@stonybrook.edu,AMS,Computational Applied Mathematics,Fall,2016,Spring,2021,Spring,2020,test_password_85
+465891839,name86,surname86,name86_surname86@stonybrook.edu,AMS,Computational Applied Mathematics,Fall,2016,Spring,2021,Spring,2020,test_password_86
+432613044,name87,surname87,name87_surname87@stonybrook.edu,AMS,Operations Research,Fall,2016,Spring,2021,Spring,2020,test_password_87
+499642653,name88,surname88,name88_surname88@stonybrook.edu,AMS,Quantitative Finance,Fall,2016,Spring,2021,Spring,2020,test_password_88
+496044483,name89,surname89,name89_surname89@stonybrook.edu,AMS,Computational Applied Mathematics,Fall,2016,Spring,2021,Spring,2020,test_password_89
+405352495,name90,surname90,name90_surname90@stonybrook.edu,AMS,Statistics,Fall,2016,Spring,2021,Spring,2020,test_password_90
+427285040,name91,surname91,name91_surname91@stonybrook.edu,AMS,Computational Applied Mathematics,Fall,2016,Spring,2021,Spring,2020,test_password_91
+422800935,name92,surname92,name92_surname92@stonybrook.edu,AMS,Computational Applied Mathematics,Fall,2016,Spring,2021,Spring,2020,test_password_92
+428310142,name93,surname93,name93_surname93@stonybrook.edu,AMS,Statistics,Fall,2016,Spring,2021,Spring,2020,test_password_93
+472563073,name94,surname94,name94_surname94@stonybrook.edu,AMS,Operations Research,Fall,2016,Spring,2021,Spring,2020,test_password_94
+426349089,name95,surname95,name95_surname95@stonybrook.edu,AMS,Quantitative Finance,Fall,2016,Spring,2021,Spring,2020,test_password_95
+432068072,name96,surname96,name96_surname96@stonybrook.edu,AMS,Quantitative Finance,Fall,2016,Spring,2021,Spring,2020,test_password_96
+415411257,name97,surname97,name97_surname97@stonybrook.edu,AMS,Computational Applied Mathematics,Fall,2016,Spring,2021,Spring,2020,test_password_97
+420114822,name98,surname98,name98_surname98@stonybrook.edu,AMS,Operations Research,Fall,2016,Spring,2021,Spring,2020,test_password_98
+462587375,name99,surname99,name99_surname99@stonybrook.edu,AMS,Computational Biology,Fall,2016,Spring,2021,Spring,2020,test_password_99
+423157723,name0,surname0,name0_surname0@stonybrook.edu,BMI,Clinical Informatics - Thesis,Fall,2016,Spring,2021,Spring,2020,test_password_0
+447704137,name1,surname1,name1_surname1@stonybrook.edu,BMI,Clinical Informatics - Capstone,Fall,2016,Spring,2021,Spring,2020,test_password_1
+431223801,name2,surname2,name2_surname2@stonybrook.edu,BMI,Clinical Informatics - Capstone,Fall,2016,Spring,2021,Spring,2020,test_password_2
+412884546,name3,surname3,name3_surname3@stonybrook.edu,BMI,Imaging Informatics - Thesis,Fall,2016,Spring,2021,Spring,2020,test_password_3
+478899154,name4,surname4,name4_surname4@stonybrook.edu,BMI,Translational Bio-Informatics - Capstone,Fall,2016,Spring,2021,Spring,2020,test_password_4
+461175362,name5,surname5,name5_surname5@stonybrook.edu,BMI,Translational Bio-Informatics - Thesis,Fall,2016,Spring,2021,Spring,2020,test_password_5
+451397488,name6,surname6,name6_surname6@stonybrook.edu,BMI,Imaging Informatics - Thesis,Fall,2016,Spring,2021,Spring,2020,test_password_6
+471915694,name7,surname7,name7_surname7@stonybrook.edu,BMI,Clinical Informatics - Thesis,Fall,2016,Spring,2021,Spring,2020,test_password_7
+410915194,name8,surname8,name8_surname8@stonybrook.edu,BMI,Translational Bio-Informatics - Thesis,Fall,2016,Spring,2021,Spring,2020,test_password_8
+422680796,name9,surname9,name9_surname9@stonybrook.edu,BMI,Translational Bio-Informatics - Capstone,Fall,2016,Spring,2021,Spring,2020,test_password_9
+427636283,name10,surname10,name10_surname10@stonybrook.edu,BMI,Imaging Informatics - Thesis,Fall,2016,Spring,2021,Spring,2020,test_password_10
+431594845,name11,surname11,name11_surname11@stonybrook.edu,BMI,Translational Bio-Informatics - Thesis,Fall,2016,Spring,2021,Spring,2020,test_password_11
+439820791,name12,surname12,name12_surname12@stonybrook.edu,BMI,Imaging Informatics - Capstone,Fall,2016,Spring,2021,Spring,2020,test_password_12
+424305080,name13,surname13,name13_surname13@stonybrook.edu,BMI,Imaging Informatics - Thesis,Fall,2016,Spring,2021,Spring,2020,test_password_13
+407259280,name14,surname14,name14_surname14@stonybrook.edu,BMI,Clinical Informatics - Capstone,Fall,2016,Spring,2021,Spring,2020,test_password_14
+425458469,name15,surname15,name15_surname15@stonybrook.edu,BMI,Clinical Informatics - Thesis,Fall,2016,Spring,2021,Spring,2020,test_password_15
+470623393,name16,surname16,name16_surname16@stonybrook.edu,BMI,Translational Bio-Informatics - Capstone,Fall,2016,Spring,2021,Spring,2020,test_password_16
+407864781,name17,surname17,name17_surname17@stonybrook.edu,BMI,Clinical Informatics - Thesis,Fall,2016,Spring,2021,Spring,2020,test_password_17
+497667830,name18,surname18,name18_surname18@stonybrook.edu,BMI,Clinical Informatics - Thesis,Fall,2016,Spring,2021,Spring,2020,test_password_18
+480206323,name19,surname19,name19_surname19@stonybrook.edu,BMI,Clinical Informatics - Thesis,Fall,2016,Spring,2021,Spring,2020,test_password_19
+457327571,name20,surname20,name20_surname20@stonybrook.edu,BMI,Translational Bio-Informatics - Capstone,Fall,2016,Spring,2021,Spring,2020,test_password_20
+481099122,name21,surname21,name21_surname21@stonybrook.edu,BMI,Clinical Informatics - Capstone,Fall,2016,Spring,2021,Spring,2020,test_password_21
+401863007,name22,surname22,name22_surname22@stonybrook.edu,BMI,Clinical Informatics - Thesis,Fall,2016,Spring,2021,Spring,2020,test_password_22
+472581611,name23,surname23,name23_surname23@stonybrook.edu,BMI,Translational Bio-Informatics - Capstone,Fall,2016,Spring,2021,Spring,2020,test_password_23
+412591402,name24,surname24,name24_surname24@stonybrook.edu,BMI,Imaging Informatics - Thesis,Fall,2016,Spring,2021,Spring,2020,test_password_24
+455714082,name25,surname25,name25_surname25@stonybrook.edu,BMI,Imaging Informatics - Capstone,Fall,2016,Spring,2021,Spring,2020,test_password_25
+466887981,name26,surname26,name26_surname26@stonybrook.edu,BMI,Clinical Informatics - Capstone,Fall,2016,Spring,2021,Spring,2020,test_password_26
+419537462,name27,surname27,name27_surname27@stonybrook.edu,BMI,Clinical Informatics - Thesis,Fall,2016,Spring,2021,Spring,2020,test_password_27
+451674345,name28,surname28,name28_surname28@stonybrook.edu,BMI,Clinical Informatics - Capstone,Fall,2016,Spring,2021,Spring,2020,test_password_28
+433669428,name29,surname29,name29_surname29@stonybrook.edu,BMI,Translational Bio-Informatics - Thesis,Fall,2016,Spring,2021,Spring,2020,test_password_29
+485074520,name30,surname30,name30_surname30@stonybrook.edu,BMI,Imaging Informatics - Thesis,Fall,2016,Spring,2021,Spring,2020,test_password_30
+412510884,name31,surname31,name31_surname31@stonybrook.edu,BMI,Clinical Informatics - Capstone,Fall,2016,Spring,2021,Spring,2020,test_password_31
+496208376,name32,surname32,name32_surname32@stonybrook.edu,BMI,Clinical Informatics - Capstone,Fall,2016,Spring,2021,Spring,2020,test_password_32
+462535489,name33,surname33,name33_surname33@stonybrook.edu,BMI,Imaging Informatics - Capstone,Fall,2016,Spring,2021,Spring,2020,test_password_33
+499837435,name34,surname34,name34_surname34@stonybrook.edu,BMI,Imaging Informatics - Capstone,Fall,2016,Spring,2021,Spring,2020,test_password_34
+476191249,name35,surname35,name35_surname35@stonybrook.edu,BMI,Imaging Informatics - Capstone,Fall,2016,Spring,2021,Spring,2020,test_password_35
+491283823,name36,surname36,name36_surname36@stonybrook.edu,BMI,Imaging Informatics - Capstone,Fall,2016,Spring,2021,Spring,2020,test_password_36
+420809137,name37,surname37,name37_surname37@stonybrook.edu,BMI,Imaging Informatics - Thesis,Fall,2016,Spring,2021,Spring,2020,test_password_37
+404554923,name38,surname38,name38_surname38@stonybrook.edu,BMI,Translational Bio-Informatics - Capstone,Fall,2016,Spring,2021,Spring,2020,test_password_38
+442802032,name39,surname39,name39_surname39@stonybrook.edu,BMI,Clinical Informatics - Thesis,Fall,2016,Spring,2021,Spring,2020,test_password_39
+442282248,name40,surname40,name40_surname40@stonybrook.edu,BMI,Translational Bio-Informatics - Thesis,Fall,2016,Spring,2021,Spring,2020,test_password_40
+433694898,name41,surname41,name41_surname41@stonybrook.edu,BMI,Clinical Informatics - Capstone,Fall,2016,Spring,2021,Spring,2020,test_password_41
+436505248,name42,surname42,name42_surname42@stonybrook.edu,BMI,Clinical Informatics - Capstone,Fall,2016,Spring,2021,Spring,2020,test_password_42
+469050523,name43,surname43,name43_surname43@stonybrook.edu,BMI,Clinical Informatics - Thesis,Fall,2016,Spring,2021,Spring,2020,test_password_43
+446230259,name44,surname44,name44_surname44@stonybrook.edu,BMI,Clinical Informatics - Capstone,Fall,2016,Spring,2021,Spring,2020,test_password_44
+417817639,name45,surname45,name45_surname45@stonybrook.edu,BMI,Imaging Informatics - Capstone,Fall,2016,Spring,2021,Spring,2020,test_password_45
+434869321,name46,surname46,name46_surname46@stonybrook.edu,BMI,Clinical Informatics - Thesis,Fall,2016,Spring,2021,Spring,2020,test_password_46
+409269607,name47,surname47,name47_surname47@stonybrook.edu,BMI,Imaging Informatics - Capstone,Fall,2016,Spring,2021,Spring,2020,test_password_47
+440899048,name48,surname48,name48_surname48@stonybrook.edu,BMI,Translational Bio-Informatics - Thesis,Fall,2016,Spring,2021,Spring,2020,test_password_48
+439932937,name49,surname49,name49_surname49@stonybrook.edu,BMI,Translational Bio-Informatics - Capstone,Fall,2016,Spring,2021,Spring,2020,test_password_49
+483411682,name50,surname50,name50_surname50@stonybrook.edu,BMI,Imaging Informatics - Capstone,Fall,2016,Spring,2021,Spring,2020,test_password_50
+402889631,name51,surname51,name51_surname51@stonybrook.edu,BMI,Clinical Informatics - Thesis,Fall,2016,Spring,2021,Spring,2020,test_password_51
+483182263,name52,surname52,name52_surname52@stonybrook.edu,BMI,Translational Bio-Informatics - Thesis,Fall,2016,Spring,2021,Spring,2020,test_password_52
+446876094,name53,surname53,name53_surname53@stonybrook.edu,BMI,Translational Bio-Informatics - Capstone,Fall,2016,Spring,2021,Spring,2020,test_password_53
+442355467,name54,surname54,name54_surname54@stonybrook.edu,BMI,Imaging Informatics - Capstone,Fall,2016,Spring,2021,Spring,2020,test_password_54
+425528445,name55,surname55,name55_surname55@stonybrook.edu,BMI,Clinical Informatics - Thesis,Fall,2016,Spring,2021,Spring,2020,test_password_55
+421557061,name56,surname56,name56_surname56@stonybrook.edu,BMI,Clinical Informatics - Capstone,Fall,2016,Spring,2021,Spring,2020,test_password_56
+472950067,name57,surname57,name57_surname57@stonybrook.edu,BMI,Imaging Informatics - Capstone,Fall,2016,Spring,2021,Spring,2020,test_password_57
+481585322,name58,surname58,name58_surname58@stonybrook.edu,BMI,Clinical Informatics - Capstone,Fall,2016,Spring,2021,Spring,2020,test_password_58
+440360091,name59,surname59,name59_surname59@stonybrook.edu,BMI,Clinical Informatics - Capstone,Fall,2016,Spring,2021,Spring,2020,test_password_59
+433632167,name60,surname60,name60_surname60@stonybrook.edu,BMI,Imaging Informatics - Thesis,Fall,2016,Spring,2021,Spring,2020,test_password_60
+473508951,name61,surname61,name61_surname61@stonybrook.edu,BMI,Clinical Informatics - Capstone,Fall,2016,Spring,2021,Spring,2020,test_password_61
+498428306,name62,surname62,name62_surname62@stonybrook.edu,BMI,Imaging Informatics - Thesis,Fall,2016,Spring,2021,Spring,2020,test_password_62
+482020530,name63,surname63,name63_surname63@stonybrook.edu,BMI,Clinical Informatics - Thesis,Fall,2016,Spring,2021,Spring,2020,test_password_63
+431160599,name64,surname64,name64_surname64@stonybrook.edu,BMI,Translational Bio-Informatics - Thesis,Fall,2016,Spring,2021,Spring,2020,test_password_64
+494641746,name65,surname65,name65_surname65@stonybrook.edu,BMI,Imaging Informatics - Capstone,Fall,2016,Spring,2021,Spring,2020,test_password_65
+496685771,name66,surname66,name66_surname66@stonybrook.edu,BMI,Imaging Informatics - Capstone,Fall,2016,Spring,2021,Spring,2020,test_password_66
+477856083,name67,surname67,name67_surname67@stonybrook.edu,BMI,Translational Bio-Informatics - Capstone,Fall,2016,Spring,2021,Spring,2020,test_password_67
+474769535,name68,surname68,name68_surname68@stonybrook.edu,BMI,Clinical Informatics - Thesis,Fall,2016,Spring,2021,Spring,2020,test_password_68
+458237063,name69,surname69,name69_surname69@stonybrook.edu,BMI,Clinical Informatics - Capstone,Fall,2016,Spring,2021,Spring,2020,test_password_69
+482120874,name70,surname70,name70_surname70@stonybrook.edu,BMI,Imaging Informatics - Thesis,Fall,2016,Spring,2021,Spring,2020,test_password_70
+479283027,name71,surname71,name71_surname71@stonybrook.edu,BMI,Clinical Informatics - Thesis,Fall,2016,Spring,2021,Spring,2020,test_password_71
+404881897,name72,surname72,name72_surname72@stonybrook.edu,BMI,Imaging Informatics - Thesis,Fall,2016,Spring,2021,Spring,2020,test_password_72
+477554152,name73,surname73,name73_surname73@stonybrook.edu,BMI,Clinical Informatics - Thesis,Fall,2016,Spring,2021,Spring,2020,test_password_73
+409180060,name74,surname74,name74_surname74@stonybrook.edu,BMI,Imaging Informatics - Thesis,Fall,2016,Spring,2021,Spring,2020,test_password_74
+446409582,name75,surname75,name75_surname75@stonybrook.edu,BMI,Imaging Informatics - Capstone,Fall,2016,Spring,2021,Spring,2020,test_password_75
+436736601,name76,surname76,name76_surname76@stonybrook.edu,BMI,Translational Bio-Informatics - Thesis,Fall,2016,Spring,2021,Spring,2020,test_password_76
+449028928,name77,surname77,name77_surname77@stonybrook.edu,BMI,Imaging Informatics - Thesis,Fall,2016,Spring,2021,Spring,2020,test_password_77
+434471918,name78,surname78,name78_surname78@stonybrook.edu,BMI,Clinical Informatics - Thesis,Fall,2016,Spring,2021,Spring,2020,test_password_78
+473523649,name79,surname79,name79_surname79@stonybrook.edu,BMI,Imaging Informatics - Capstone,Fall,2016,Spring,2021,Spring,2020,test_password_79
+417048495,name80,surname80,name80_surname80@stonybrook.edu,BMI,Imaging Informatics - Thesis,Fall,2016,Spring,2021,Spring,2020,test_password_80
+487742450,name81,surname81,name81_surname81@stonybrook.edu,BMI,Imaging Informatics - Capstone,Fall,2016,Spring,2021,Spring,2020,test_password_81
+492070815,name82,surname82,name82_surname82@stonybrook.edu,BMI,Imaging Informatics - Capstone,Fall,2016,Spring,2021,Spring,2020,test_password_82
+498965305,name83,surname83,name83_surname83@stonybrook.edu,BMI,Clinical Informatics - Capstone,Fall,2016,Spring,2021,Spring,2020,test_password_83
+495799075,name84,surname84,name84_surname84@stonybrook.edu,BMI,Clinical Informatics - Thesis,Fall,2016,Spring,2021,Spring,2020,test_password_84
+436379244,name85,surname85,name85_surname85@stonybrook.edu,BMI,Clinical Informatics - Thesis,Fall,2016,Spring,2021,Spring,2020,test_password_85
+494891019,name86,surname86,name86_surname86@stonybrook.edu,BMI,Clinical Informatics - Capstone,Fall,2016,Spring,2021,Spring,2020,test_password_86
+415969461,name87,surname87,name87_surname87@stonybrook.edu,BMI,Imaging Informatics - Thesis,Fall,2016,Spring,2021,Spring,2020,test_password_87
+493754649,name88,surname88,name88_surname88@stonybrook.edu,BMI,Imaging Informatics - Thesis,Fall,2016,Spring,2021,Spring,2020,test_password_88
+428938962,name89,surname89,name89_surname89@stonybrook.edu,BMI,Clinical Informatics - Capstone,Fall,2016,Spring,2021,Spring,2020,test_password_89
+413275538,name90,surname90,name90_surname90@stonybrook.edu,BMI,Clinical Informatics - Capstone,Fall,2016,Spring,2021,Spring,2020,test_password_90
+437726619,name91,surname91,name91_surname91@stonybrook.edu,BMI,Translational Bio-Informatics - Capstone,Fall,2016,Spring,2021,Spring,2020,test_password_91
+413380467,name92,surname92,name92_surname92@stonybrook.edu,BMI,Imaging Informatics - Capstone,Fall,2016,Spring,2021,Spring,2020,test_password_92
+412953217,name93,surname93,name93_surname93@stonybrook.edu,BMI,Clinical Informatics - Capstone,Fall,2016,Spring,2021,Spring,2020,test_password_93
+492714233,name94,surname94,name94_surname94@stonybrook.edu,BMI,Translational Bio-Informatics - Thesis,Fall,2016,Spring,2021,Spring,2020,test_password_94
+453132386,name95,surname95,name95_surname95@stonybrook.edu,BMI,Clinical Informatics - Capstone,Fall,2016,Spring,2021,Spring,2020,test_password_95
+438654303,name96,surname96,name96_surname96@stonybrook.edu,BMI,Translational Bio-Informatics - Thesis,Fall,2016,Spring,2021,Spring,2020,test_password_96
+497286081,name97,surname97,name97_surname97@stonybrook.edu,BMI,Clinical Informatics - Thesis,Fall,2016,Spring,2021,Spring,2020,test_password_97
+471175238,name98,surname98,name98_surname98@stonybrook.edu,BMI,Clinical Informatics - Thesis,Fall,2016,Spring,2021,Spring,2020,test_password_98
+456162087,name99,surname99,name99_surname99@stonybrook.edu,BMI,Translational Bio-Informatics - Capstone,Fall,2016,Spring,2021,Spring,2020,test_password_99
+483488866,name0,surname0,name0_surname0@stonybrook.edu,ESE,Thesis,Fall,2016,Spring,2021,Spring,2020,test_password_0
+480277418,name1,surname1,name1_surname1@stonybrook.edu,ESE,Non-Thesis,Fall,2016,Spring,2021,Spring,2020,test_password_1
+493668453,name2,surname2,name2_surname2@stonybrook.edu,ESE,Non-Thesis,Fall,2016,Spring,2021,Spring,2020,test_password_2
+401338285,name3,surname3,name3_surname3@stonybrook.edu,ESE,Non-Thesis,Fall,2016,Spring,2021,Spring,2020,test_password_3
+415631780,name4,surname4,name4_surname4@stonybrook.edu,ESE,Non-Thesis,Fall,2016,Spring,2021,Spring,2020,test_password_4
+495415199,name5,surname5,name5_surname5@stonybrook.edu,ESE,Thesis,Fall,2016,Spring,2021,Spring,2020,test_password_5
+412213009,name6,surname6,name6_surname6@stonybrook.edu,ESE,Thesis,Fall,2016,Spring,2021,Spring,2020,test_password_6
+480739666,name7,surname7,name7_surname7@stonybrook.edu,ESE,Thesis,Fall,2016,Spring,2021,Spring,2020,test_password_7
+428354548,name8,surname8,name8_surname8@stonybrook.edu,ESE,Thesis,Fall,2016,Spring,2021,Spring,2020,test_password_8
+478495944,name9,surname9,name9_surname9@stonybrook.edu,ESE,Thesis,Fall,2016,Spring,2021,Spring,2020,test_password_9
+457029164,name10,surname10,name10_surname10@stonybrook.edu,ESE,Non-Thesis,Fall,2016,Spring,2021,Spring,2020,test_password_10
+425922666,name11,surname11,name11_surname11@stonybrook.edu,ESE,Non-Thesis,Fall,2016,Spring,2021,Spring,2020,test_password_11
+435032832,name12,surname12,name12_surname12@stonybrook.edu,ESE,Thesis,Fall,2016,Spring,2021,Spring,2020,test_password_12
+424937370,name13,surname13,name13_surname13@stonybrook.edu,ESE,Thesis,Fall,2016,Spring,2021,Spring,2020,test_password_13
+404231431,name14,surname14,name14_surname14@stonybrook.edu,ESE,Thesis,Fall,2016,Spring,2021,Spring,2020,test_password_14
+447783145,name15,surname15,name15_surname15@stonybrook.edu,ESE,Non-Thesis,Fall,2016,Spring,2021,Spring,2020,test_password_15
+485826077,name16,surname16,name16_surname16@stonybrook.edu,ESE,Non-Thesis,Fall,2016,Spring,2021,Spring,2020,test_password_16
+432592962,name17,surname17,name17_surname17@stonybrook.edu,ESE,Thesis,Fall,2016,Spring,2021,Spring,2020,test_password_17
+421392043,name18,surname18,name18_surname18@stonybrook.edu,ESE,Non-Thesis,Fall,2016,Spring,2021,Spring,2020,test_password_18
+426537421,name19,surname19,name19_surname19@stonybrook.edu,ESE,Thesis,Fall,2016,Spring,2021,Spring,2020,test_password_19
+485848904,name20,surname20,name20_surname20@stonybrook.edu,ESE,Non-Thesis,Fall,2016,Spring,2021,Spring,2020,test_password_20
+459813633,name21,surname21,name21_surname21@stonybrook.edu,ESE,Thesis,Fall,2016,Spring,2021,Spring,2020,test_password_21
+497853060,name22,surname22,name22_surname22@stonybrook.edu,ESE,Non-Thesis,Fall,2016,Spring,2021,Spring,2020,test_password_22
+425778698,name23,surname23,name23_surname23@stonybrook.edu,ESE,Thesis,Fall,2016,Spring,2021,Spring,2020,test_password_23
+477692169,name24,surname24,name24_surname24@stonybrook.edu,ESE,Thesis,Fall,2016,Spring,2021,Spring,2020,test_password_24
+428228625,name25,surname25,name25_surname25@stonybrook.edu,ESE,Thesis,Fall,2016,Spring,2021,Spring,2020,test_password_25
+432658089,name26,surname26,name26_surname26@stonybrook.edu,ESE,Thesis,Fall,2016,Spring,2021,Spring,2020,test_password_26
+482110194,name27,surname27,name27_surname27@stonybrook.edu,ESE,Non-Thesis,Fall,2016,Spring,2021,Spring,2020,test_password_27
+475837968,name28,surname28,name28_surname28@stonybrook.edu,ESE,Non-Thesis,Fall,2016,Spring,2021,Spring,2020,test_password_28
+486686962,name29,surname29,name29_surname29@stonybrook.edu,ESE,Non-Thesis,Fall,2016,Spring,2021,Spring,2020,test_password_29
+414356168,name30,surname30,name30_surname30@stonybrook.edu,ESE,Non-Thesis,Fall,2016,Spring,2021,Spring,2020,test_password_30
+404716315,name31,surname31,name31_surname31@stonybrook.edu,ESE,Non-Thesis,Fall,2016,Spring,2021,Spring,2020,test_password_31
+497557182,name32,surname32,name32_surname32@stonybrook.edu,ESE,Non-Thesis,Fall,2016,Spring,2021,Spring,2020,test_password_32
+408231693,name33,surname33,name33_surname33@stonybrook.edu,ESE,Non-Thesis,Fall,2016,Spring,2021,Spring,2020,test_password_33
+485801870,name34,surname34,name34_surname34@stonybrook.edu,ESE,Thesis,Fall,2016,Spring,2021,Spring,2020,test_password_34
+433765815,name35,surname35,name35_surname35@stonybrook.edu,ESE,Thesis,Fall,2016,Spring,2021,Spring,2020,test_password_35
+433204494,name36,surname36,name36_surname36@stonybrook.edu,ESE,Thesis,Fall,2016,Spring,2021,Spring,2020,test_password_36
+484002599,name37,surname37,name37_surname37@stonybrook.edu,ESE,Thesis,Fall,2016,Spring,2021,Spring,2020,test_password_37
+494907196,name38,surname38,name38_surname38@stonybrook.edu,ESE,Non-Thesis,Fall,2016,Spring,2021,Spring,2020,test_password_38
+489287640,name39,surname39,name39_surname39@stonybrook.edu,ESE,Thesis,Fall,2016,Spring,2021,Spring,2020,test_password_39
+452111955,name40,surname40,name40_surname40@stonybrook.edu,ESE,Non-Thesis,Fall,2016,Spring,2021,Spring,2020,test_password_40
+499402158,name41,surname41,name41_surname41@stonybrook.edu,ESE,Non-Thesis,Fall,2016,Spring,2021,Spring,2020,test_password_41
+428484721,name42,surname42,name42_surname42@stonybrook.edu,ESE,Non-Thesis,Fall,2016,Spring,2021,Spring,2020,test_password_42
+452405300,name43,surname43,name43_surname43@stonybrook.edu,ESE,Thesis,Fall,2016,Spring,2021,Spring,2020,test_password_43
+406961949,name44,surname44,name44_surname44@stonybrook.edu,ESE,Non-Thesis,Fall,2016,Spring,2021,Spring,2020,test_password_44
+455481271,name45,surname45,name45_surname45@stonybrook.edu,ESE,Thesis,Fall,2016,Spring,2021,Spring,2020,test_password_45
+470545223,name46,surname46,name46_surname46@stonybrook.edu,ESE,Non-Thesis,Fall,2016,Spring,2021,Spring,2020,test_password_46
+495085816,name47,surname47,name47_surname47@stonybrook.edu,ESE,Non-Thesis,Fall,2016,Spring,2021,Spring,2020,test_password_47
+449751456,name48,surname48,name48_surname48@stonybrook.edu,ESE,Non-Thesis,Fall,2016,Spring,2021,Spring,2020,test_password_48
+488905290,name49,surname49,name49_surname49@stonybrook.edu,ESE,Non-Thesis,Fall,2016,Spring,2021,Spring,2020,test_password_49
+499932331,name50,surname50,name50_surname50@stonybrook.edu,ESE,Non-Thesis,Fall,2016,Spring,2021,Spring,2020,test_password_50
+436655366,name51,surname51,name51_surname51@stonybrook.edu,ESE,Thesis,Fall,2016,Spring,2021,Spring,2020,test_password_51
+437665794,name52,surname52,name52_surname52@stonybrook.edu,ESE,Non-Thesis,Fall,2016,Spring,2021,Spring,2020,test_password_52
+419808297,name53,surname53,name53_surname53@stonybrook.edu,ESE,Thesis,Fall,2016,Spring,2021,Spring,2020,test_password_53
+471866534,name54,surname54,name54_surname54@stonybrook.edu,ESE,Non-Thesis,Fall,2016,Spring,2021,Spring,2020,test_password_54
+483841278,name55,surname55,name55_surname55@stonybrook.edu,ESE,Thesis,Fall,2016,Spring,2021,Spring,2020,test_password_55
+424777066,name56,surname56,name56_surname56@stonybrook.edu,ESE,Thesis,Fall,2016,Spring,2021,Spring,2020,test_password_56
+437386160,name57,surname57,name57_surname57@stonybrook.edu,ESE,Thesis,Fall,2016,Spring,2021,Spring,2020,test_password_57
+419909609,name58,surname58,name58_surname58@stonybrook.edu,ESE,Thesis,Fall,2016,Spring,2021,Spring,2020,test_password_58
+499591730,name59,surname59,name59_surname59@stonybrook.edu,ESE,Thesis,Fall,2016,Spring,2021,Spring,2020,test_password_59
+401880915,name60,surname60,name60_surname60@stonybrook.edu,ESE,Non-Thesis,Fall,2016,Spring,2021,Spring,2020,test_password_60
+425826655,name61,surname61,name61_surname61@stonybrook.edu,ESE,Thesis,Fall,2016,Spring,2021,Spring,2020,test_password_61
+413124945,name62,surname62,name62_surname62@stonybrook.edu,ESE,Thesis,Fall,2016,Spring,2021,Spring,2020,test_password_62
+413332473,name63,surname63,name63_surname63@stonybrook.edu,ESE,Non-Thesis,Fall,2016,Spring,2021,Spring,2020,test_password_63
+422312689,name64,surname64,name64_surname64@stonybrook.edu,ESE,Thesis,Fall,2016,Spring,2021,Spring,2020,test_password_64
+415752729,name65,surname65,name65_surname65@stonybrook.edu,ESE,Thesis,Fall,2016,Spring,2021,Spring,2020,test_password_65
+421174457,name66,surname66,name66_surname66@stonybrook.edu,ESE,Thesis,Fall,2016,Spring,2021,Spring,2020,test_password_66
+480878086,name67,surname67,name67_surname67@stonybrook.edu,ESE,Thesis,Fall,2016,Spring,2021,Spring,2020,test_password_67
+496586740,name68,surname68,name68_surname68@stonybrook.edu,ESE,Non-Thesis,Fall,2016,Spring,2021,Spring,2020,test_password_68
+441533123,name69,surname69,name69_surname69@stonybrook.edu,ESE,Non-Thesis,Fall,2016,Spring,2021,Spring,2020,test_password_69
+472328779,name70,surname70,name70_surname70@stonybrook.edu,ESE,Thesis,Fall,2016,Spring,2021,Spring,2020,test_password_70
+448993378,name71,surname71,name71_surname71@stonybrook.edu,ESE,Non-Thesis,Fall,2016,Spring,2021,Spring,2020,test_password_71
+459542773,name72,surname72,name72_surname72@stonybrook.edu,ESE,Non-Thesis,Fall,2016,Spring,2021,Spring,2020,test_password_72
+466253325,name73,surname73,name73_surname73@stonybrook.edu,ESE,Non-Thesis,Fall,2016,Spring,2021,Spring,2020,test_password_73
+414955914,name74,surname74,name74_surname74@stonybrook.edu,ESE,Thesis,Fall,2016,Spring,2021,Spring,2020,test_password_74
+412598318,name75,surname75,name75_surname75@stonybrook.edu,ESE,Thesis,Fall,2016,Spring,2021,Spring,2020,test_password_75
+439249003,name76,surname76,name76_surname76@stonybrook.edu,ESE,Thesis,Fall,2016,Spring,2021,Spring,2020,test_password_76
+422543021,name77,surname77,name77_surname77@stonybrook.edu,ESE,Thesis,Fall,2016,Spring,2021,Spring,2020,test_password_77
+489073196,name78,surname78,name78_surname78@stonybrook.edu,ESE,Thesis,Fall,2016,Spring,2021,Spring,2020,test_password_78
+488618760,name79,surname79,name79_surname79@stonybrook.edu,ESE,Thesis,Fall,2016,Spring,2021,Spring,2020,test_password_79
+496521097,name80,surname80,name80_surname80@stonybrook.edu,ESE,Thesis,Fall,2016,Spring,2021,Spring,2020,test_password_80
+455634136,name81,surname81,name81_surname81@stonybrook.edu,ESE,Non-Thesis,Fall,2016,Spring,2021,Spring,2020,test_password_81
+438656767,name82,surname82,name82_surname82@stonybrook.edu,ESE,Non-Thesis,Fall,2016,Spring,2021,Spring,2020,test_password_82
+440460580,name83,surname83,name83_surname83@stonybrook.edu,ESE,Thesis,Fall,2016,Spring,2021,Spring,2020,test_password_83
+492222911,name84,surname84,name84_surname84@stonybrook.edu,ESE,Thesis,Fall,2016,Spring,2021,Spring,2020,test_password_84
+440171540,name85,surname85,name85_surname85@stonybrook.edu,ESE,Non-Thesis,Fall,2016,Spring,2021,Spring,2020,test_password_85
+485611082,name86,surname86,name86_surname86@stonybrook.edu,ESE,Thesis,Fall,2016,Spring,2021,Spring,2020,test_password_86
+418616423,name87,surname87,name87_surname87@stonybrook.edu,ESE,Non-Thesis,Fall,2016,Spring,2021,Spring,2020,test_password_87
+441789937,name88,surname88,name88_surname88@stonybrook.edu,ESE,Thesis,Fall,2016,Spring,2021,Spring,2020,test_password_88
+434487686,name89,surname89,name89_surname89@stonybrook.edu,ESE,Non-Thesis,Fall,2016,Spring,2021,Spring,2020,test_password_89
+440847784,name90,surname90,name90_surname90@stonybrook.edu,ESE,Non-Thesis,Fall,2016,Spring,2021,Spring,2020,test_password_90
+423009575,name91,surname91,name91_surname91@stonybrook.edu,ESE,Thesis,Fall,2016,Spring,2021,Spring,2020,test_password_91
+426735333,name92,surname92,name92_surname92@stonybrook.edu,ESE,Non-Thesis,Fall,2016,Spring,2021,Spring,2020,test_password_92
+442211151,name93,surname93,name93_surname93@stonybrook.edu,ESE,Thesis,Fall,2016,Spring,2021,Spring,2020,test_password_93
+446456685,name94,surname94,name94_surname94@stonybrook.edu,ESE,Thesis,Fall,2016,Spring,2021,Spring,2020,test_password_94
+466349482,name95,surname95,name95_surname95@stonybrook.edu,ESE,Thesis,Fall,2016,Spring,2021,Spring,2020,test_password_95
+470912789,name96,surname96,name96_surname96@stonybrook.edu,ESE,Non-Thesis,Fall,2016,Spring,2021,Spring,2020,test_password_96
+409751514,name97,surname97,name97_surname97@stonybrook.edu,ESE,Non-Thesis,Fall,2016,Spring,2021,Spring,2020,test_password_97
+424862278,name98,surname98,name98_surname98@stonybrook.edu,ESE,Thesis,Fall,2016,Spring,2021,Spring,2020,test_password_98
+434830536,name99,surname99,name99_surname99@stonybrook.edu,ESE,Thesis,Fall,2016,Spring,2021,Spring,2020,test_password_99
