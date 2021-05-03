@@ -63,6 +63,8 @@ def search(request):
     last_name_list = Student.objects.filter(last_name__icontains=name_search)
     sbu_id_list = Student.objects.filter(sbu_id__icontains=sbu_id_search)
 
+    print(graduated_search)
+
     if graduated_search == 0:
         first_name_list = first_name_list.filter(graduated=True)
         last_name_list = last_name_list.filter(graduated=True)
