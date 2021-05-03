@@ -247,6 +247,7 @@ def import_student(request):
         # Regex for splitting by comma unless in quotes
         line = re.split(',(?=(?:[^\"]*\"[^\"]*\")*[^\"]*$)', row)
         student = Student()
+        current_semester = Semester.objects.filter(is_current_semester=True)[0]
         if line != ['']:
             if Student.objects.filter(sbu_id=line[0]):
                 s = Student.objects.get(sbu_id=line[0])
@@ -285,7 +286,6 @@ def import_student(request):
                 student.entry_semester = Semester.objects.get(season=line[6], year=line[7])
                 e = Semester.objects.get(season=line[6], year=line[7])
                 if Semester.objects.filter(is_current_semester=True):
-                    current_semester = Semester.objects.filter(is_current_semester=True)[0]
                     if e.year < current_semester.year:
                         i = e.year
                         count = 0
@@ -301,6 +301,13 @@ def import_student(request):
                 student.requirement_semester = Semester.objects.get(season=line[8], year=line[9])
             if line[10] and line[11]:
                 student.graduation_semester = Semester.objects.get(season=line[10], year=line[11])
+                enum = {Season.WINTER: 0, Season.SPRING: 1, Season.SUMMER: 2, Season.FALL: 3}
+                if student.graduation_semester.year < current_semester.year:
+                    student.graduated = True
+                elif student.graduation_semester.year == current_semester.year and enum[
+                    student.graduation_semester.season] < enum[current_semester.season]:
+                    student.graduated = True
+
             if line[12]:
                 student.password = line[12].replace('\r', '')
 
@@ -582,7 +589,6 @@ def scrape_courses(request):
     course_file = request.FILES['file']
     major = request.POST.get('major')
     semester = request.POST.get('semester')
-    
 
     semester = Semester.objects.get(pk=semester)
     course_data = course_file.read().decode("utf-8", "ignore")
