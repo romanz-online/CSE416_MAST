@@ -9,7 +9,7 @@ from .datatables import StudentDatatable
 from .models import Student, Major, Season, Semester, Track, Course, CoursePrerequisiteSet, Prerequisite, \
     CourseInstance
 
-from . import searching, student_detail
+from . import searching, student_detail, editing_student
 
 
 def setup():
@@ -152,6 +152,7 @@ def commit_new_student(request):
         if int(sbu_id) in id_list:
             id_taken = True
             raise Exception('non-unique id')
+
         student = Student(sbu_id=sbu_id,
                           first_name=first_name,
                           last_name=last_name,
@@ -162,9 +163,11 @@ def commit_new_student(request):
                           unsatisfied_courses=track.total_requirements,
                           entry_semester=entry_semester,
                           requirement_semester=requirement_semester,
-                          semesters_enrolled=semesters_enrolled
+                          semesters_enrolled=semesters_enrolled,
                           )
         student.save()
+
+        editing_student.sync_course_data(student)
 
         student_user = User.objects.create_user(student.sbu_id, student.email, student.password)
         student_user.save()

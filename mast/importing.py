@@ -307,6 +307,8 @@ def import_student(request):
 
             student.save()
 
+            editing_student.sync_course_data(student)
+
             if User.objects.filter(username=student.sbu_id):
                 current_student_user = User.objects.filter(username=student.sbu_id)[0]
                 current_student_user.delete()
@@ -371,8 +373,7 @@ def import_grades(request, course_file):
         if line != ['']:
             new_class = CoursesTakenByStudent()
             student = None
-            if line[0] and not Student.objects.get(sbu_id=line[0]):
-                messages.error(request, bytes('No student with ID', line[0]))
+            if line[0] and not Student.objects.filter(sbu_id=line[0]):
                 continue
             if line[0]:
                 new_class.student = Student.objects.get(sbu_id=line[0])
