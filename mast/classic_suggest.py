@@ -150,7 +150,8 @@ def get_unsatisfied_prerequisite(student, department, number):
                 else:
                     required_courses.append(prerequisite_course)
         # get the courses that has or relationship
-        optional_set = prerequisiteSet.objects.filter(parent_set=prerequisiteSet[0])
+        parent_set = prerequisiteSet[0]
+        optional_set = CoursePrerequisiteSet.objects.filter(parent_set=parent_set)
         if optional_set:
             for set in optional_set:
                 satisfy = False

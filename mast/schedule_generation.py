@@ -6,6 +6,7 @@ from .models import Student, Course, CourseInstance, CoursePrerequisiteSet, Prer
     Semester, ScheduleType, ScheduleStatus
 from .classic_suggest import classic_suggest
 
+
 @login_required
 def schedule_generation(request, sbu_id):
     student = get_object_or_404(Student, pk=sbu_id)
@@ -54,17 +55,25 @@ def generate_schedule(request, sbu_id):
 
     try:
         start_time = request.POST['start_time']
+        print(start_time)
     except:
+        start_time = None
+    if not start_time:
         start_time = None
 
     try:
         end_time = request.POST['end_time']
+        print(end_time)
     except:
+        end_time = None
+    if not end_time:
         end_time = None
 
     try:
         courses_per_semester = request.POST['courses_per_semester']
     except:
+        courses_per_semester = 6
+    if not courses_per_semester:
         courses_per_semester = 6
 
     # values and their meanings:
@@ -76,22 +85,22 @@ def generate_schedule(request, sbu_id):
     # 5 - don't offer this course at all (AKA don't offer the corresponding Course)
 
     # do stuff with the "preferences" dictionary, start_time, end_time, and courses_per_semester here
-   
-    prefer_courses  = [[], [], []]
+
+    prefer_courses = [[], [], []]
     for courseInstance in preferences.keys():
         if preferences[courseInstance] in [1, 2, 3]:
             match_course = courseInstance.course
-            prefer_courses[preferences[courseInstance]-1].append(match_course)
+            prefer_courses[preferences[courseInstance] - 1].append(match_course)
     time_constraints = [start_time, end_time]
     graduation_semester = None
     avoid_courses = []
     student = Student.objects.filter(sbu_id=sbu_id).first()
-   
+
     classic_suggest(student, prefer_courses, courses_per_semester, avoid_courses, time_constraints, graduation_semester)
     return offered_schedules(request, sbu_id)
 
 
-@login_required     
+@login_required
 def smart_suggest(request, sbu_id):
     return offered_schedules(request, sbu_id)
 
@@ -144,7 +153,8 @@ def approve_all(request, sbu_id, schedule_id):
         if i.status != ScheduleStatus.APPROVED:
             i.status = ScheduleStatus.APPROVED
             i.save()
-            new_record = StudentCourseSchedule(student=student, course=i.course, schedule_id=0, status=ScheduleStatus.APPROVED)
+            new_record = StudentCourseSchedule(student=student, course=i.course, schedule_id=0,
+                                               status=ScheduleStatus.APPROVED)
             new_record.save()
 
     return schedule_display(request, sbu_id, schedule_id)
@@ -157,7 +167,8 @@ def approve_scheduled_course(request, sbu_id, schedule_id, course_id):
     c = StudentCourseSchedule.objects.get(student=student, course=course_record, schedule_id=schedule_id)
     c.status = ScheduleStatus.APPROVED
     c.save()
-    new_record = StudentCourseSchedule(student=student, course=course_record, schedule_id=0, status=ScheduleStatus.APPROVED)
+    new_record = StudentCourseSchedule(student=student, course=course_record, schedule_id=0,
+                                       status=ScheduleStatus.APPROVED)
     new_record.save()
 
     return schedule_display(request, sbu_id, schedule_id)
