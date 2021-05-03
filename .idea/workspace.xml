@@ -2,6 +2,7 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="433e10ab-7bf6-49f7-ab54-8658f67b786e" name="Default Changelist" comment="">
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/mast/classic_suggest.py" beforeDir="false" afterPath="$PROJECT_DIR$/mast/classic_suggest.py" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
@@ -29,23 +30,11 @@
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/mast/models.py">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="-2533">
-              <caret line="16" column="21" lean-forward="true" selection-start-line="16" selection-start-column="21" selection-end-line="16" selection-end-column="21" />
-              <folding>
-                <element signature="e#0#28#0" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
       <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/mast/classic_suggest.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="250">
-              <caret line="267" column="26" lean-forward="true" selection-start-line="267" selection-start-column="26" selection-end-line="267" selection-end-column="26" />
+            <state relative-caret-position="230">
+              <caret line="103" column="95" selection-start-line="103" selection-start-column="95" selection-end-line="103" selection-end-column="95" />
             </state>
           </provider>
         </entry>
@@ -58,15 +47,6 @@
               <folding>
                 <element signature="e#0#54#0" expanded="true" />
               </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/mast/templates/mast/schedule_generation.html">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="561">
-              <caret line="108" column="19" selection-start-line="108" selection-start-column="19" selection-end-line="108" selection-end-column="19" />
             </state>
           </provider>
         </entry>
@@ -415,7 +395,7 @@
     </history-entry>
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="398362000" />
+    <option name="totallyTimeSpent" value="399495000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="-1608" y="-8" width="1616" height="876" extended-state="6" />
@@ -869,8 +849,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/mast/classic_suggest.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="250">
-          <caret line="267" column="26" lean-forward="true" selection-start-line="267" selection-start-column="26" selection-end-line="267" selection-end-column="26" />
+        <state relative-caret-position="230">
+          <caret line="103" column="95" selection-start-line="103" selection-start-column="95" selection-end-line="103" selection-end-column="95" />
         </state>
       </provider>
     </entry>
