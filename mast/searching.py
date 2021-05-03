@@ -52,10 +52,10 @@ def search(request):
     name_search = request.GET['name']
     sbu_id_search = request.GET['sbu_id']
     major_search = request.GET['major']
-    graduated_search = request.GET['graduated']
-    withdrew_search = request.GET['withdrew']
-    plan_complete_search = request.GET['plan_complete']
-    plan_valid_search = request.GET['plan_valid']
+    graduated_search = int(request.GET['graduated'])
+    withdrew_search = int(request.GET['withdrew'])
+    plan_complete_search = int(request.GET['plan_complete'])
+    plan_valid_search = int(request.GET['plan_valid'])
     first_name_list = Student.objects.filter(first_name__icontains=name_search)
     last_name_list = Student.objects.filter(last_name__icontains=name_search)
     sbu_id_list = Student.objects.filter(sbu_id__icontains=sbu_id_search)
