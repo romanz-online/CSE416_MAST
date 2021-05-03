@@ -15,7 +15,7 @@ avoid classes -> a list of course to avoid
 preferred classes-> nested array, index 0 is the list of favorite courses, and index 1, index2
 """
 def classic_suggest(student, prefrered_class, max_classes, avoid_classes, time_constraints, graduation_semester):
-    track = Track.objects.filter(major = student.major, track = student.track)
+    track = Track.objects.filter(track = student.track)
     if(len(track) ==0):
         return "does not have track yet"
     #the list of courses to take
@@ -120,7 +120,7 @@ def classic_suggest(student, prefrered_class, max_classes, avoid_classes, time_c
         course_and_prerequisite[course] = unsatisfied_prerequisite
         for prerequisite in unsatisfied_prerequisite:
             course_and_prerequisite[prerequisite] = get_unsatisfied_prerequisite(student, prerequisite.department, prerequisite.number)
-    scheduel_id  = generate_plan(student, course_and_prerequisite, max_classes)
+    schedule_id  = generate_plan(student, course_and_prerequisite, max_classes)
     return "Finished generation of classic schedule " + str(schedule_id)
 
 """
@@ -220,7 +220,7 @@ def generate_plan(student, course_and_prerequisite, max_classes, time_constraint
         if len(course_and_prerequisite[course]) ==0:
             courses_can_take.append(course)
     while(len(course_and_prerequisite) > 0):
-        add_new_semester(schedule_id, next_semester, courses_can_take, course_and_prerequisite, max_classes, time_constraints)
+        add_new_semester(student ,schedule_id, next_semester, courses_can_take, course_and_prerequisite, max_classes, time_constraints)
         courses_can_take = []
         for course in course_and_prerequisite.keys():
             if len(course_and_prerequisite[course]) ==0:
@@ -245,7 +245,7 @@ this function create a new semster with classes that can be taken from the cours
 return the number of courses added to that semester
 """
 
-def add_new_semester(schedule_id, semeseter, courses, course_and_prerequisite, max_classes, time_constraints):
+def add_new_semester(student ,schedule_id, semeseter, courses, course_and_prerequisite, max_classes, time_constraints):
     currentInstances = []
     for course in courses:
         # did not exceed max number of courses
