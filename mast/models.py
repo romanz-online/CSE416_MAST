@@ -2,6 +2,7 @@ from django.db import models
 from datetime import datetime
 from concurrency.fields import IntegerVersionField
 
+
 class Season(models.TextChoices):
     WINTER = 'Winter'
     SPRING = 'Spring'
