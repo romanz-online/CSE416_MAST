@@ -88,7 +88,6 @@ def generate_schedule(request, sbu_id):
     student = Student.objects.filter(sbu_id=sbu_id).first()
    
     classic_suggest(student, prefer_courses, courses_per_semester, avoid_courses, time_constraints, graduation_semester)
-
     return offered_schedules(request, sbu_id)
 
 
