@@ -31,8 +31,7 @@ def import_degree_requirements(request):
         return render(request, 'mast/import_degree_reqs.html', {'': None})
 
     # Open File using BS4
-    infile = open("mast\\test_files\\" + degree_file.name, "r")
-    contents = infile.read()
+    contents = degree_file.read()
     soup = BeautifulSoup(contents, 'xml')
 
     # Add Major to database
