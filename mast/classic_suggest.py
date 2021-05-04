@@ -15,6 +15,8 @@ preferred classes-> nested array, index 0 is the list of favorite courses, and i
 
 
 def classic_suggest(student, prefrered_class, max_classes, avoid_classes, time_constraints, graduation_semester):
+    print(prefrered_class)
+    print(avoid_classes)
     track = student.track
     if not track:
         return "does not have track yet"
@@ -102,22 +104,22 @@ def classic_suggest(student, prefrered_class, max_classes, avoid_classes, time_c
     for course in passed_courses:
         current_credits += course.lower_credit_limit
     # add new courses to the list if does not have enough credits
-    if current_credits < credits_required:
-        lst = prefrered_class[0] + prefrered_class[1] + prefrered_class[2]
-        for course in lst:
-            if course not in course_list and course not in passed_courses:
-                course_list.append(course)
-                current_credits += course.lower_credit_limit
-                if current_credits >= credits_required:
-                    break
-        major_courses = [i for i in Course.objects.filter(department=student.major.department) if i.number >= 510]
-        while current_credits < credits_required:
-            course = random.choice(major_courses)
-            if course not in course_list and course not in passed_courses and course not in avoid_classes:
-                current_credits += course.lower_credit_limit
-                course_list.append(course)
-                if current_credits >= credits_required:
-                    break
+
+    lst = prefrered_class[0] + prefrered_class[1] + prefrered_class[2]
+    for course in lst:
+        if course not in course_list and course not in passed_courses:
+            course_list.append(course)
+            current_credits += course.lower_credit_limit
+            
+    major_courses = [i for i in Course.objects.filter(department=student.major.department) if i.number >= 510]
+    while current_credits < credits_required:
+        course = random.choice(major_courses)
+        if course not in course_list and course not in passed_courses and course not in avoid_classes:
+            current_credits += course.lower_credit_limit
+            course_list.append(course)
+            if current_credits >= credits_required:
+                break
+    print(prefrered_class)
     print(course_list)
     # a dictionary of courses and their prerequisite
     course_and_prerequisite = {}
@@ -129,7 +131,7 @@ def classic_suggest(student, prefrered_class, max_classes, avoid_classes, time_c
         for prerequisite in unsatisfied_prerequisite:
             course_and_prerequisite[prerequisite] = get_unsatisfied_prerequisite(student, prerequisite.department,
                                                                                  prerequisite.number)
-    print(course_and_prerequisite)
+
     schedule_id = generate_plan(student, course_and_prerequisite, max_classes, time_constraints)
 
     return "Finished generation of classic schedule " + str(schedule_id)
