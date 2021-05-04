@@ -110,7 +110,7 @@ def classic_suggest(student, prefrered_class, max_classes, avoid_classes, time_c
         if course not in course_list and course not in passed_courses:
             course_list.append(course)
             current_credits += course.lower_credit_limit
-            
+
     major_courses = [i for i in Course.objects.filter(department=student.major.department) if i.number >= 510]
     while current_credits < credits_required:
         course = random.choice(major_courses)
@@ -293,12 +293,13 @@ def add_new_semester(student, schedule_id, semester, courses, course_and_prerequ
     print(courses)
     print(course_and_prerequisite)
     priority = []
-    for course in courses:
+    for index in range(len(courses)):
         for key in course_and_prerequisite.keys():
-            if course in course_and_prerequisite[key]:
-                priority.append(course)
-                courses.remove(course)
-    courses = priority + courses
+            if courses[index] in course_and_prerequisite[key]:
+                temp = courses[0]
+                courses[0] = courses[index]
+                courses[index] = temp
+
     currentInstances = []
     for course in courses:
         # did not exceed max number of courses
