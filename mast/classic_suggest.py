@@ -1,6 +1,6 @@
 from .models import Student, Major, Season, CoursesTakenByStudent, Comment, StudentCourseSchedule, Semester, Track, \
     TrackCourseSet, CourseInTrackSet, CourseToCourseRelation, Course, CoursePrerequisiteSet, Prerequisite, \
-    CourseInstance, CourseStatus
+    CourseInstance, CourseStatus, ScheduleType
 import random
 """
 this funciton takes student, prefered class, max_number of classes to take, classes to avoid, time
@@ -316,7 +316,7 @@ def add_new_semester(student, schedule_id, semester, courses, course_and_prerequ
                         currentInstances.append(instance)
                         course_and_prerequisite.pop(course, None)
                         c = StudentCourseSchedule(student=student, course=instance, schedule_id=schedule_id,
-                                                  schedule_type='Classic')
+                                                  schedule_type=ScheduleType.CLASSIC)
                         c.save()
                         for key in course_and_prerequisite.keys():
                             if course in course_and_prerequisite[key]:

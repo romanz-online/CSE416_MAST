@@ -2,12 +2,13 @@ import operator
 
 from .modifying_schedule import sort_semester_list
 from . import editing_student
-from .models import Student, CoursesTakenByStudent, StudentCourseSchedule, TrackCourseSet, CoursePrerequisiteSet, Prerequisite
+from .models import Student, CoursesTakenByStudent, StudentCourseSchedule, TrackCourseSet, CoursePrerequisiteSet, \
+    Prerequisite, ScheduleType
 
 
 # main smart_suggest driver
 def smart_suggest_gen(student):
-     # get an unused shchedule id
+    # get an unused shchedule id
     schedule_id = 1
     for course in StudentCourseSchedule.objects.filter(student=student):
         if course.schedule_id >= schedule_id:
@@ -33,7 +34,7 @@ def smart_suggest_gen(student):
         current_semester = student_semesters[max(student_semesters.items(), key=operator.itemgetter(1))[0]] + 1
     else:
         current_semester = 1
-   
+
     # while schedule is not complete, add semesters
     while not requirements_met(student, schedule_id, 'Smart'):
         print(current_semester)
@@ -48,6 +49,7 @@ def smart_suggest_gen(student):
 
     print("Finished generation of smart schedule " + str(schedule_id))
     return
+
 
 # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~HELPER FUNCTIONS~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~#
 
@@ -98,8 +100,9 @@ def map_semester_numbers(student, student_courses):
     semesters = sort_semester_list(semesters)
     # dictionary with value as order number
     for i in range(len(semesters)):
-        semester_map[semesters[i]] = i+1
+        semester_map[semesters[i]] = i + 1
     return semester_map
+
 
 # get dictionary that maps all classes a student has taken to its semester number
 def course_semester_map(student_courses, student_semesters):
@@ -144,7 +147,8 @@ def requirements_met(student, schedule_id, schedule_type):
     if not student.track:
         return False
     taken_courses = [i for i in CoursesTakenByStudent.objects.filter(student=student)]
-    scheduled_courses = [i for i in StudentCourseSchedule.objects.filter(student=student, schedule_id=schedule_id, schedule_type='Smart')]
+    scheduled_courses = [i for i in StudentCourseSchedule.objects.filter(student=student, schedule_id=schedule_id,
+                                                                         schedule_type=ScheduleType.SMART)]
     courses_to_check = taken_courses + scheduled_courses
     track = student.track
 
@@ -180,7 +184,7 @@ def create_semester_schedule(student, semester, schedule_id, course_counts):
     # for each class in that are most often taken in this semester, add all that student met prereqs for
     for course in this_semesters_classes:
         if prereqs_met(student, course, schedule_id):
-            c = StudentCourseSchedule(student=student, course=course, schedule_id=schedule_id, schedule_type='Smart')
+            c = StudentCourseSchedule(student=student, course=course, schedule_id=schedule_id, schedule_type=ScheduleType.SMART)
             c.save()
             print(course)
             course_counts.pop(course)
@@ -191,8 +195,11 @@ def create_semester_schedule(student, semester, schedule_id, course_counts):
     # return course counts with the taken classes removed
     return course_counts
 
+
 def prereqs_met(student, course, schedule_id):
-    student_courses = StudentCourseSchedule.objects.filter(student=student, schedule_id=schedule_id) | StudentCourseSchedule.objects.filter(student=student, schedule_id=0)
+    student_courses = StudentCourseSchedule.objects.filter(student=student,
+                                                           schedule_id=schedule_id) | StudentCourseSchedule.objects.filter(
+        student=student, schedule_id=0)
     prereq_set = CoursePrerequisiteSet.objects.filter(parent_course=course)
     if prereq_set:
         for prereq in prereq_set:
@@ -203,7 +210,7 @@ def prereqs_met(student, course, schedule_id):
         nested_prereqs = CoursePrerequisiteSet.objects.filter(parent_set=prereq_set)
         for nested_set in nested_prereqs:
             met = False
-            nested_objects = Prerequisite.objects.filter(course_set=nested_set) 
+            nested_objects = Prerequisite.objects.filter(course_set=nested_set)
             for prereq in nested_objects:
                 if prereq in student_courses:
                     met = True

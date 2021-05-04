@@ -482,8 +482,8 @@ def modify_course_in_progress(request, sbu_id, record):
 
 
 def find_requirements(taken_courses, course_set, for_pending):
+    number_taken = 0
     if course_set.size:
-        number_taken = 0
         if not course_set.limiter:
             if course_set.lower_limit != 100 and course_set.upper_limit != 999:
                 taken_course_lookup = len([i for i in taken_courses if
@@ -495,23 +495,21 @@ def find_requirements(taken_courses, course_set, for_pending):
             for course in CourseInTrackSet.objects.filter(course_set=course_set):
                 if for_pending:
                     taken_course_lookup = len([i for i in taken_courses if
-                                               i.course.course == course.course and i.status == CourseStatus.PENDING])
+                                               i.course.course == course.course and i.course.status == CourseStatus.PENDING])
                 else:
                     taken_course_lookup = len([i for i in taken_courses if
                                                i.course.course == course.course and i.status == CourseStatus.PASSED])
-                if taken_course_lookup:
-                    number_taken += taken_course_lookup
+                number_taken += taken_course_lookup
             for track in TrackCourseSet.objects.filter(parent_course_set=course_set):
                 if track.lower_limit != 100 and track.upper_limit != 999:
                     taken_course_lookup = len(
                         [i for i in taken_courses if track.lower_limit <= i.course.course.number <= track.upper_limit])
-                    if taken_course_lookup:
-                        number_taken += taken_course_lookup
+                    number_taken += taken_course_lookup
                 else:
                     for course in CourseInTrackSet.objects.filter(course_set=track):
                         if for_pending:
                             taken_course_lookup = len([i for i in taken_courses if
-                                                       i.course.course == course.course and i.status == CourseStatus.PENDING])
+                                                       i.course.course == course.course and i.course.status == CourseStatus.PENDING])
                         else:
                             taken_course_lookup = len([i for i in taken_courses if
                                                        i.course.course == course.course and i.status == CourseStatus.PASSED])
@@ -524,8 +522,9 @@ def find_requirements(taken_courses, course_set, for_pending):
                     number_taken += 1
             if "Elective" not in course_set.name and number_taken >= course_set.size:
                 return True
-
-    return False
+    print(number_taken)
+    print(taken_courses)
+    return number_taken
 
 
 def adjust_credits_recurse(course_set, credits_taken, taken_course_instances, taken_courses):
@@ -595,20 +594,21 @@ def sync_course_data(student):
         satisfied_requirements += 1
         pending_requirements -= 1
 
-    if student.graduated:
-        satisfied_requirements = student.track.total_requirements
-        pending_requirements = 0
-        unsatisfied_requirements = 0
-    else:
+    # if student.graduated:
+    #     satisfied_requirements = student.track.total_requirements
+    #     pending_requirements = 0
+    #     unsatisfied_requirements = 0
+    # else:
         # find satisfied and pending requirements
-        parent_course_sets = TrackCourseSet.objects.filter(track=track, parent_course_set=None)
-        for i in parent_course_sets:
-            if find_requirements(taken_courses, i, False):
-                satisfied_requirements += 1
-                unsatisfied_requirements -= 1
-            if find_requirements(scheduled_courses, i, True):
-                pending_requirements += 1
-                unsatisfied_requirements -= 1
+    parent_course_sets = TrackCourseSet.objects.filter(track=track, parent_course_set=None)
+    for i in parent_course_sets:
+        if find_requirements(taken_courses, i, False):
+            satisfied_requirements += 1
+            unsatisfied_requirements -= 1
+        if find_requirements(scheduled_courses, i, True):
+            print('found pending')
+            pending_requirements += 1
+            unsatisfied_requirements -= 1
 
     student.satisfied_courses = satisfied_requirements
     student.pending_courses = pending_requirements

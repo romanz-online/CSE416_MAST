@@ -187,15 +187,9 @@ def modify_scheduled_course(request, sbu_id, course):
     student = get_object_or_404(Student, pk=sbu_id)
     course_record = get_object_or_404(CourseInstance, pk=course)
     try:
-        c = StudentCourseSchedule.objects.get(student=student, course=course_record)
-        if request.GET['action'] == 'approve':
-            c.status = ScheduleStatus.APPROVED
-            c.save()
-        elif request.GET['action'] == 'remove':
-            c.delete()
-            editing_student.sync_course_data(student)
-        else:
-            raise Exception()
+        c = StudentCourseSchedule.objects.filter(student=student, course=course_record, schedule_id=0)[0]
+        c.delete()
+        editing_student.sync_course_data(student)
     except:
         return HttpResponseRedirect(reverse('mast:edit_schedule', args=(sbu_id,)))
     return HttpResponseRedirect(reverse('mast:edit_schedule', args=(sbu_id,)))
