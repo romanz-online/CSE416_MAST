@@ -495,7 +495,7 @@ def find_requirements(taken_courses, course_set, for_pending):
             for course in CourseInTrackSet.objects.filter(course_set=course_set):
                 if for_pending:
                     taken_course_lookup = len([i for i in taken_courses if
-                                               i.course.course == course.course and i.course.status == CourseStatus.PENDING])
+                                               i.course.course == course.course])
                 else:
                     print(len(taken_course_lookup))
                     taken_course_lookup = len([i for i in taken_courses if
@@ -510,7 +510,7 @@ def find_requirements(taken_courses, course_set, for_pending):
                     for course in CourseInTrackSet.objects.filter(course_set=track):
                         if for_pending:
                             taken_course_lookup = len([i for i in taken_courses if
-                                                       i.course.course == course.course and i.course.status == CourseStatus.PENDING])
+                                                       i.course.course == course.course])
                         else:
                             taken_course_lookup = len([i for i in taken_courses if
                                                        i.course.course == course.course and i.status == CourseStatus.PASSED])
@@ -593,21 +593,21 @@ def sync_course_data(student):
         satisfied_requirements += 1
         pending_requirements -= 1
 
-    # if student.graduated:
-    #     satisfied_requirements = student.track.total_requirements
-    #     pending_requirements = 0
-    #     unsatisfied_requirements = 0
-    # else:
+    if student.graduated:
+        satisfied_requirements = student.track.total_requirements
+        pending_requirements = 0
+        unsatisfied_requirements = 0
+    else:
         # find satisfied and pending requirements
-    parent_course_sets = TrackCourseSet.objects.filter(track=track, parent_course_set=None)
-    for i in parent_course_sets:
-        if find_requirements(taken_courses, i, False):
-            satisfied_requirements += 1
-            unsatisfied_requirements -= 1
-        if find_requirements(scheduled_courses, i, True):
-            print('found pending')
-            pending_requirements += 1
-            unsatisfied_requirements -= 1
+        parent_course_sets = TrackCourseSet.objects.filter(track=track, parent_course_set=None)
+        for i in parent_course_sets:
+            if find_requirements(taken_courses, i, False):
+                satisfied_requirements += 1
+                unsatisfied_requirements -= 1
+            if find_requirements(scheduled_courses, i, True):
+                print('found pending')
+                pending_requirements += 1
+                unsatisfied_requirements -= 1
 
     student.satisfied_courses = satisfied_requirements
     student.pending_courses = pending_requirements
