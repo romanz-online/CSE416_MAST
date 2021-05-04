@@ -6,7 +6,7 @@ from .models import Student, Course, CourseInstance, CoursePrerequisiteSet, Prer
     Semester, ScheduleType, ScheduleStatus, Major
 from .classic_suggest import classic_suggest
 from .smart_suggest import smart_suggest_gen
-
+import datetime
 
 @login_required
 def schedule_generation(request, sbu_id):
@@ -87,11 +87,15 @@ def generate_schedule(request, sbu_id):
     # do stuff with the "preferences" dictionary, start_time, end_time, and courses_per_semester here
 
     prefer_courses = [[], [], []]
+    print("debug")
+    print(preferences)
+    for key in preferences.keys():
+        preferences[key] = int(preferences[key])
     for courseInstance in preferences.keys():
         if preferences[courseInstance] in [1, 2, 3]:
             match_course = courseInstance.course
             prefer_courses[preferences[courseInstance] - 1].append(match_course)
-
+    print(prefer_courses)
     avoid_courses = []
     for courseInstance in preferences.keys():
         if preferences[courseInstance] in [4, 5]:
@@ -99,6 +103,16 @@ def generate_schedule(request, sbu_id):
             avoid_courses.append(match_course)
 
     student = Student.objects.filter(sbu_id=sbu_id).first()
+
+    if(start_time != None):
+        hour = start_time[0:2]
+        minute = start_time[3:5]
+        print(hour + minute)
+        start_time = datetime.time(int(hour), int(minute))
+    if end_time != None:
+        hour = end_time[0:2]
+        minute = end_time[3:5]
+        end_time = datetime.time(int(hour), int(minute))
     time_constraints = [start_time, end_time]
     graduation_semester = None
 
