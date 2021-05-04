@@ -497,6 +497,7 @@ def find_requirements(taken_courses, course_set, for_pending):
                     taken_course_lookup = len([i for i in taken_courses if
                                                i.course.course == course.course and i.course.status == CourseStatus.PENDING])
                 else:
+                    print(len(taken_course_lookup))
                     taken_course_lookup = len([i for i in taken_courses if
                                                i.course.course == course.course and i.status == CourseStatus.PASSED])
                 number_taken += taken_course_lookup
@@ -522,8 +523,6 @@ def find_requirements(taken_courses, course_set, for_pending):
                     number_taken += 1
             if "Elective" not in course_set.name and number_taken >= course_set.size:
                 return True
-    print(number_taken)
-    print(taken_courses)
     return number_taken
 
 

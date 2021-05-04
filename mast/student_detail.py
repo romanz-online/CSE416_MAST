@@ -7,7 +7,7 @@ from django.core.mail import EmailMessage
 from django.http import HttpResponseRedirect
 from django.urls import reverse
 from .models import Student, Major, CoursesTakenByStudent, Comment, StudentCourseSchedule, TrackCourseSet, \
-    CourseInTrackSet, CourseStatus, ScheduleStatus
+    CourseInTrackSet, CourseStatus, ScheduleStatus, Semester 
 
 
 @login_required
@@ -75,7 +75,7 @@ def wrap_text(text, limit):
     return ''.join(text_list)
 
 
-def student_degree_reqs_loop(taken_courses, course_set, layer, info):
+def student_degree_reqs_loop(taken_courses, course_set, layer, info, pending_schedule_search):
     # all this section does is create the sentences before each set of courses
     if course_set.parent_course_set and course_set.parent_course_set.size and not course_set.size:
         return info
@@ -157,15 +157,19 @@ def student_degree_reqs_loop(taken_courses, course_set, layer, info):
                 info += ':\n'
 
     # this is where courses get listed out, along with their properties
+    season_dict = {"Spring": 0, "Summer": 1, "Fall": 2, "Winter": 3}
     for course in CourseInTrackSet.objects.filter(course_set=course_set):
         if course_set.lower_limit != 100 and course_set.upper_limit != 999:
             taken_course_lookup = [i for i in taken_courses if
                                    course_set.lower_limit <= i.course.course.number <= course_set.upper_limit
                                    and i.course.course.department == course_set.department_limit
                                    and i.status != CourseStatus.FAILED]
+            schedule_course_lookup = [i for i in pending_schedule_search if course_set.lower_limit <= i.course.course.number <= course_set.upper_limit
+                                        and i.course.course.department == course_set.department_limit]
         else:
             taken_course_lookup = [i for i in taken_courses if i.course.course == course.course
                                    and i.status != CourseStatus.FAILED]
+            schedule_course_lookup = [i for i in pending_schedule_search if course.course == i.course.course]
         flag = ''
         taken_count = 0
         pending_count = 0
@@ -174,6 +178,16 @@ def student_degree_reqs_loop(taken_courses, course_set, layer, info):
                 taken_count += 1
             elif i.status == CourseStatus.PENDING:
                 pending_count += 1
+        current_semester = Semester.objects.filter(is_current_semester=True)[0]
+        for schedule in schedule_course_lookup:
+            if schedule.course.course == course.course:
+                current_year = schedule.course.semester.year
+                current_season = schedule.course.semester.season
+                if current_year > current_semester.year:
+                    pending_count += 1 
+                elif current_year == current_semester.year and season_dict[current_season] >= season_dict[current_semester.season]:
+                    pending_count += 1   
+
 
         if taken_count > 0 and pending_count == 0:
             flag = '[TAKEN]'
@@ -258,13 +272,14 @@ def student_degree_reqs_loop(taken_courses, course_set, layer, info):
 
     # this is the recursion call
     for nested_set in TrackCourseSet.objects.filter(parent_course_set=course_set):
-        info = student_degree_reqs_loop(taken_courses, nested_set, layer + 1, info)
+        info = student_degree_reqs_loop(taken_courses, nested_set, layer + 1, info, pending_schedule_search)
 
     return info + '\n'
 
 
 def stringify_student_degree_reqs(student):
     taken_courses = CoursesTakenByStudent.objects.filter(student=student)
+    pending_schedule_search = StudentCourseSchedule.objects.filter(student=student)         
     total_credits = student.credits_taken
 
     info = ''
@@ -285,6 +300,6 @@ def stringify_student_degree_reqs(student):
     info += ':\n\n'
 
     for course_set in TrackCourseSet.objects.filter(track=student.track, parent_course_set=None):
-        info = student_degree_reqs_loop(taken_courses, course_set, 0, info)
+        info = student_degree_reqs_loop(taken_courses, course_set, 0, info, pending_schedule_search)
 
     return info
