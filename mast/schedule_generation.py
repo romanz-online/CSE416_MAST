@@ -1,5 +1,5 @@
 from django.shortcuts import get_object_or_404, render
-
+from .editing_student import sync_course_data
 from .modifying_schedule import sort_semester_list
 from django.contrib.auth.decorators import login_required
 from .models import Student, Course, CourseInstance, CoursePrerequisiteSet, Prerequisite, StudentCourseSchedule, \
@@ -132,7 +132,7 @@ def generate_random_schedules():
 @login_required
 def smart_suggest(request, sbu_id):
     student = Student.objects.filter(sbu_id=sbu_id).first()
-    # smart_suggest_gen(student)
+    smart_suggest_gen(student)
     return offered_schedules(request, sbu_id)
 
 
@@ -194,7 +194,7 @@ def approve_all(request, sbu_id, schedule_id):
             new_record = StudentCourseSchedule(student=student, course=i.course, schedule_id=0,
                                                status=ScheduleStatus.APPROVED)
             new_record.save()
-
+    sync_course_data(student)
     return schedule_display(request, sbu_id, schedule_id)
 
 
@@ -208,7 +208,7 @@ def approve_scheduled_course(request, sbu_id, schedule_id, course_id):
     new_record = StudentCourseSchedule(student=student, course=course_record, schedule_id=0,
                                        status=ScheduleStatus.APPROVED)
     new_record.save()
-
+    sync_course_data(student)
     return schedule_display(request, sbu_id, schedule_id)
 
 

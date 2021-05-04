@@ -2,14 +2,19 @@ import operator
 
 from .modifying_schedule import sort_semester_list
 from . import editing_student
-from .models import Student, CoursesTakenByStudent, StudentCourseSchedule, TrackCourseSet
+from .models import Student, CoursesTakenByStudent, StudentCourseSchedule, TrackCourseSet, CoursePrerequisiteSet, Prerequisite
 
 
 # main smart_suggest driver
 def smart_suggest_gen(student):
+     # get an unused shchedule id
+    schedule_id = 1
+    for course in StudentCourseSchedule.objects.filter(student=student):
+        if course.schedule_id >= schedule_id:
+            schedule_id = course.schedule_id + 1
     # get graduated students who have same track and major
     graduate_set = Student.objects.filter(track=student.track, major=student.major, graduated=True)
-    student_courses = StudentCourseSchedule.objects.filter(student=student)
+    student_courses = StudentCourseSchedule.objects.filter(student=student, schedule_id=0)
     # if student has not taken or signed up for any classes, all students are 100% similar
     if len(student_courses) == 0:
         similar_schedules = graduate_set
@@ -22,22 +27,18 @@ def smart_suggest_gen(student):
         return
     # else continue and get course counts
     course_counts = course_counter(student, graduate_set)
-    print(course_counts)
     # get next semester number for student
     student_semesters = map_semester_numbers(student, student_courses)
     if student_semesters:
         current_semester = student_semesters[max(student_semesters.items(), key=operator.itemgetter(1))[0]] + 1
     else:
         current_semester = 1
-    # get an unused shchedule id
-    schedule_id = 1
-    for course in StudentCourseSchedule.objects.filter(student=student):
-        if course.schedule_id >= schedule_id:
-            schedule_id = course.schedule_id + 1
+   
     # while schedule is not complete, add semesters
     while not requirements_met(student, schedule_id, 'Smart'):
-        if create_semester_schedule(student, current_semester, schedule_id, course_counts) == -1:
-            print("Not enough data")
+        print(current_semester)
+        if course_counts == -1:
+            print("Partial Schedule")
             return
         else:
             # update course counts to remove added classes
@@ -97,14 +98,14 @@ def map_semester_numbers(student, student_courses):
     semesters = sort_semester_list(semesters)
     # dictionary with value as order number
     for i in range(len(semesters)):
-        semester_map[semesters[i]] = i
+        semester_map[semesters[i]] = i+1
     return semester_map
 
 # get dictionary that maps all classes a student has taken to its semester number
 def course_semester_map(student_courses, student_semesters):
     student_dict = {}
     for course in student_courses:
-        student_dict[course.course.course.name] = student_semesters.get(course.course.semester)
+        student_dict[course.course] = student_semesters.get(course.course.semester)
     return student_dict
 
 
@@ -119,29 +120,27 @@ def course_counter(student, graduate_set):
 
     for g_s in graduate_set:
         graduated_courses = StudentCourseSchedule.objects.filter(student=g_s)
-        print(graduated_courses)
         graduated_semesters = map_semester_numbers(g_s, graduated_courses)
         graduated_map = course_semester_map(graduated_courses, graduated_semesters)
         for course in graduated_map:
             # get count for all classes not yet taken by current student
             # if class not taken, and not yet in course_counts
-            if course.course.course.name not in taken_course_list and course.course.course.name not in course_counts:
-                course_counts[course.course.course.name] = {graduated_semesters.get(course.course.semester): 1}
+            if course not in taken_course_list and course not in course_counts:
+                course_counts[course] = {graduated_semesters.get(course.semester): 1}
             # else if its not been taken, and already in course_counts
-            elif course.course.course.name not in taken_course_list:
+            elif course not in taken_course_list:
                 # semester value already present for course
-                if graduated_semesters.get(course.course.semester) in course_counts.keys():
-                    course_counts[course][graduated_semesters.get(course.course.semester)] += 1
+                if graduated_semesters.get(course.semester) in course_counts.keys():
+                    course_counts[course][graduated_semesters.get(course.semester)] += 1
                 # new semester value for course
                 else:
-                    course_counts[course][graduated_semesters.get(course.course.semester)] = 1
+                    course_counts[course][graduated_semesters.get(course.semester)] = 1
 
     return course_counts
 
 
 # return boolean indicating if the students's schedule meets all degree reqs
 def requirements_met(student, schedule_id, schedule_type):
-    print("check")
     if not student.track:
         return False
     taken_courses = [i for i in CoursesTakenByStudent.objects.filter(student=student)]
@@ -170,9 +169,10 @@ def create_semester_schedule(student, semester, schedule_id, course_counts):
     # get classes taken most often in
     this_semesters_classes = []
     for course in course_counts:
-        if max(course_counts[course], key=course_counts[course].get) == semester:
+        if course_counts[course] and max(course_counts[course], key=course_counts[course].get) == semester:
             this_semesters_classes.append(course)
-
+        if len(this_semesters_classes) >= 4:
+            break
     # error, no classes found
     if len(this_semesters_classes) == 0:
         return -1
@@ -192,20 +192,21 @@ def create_semester_schedule(student, semester, schedule_id, course_counts):
     return course_counts
 
 def prereqs_met(student, course, schedule_id):
-   
-    student_courses = StudentCourseSchedule.objects.filter(student=student,
-                                                           schedule_id=schedule_id) | StudentCourseSchedule.objects.filter(
-        student=student, schedule_id=0)
+    student_courses = StudentCourseSchedule.objects.filter(student=student, schedule_id=schedule_id) | StudentCourseSchedule.objects.filter(student=student, schedule_id=0)
     prereq_set = CoursePrerequisiteSet.objects.filter(parent_course=course)
-    for prereq in Prerequisite.objects.filter(course_set=prereq_set):
-        if prereq not in student_courses:
-            return False
+    if prereq_set:
+        for prereq in prereq_set:
+            prereq_object = Prerequisite.objects.filter(course_set=prereq)
+            if prereq not in student_courses:
+                return False
 
-    for nested_set in CoursePrerequisiteSet.objects.filter(parent_set=prereq_set):
-        met = False
-        for prereq in Prerequisite.objects.filter(course_set=nested_set):
-            if prereq in student_courses:
-                met = True
+        nested_prereqs = CoursePrerequisiteSet.objects.filter(parent_set=prereq_set)
+        for nested_set in nested_prereqs:
+            met = False
+            nested_objects = Prerequisite.objects.filter(course_set=nested_set) 
+            for prereq in nested_objects:
+                if prereq in student_courses:
+                    met = True
         if not met:
             return False
 
